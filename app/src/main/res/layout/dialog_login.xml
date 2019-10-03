@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:paddingHorizontal="@dimen/dp_5"
+        android:layout_width="match_parent"
+        android:paddingVertical="@dimen/dp_5"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/ivCancel"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:padding="@dimen/dp_5"
+            android:src="@mipmap/back_w_black"/>
+        <ImageView
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:padding="@dimen/dp_5"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/ddd"/>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="手机登陆"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_40"
+        android:textColor="@color/textTitle"
+        android:textSize="@dimen/sp_21"/>
+
+    <RelativeLayout
+        android:layout_marginHorizontal="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_50"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/etPhone"
+            android:layout_width="match_parent"
+            android:textSize="@dimen/sp_18"
+            android:paddingVertical="@dimen/dp_5"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:hint="手机号"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_below="@+id/etPhone"
+            android:background="@color/colorDb3"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginHorizontal="@dimen/dp_20"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_below="@+id/etCode"
+            android:background="@color/colorDb3"/>
+        <EditText
+            android:id="@+id/etCode"
+            android:layout_toLeftOf="@+id/tvGetCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_18"
+            android:maxLength="8"
+            android:background="@null"
+            android:paddingVertical="@dimen/dp_5"
+            android:hint="验证码"/>
+        <TextView
+            android:id="@+id/tvGetCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="获取验证码"
+            android:textSize="@dimen/sp_16"
+            android:padding="@dimen/dp_5"
+            android:layout_marginHorizontal="@dimen/dp_5"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"/>
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/tvLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="登陆"
+        android:layout_marginTop="@dimen/dp_20"
+        android:gravity="center"
+        android:paddingVertical="@dimen/dp_8"
+        android:layout_marginHorizontal="@dimen/dp_20"
+        android:textSize="@dimen/sp_20"
+        android:textColor="@android:color/white"
+        android:background="@drawable/shape_touming"/>
+
+</LinearLayout>

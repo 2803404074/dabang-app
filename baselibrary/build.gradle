@@ -1,0 +1,84 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+
+    api 'com.jakewharton:butterknife:10.0.0'
+    annotationProcessor "com.jakewharton:butterknife-compiler:10.0.0"
+
+    //微信
+    api 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
+
+    //网络请求
+    api 'com.squareup.okhttp3:okhttp:3.12.0'
+
+    //数据解析
+    api 'com.google.code.gson:gson:2.8.5'
+
+    //图片加载
+    api 'com.github.bumptech.glide:glide:4.8.0'
+
+    //原图头像
+    api 'com.facebook.fresco:fresco:0.14.1'
+
+    //加载动画
+    api 'com.github.ybq:Android-SpinKit:1.2.0'
+
+    //tablayout
+    api 'com.ogaclejapan.smarttablayout:library:2.0.0@aar'
+
+    //banner
+    api 'com.youth.banner:banner:1.4.10'
+
+    //右側滑動
+    api 'com.r0adkll:slidableactivity:2.0.5'
+
+    //底部弹窗
+    api 'com.github.rey5137:material:1.2.2'
+
+    //上下切换直播间
+    api 'com.github.castorflex.verticalviewpager:library:19.0.1'
+
+    api 'io.reactivex:rxandroid:1.2.1'
+
+    //仿映客直播滑动
+    //api 'com.lmxjw3.media:videoplay:1.0.0'
+
+    //清屏的，暂时不需要，滑动出现问题
+    //api 'com.github.wjianchen13:SlideDemo:1.0.0'
+}

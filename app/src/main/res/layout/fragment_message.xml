@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:paddingTop="@dimen/dp_35"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="消 息"
+        android:textColor="@color/textTitle"
+        android:layout_gravity="center"
+        android:textSize="@dimen/sp_20"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
+            android:padding="@dimen/dp_5"
+            android:src="@mipmap/test13"/>
+        <ImageView
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
+            android:layout_marginHorizontal="@dimen/dp_70"
+            android:padding="@dimen/dp_5"
+            android:src="@mipmap/test14"/>
+        <ImageView
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
+            android:padding="@dimen/dp_5"
+            android:src="@mipmap/test12"/>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginVertical="@dimen/dp_5"
+        android:background="@color/speedTextNormal"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_mess"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>

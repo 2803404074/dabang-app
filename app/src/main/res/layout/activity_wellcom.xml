@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.WellcomActivity">
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_centerInParent="true"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/test7"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:text="V1.0.0"
+        android:id="@+id/text_version"
+        android:textSize="@dimen/sp_14"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:id="@+id/ivLogo"
+        android:layout_centerHorizontal="true"
+        android:layout_width="@dimen/dp_90"
+        android:layout_marginTop="@dimen/dp_90"
+        android:layout_height="@dimen/dp_90"
+        android:src="@drawable/app_logo"/>
+
+    <TextView
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/ivLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/sp_21"
+        android:textStyle="italic"
+        android:textColor="@color/textTitle"
+        android:text="鲜而美-跳跳传媒"/>
+</RelativeLayout>

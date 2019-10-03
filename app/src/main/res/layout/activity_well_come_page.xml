@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.WellComePageActivity">
+
+    <androidx.viewpager.widget.ViewPager
+        android:layout_width="match_parent"
+        android:id="@+id/view_pager"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/dp_35"
+        android:text="立即体验"
+        android:visibility="gone"
+        android:id="@+id/text_time"
+        android:paddingHorizontal="@dimen/dp_15"
+        android:paddingVertical="@dimen/dp_5"
+        android:background="@drawable/shape_db"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_15"
+        android:layout_height="wrap_content" />
+
+
+    <com.dabangvr.ui.GuideButtomLineView
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/guideButtomLineView"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"/>
+</RelativeLayout>

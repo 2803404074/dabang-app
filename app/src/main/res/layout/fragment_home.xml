@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_200"
+        android:background="@drawable/shape_style_db_green">
+    </RelativeLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
+    <LinearLayout
+        android:id="@+id/ll_top"
+        android:paddingTop="@dimen/dp_35"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_130"
+        android:paddingHorizontal="@dimen/dp_10"
+        android:orientation="horizontal">
+
+        <include layout="@layout/tab_layout"
+            android:layout_marginVertical="@dimen/dp_5"
+            android:layout_height="@dimen/dp_40"
+            android:layout_width="wrap_content" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1px"
+            android:layout_weight="1"/>
+        <ImageView
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:padding="@dimen/dp_3"
+            android:layout_marginTop="@dimen/dp_10"
+            android:src="@mipmap/search"/>
+        <ImageView
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:src="@mipmap/my_message"/>
+    </LinearLayout>
+
+
+</RelativeLayout>

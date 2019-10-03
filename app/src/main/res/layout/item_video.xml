@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:background="#000"
+    android:layout_height="match_parent">
+
+    <com.pili.pldroid.player.widget.PLVideoTextureView
+        android:id="@+id/video_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"/>
+
+
+    <LinearLayout
+        android:layout_above="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_10"
+        android:orientation="horizontal">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sdvHead"
+            android:layout_centerHorizontal="true"
+            android:layout_width="@dimen/dp_45"
+            android:layout_height="@dimen/dp_45"
+            fresco:roundAsCircle="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_21"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="@dimen/dp_5"
+            android:textColor="@color/colorWhite"
+            android:text="1299酒庄"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="关注"
+            android:paddingHorizontal="@dimen/dp_10"
+            android:paddingVertical="@dimen/dp_2"
+            android:layout_gravity="center"
+            android:textColor="@android:color/white"
+            android:background="@drawable/shape_style_yellow_org"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_alignParentBottom="true"
+        android:layout_width="@dimen/dp_250"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp_15"
+        android:padding="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_70"
+        android:text="欢迎各位新老顾客买酒啦，买一送一啦，买一红酒送白酒"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginRight="@dimen/dp_5"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true">
+
+        <ImageView
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="@dimen/dp_50"
+            android:padding="@dimen/dp_5"
+            android:src="@mipmap/love"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="156"
+            android:textColor="@android:color/white"
+            android:layout_gravity="center"/>
+        <ImageView
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="@dimen/dp_50"
+            android:padding="@dimen/dp_5"
+            android:layout_marginTop="@dimen/dp_20"
+            android:src="@mipmap/comment"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="156"
+            android:textColor="@android:color/white"
+            android:layout_gravity="center"/>
+        <ImageView
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="@dimen/dp_50"
+            android:padding="@dimen/dp_5"
+            android:layout_marginTop="@dimen/dp_20"
+            android:src="@mipmap/share"/>
+    </LinearLayout>
+
+
+</RelativeLayout>
