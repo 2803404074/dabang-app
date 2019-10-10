@@ -90,7 +90,7 @@ public class BaseRecyclerHolder extends RecyclerView.ViewHolder {
     }
 
     public BaseRecyclerHolder setImageByUrl(int viewId, String url) {
-        // TODO: 2019/9/9
+
         if (!StringUtils.isEmpty(url) && !url.endsWith("null")) {
 
             RequestOptions options = new RequestOptions();

@@ -198,7 +198,7 @@ public class LoginActivity extends BaseActivity implements IUiListener {
         new CountDownTimer(60*1000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                // TODO Auto-generated method stub
+
                 tvGetCode.setText(millisUntilFinished/1000+"秒");
                 tvGetCode.setClickable(false);
             }
