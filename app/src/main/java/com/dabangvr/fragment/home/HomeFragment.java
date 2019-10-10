@@ -1,6 +1,6 @@
 package com.dabangvr.fragment.home;
 
-import android.util.Log;
+
 import android.widget.LinearLayout;
 
 import androidx.fragment.app.Fragment;
@@ -9,7 +9,6 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.dabangvr.R;
-import com.dabangvr.fragment.MessageFragment;
 import com.dbvr.baselibrary.view.BaseFragment;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
@@ -56,6 +55,7 @@ public class HomeFragment extends BaseFragment {
         ContentPagerAdapter contentAdapter = new ContentPagerAdapter(getFragmentManager(),mTitles);
         viewPager.setAdapter(contentAdapter);
         tabLayout.setViewPager(viewPager);
+        viewPager.setCurrentItem(1);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

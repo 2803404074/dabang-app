@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 import android.view.View;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,7 +14,6 @@ import com.dabangvr.activity.VideoActivityTest;
 import com.dabangvr.adapter.BaseRecyclerHolder;
 import com.dabangvr.adapter.RecyclerAdapter;
 import com.dbvr.baselibrary.view.BaseFragment;
-
 import java.util.ArrayList;
 import java.util.List;
 

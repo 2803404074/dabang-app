@@ -39,7 +39,7 @@ public abstract class MoreItemAdapter<T extends MoreItemType> extends RecyclerVi
     }
     public void addData(List<T> data){
         this.mData.addAll(data);
-        this.mData = data;
+//        this.mData = data;
         notifyDataSetChanged();
     }
     @NonNull

@@ -78,19 +78,20 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 
     @Override
     public void initData() {
-        UserMess userMess = SPUtils.instance(this).getUser();
-        if (null == userMess){
-            goTActivity(LoginActivity.class,null);
-            AppManager.getAppManager().finishActivity(MainActivity.class);
-        }else {
-            //登陆环信
-            boolean isLoginHy = (boolean) SPUtils.instance(this).getkey("isLoginHy",false);
-            if (isLoginHy){
-                loginToHx(String.valueOf(userMess.getId()),ALL_HY_PASS);
-            }else {
-                registerHX(String.valueOf(userMess.getId()),ALL_HY_PASS);
-            }
-        }
+        // TODO: 2019/10/8 屏蔽登陆 放开全部就可以了
+//        UserMess userMess = SPUtils.instance(this).getUser();
+//        if (null == userMess){
+//            goTActivity(LoginActivity.class,null);
+//            AppManager.getAppManager().finishActivity(MainActivity.class);
+//        }else {
+//            //登陆环信
+//            boolean isLoginHy = (boolean) SPUtils.instance(this).getkey("isLoginHy",false);
+//            if (isLoginHy){
+//                loginToHx(String.valueOf(userMess.getId()),ALL_HY_PASS);
+//            }else {
+//                registerHX(String.valueOf(userMess.getId()),ALL_HY_PASS);
+//            }
+//        }
     }
 
 
