@@ -1,33 +1,25 @@
 package com.dabangvr.fragment.home;
 
 import android.content.Context;
-import android.graphics.Canvas;
-import android.net.sip.SipManager;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.dabangvr.R;
 import com.dabangvr.adapter.BaseRecyclerHolder;
 import com.dabangvr.adapter.MoreItemAdapter;
 import com.dabangvr.adapter.RecyclerAdapter;
 import com.dabangvr.adapter.RecyclerAdapterTest;
 import com.dbvr.baselibrary.model.HomeFindMo;
-import com.dbvr.baselibrary.ui.MyImageView;
 import com.dbvr.baselibrary.utils.BannerUtil;
-import com.dbvr.baselibrary.view.AppManager;
 import com.dbvr.baselibrary.view.BaseFragment;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.youth.banner.Banner;
@@ -67,6 +59,11 @@ public class HomeFragmentFind extends BaseFragment {
         for (int i = 0; i < 30; i++) {
             dataTow.add("");
         }
+        //橫型主播類型
+        List<String> data = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            data.add("http://e.hiphotos.baidu.com/image/pic/item/4610b912c8fcc3cef70d70409845d688d53f20f7.jpg");
+        }
 
         mData.add(new HomeFindMo(0, R.layout.recy_no_bg));//0和2和4的类型都是列表，区别布局管理器
         mData.add(new HomeFindMo(1, R.layout.item_home_find_tow));//一个直播封面视图
@@ -103,14 +100,12 @@ public class HomeFragmentFind extends BaseFragment {
                         LinearLayoutManager manager = new LinearLayoutManager(getContext());
                         manager.setOrientation(RecyclerView.HORIZONTAL);
                         recyclerView.setLayoutManager(manager);
-                        List<String> data = new ArrayList<>();
-                        for (int i = 0; i < 10; i++) {
-                            data.add("http://b-ssl.duitang.com/uploads/item/201707/04/20170704113215_uAwk5.jpeg");
-                        }
+
                         RecyclerAdapter adapter = new RecyclerAdapter<String>(getContext(), data, R.layout.item_head) {
                             @Override
                             public void convert(Context mContext, BaseRecyclerHolder holder, String o) {
                                 SimpleDraweeView sdvHead = holder.getView(R.id.sdvHead);
+                                Log.d(TAG, "convert: "+o);
                                 sdvHead.setImageURI(o);
 
                             }
@@ -205,7 +200,6 @@ public class HomeFragmentFind extends BaseFragment {
             }else {
                 Log.i(TAG, "direction -1: false");//滑动到顶部
             }
-
         }
     });
     }

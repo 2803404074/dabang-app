@@ -13,7 +13,7 @@
    <com.facebook.drawee.view.SimpleDraweeView
        android:id="@+id/sdvHead"
        fresco:progressBarImage="@mipmap/loading"
-       fresco:progressBarAutoRotateInterval="5000"
+       fresco:progressBarAutoRotateInterval="1000"
        android:layout_width="@dimen/dp_55"
        android:layout_height="@dimen/dp_55"
        fresco:roundingBorderWidth="@dimen/dp_5"
