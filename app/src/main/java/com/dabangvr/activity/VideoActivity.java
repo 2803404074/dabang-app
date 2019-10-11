@@ -36,12 +36,6 @@ import com.dbvr.baselibrary.view.AppManager;
 import com.dbvr.baselibrary.view.BaseActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
-import com.hyphenate.EMChatRoomChangeListener;
-import com.hyphenate.EMMessageListener;
-import com.hyphenate.chat.EMClient;
-import com.hyphenate.chat.EMMessage;
-import com.hyphenate.chat.EMTextMessageBody;
-
 import java.util.ArrayList;
 import java.util.List;
 import butterknife.BindView;
@@ -96,9 +90,6 @@ public class VideoActivity extends BaseActivity{
             public void convert(Context mContext, BaseRecyclerHolder holder, String s) {
                 recyclerComment = holder.getView(R.id.recycle_comment);
                 doTopGradualEffect();//淡出效果列表
-                //注册
-                //注册消息监听
-                EMClient.getInstance().chatManager().addMessageListener(msgListener);
                 commentAdapter = new RecyclerAdapter<LiveComment>(getContext(),commentData,R.layout.item_live_comment) {
                     @Override
                     public void convert(Context mContext, BaseRecyclerHolder holder, LiveComment o) {
@@ -139,7 +130,7 @@ public class VideoActivity extends BaseActivity{
 
                 //初始化房间人员信息
                 TextView tvHotsSize = holder.getView(R.id.auth_fanse);
-                initJoin(tvHotsSize);
+
             }
         };
         recyclerView.setAdapter(adapter);
@@ -148,131 +139,6 @@ public class VideoActivity extends BaseActivity{
     public void initData() {
 
     }
-
-    //房间状态消息
-    private int onLineNumber;//在线人数
-    private String roomNumber;//房间号，通过房间接收到的消息，哪个房间的消息就更新哪个房间的UI
-    private void initJoin(TextView tvHotsSize) {
-        EMClient.getInstance().chatroomManager().addChatRoomChangeListener(new EMChatRoomChangeListener() {
-
-            @Override
-            public void onChatRoomDestroyed(String roomId, String roomName) {
-                Log.e("HyListener", "onChatRoomDestroyed:roomId=" + roomId + ",roomName=" + roomName);
-
-            }
-
-            @Override
-            public void onMemberJoined(String roomId, String participant) {
-                if (participant.equals("系统管理员")) return;
-                //有人进来
-                onLineNumber++;
-                tvHotsSize.setText("在线 " + onLineNumber);
-                setNotifyUi(new LiveComment(Contents.HY_JOIN, participant, "", "进入直播间"));
-                Log.e("HyListener", "onMemberJoined:roomId=" + roomId + ",participant=" + participant);
-            }
-
-            @Override
-            public void onMemberExited(String roomId, String roomName, String participant) {
-                //用户退出
-                onLineNumber--;
-                tvHotsSize.setText("在线 " + onLineNumber);
-                Log.e("HyListener", "onMemberExited:roomId=" + roomId + ",roomName=" + roomName + ",participant=" + participant);
-                setNotifyUi(new LiveComment(Contents.HY_JOIN, participant, "", "离开直播间"));
-            }
-
-            @Override
-            public void onRemovedFromChatRoom(int i, String s, String s1, String s2) {
-                Log.e("HyListener", "onRemovedFromChatRoom:");
-            }
-
-
-            @Override
-            public void onMuteListAdded(final String chatRoomId, final List<String> mutes, final long expireTime) {
-                Log.e("HyListener", "onMuteListAdded:");
-            }
-
-            @Override
-            public void onMuteListRemoved(final String chatRoomId, final List<String> mutes) {
-                Log.e("HyListener", "onMuteListRemoved:");
-            }
-
-            @Override
-            public void onAdminAdded(final String chatRoomId, final String admin) {
-                Log.e("HyListener", "onAdminAdded:");
-            }
-
-            @Override
-            public void onAdminRemoved(final String chatRoomId, final String admin) {
-                Log.e("HyListener", "onAdminRemoved:");
-            }
-
-            @Override
-            public void onOwnerChanged(final String chatRoomId, final String newOwner, final String oldOwner) {
-                Log.e("HyListener", "onOwnerChanged:");
-            }
-
-            @Override
-            public void onAnnouncementChanged(String chatRoomId, final String announcement) {
-                Log.e("HyListener", "onAnnouncementChanged:");
-            }
-        });
-    }
-
-    //评论弹幕礼物消息
-    EMMessageListener msgListener = new EMMessageListener() {
-
-        @Override
-        public void onMessageReceived(List<EMMessage> messages) {
-            Log.e("HyListener", "onMessageReceived:" + messages.toString());
-            for (EMMessage message : messages) {
-                String username = null;
-                // 群组消息
-                if (message.getChatType() == EMMessage.ChatType.GroupChat || message.getChatType() == EMMessage.ChatType.ChatRoom) {
-                    username = message.getTo();
-                } else {
-                    // 单聊消息
-                    username = message.getFrom();
-                }
-                Log.e("HyListener", "onMessageReceived:" + username);
-                // 如果是当前会话的消息，刷新聊天页面
-                if (username.equals(roomNumber)){
-
-                }
-                EMTextMessageBody txtBody = (EMTextMessageBody) message.getBody();
-                Gson gson = new Gson();
-                LiveComment liveComment = gson.fromJson(txtBody.getMessage(), LiveComment.class);
-                setNotifyUi(liveComment);
-            }
-        }
-
-        @Override
-        public void onCmdMessageReceived(List<EMMessage> messages) {
-            // 收到透传消息
-            Log.e("HyListener", "onCmdMessageReceived:" + messages.toString());
-        }
-
-        @Override
-        public void onMessageRead(List<EMMessage> list) {
-            Log.e("HyListener", "onMessageRead:" + list.toString());
-        }
-
-        @Override
-        public void onMessageDelivered(List<EMMessage> list) {
-            Log.e("HyListener", "onMessageDelivered:" + list.toString());
-        }
-
-        @Override
-        public void onMessageRecalled(List<EMMessage> list) {
-            Log.e("HyListener", "onMessageRecalled:" + list.toString());
-        }
-
-        @Override
-        public void onMessageChanged(EMMessage emMessage, Object o) {
-            Log.e("HyListener", "onMessageChanged:" + o.toString());
-        }
-    };
-
-
     private final int handleMessRequestCode = 100; //更新评论内容，handle
     private int dataSize;//消息数量，始终将最新消息显示在recycelview的底部
     Handler handler = new Handler(new Handler.Callback() {
@@ -342,18 +208,13 @@ public class VideoActivity extends BaseActivity{
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        AppManager.getAppManager().finishActivity(VideoActivity.class);
-        if (null!=adapter.getmVideoView()){
-            adapter.getmVideoView().stopPlayback();
-        }
+
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if (null!=adapter.getmVideoView()){
-            adapter.getmVideoView().stopPlayback();
-        }
+
     }
 
     //自定义评论区淡出

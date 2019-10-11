@@ -18,17 +18,10 @@ import androidx.viewpager.widget.ViewPager;
 import com.dabangvr.R;
 import com.dabangvr.adapter.LivePageAdapter;
 import com.dabangvr.fragment.RoomFragment;
-import com.dabangvr.play.MediaController;
 import com.dbvr.baselibrary.model.TestLive;
 import com.dbvr.baselibrary.utils.NetWorkUtils;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
-import com.pili.pldroid.player.AVOptions;
-import com.pili.pldroid.player.PLOnCompletionListener;
-import com.pili.pldroid.player.PLOnErrorListener;
-import com.pili.pldroid.player.widget.PLVideoTextureView;
-
 import java.util.ArrayList;
-
 import fr.castorflex.android.verticalviewpager.VerticalViewPager;
 import rx.Subscription;
 import rx.subscriptions.Subscriptions;
@@ -37,13 +30,9 @@ import rx.subscriptions.Subscriptions;
  * 上下切换房间直播
  *
  */
-public class VideoActivityTest  extends AppCompatActivity implements PLOnErrorListener, PLOnCompletionListener {
+public class VideoActivityTest  extends AppCompatActivity{
     private static final int MESSAGE_ID_RECONNECTING = 0x01;
     private boolean mIsActivityPaused = true;
-    private MediaController mMediaController;
-    private PLVideoTextureView mVideoView;
-    private String mVideoPath = null;
-    private int mDisplayAspectRatio = PLVideoTextureView.ASPECT_RATIO_PAVED_PARENT;
     protected Handler mHandler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(Message msg) {
@@ -58,16 +47,12 @@ public class VideoActivityTest  extends AppCompatActivity implements PLOnErrorLi
                 sendReconnectMessage();
                 return;
             }
-            mVideoView.setVideoPath(mVideoPath);
-            mVideoView.start();
         }
     };
     private VerticalViewPager mViewPager;
     private RelativeLayout mRoomContainer;
     private LivePageAdapter mPagerAdapter;
     private int mCurrentItem;
-    private int isLiveStreaming = 1;
-    private AVOptions options;
     private FrameLayout mFragmentContainer;
     private ArrayList<TestLive> mData = new ArrayList<>();
     private Subscription mSubscription = Subscriptions.empty();
@@ -100,13 +85,8 @@ public class VideoActivityTest  extends AppCompatActivity implements PLOnErrorLi
         mViewPager = (VerticalViewPager) findViewById(R.id.view_pager);
         mRoomContainer = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.view_room_container, null);
         mFragmentContainer = (FrameLayout) mRoomContainer.findViewById(R.id.fragment_container);
-        mVideoView = (PLVideoTextureView) mRoomContainer.findViewById(R.id.texture_view);
-        mVideoView.setDisplayAspectRatio(mDisplayAspectRatio);
        // mVideoPath = DEFAULT_TEST_URL;
         mFragmentManager = getSupportFragmentManager();
-        initAVOptions();
-        mVideoView.setAVOptions(options);
-        mMediaController = new MediaController(this, false, true);
         generateUrls();
         mPagerAdapter = new LivePageAdapter(mData);
         mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
@@ -145,13 +125,6 @@ public class VideoActivityTest  extends AppCompatActivity implements PLOnErrorLi
         mData.add(new TestLive("名称4","555","http://pili-clickplay.vrzbgw.com/WeChat_20191003172444.mp4"));
     }
 
-    private void initAVOptions() {
-        options = new AVOptions();
-        options.setInteger(AVOptions.KEY_PREPARE_TIMEOUT, 10 * 1000);
-        options.setInteger(AVOptions.KEY_LIVE_STREAMING, isLiveStreaming);
-        int codec = 0;
-        options.setInteger(AVOptions.KEY_MEDIACODEC, codec);
-    }
 
     /**
      * @param viewGroup
@@ -174,17 +147,12 @@ public class VideoActivityTest  extends AppCompatActivity implements PLOnErrorLi
     }
 
     private void loadVideo(int position) {
-        mVideoView.setMediaController(mMediaController);
-        mVideoView.setOnCompletionListener(this);
-        mVideoView.setOnErrorListener(this);
-        mVideoView.setVideoPath(mData.get(position).getUrl());
-        mVideoView.start();
+
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        mVideoView.pause();
         mIsActivityPaused = true;
     }
 
@@ -192,13 +160,11 @@ public class VideoActivityTest  extends AppCompatActivity implements PLOnErrorLi
     protected void onResume() {
         super.onResume();
         mIsActivityPaused = false;
-        mVideoView.start();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mVideoView.stopPlayback();
         mSubscription.unsubscribe();
     }
 
@@ -208,20 +174,4 @@ public class VideoActivityTest  extends AppCompatActivity implements PLOnErrorLi
         mHandler.sendMessageDelayed(mHandler.obtainMessage(MESSAGE_ID_RECONNECTING), 500);
     }
 
-    @Override
-    public boolean onError(int errorCode) {
-        boolean isNeedReconnect = false;
-        // Todo pls handle the error status here, reconnect or call finish()
-        if (isNeedReconnect) {
-            sendReconnectMessage();
-        } else {
-            finish();
-        }
-        return true;
-    }
-
-    @Override
-    public void onCompletion() {
-        finish();
-    }
 }

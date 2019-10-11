@@ -17,7 +17,7 @@ import com.dabangvr.R;
 import com.dabangvr.adapter.BaseRecyclerHolder;
 import com.dabangvr.adapter.MoreItemAdapter;
 import com.dabangvr.adapter.RecyclerAdapter;
-import com.dabangvr.adapter.RecyclerAdapterTest;
+import com.dabangvr.adapter.RecyclerAdapterPosition;
 import com.dbvr.baselibrary.model.HomeFindMo;
 import com.dbvr.baselibrary.utils.BannerUtil;
 import com.dbvr.baselibrary.view.BaseFragment;
@@ -123,7 +123,7 @@ public class HomeFragmentFind extends BaseFragment {
                         break;
                     case 2:
                         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-                        RecyclerAdapterTest adapter2 = new RecyclerAdapterTest<String>(getContext(), s.getmResources(), R.layout.item_conver_match) {
+                        RecyclerAdapterPosition adapter2 = new RecyclerAdapterPosition<String>(getContext(), s.getmResources(), R.layout.item_conver_match) {
                             @Override
                             public void convert(Context mContext, BaseRecyclerHolder holder, int position, String o) {
                                 ImageView myImageView = holder.getView(R.id.miv_view);

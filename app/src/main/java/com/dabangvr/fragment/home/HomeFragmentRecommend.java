@@ -82,55 +82,23 @@ public class HomeFragmentRecommend extends LazyFragment{
 
     @Override
     public void isVisibleToUserFunction(boolean isDataInitiated) {
-        if (!isDataInitiated){
-            if (adapter!=null){
-                if (adapter.getmVideoView()!=null){
-                    if (adapter.getmVideoView().isPlaying()){
-                        adapter.getmVideoView().stopPlayback();
-                    }
-                }
-            }
-        }else {
-            if (adapter!=null){
-                if (adapter.getmVideoView()!=null){
-                    if (!adapter.getmVideoView().isPlaying()){
-                        adapter.getmVideoView().start();
-                    }
-                }
-            }
-        }
+
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (adapter!=null){
-            if (adapter.getmVideoView()!=null){
-                adapter.getmVideoView().stopPlayback();
-            }
-        }
+
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (adapter!=null){
-            if (adapter.getmVideoView()!=null){
-                if (!adapter.getmVideoView().isPlaying()){
-                    adapter.getmVideoView().start();
-                }
-            }
-        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        if (adapter!=null){
-            if (adapter.getmVideoView()!=null){
-                adapter.getmVideoView().pause();
-            }
-        }
     }
 
 

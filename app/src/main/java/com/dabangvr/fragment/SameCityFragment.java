@@ -5,14 +5,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dabangvr.R;
 import com.dabangvr.adapter.BaseRecyclerHolder;
-import com.dabangvr.adapter.RecyclerAdapter;
-import com.dabangvr.adapter.RecyclerAdapterTest;
+import com.dabangvr.adapter.RecyclerAdapterPosition;
 import com.dbvr.baselibrary.ui.MyImageView;
 import com.dbvr.baselibrary.view.BaseFragment;
 
@@ -32,7 +30,7 @@ public class SameCityFragment extends BaseFragment {
     @BindView(R.id.mivIcon)
     MyImageView myImageView;
 
-    private RecyclerAdapterTest adapter;
+    private RecyclerAdapterPosition adapter;
 
     private List<Integer> mData = new ArrayList<>();
 
@@ -50,7 +48,7 @@ public class SameCityFragment extends BaseFragment {
         }
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
         recyclerView.setNestedScrollingEnabled(false);
-        adapter = new RecyclerAdapterTest<Integer>(getContext(),mData,R.layout.item_conver_match) {
+        adapter = new RecyclerAdapterPosition<Integer>(getContext(),mData,R.layout.item_conver_match) {
             @Override
             public void convert(Context mContext, BaseRecyclerHolder holder,int position, Integer o) {
                 holder.setImageResource(R.id.miv_view,o);

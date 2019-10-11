@@ -3,8 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
-
     <com.ogaclejapan.smarttablayout.SmartTabLayout
         android:id="@+id/tab_layout"
         android:layout_width="wrap_content"
@@ -15,19 +13,13 @@
         app:stl_indicatorThickness="4dp"
         app:stl_indicatorWidth="auto"
         app:stl_distributeEvenly="true"
+        app:stl_customTabTextLayoutId="@layout/view_tab_text"
         app:stl_defaultTabTextHorizontalPadding="@dimen/dp_5"
         app:stl_defaultTabTextMinWidth="@dimen/dp_14"
         app:stl_indicatorCornerRadius="2dp"
-        app:stl_defaultTabTextColor="@color/white"
-        app:stl_defaultTabTextSize="@dimen/sp_21"
-
         app:stl_overlineThickness="0dp"
         app:stl_underlineThickness="0dp"
         app:stl_dividerThickness="0dp"
-
-
-
         app:stl_drawDecorationAfterTab="true"
         />
-
 </LinearLayout>

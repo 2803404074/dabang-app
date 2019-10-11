@@ -19,23 +19,11 @@ import com.dabangvr.fragment.MessageFragment;
 import com.dabangvr.fragment.MyFragment;
 import com.dabangvr.fragment.SameCityFragment;
 import com.dabangvr.fragment.home.HomeFragment;
-import com.dbvr.baselibrary.model.UserMess;
 import com.dbvr.baselibrary.utils.SPUtils;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
-import com.dbvr.baselibrary.utils.StringUtils;
-import com.dbvr.baselibrary.utils.ToastUtil;
-import com.dbvr.baselibrary.view.AppManager;
 import com.dbvr.baselibrary.view.BaseActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.gson.Gson;
-import com.hyphenate.EMCallBack;
-import com.hyphenate.EMError;
-import com.hyphenate.chat.EMClient;
-import com.hyphenate.exceptions.HyphenateException;
-
 import butterknife.BindView;
-
-import static com.dbvr.baselibrary.other.ThirdParty.ALL_HY_PASS;
 
 public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener, HomeFragment.ChangeCallBack {
 
@@ -93,60 +81,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 //            }
 //        }
     }
-
-
-    /**
-     * 注册
-     */
-    private void registerHX(final String name, final String pass) {
-        new Thread(new Runnable() {
-            public void run() {
-                try {
-                    // 调用sdk注册方法
-                    EMClient.getInstance().createAccount(name, pass);
-                    loginToHx(name, pass);
-                } catch (final HyphenateException e) {
-                    e.printStackTrace();
-                    int errorCode=e.getErrorCode();
-                    if(errorCode == EMError.USER_ALREADY_EXIST){
-                        loginToHx(name, pass);
-                    }
-                }
-            }
-        }).start();
-    }
-
-    /**
-     * /登陆环信
-     * @param name
-     * @param psd
-     */
-    private void loginToHx(String name,String psd){
-        EMClient.getInstance().login(name, psd, new EMCallBack() {
-            @Override
-            public void onSuccess() {
-                // ** 第一次登录或者之前logout后再登录，加载所有本地群和回话
-                // ** manually load all local groups and
-                EMClient.getInstance().groupManager().loadAllGroups();
-                EMClient.getInstance().chatManager().loadAllConversations();
-//                ToastUtil.showShort(getContext(),"环信登陆成功");
-                SPUtils.instance(getContext()).put("isLoginHy",true);
-            }
-
-            @Override
-            public void onProgress(int progress, String status) {
-            }
-            @Override
-            public void onError(final int code, final String message) {
-                Log.e("aaa",message);
-                //ToastUtil.showShort(getContext(),message);
-            }
-        });
-    }
-
-
-
-
 
     public void changeFragment(int index) {
         FragmentTransaction beginTransaction = fragmentManager.beginTransaction();

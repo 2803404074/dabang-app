@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public abstract class RecyclerAdapterTest<T> extends RecyclerView.Adapter<BaseRecyclerHolder> {
+public abstract class RecyclerAdapterPosition<T> extends RecyclerView.Adapter<BaseRecyclerHolder> {
     private Context mContext;
     private boolean isLoading = false;
     private OnLoadMoreListener mOnLoadMoreListener;
@@ -26,7 +26,7 @@ public abstract class RecyclerAdapterTest<T> extends RecyclerView.Adapter<BaseRe
     public static final int TYPE_FOOTER = 1;  //说明是带有Footer的
     public static final int TYPE_NORMAL = 2;  //说明是不带有header和footer的
 
-    public RecyclerAdapterTest(Context mContext, List<T> mDatas, int mLayoutId) {
+    public RecyclerAdapterPosition(Context mContext, List<T> mDatas, int mLayoutId) {
         this.mContext = mContext;
         this.mDatas = mDatas;
         this.mLayoutId = mLayoutId;
