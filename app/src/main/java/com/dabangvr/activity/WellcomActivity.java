@@ -37,15 +37,13 @@ public class WellcomActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        goTActivity(MainActivity.class);
-        // TODO: 2019/10/8 屏蔽登陆，放开全部删除40行代码
-//        UserMess userMess = SPUtils.instance(this).getUser();
-//        if (null == userMess){
-//            goTActivity(LoginActivity.class);
-//        }else {
-//            goTActivity(MainActivity.class);
-//            SPUtils.instance(this).put("token",userMess.getToken());
-//        }
+        UserMess userMess = SPUtils.instance(this).getUser();
+        if (null == userMess){
+            goTActivity(LoginActivity.class);
+        }else {
+            goTActivity(MainActivity.class);
+            SPUtils.instance(this).put("token",userMess.getToken());
+        }
     }
 
     private void goTActivity(final Class T){

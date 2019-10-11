@@ -19,10 +19,13 @@ import com.dabangvr.fragment.MessageFragment;
 import com.dabangvr.fragment.MyFragment;
 import com.dabangvr.fragment.SameCityFragment;
 import com.dabangvr.fragment.home.HomeFragment;
+import com.dbvr.baselibrary.model.UserMess;
 import com.dbvr.baselibrary.utils.SPUtils;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
+import com.dbvr.baselibrary.view.AppManager;
 import com.dbvr.baselibrary.view.BaseActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import butterknife.BindView;
 
 public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener, HomeFragment.ChangeCallBack {
@@ -66,20 +69,11 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 
     @Override
     public void initData() {
-        // TODO: 2019/10/8 屏蔽登陆 放开全部就可以了
-//        UserMess userMess = SPUtils.instance(this).getUser();
-//        if (null == userMess){
-//            goTActivity(LoginActivity.class,null);
-//            AppManager.getAppManager().finishActivity(MainActivity.class);
-//        }else {
-//            //登陆环信
-//            boolean isLoginHy = (boolean) SPUtils.instance(this).getkey("isLoginHy",false);
-//            if (isLoginHy){
-//                loginToHx(String.valueOf(userMess.getId()),ALL_HY_PASS);
-//            }else {
-//                registerHX(String.valueOf(userMess.getId()),ALL_HY_PASS);
-//            }
-//        }
+        UserMess userMess = SPUtils.instance(this).getUser();
+        if (null == userMess) {
+            goTActivity(LoginActivity.class, null);
+            AppManager.getAppManager().finishActivity(MainActivity.class);
+        }
     }
 
     public void changeFragment(int index) {
@@ -169,6 +163,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     }
 
     private long exitTime = 0;
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK
@@ -186,9 +181,9 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 
     @Override
     public void change(boolean isCheck) {
-        if (isCheck){
+        if (isCheck) {
             navView.getBackground().setAlpha(0);
-        }else {
+        } else {
             navView.getBackground().setAlpha(255);
             navView.setVisibility(View.VISIBLE);
         }
