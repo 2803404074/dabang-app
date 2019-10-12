@@ -7,6 +7,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.dbvr.baselibrary.ui.LoadingUtils;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
 import com.r0adkll.slidr.Slidr;
+
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.Map;
 import butterknife.ButterKnife;
 
@@ -21,6 +24,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(setLayout());
         AppManager.getAppManager().addActivity(this);
         ButterKnife.bind(this);
+//        EventBus.getDefault().register(this); //第1步: 注册
         initView();
         initData();
 
@@ -79,6 +83,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+
         setLoaddingView(false);
         AppManager.getAppManager().finishActivity(this);
         super.onDestroy();

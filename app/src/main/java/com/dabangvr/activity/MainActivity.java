@@ -2,6 +2,7 @@ package com.dabangvr.activity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,12 +22,16 @@ import com.dabangvr.fragment.home.HomeFragment;
 import com.dabangvr.play.activity.VideoActivity;
 import com.dabangvr.publish.ZGBaseHelper;
 import com.dabangvr.publish.activity.PublishActivity;
+import com.dbvr.baselibrary.eventBus.ReadEvent;
 import com.dbvr.baselibrary.model.UserMess;
 import com.dbvr.baselibrary.utils.SPUtils;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
 import com.dbvr.baselibrary.view.AppManager;
 import com.dbvr.baselibrary.view.BaseActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import org.greenrobot.eventbus.EventBus;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -47,6 +52,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     private MessageFragment messageFragment;
     private MyFragment myFragment;
     private FragmentManager fragmentManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -155,28 +161,36 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        String unist = "";
         switch (menuItem.getItemId()) {
             case R.id.navigation_home:
                 changeFragment(0);
                 menuItem.setChecked(true);
+                unist = "0";
                 break;
             case R.id.navigation_tc:
                 changeFragment(1);
                 menuItem.setChecked(true);
+                unist = "1";
                 break;
             case R.id.navigation_live:
                 changeFragment(2);
                 menuItem.setChecked(true);
+                unist = "2";
                 break;
             case R.id.navigation_my:
                 changeFragment(3);
                 menuItem.setChecked(true);
+                unist = "3";
                 break;
         }
+
+        EventBus.getDefault().post(new ReadEvent("1000", 1000, unist));
         return false;
     }
 
     private long exitTime = 0;
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK
@@ -194,9 +208,9 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 
     @Override
     public void change(boolean isCheck) {
-        if (isCheck){
+        if (isCheck) {
             navView.getBackground().setAlpha(0);
-        }else {
+        } else {
             navView.getBackground().setAlpha(255);
             navView.setVisibility(View.VISIBLE);
         }

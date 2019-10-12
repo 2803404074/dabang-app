@@ -1,6 +1,7 @@
 package com.dabangvr.fragment.home;
 
 
+import android.util.Log;
 import android.widget.LinearLayout;
 
 import androidx.fragment.app.Fragment;
@@ -9,8 +10,11 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.dabangvr.R;
+import com.dbvr.baselibrary.eventBus.ReadEvent;
 import com.dbvr.baselibrary.view.BaseFragment;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,6 +78,13 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onPageScrollStateChanged(int state) {
 
+            }
+        });
+        tabLayout.setOnTabClickListener(new SmartTabLayout.OnTabClickListener() {
+            @Override
+            public void onTabClicked(int position) {
+                Log.d("luhuas", "onTabClicked: "+position);
+                EventBus.getDefault().post(new ReadEvent("1001", 1001, String.valueOf(position)));
             }
         });
     }

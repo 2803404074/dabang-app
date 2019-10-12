@@ -1,6 +1,9 @@
 package com.dabangvr.fragment.home;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,11 +21,24 @@ import com.dabangvr.adapter.BaseRecyclerHolder;
 import com.dabangvr.adapter.MoreItemAdapter;
 import com.dabangvr.adapter.RecyclerAdapter;
 import com.dabangvr.adapter.RecyclerAdapterPosition;
+import com.dbvr.baselibrary.eventBus.ReadEvent;
 import com.dbvr.baselibrary.model.HomeFindMo;
+import com.dbvr.baselibrary.model.PlayMode;
 import com.dbvr.baselibrary.utils.BannerUtil;
+import com.dbvr.baselibrary.utils.SPUtils;
 import com.dbvr.baselibrary.view.BaseFragment;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.youth.banner.Banner;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,13 +53,15 @@ public class HomeFragmentFind extends BaseFragment {
     private static final String TAG = "luhuas";
     @BindView(R.id.recycler_find)
     RecyclerView recyclerView;
-
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout refreshLayout;
     private MoreItemAdapter adapter;
 
     private List<HomeFindMo> mData = new ArrayList<>();
 
     @Override
     public int layoutId() {
+        EventBus.getDefault().register(this); //第1步: 注册
         return R.layout.fragment_home_find;
     }
 
@@ -60,10 +78,10 @@ public class HomeFragmentFind extends BaseFragment {
             dataTow.add("");
         }
         //橫型主播類型
-        List<String> data = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            data.add("http://e.hiphotos.baidu.com/image/pic/item/4610b912c8fcc3cef70d70409845d688d53f20f7.jpg");
-        }
+        String str = (String) SPUtils.instance(getActivity()).getkey("AnchorList", "");
+        List<PlayMode> data = new Gson().fromJson(str, new TypeToken<List<PlayMode>>() {
+        }.getType());
+
 
         mData.add(new HomeFindMo(0, R.layout.recy_no_bg));//0和2和4的类型都是列表，区别布局管理器
         mData.add(new HomeFindMo(1, R.layout.item_home_find_tow));//一个直播封面视图
@@ -101,12 +119,12 @@ public class HomeFragmentFind extends BaseFragment {
                         manager.setOrientation(RecyclerView.HORIZONTAL);
                         recyclerView.setLayoutManager(manager);
 
-                        RecyclerAdapter adapter = new RecyclerAdapter<String>(getContext(), data, R.layout.item_head) {
+                        RecyclerAdapter adapter = new RecyclerAdapter<PlayMode>(getContext(), data, R.layout.item_head) {
                             @Override
-                            public void convert(Context mContext, BaseRecyclerHolder holder, String o) {
+                            public void convert(Context mContext, BaseRecyclerHolder holder, PlayMode mode) {
                                 SimpleDraweeView sdvHead = holder.getView(R.id.sdvHead);
-                                Log.d(TAG, "convert: "+o);
-                                sdvHead.setImageURI(o);
+                                holder.setText(R.id.tv_nickName, mode.getNickName());
+                                sdvHead.setImageURI(mode.getHeadUrl());
 
                             }
                         };
@@ -114,7 +132,7 @@ public class HomeFragmentFind extends BaseFragment {
                         adapter.setOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
                             @Override
                             public void onItemClick(View view, int position) {
-                                Log.d("luhuas", "onItemClick: item0=="+position);
+                                Log.d("luhuas", "onItemClick: item0==" + position);
                             }
                         });
                         break;
@@ -182,30 +200,87 @@ public class HomeFragmentFind extends BaseFragment {
                 Log.d("luhuas", "onItemClick: " + position);
             }
         });
-    recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-        @Override
-        public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-            super.onScrolled(recyclerView, dx, dy);
-            if(recyclerView.canScrollVertically(1)){
-                Log.i(TAG, "direction 1: true");
-            }else {
-                Log.i(TAG, "direction 1: false");//滑动到底部
-                List<HomeFindMo> mData1 = new ArrayList<>();
-                mData1.add(new HomeFindMo(2, R.layout.item_home_find_one, dataTow));
-                // TODO: 2019/10/9 加载更多
-                adapter.addData(mData1);
-            }
-            if(recyclerView.canScrollVertically(-1)){
-                Log.i(TAG, "direction -1: true");
-            }else {
-                Log.i(TAG, "direction -1: false");//滑动到顶部
-            }
-        }
-    });
+
     }
 
     @Override
     public void initData() {
+        refreshLayout.setPrimaryColorsId(R.color.colorTM, android.R.color.white);
+        refreshLayout.setEnableLoadMore(true);
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshLayout) {
+                Message message = new Message();
+                message.what = 1;
+                message.obj = "刷新";
+                mHandler.sendMessageDelayed(message, 2000);
+            }
+        });
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(RefreshLayout refreshLayout) {
 
+
+                Message message = new Message();
+                message.what = 2;
+                message.obj = "加载更多";
+                mHandler.sendMessageDelayed(message, 2000);
+            }
+        });
+    }
+
+    private Handler mHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            String obj = " ";
+            switch (msg.what) {
+                case 1:         //刷新加载
+                    obj = (String) msg.obj;
+                    refreshLayout.finishRefresh(true);
+                    break;
+                case 2:         //加载更多
+                    List<HomeFindMo> mData1 = new ArrayList<>();
+                    mData1.add(new HomeFindMo(2, R.layout.item_home_find_one, dataTow));
+                    // TODO: 2019/10/9 加载更多
+                    adapter.addData(mData1);
+                    obj = (String) msg.obj;
+                    refreshLayout.finishLoadMore(true);
+                    break;
+            }
+            Log.d("luhuas", "onRefresh: " + obj);
+            return false;
+        }
+    });
+    private String info = null;
+    private String info1 = null;
+
+    //EventBus主线程接收消息
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onUserEvent(ReadEvent event) {
+        String state = event.getState();
+        refreshLayout.setEnableHeaderTranslationContent(true);//内容跟着下拉
+        recyclerView.scrollToPosition(0); //刷新回到顶部
+        //如果多个消息，可在实体类中添加type区分消息
+        switch (event.getType()) {
+            case 1000:
+                info = event.getInfo();
+                break;
+
+            case 1001:
+                info1 = event.getInfo();
+                break;
+        }
+        if ((!TextUtils.isEmpty(info) && TextUtils.equals(info1, "0")) || (!TextUtils.isEmpty(info1) && TextUtils.equals("1", info1))) {
+            if (TextUtils.equals(info1, "1")) {
+                refreshLayout.autoRefresh();
+
+            }
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }
