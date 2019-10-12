@@ -2,7 +2,6 @@ package com.dabangvr.activity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,14 +18,18 @@ import com.dabangvr.fragment.MessageFragment;
 import com.dabangvr.fragment.MyFragment;
 import com.dabangvr.fragment.SameCityFragment;
 import com.dabangvr.fragment.home.HomeFragment;
+import com.dabangvr.play.activity.VideoActivity;
+import com.dabangvr.publish.ZGBaseHelper;
+import com.dabangvr.publish.activity.PublishActivity;
 import com.dbvr.baselibrary.model.UserMess;
 import com.dbvr.baselibrary.utils.SPUtils;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
 import com.dbvr.baselibrary.view.AppManager;
 import com.dbvr.baselibrary.view.BaseActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 import butterknife.BindView;
+import butterknife.OnClick;
+
 
 public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener, HomeFragment.ChangeCallBack {
 
@@ -44,7 +47,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     private MessageFragment messageFragment;
     private MyFragment myFragment;
     private FragmentManager fragmentManager;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,10 +71,22 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 
     @Override
     public void initData() {
+        // TODO: 2019/10/8 屏蔽登陆 放开全部就可以了
         UserMess userMess = SPUtils.instance(this).getUser();
-        if (null == userMess) {
-            goTActivity(LoginActivity.class, null);
+        if (null == userMess){
+            goTActivity(LoginActivity.class,null);
             AppManager.getAppManager().finishActivity(MainActivity.class);
+        }
+        ZGBaseHelper.sharedInstance().setUser(String.valueOf(userMess.getId()),userMess.getNickName());
+    }
+
+    @OnClick({R.id.tvPublish,R.id.tvPlay})
+    public void onclick(View view){
+        if (view.getId() == R.id.tvPublish){
+            goTActivity(PublishActivity.class,null);
+        }
+        if (view.getId() == R.id.tvPlay){
+            goTActivity(VideoActivity.class,null);
         }
     }
 
@@ -163,7 +177,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     }
 
     private long exitTime = 0;
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK
@@ -181,9 +194,9 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 
     @Override
     public void change(boolean isCheck) {
-        if (isCheck) {
+        if (isCheck){
             navView.getBackground().setAlpha(0);
-        } else {
+        }else {
             navView.getBackground().setAlpha(255);
             navView.setVisibility(View.VISIBLE);
         }

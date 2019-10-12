@@ -20,10 +20,5 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
-#七牛播放器
--keep class com.pili.pldroid.player.** { *; }
--keep class com.qiniu.qplayer.mediaEngine.MediaPlayer{*;}
-
-#环信
--keep class com.hyphenate.** {*;}
--dontwarn  com.hyphenate.**
+#即购
+-keep class com.zego.**{*;}

@@ -76,9 +76,6 @@ dependencies {
 
     api 'io.reactivex:rxandroid:1.2.1'
 
-    //仿映客直播滑动
-    //api 'com.lmxjw3.media:videoplay:1.0.0'
-
-    //清屏的，暂时不需要，滑动出现问题
-    //api 'com.github.wjianchen13:SlideDemo:1.0.0'
+    //清屏的
+    api 'com.github.wjianchen13:SlideDemo:1.0.0'
 }

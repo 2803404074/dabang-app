@@ -4,12 +4,10 @@ import android.content.Context;
 import android.util.Log;
 import android.view.View;
 
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dabangvr.R;
-import com.dabangvr.activity.VideoActivity;
 import com.dabangvr.activity.VideoActivityTest;
 import com.dabangvr.adapter.BaseRecyclerHolder;
 import com.dabangvr.adapter.RecyclerAdapter;
