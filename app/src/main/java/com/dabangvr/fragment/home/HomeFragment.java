@@ -2,6 +2,7 @@ package com.dabangvr.fragment.home;
 
 
 import android.util.Log;
+import android.view.View;
 import android.widget.LinearLayout;
 
 import androidx.fragment.app.Fragment;
@@ -10,6 +11,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.dabangvr.R;
+import com.dabangvr.activity.SearchActivity;
 import com.dbvr.baselibrary.eventBus.ReadEvent;
 import com.dbvr.baselibrary.view.BaseFragment;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
@@ -20,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class HomeFragment extends BaseFragment {
 
@@ -70,9 +73,9 @@ public class HomeFragment extends BaseFragment {
             public void onPageSelected(int position) {
                 if (position == 3){
                     //设置底部透明
-                    changeCallBack.change(true);
+                    changeCallBack.change(true,false);
                 }else {
-                    changeCallBack.change(false);
+                    changeCallBack.change(false,false);
                 }
             }
             @Override
@@ -89,13 +92,26 @@ public class HomeFragment extends BaseFragment {
         });
     }
 
+    @OnClick({R.id.ivSearch,R.id.ivMess})
+    public void onclick(View view){
+        switch (view.getId()){
+            case R.id.ivSearch:
+                goTActivity(SearchActivity.class,null);
+                break;
+            case R.id.ivMess:
+                changeCallBack.change(false,true);
+                break;
+                default:break;
+        }
+    }
+
     @Override
     public void initData() {
 
     }
 
     public interface ChangeCallBack{
-        void change(boolean isCheck);
+        void change(boolean isCheck,boolean isClickMess);//isClickMess是否点击到消息
     }
 
     class ContentPagerAdapter extends FragmentPagerAdapter {

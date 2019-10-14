@@ -87,12 +87,12 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
             goTActivity(LoginActivity.class,null);
             AppManager.getAppManager().finishActivity(MainActivity.class);
         }
-
-        if (userMess.isNewsUser()){
-            registerHX(String.valueOf(userMess.getId()),"123");
-        }else {
-            loginToHx(String.valueOf(userMess.getId()),"123");
-        }
+        registerHX(String.valueOf(userMess.getId()),"123");
+//        if (userMess.isNewsUser()){
+//            registerHX(String.valueOf(userMess.getId()),"123");
+//        }else {
+//            loginToHx(String.valueOf(userMess.getId()),"123");
+//        }
     }
 
     private void registerHX(final String name, final String pass) {
@@ -104,7 +104,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
                     loginToHx(name, pass);
                     UserMess userMess =  SPUtils.instance(getContext()).getUser();
                     userMess .setNewsUser(false);
-                    SPUtils.instance(getContext()).putUser(userMess.toString());
+                    SPUtils.instance(getContext()).putUser(userMess);
                 } catch (final HyphenateException e) {
                     e.printStackTrace();
                     int errorCode=e.getErrorCode();
@@ -298,8 +298,12 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     }
 
     @Override
-    public void change(boolean isCheck) {
-        if (isCheck) {
+    public void change(boolean isCheck,boolean isClickMess) {
+
+        if (isClickMess){
+            changeFragment(2);
+            return;
+        } else if (isCheck) {
             navView.getBackground().setAlpha(0);
         } else {
             navView.getBackground().setAlpha(255);

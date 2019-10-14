@@ -24,10 +24,7 @@ import com.dbvr.baselibrary.model.QiniuUploadFile;
 import com.dbvr.baselibrary.model.StreamMo;
 import com.dbvr.baselibrary.model.TagMo;
 import com.dbvr.baselibrary.ui.MyImageView;
-import com.dbvr.baselibrary.utils.BottomDialogUtil;
 import com.dbvr.baselibrary.utils.BottomDialogUtil2;
-import com.dbvr.baselibrary.utils.Conver;
-import com.dbvr.baselibrary.utils.GsonUtil;
 import com.dbvr.baselibrary.utils.OnUploadListener;
 import com.dbvr.baselibrary.utils.QiniuUploadManager;
 import com.dbvr.baselibrary.utils.StringUtils;
@@ -37,9 +34,11 @@ import com.dbvr.httplibrart.constans.DyUrl;
 import com.dbvr.httplibrart.utils.ObjectCallback;
 import com.dbvr.httplibrart.utils.OkHttp3Utils;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.wildma.pictureselector.PictureSelector;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -79,29 +78,26 @@ public class CreateLiveActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        mData.add(new TagMo("0","标签1"));
-        mData.add(new TagMo("0","标签2"));
-        mData.add(new TagMo("0","标签3"));
-        mData.add(new TagMo("0","标签4"));
-        mData.add(new TagMo("0","标签5"));
-        mData.add(new TagMo("0","标签6"));
+        Map<String,Object>map = new HashMap<>();
+        map.put("page",1);
+        map.put("limit",20);
+        //获取标签
+        OkHttp3Utils.getInstance(this).doPostJson(DyUrl.getLiveCategoryList, map, new ObjectCallback<String>(this) {
+            @Override
+            public void onUi(String result)throws JSONException{
+                JSONObject object = new JSONObject(result);
+                String records = object.optString("records");
+                List<TagMo> list = new Gson().fromJson(records, new TypeToken<List<TagMo>>() {}.getType());
+                if (list!=null && list.size()>0){
+                    mData = list;
+                }
+            }
 
-//        //获取标签
-//        OkHttp3Utils.getInstance(this).doPostJson("", null, new ObjectCallback<String>(this) {
-//            @Override
-//            public void onUi(String result) throws JSONException {
-//                GsonUtil<TagMo> giftMoGsonUtil = new GsonUtil<>();
-//                List<TagMo> list = giftMoGsonUtil.getList(TagMo.class,result);
-//                if (list!=null && list.size()>0){
-//                    mData = list;
-//                }
-//            }
-//
-//            @Override
-//            public void onFailed(String msg) {
-//
-//            }
-//        });
+            @Override
+            public void onFailed(String msg) {
+
+            }
+        });
     }
 
     public void onClickImage(View view){
@@ -112,7 +108,6 @@ public class CreateLiveActivity extends BaseActivity {
         PictureSelector
                 .create(CreateLiveActivity.this, PictureSelector.SELECT_REQUEST_CODE)
                 .selectPicture(true, 130, 156, 5, 6);
-
     }
 
     @OnClick({R.id.tvAdd,R.id.tvAddTag,R.id.tvCreate})
@@ -124,8 +119,8 @@ public class CreateLiveActivity extends BaseActivity {
                 showBottomDialog();
                 break;
             case R.id.tvCreate:
-                createLive("http://i2.sinaimg.cn/gm/cr/2015/0113/1969148222.jpg");
-                //judge();
+                //createLive("http://i2.sinaimg.cn/gm/cr/2015/0113/1969148222.jpg");
+                judge();
                 break;
                 default:break;
         }
@@ -152,11 +147,10 @@ public class CreateLiveActivity extends BaseActivity {
             ToastUtil.showShort(getContext(),"请添加标签");
             return;
         }
-        OkHttp3Utils.getInstance(this).doPostJson("", null, new ObjectCallback<String>(this) {
+        OkHttp3Utils.getInstance(this).doPostJson(DyUrl.getUploadConfigToken, null, new ObjectCallback<String>(this) {
             @Override
             public void onUi(String result) throws JSONException {
-                GsonUtil<QiniuUploadFile>gsonUtil = new GsonUtil<>();
-                QiniuUploadFile qiniuUploadFile = gsonUtil.getClass(QiniuUploadFile.class,result);
+                QiniuUploadFile qiniuUploadFile = new Gson().fromJson(result,QiniuUploadFile.class);
                 upCover(qiniuUploadFile);//这里是七牛的token
             }
 
@@ -230,8 +224,7 @@ public class CreateLiveActivity extends BaseActivity {
         OkHttp3Utils.getInstance(this).doPostJson(DyUrl.createStream, map, new ObjectCallback<String>(this) {
             @Override
             public void onUi(String result){
-                GsonUtil<StreamMo>gsonUtil = new GsonUtil<>();
-                StreamMo streamMo = gsonUtil.getClass(StreamMo.class,result);
+                StreamMo streamMo = new Gson().fromJson(result,StreamMo.class);
                 Map<String,Object>map = new HashMap<>();
                 map.put("streamUrl",streamMo.getPublishURL());
                 map.put("streamTag",streamMo.getTag());
@@ -250,7 +243,8 @@ public class CreateLiveActivity extends BaseActivity {
     private List<TagMo>mData = new ArrayList<>();
     private List<TagMo>checkItemData = new ArrayList<>();
     private void showBottomDialog() {
-        BottomDialogUtil2.getInstance(this).show(R.layout.recy_no_bg, 1.5, view -> {
+        BottomDialogUtil2.getInstance(this).show(R.layout.recy_no_bg, 0, view -> {
+            view.findViewById(R.id.mainView).setBackgroundResource(R.drawable.shape_white);
             RecyclerView recyclerView = view.findViewById(R.id.recycler_head);
             recyclerView.setLayoutManager(new GridLayoutManager(getContext(),5));
             adapter = new RecyclerAdapter<TagMo>(getContext(),mData,R.layout.item_txt) {

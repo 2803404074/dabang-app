@@ -2,9 +2,9 @@ package com.dbvr.httplibrart.constans;
 
 public class UserUrl {
 
-    //发送短信
-    public final static String sendMessage = "/api/auth/sendCode";
+    //登陆
+    public static final String login ="api/login";
 
-    //验证码登陆
-    public final static String loginForCode = "/api/auth/loginByPhone";
+    //发送验证码
+    public static final String sendCode ="api/sms/sendCode";
 }

@@ -138,7 +138,7 @@ public class LoginActivity extends BaseActivity implements IUiListener {
                            return;
                        }
                        setLoaddingView(true);
-                       phoneLogin();
+                       phoneLogin(etPhone.getText().toString(),etCode.getText().toString());
                    }
                });
             }
@@ -149,15 +149,19 @@ public class LoginActivity extends BaseActivity implements IUiListener {
     /**
      * 手机登录方法
      */
-    private void phoneLogin() {
-        OkHttp3Utils.getInstance(this).doPostForm(UserUrl.loginForCode, null, new ObjectCallback<String>(this) {
+    private void phoneLogin(String phone,String code) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("phone", phone);
+        map.put("code", code);
+        map.put("loginType", "PHONE");
+        OkHttp3Utils.getInstance(this).doPostJson(UserUrl.login, map, new ObjectCallback<String>(this) {
             @Override
-            public void onUi(String result) throws JSONException {
+            public void onUi(String result){
                 setLoaddingView(false);
                 Gson gson = new Gson();
                 UserMess userMess = gson.fromJson(result,UserMess.class);
                 if (userMess!=null){
-                    SPUtils.instance(getContext()).putObj("user",userMess);
+                    SPUtils.instance(getContext()).putUser(result);
                     SPUtils.instance(getContext()).putObj("token",userMess.getToken());
                     goTActivity(MainActivity.class,null);
                     AppManager.getAppManager().finishActivity(LoginActivity.class);
@@ -177,11 +181,11 @@ public class LoginActivity extends BaseActivity implements IUiListener {
      * 请求后端发送短信
      */
     private void getMessage(String phone){
-        Map<String,String>map = new HashMap<>();
+        Map<String,Object>map = new HashMap<>();
         map.put("phone",phone);
-        OkHttp3Utils.getInstance(this).doPostForm(UserUrl.sendMessage, null, new ObjectCallback<String>(this) {
+        OkHttp3Utils.getInstance(this).doPostJson(UserUrl.sendCode, map, new ObjectCallback<String>(this) {
             @Override
-            public void onUi(String result) throws JSONException {
+            public void onUi(String result){
                 downDate();
             }
 
@@ -297,12 +301,12 @@ public class LoginActivity extends BaseActivity implements IUiListener {
     }
 
     private void senMyServer(final String openID, final String uName, final String icon, final String type) {
-        HashMap<String, String> map = new HashMap<>();
+        HashMap<String, Object> map = new HashMap<>();
         map.put("openId", openID);
         map.put("nickName", uName);
         map.put("icon", icon);
         map.put("loginType", type);
-        OkHttp3Utils.getInstance(this).doPost(DyUrl.login, map, new ObjectCallback<String>(this) {
+        OkHttp3Utils.getInstance(this).doPostJson(UserUrl.login, map, new ObjectCallback<String>(this) {
 
             @Override
             public void onUi(String result) {

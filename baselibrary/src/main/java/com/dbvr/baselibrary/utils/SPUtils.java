@@ -170,6 +170,12 @@ public class SPUtils {
         put("token",userMess.getToken());
     }
 
+    public void putUser(UserMess userMess){
+        Gson gson = new Gson();
+        String str = gson.toJson(userMess);
+        put("userStr",str);
+        put("token",userMess.getToken());
+    }
 
     /**
      * 存储对象----序列化 --私密数据

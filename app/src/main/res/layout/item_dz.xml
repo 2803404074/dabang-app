@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_height="@dimen/dp_55"
+    android:paddingHorizontal="@dimen/dp_5"
+    android:layout_marginVertical="@dimen/dp_5"
+    xmlns:roundiv="http://schemas.android.com/tools">
+
+   <com.facebook.drawee.view.SimpleDraweeView
+       android:id="@+id/sdvHead"
+       android:layout_width="@dimen/dp_50"
+       android:layout_height="@dimen/dp_50"
+       android:layout_centerVertical="true"
+       fresco:roundAsCircle="true" />
+
+   <LinearLayout
+       android:layout_toRightOf="@+id/sdvHead"
+       android:layout_toLeftOf="@+id/mivImg"
+       android:layout_width="match_parent"
+       android:gravity="center|left"
+       android:paddingHorizontal="@dimen/dp_5"
+       android:layout_height="match_parent"
+       android:orientation="vertical">
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="天使的眼没毛病"
+          android:textSize="@dimen/sp_15"
+          android:textColor="@color/textTitle"/>
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/dp_10"
+          android:text="攒了你的动态     18:55    2019/10/25"/>
+
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="1.5px"
+          android:layout_marginTop="@dimen/dp_5"
+          android:background="@color/lsq_seekbar_view_color"/>
+   </LinearLayout>
+   <com.dbvr.baselibrary.ui.MyImageView
+       android:id="@+id/mivImg"
+       android:layout_width="@dimen/dp_40"
+       android:layout_height="@dimen/dp_40"
+       android:src="@mipmap/test2"
+       roundiv:radius="@dimen/dp_5"
+       android:layout_alignParentRight="true"
+       android:layout_centerVertical="true"
+       android:scaleType="centerCrop"/>
+</RelativeLayout>

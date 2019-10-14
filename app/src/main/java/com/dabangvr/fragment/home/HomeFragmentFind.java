@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -80,6 +79,9 @@ public class HomeFragmentFind extends BaseFragment {
         //橫型主播類型
         String str = (String) SPUtils.instance(getActivity()).getkey("AnchorList", "");
         List<PlayMode> data = new Gson().fromJson(str, new TypeToken<List<PlayMode>>() {}.getType());
+        if (data == null){
+            data = new ArrayList<>();
+        }
 
 
         mData.add(new HomeFindMo(0, R.layout.recy_no_bg));//0和2和4的类型都是列表，区别布局管理器
@@ -90,12 +92,12 @@ public class HomeFragmentFind extends BaseFragment {
         HomeFindMo homeFindMo = new HomeFindMo(4, R.layout.item_home_find_one);//分类
         List<HomeFindMo.TypeMo> mType = new ArrayList<>();
         mType.add(new HomeFindMo.TypeMo(R.drawable.shape_yellow));
-        mType.add(new HomeFindMo.TypeMo(R.drawable.shape_db));
+        mType.add(new HomeFindMo.TypeMo(R.drawable.shape_db_search));
         mType.add(new HomeFindMo.TypeMo(R.drawable.shape_orag));
-        mType.add(new HomeFindMo.TypeMo(R.drawable.shape_db));
+        mType.add(new HomeFindMo.TypeMo(R.drawable.shape_db_search));
         mType.add(new HomeFindMo.TypeMo(R.drawable.shape_yellow));
         mType.add(new HomeFindMo.TypeMo(R.drawable.shape_orag));
-        mType.add(new HomeFindMo.TypeMo(R.drawable.shape_db));
+        mType.add(new HomeFindMo.TypeMo(R.drawable.shape_db_search));
         mType.add(new HomeFindMo.TypeMo(R.drawable.shape_orag));
         mType.add(new HomeFindMo.TypeMo(R.drawable.shape_yellow));
         mType.add(new HomeFindMo.TypeMo(R.drawable.shape_gray));
@@ -108,6 +110,7 @@ public class HomeFragmentFind extends BaseFragment {
         mData.add(new HomeFindMo(1, R.layout.item_home_find_tow));
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        List<PlayMode> finalData = data;
         adapter = new MoreItemAdapter<HomeFindMo>(getContext(), mData) {
             @Override
             public void convert(BaseRecyclerHolder holder, int position, HomeFindMo s) {
@@ -118,7 +121,7 @@ public class HomeFragmentFind extends BaseFragment {
                         manager.setOrientation(RecyclerView.HORIZONTAL);
                         recyclerView.setLayoutManager(manager);
 
-                        RecyclerAdapter adapter = new RecyclerAdapter<PlayMode>(getContext(), data, R.layout.item_head) {
+                        RecyclerAdapter adapter = new RecyclerAdapter<PlayMode>(getContext(), finalData, R.layout.item_head) {
                             @Override
                             public void convert(Context mContext, BaseRecyclerHolder holder, PlayMode mode) {
                                 SimpleDraweeView sdvHead = holder.getView(R.id.sdvHead);

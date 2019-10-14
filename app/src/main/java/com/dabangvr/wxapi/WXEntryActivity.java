@@ -16,6 +16,7 @@ import com.dbvr.baselibrary.utils.StringUtils;
 import com.dbvr.baselibrary.utils.ToastUtil;
 import com.dbvr.baselibrary.view.AppManager;
 import com.dbvr.httplibrart.constans.DyUrl;
+import com.dbvr.httplibrart.constans.UserUrl;
 import com.dbvr.httplibrart.utils.ObjectCallback;
 import com.dbvr.httplibrart.utils.OkHttp3Utils;
 import com.dbvr.httplibrart.utils.OtherCallback;
@@ -153,7 +154,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
         map.put("icon", icon);
         map.put("loginType", type);
 
-        OkHttp3Utils.getInstance(this).doPost(DyUrl.login, map, new ObjectCallback<String>(this) {
+        OkHttp3Utils.getInstance(this).doPost(UserUrl.login, map, new ObjectCallback<String>(this) {
             @Override
             public void onUi(String result) {
                 try {

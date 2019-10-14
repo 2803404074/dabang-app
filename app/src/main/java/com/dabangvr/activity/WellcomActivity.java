@@ -57,8 +57,6 @@ public class WellcomActivity extends BaseActivity {
             goTActivity(MainActivity.class);
             SPUtils.instance(this).put("token", userMess.getToken());
         }
-
-        getAnchorList();
     }
 
     private void goTActivity(final Class T) {
@@ -71,36 +69,6 @@ public class WellcomActivity extends BaseActivity {
             }
         }, 1500);
     }
-
-    private void getAnchorList() {
-        Map<String, String> map = new HashMap<>();
-        map.put("page", "1");
-        map.put("limit", "10");
-        OkHttp3Utils.getInstance(getContext()).doPost(DyUrl.indexAnchorList, map,
-                new ObjectCallback(getContext()) {
-                    //主线程处理
-                    @Override
-                    public void onUi(Object msg) {
-                        SPUtils.instance(getApplicationContext()).put("AnchorList", msg);
-
-                    }
-
-                    //请求失败
-                    @Override
-                    public void onFailed(String messsge) {
-                        Log.d("luhuas", "onFailed: "+messsge);
-                    }
-
-                    @Override
-                    public void onFailure(Call call, IOException e) {
-                        super.onFailure(call, e);
-
-
-                    }
-                });
-    }
-
-
     //获取版本号
     private String getVersion() {
         PackageManager packageManager = getPackageManager();
