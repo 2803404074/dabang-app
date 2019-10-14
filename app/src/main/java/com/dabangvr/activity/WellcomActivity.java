@@ -57,6 +57,7 @@ public class WellcomActivity extends BaseActivity {
             goTActivity(MainActivity.class);
             SPUtils.instance(this).put("token", userMess.getToken());
         }
+
         getAnchorList();
     }
 
@@ -71,21 +72,6 @@ public class WellcomActivity extends BaseActivity {
         }, 1500);
     }
 
-    //获取版本号
-    private String getVersion() {
-        PackageManager packageManager = getPackageManager();
-        PackageInfo packInfo = null;
-        try {
-            packInfo = packageManager.getPackageInfo(getPackageName(), 0);
-            return packInfo.versionName;
-        } catch (PackageManager.NameNotFoundException eArp) {
-        }
-        return "";
-    }
-
-    /**
-     * 获取首页正在直播列表
-     */
     private void getAnchorList() {
         Map<String, String> map = new HashMap<>();
         map.put("page", "1");
@@ -112,6 +98,19 @@ public class WellcomActivity extends BaseActivity {
 
                     }
                 });
+    }
+
+
+    //获取版本号
+    private String getVersion() {
+        PackageManager packageManager = getPackageManager();
+        PackageInfo packInfo = null;
+        try {
+            packInfo = packageManager.getPackageInfo(getPackageName(), 0);
+            return packInfo.versionName;
+        } catch (PackageManager.NameNotFoundException eArp) {
+        }
+        return "";
     }
 
     @Override

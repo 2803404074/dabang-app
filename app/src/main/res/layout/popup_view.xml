@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/dp_200"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/dp_5"
+    android:background="@drawable/shape_function">
+
+    <LinearLayout
+        android:id="@+id/llCancelMy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/dp_3"
+        android:padding="@dimen/dp_5"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:padding="@dimen/dp_5"
+            android:src="@mipmap/meiy"/>
+        <TextView
+
+            android:layout_gravity="center"
+            android:textColor="@android:color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_15"
+            android:gravity="center"
+            android:text="关闭美颜"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llSetMy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/dp_3"
+        android:padding="@dimen/dp_5"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:padding="@dimen/dp_5"
+            android:src="@mipmap/cancel_my"/>
+        <TextView
+
+            android:layout_gravity="center"
+            android:textColor="@android:color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_15"
+            android:gravity="center"
+            android:text="调整美颜"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/llOpenLight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/dp_3"
+        android:padding="@dimen/dp_5"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:padding="@dimen/dp_5"
+            android:src="@mipmap/shan_guang"/>
+        <TextView
+            android:id="@+id/tvOnOffLine"
+            android:layout_gravity="center"
+            android:textColor="@android:color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_15"
+            android:gravity="center"
+            android:text="开启闪光灯"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llScreen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/dp_3"
+        android:padding="@dimen/dp_5"
+        android:orientation="horizontal">
+        <ImageView
+
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:padding="@dimen/dp_5"
+            android:src="@mipmap/luping"/>
+        <TextView
+            android:layout_gravity="center"
+            android:textColor="@android:color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_15"
+            android:gravity="center"
+            android:text="录屏"/>
+    </LinearLayout>
+</LinearLayout>

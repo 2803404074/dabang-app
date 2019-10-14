@@ -2,7 +2,6 @@ package com.dabangvr.activity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,16 +18,21 @@ import com.dabangvr.fragment.MessageFragment;
 import com.dabangvr.fragment.MyFragment;
 import com.dabangvr.fragment.SameCityFragment;
 import com.dabangvr.fragment.home.HomeFragment;
-import com.dabangvr.play.activity.VideoActivity;
-import com.dabangvr.publish.ZGBaseHelper;
-import com.dabangvr.publish.activity.PublishActivity;
+import com.dabangvr.live.activity.CreateLiveActivity;
+import com.dabangvr.live.activity.LiveActivity;
 import com.dbvr.baselibrary.eventBus.ReadEvent;
 import com.dbvr.baselibrary.model.UserMess;
+import com.dbvr.baselibrary.utils.BottomDialogUtil2;
+import com.dbvr.baselibrary.utils.Conver;
 import com.dbvr.baselibrary.utils.SPUtils;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
 import com.dbvr.baselibrary.view.AppManager;
 import com.dbvr.baselibrary.view.BaseActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.hyphenate.EMCallBack;
+import com.hyphenate.EMError;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.exceptions.HyphenateException;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -83,17 +87,69 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
             goTActivity(LoginActivity.class,null);
             AppManager.getAppManager().finishActivity(MainActivity.class);
         }
-        ZGBaseHelper.sharedInstance().setUser(String.valueOf(userMess.getId()),userMess.getNickName());
+
+        if (userMess.isNewsUser()){
+            registerHX(String.valueOf(userMess.getId()),"123");
+        }else {
+            loginToHx(String.valueOf(userMess.getId()),"123");
+        }
+    }
+
+    private void registerHX(final String name, final String pass) {
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    // 调用sdk注册方法
+                    EMClient.getInstance().createAccount(name, pass);
+                    loginToHx(name, pass);
+                    UserMess userMess =  SPUtils.instance(getContext()).getUser();
+                    userMess .setNewsUser(false);
+                    SPUtils.instance(getContext()).putUser(userMess.toString());
+                } catch (final HyphenateException e) {
+                    e.printStackTrace();
+                    int errorCode=e.getErrorCode();
+                    if(errorCode == EMError.USER_ALREADY_EXIST){
+                        loginToHx(name, pass);
+                    }
+                }
+            }
+        }).start();
+    }
+
+    private void loginToHx(String name,String psd){
+        EMClient.getInstance().login(name, psd, new EMCallBack() {
+            @Override
+            public void onSuccess() {
+                // ** 第一次登录或者之前logout后再登录，加载所有本地群和回话
+                EMClient.getInstance().groupManager().loadAllGroups();
+                EMClient.getInstance().chatManager().loadAllConversations();
+            }
+
+            @Override
+            public void onProgress(int progress, String status) {
+            }
+            @Override
+            public void onError(final int code, final String message) {
+                if (code == 202){
+                    //ToastUtil.showShort(getContext(),"密码错误");
+                    return;
+                }
+                if(code == EMError.USER_NOT_FOUND){
+                    //找不到用户,去注册
+                    registerHX(name, psd);
+                }
+            }
+        });
     }
 
     @OnClick({R.id.tvPublish,R.id.tvPlay})
     public void onclick(View view){
-        if (view.getId() == R.id.tvPublish){
-            goTActivity(PublishActivity.class,null);
-        }
-        if (view.getId() == R.id.tvPlay){
-            goTActivity(VideoActivity.class,null);
-        }
+//        if (view.getId() == R.id.tvPublish){
+//            goTActivity(PublishActivity.class,null);
+//        }
+//        if (view.getId() == R.id.tvPlay){
+//            goTActivity(VideoActivity.class,null);
+//        }
     }
 
     public void changeFragment(int index) {
@@ -173,6 +229,11 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
                 menuItem.setChecked(true);
                 unist = "1";
                 break;
+
+            case R.id.navigation_fb:
+                //功能菜单
+                showFunction();
+                break;
             case R.id.navigation_live:
                 changeFragment(2);
                 menuItem.setChecked(true);
@@ -187,6 +248,36 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 
         EventBus.getDefault().post(new ReadEvent("1000", 1000, unist));
         return false;
+    }
+
+    private void showFunction() {
+        BottomDialogUtil2.getInstance(this).show(R.layout.dialog_main_function, 0, view -> {
+            view.findViewById(R.id.tvOpenLive).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    goTActivity(CreateLiveActivity.class,null);
+                    BottomDialogUtil2.getInstance(MainActivity.this).dess();
+                }
+            });
+            view.findViewById(R.id.tvOpenVideo).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    BottomDialogUtil2.getInstance(MainActivity.this).dess();
+                }
+            });
+            view.findViewById(R.id.tvOpenDynamic).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    BottomDialogUtil2.getInstance(MainActivity.this).dess();
+                }
+            });
+            view.findViewById(R.id.ivClose).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    BottomDialogUtil2.getInstance(MainActivity.this).dess();
+                }
+            });
+        });
     }
 
     private long exitTime = 0;
@@ -214,5 +305,11 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
             navView.getBackground().setAlpha(255);
             navView.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        BottomDialogUtil2.getInstance(this).dess();
     }
 }

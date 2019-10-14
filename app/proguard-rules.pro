@@ -20,5 +20,7 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
-#即购
--keep class com.zego.**{*;}
+-keep class com.qiniu.pili.droid.streaming.** { *; }
+
+-keep class com.hyphenate.** {*;}
+-dontwarn  com.hyphenate.**

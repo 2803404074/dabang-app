@@ -6,6 +6,8 @@ package com.dbvr.baselibrary.model;
 public class UserMess {
     private Integer id;
 
+    private boolean isNewsUser;
+
     private String mobile;
 
     private String openId;
@@ -39,6 +41,38 @@ public class UserMess {
     private String isNew;//是否是新人
 
     public UserMess() {
+    }
+
+    @Override
+    public String toString() {
+        return "UserMess{" +
+                "id=" + id +
+                ", isNewsUser=" + isNewsUser +
+                ", mobile='" + mobile + '\'' +
+                ", openId='" + openId + '\'' +
+                ", headUrl='" + headUrl + '\'' +
+                ", nickName='" + nickName + '\'' +
+                ", autograph='" + autograph + '\'' +
+                ", permanentResidence='" + permanentResidence + '\'' +
+                ", sex='" + sex + '\'' +
+                ", fansNumber='" + fansNumber + '\'' +
+                ", praisedNumber='" + praisedNumber + '\'' +
+                ", followNumber='" + followNumber + '\'' +
+                ", diamond='" + diamond + '\'' +
+                ", integral='" + integral + '\'' +
+                ", token='" + token + '\'' +
+                ", anchorId='" + anchorId + '\'' +
+                ", isAnchor=" + isAnchor +
+                ", isNew='" + isNew + '\'' +
+                '}';
+    }
+
+    public boolean isNewsUser() {
+        return isNewsUser;
+    }
+
+    public void setNewsUser(boolean newsUser) {
+        isNewsUser = newsUser;
     }
 
     public String getAnchorId() {

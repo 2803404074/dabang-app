@@ -6,5 +6,6 @@
 
     <color name="green01">#24ecbb</color>
     <color name="green02">#18dadc</color>
+    <color name="colorTouMing1">#4d000000</color>
     <color name="colorTouMing2">#1a000000</color>
 </resources>

@@ -302,7 +302,7 @@ public class LoginActivity extends BaseActivity implements IUiListener {
         map.put("nickName", uName);
         map.put("icon", icon);
         map.put("loginType", type);
-        OkHttp3Utils.getInstance(this).doPost(DyUrl.LOGIN, map, new ObjectCallback<String>(this) {
+        OkHttp3Utils.getInstance(this).doPost(DyUrl.login, map, new ObjectCallback<String>(this) {
 
             @Override
             public void onUi(String result) {

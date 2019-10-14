@@ -84,4 +84,18 @@ dependencies {
     //清屏的，暂时不需要，滑动出现问题
     //api 'com.github.wjianchen13:SlideDemo:1.0.0'
     api 'org.greenrobot:eventbus:3.0.0'
+
+
+    /**
+     * 七牛云
+     */
+    api 'com.qiniu:happy-dns:0.2.13'
+    api 'com.qiniu.pili:pili-android-qos:0.8.20'
+    api 'com.qiniu:qiniu-android-sdk:7.3.15'
+
+    /**
+     * 图片选择
+     */
+    api 'com.github.wildma:PictureSelector:1.1.4'
+
 }

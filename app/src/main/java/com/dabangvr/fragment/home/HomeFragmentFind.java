@@ -79,8 +79,7 @@ public class HomeFragmentFind extends BaseFragment {
         }
         //橫型主播類型
         String str = (String) SPUtils.instance(getActivity()).getkey("AnchorList", "");
-        List<PlayMode> data = new Gson().fromJson(str, new TypeToken<List<PlayMode>>() {
-        }.getType());
+        List<PlayMode> data = new Gson().fromJson(str, new TypeToken<List<PlayMode>>() {}.getType());
 
 
         mData.add(new HomeFindMo(0, R.layout.recy_no_bg));//0和2和4的类型都是列表，区别布局管理器

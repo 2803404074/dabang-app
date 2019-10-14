@@ -153,7 +153,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
         map.put("icon", icon);
         map.put("loginType", type);
 
-        OkHttp3Utils.getInstance(this).doPost(DyUrl.LOGIN, map, new ObjectCallback<String>(this) {
+        OkHttp3Utils.getInstance(this).doPost(DyUrl.login, map, new ObjectCallback<String>(this) {
             @Override
             public void onUi(String result) {
                 try {

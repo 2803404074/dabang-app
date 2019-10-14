@@ -1,15 +1,17 @@
 package com.dabangvr.application;
 
+import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
-import android.util.Log;
 
 import com.dabangvr.R;
-import com.dabangvr.publish.ZGBaseHelper;
 import com.dbvr.baselibrary.utils.NetWorkStateReceiver;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMOptions;
+import com.qiniu.pili.droid.streaming.StreamingEnv;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreator;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreator;
@@ -20,16 +22,15 @@ import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
-import com.zego.zegoliveroom.ZegoLiveRoom;
-import com.zego.zegoliveroom.callback.IZegoInitSDKCompletionCallback;
 
-import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
-import static com.dbvr.baselibrary.other.ThirdParty.JG_APP_ID;
-import static com.dbvr.baselibrary.other.ThirdParty.JG_APP_SIGN;
 import static com.dbvr.baselibrary.other.ThirdParty.WECHART_APP_ID;
 
 public class MyApplication extends Application {
+
+
     private NetWorkStateReceiver netWorkStateReceiver;
     public static IWXAPI api;
 
@@ -72,46 +73,86 @@ public class MyApplication extends Application {
         api = WXAPIFactory.createWXAPI(this,WECHART_APP_ID,true);
         api.registerApp(WECHART_APP_ID);
 
-        //即购
-        // 使用Zego sdk前必须先设置SDKContext。
-        ZGBaseHelper.sharedInstance().setSDKContextEx(null, null, 10 * 1024 * 1024, this);
-        ZegoLiveRoom.setSDKContext(new ZegoLiveRoom.SDKContextEx() {
+        //七牛云
+        StreamingEnv.init(getApplicationContext());
+        //环信
+        initHy();
 
-            @Override
-            public long getLogFileSize() {
-                return 0;  // 单个日志文件的大小，必须在 [5M, 100M] 之间；当返回 0 时，表示关闭写日志功能，不推荐关闭日志。
-            }
+        //腾讯云短视频
+//        TXUGCBase.getInstance().setLicence(this, ugcLicenceUrl, ugcKey);
 
-            @Override
-            public String getSubLogFolder() {
-                return null;
-            }
+    }
 
-            @Override
-            public String getSoFullPath() {
 
-                return null; // return null 表示使用默认方式加载 libzegoliveroom.so
-                // 此处可以返回 so 的绝对路径，用来指定从这个位置加载 libzegoliveroom.so，确保应用具备存取此路径的权限
-            }
+    private void initHy() {
+        // 第一步
+        EMOptions options = initChatOptions();
+        // 第二步
+        boolean success = initSDK(this, options);
+        if (success) {
+            // 设为调试模式，打成正式包时，最好设为false，以免消耗额外的资源
+            EMClient.getInstance().setDebugMode(true);
 
-            @Override
-            public String getLogPath() {
-                return null; //  return null 表示日志文件会存储到默认位置，如果返回非空，则将日志文件存储到该路径下，注意应用必须具备存取该目录的权限
-            }
+            // 初始化数据库
+            //initDbDao(context);
+        }
+    }
+    private EMOptions initChatOptions() {
+        // 获取到EMChatOptions对象
+        EMOptions options = new EMOptions();
+        // 默认添加好友时，是不需要验证的，改成需要验证
+        options.setAcceptInvitationAlways(false);
+        // 设置是否需要已读回执
+        options.setRequireAck(true);
+        // 设置是否需要已送达回执
+        options.setRequireDeliveryAck(false);
+        return options;
+    }
 
-            @Override
-            public Application getAppContext() {
-                return MyApplication.this; // android上下文. 不能为null
+    private boolean sdkInited = false;
+
+    public synchronized boolean initSDK(Context context, EMOptions options) {
+        if (sdkInited) {
+            return true;
+        }
+
+        int pid = android.os.Process.myPid();
+        String processAppName = getAppName(pid);
+
+        // 如果app启用了远程的service，此application:onCreate会被调用2次
+        // 为了防止环信SDK被初始化2次，加此判断会保证SDK被初始化1次
+        // 默认的app会在以包名为默认的process name下运行，如果查到的process name不是app的process
+        // name就立即返回
+        if (processAppName == null || !processAppName.equalsIgnoreCase(getPackageName())) {
+
+            // 则此application::onCreate 是被service 调用的，直接返回
+            return false;
+        }
+        if (options == null) {
+            EMClient.getInstance().init(context, initChatOptions());
+        } else {
+            EMClient.getInstance().init(context, options);
+        }
+        sdkInited = true;
+        return true;
+    }
+
+    private String getAppName(int pID) {
+        String processName = null;
+        ActivityManager am = (ActivityManager) this.getSystemService(Context.ACTIVITY_SERVICE);
+        List l = am.getRunningAppProcesses();
+        Iterator i = l.iterator();
+        while (i.hasNext()) {
+            ActivityManager.RunningAppProcessInfo info = (ActivityManager.RunningAppProcessInfo) (i.next());
+            try {
+                if (info.pid == pID) {
+
+                    processName = info.processName;
+                    return processName;
+                }
+            } catch (Exception e) {
             }
-        });
-        ZGBaseHelper.sharedInstance().initZegoSDK(JG_APP_ID, JG_APP_SIGN, true, errorCode -> {
-            // errorCode 非0 代表初始化sdk失败
-            if (errorCode == 0) {
-                Log.e("zego","初始化成功");
-            } else {
-                Log.e("zego","初始化失败");
-            }
-        });
-        ZegoLiveRoom.setTestEnv(true);
+        }
+        return processName;
     }
 }
