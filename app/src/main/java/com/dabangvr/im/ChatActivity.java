@@ -22,6 +22,7 @@ import com.dabangvr.adapter.BaseRecyclerHolder;
 import com.dbvr.baselibrary.model.UserMess;
 import com.dbvr.baselibrary.utils.SPUtils;
 import com.dbvr.baselibrary.utils.ScreenUtils;
+import com.dbvr.baselibrary.utils.StatusBarUtil;
 import com.dbvr.baselibrary.utils.StringUtils;
 import com.dbvr.baselibrary.view.BaseActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -74,6 +75,14 @@ public class ChatActivity extends BaseActivity {
     private EMConversation conversation;
     protected int pagesize = 20;
     private ChatAdapter chatAdapter;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        //用来设置整体下移，状态栏沉浸
+        StatusBarUtil.setRootViewFitsSystemWindows(this, false);
+    }
+
 
     @Override
     public int setLayout() {

@@ -52,6 +52,7 @@ public class UserDynamicFragment extends BaseFragment {
                 SimpleDraweeView simpleDraweeView = holder.getView(R.id.sdvHead);
                 simpleDraweeView.setImageURI(head);
                 RecyclerView recyclerViewx = holder.getView(R.id.recycle_img);
+                recyclerViewx.setNestedScrollingEnabled(false);
                 recyclerViewx.setLayoutManager(new GridLayoutManager(getContext(),3));
                 recyclerViewx.addItemDecoration(new SpaceGridItemDecoration((int) TDevice.dipToPx(getResources(), 1)));
                 List<String>list = new ArrayList<>();

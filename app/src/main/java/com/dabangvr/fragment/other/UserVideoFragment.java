@@ -46,7 +46,7 @@ public class UserVideoFragment extends BaseFragment {
         for (int i = 0; i < 10; i++) {
             mData.add("");
         }
-        recyclerView.setNestedScrollingEnabled(false);
+        //recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new RecyclerAdapter<String>(getContext(),mData,R.layout.item_user_video) {
             @Override

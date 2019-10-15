@@ -14,8 +14,9 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_50">
+        android:layout_height="@dimen/dp_60">
         <ImageView
+            android:id="@+id/ivBack"
             android:layout_width="@dimen/dp_30"
             android:layout_height="@dimen/dp_30"
             android:src="@mipmap/back_w_black"
@@ -29,7 +30,7 @@
             android:padding="@dimen/dp_5"
             android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
-            android:textSize="@dimen/sp_18"/>
+            android:textSize="@dimen/sp_21"/>
     </RelativeLayout>
 
     <LinearLayout
@@ -41,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/shape_db"
-            android:paddingHorizontal="@dimen/dp_5"
+            android:paddingHorizontal="@dimen/dp_10"
             android:paddingVertical="@dimen/dp_3"
             android:orientation="horizontal">
             <ImageView
@@ -64,14 +65,15 @@
             android:layout_weight="1"/>
 
         <ImageView
-            android:layout_width="@dimen/dp_20"
-            android:layout_height="@dimen/dp_20"
+            android:layout_width="@dimen/dp_25"
+            android:layout_height="@dimen/dp_25"
             android:layout_gravity="center"
             android:src="@mipmap/update"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/sp_15"
+            android:textSize="@dimen/sp_17"
+            android:layout_marginLeft="@dimen/dp_5"
             android:layout_gravity="center"
             android:text="刷新定位"/>
     </LinearLayout>

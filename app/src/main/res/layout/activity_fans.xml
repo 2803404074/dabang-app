@@ -14,8 +14,8 @@
         android:layout_height="@dimen/dp_65">
         <ImageView
             android:id="@+id/ivBack"
-            android:layout_width="@dimen/dp_30"
-            android:layout_height="@dimen/dp_30"
+            android:layout_width="@dimen/dp_28"
+            android:layout_height="@dimen/dp_28"
             android:padding="@dimen/dp_5"
             android:layout_alignParentBottom="true"
             android:src="@mipmap/back_w"/>

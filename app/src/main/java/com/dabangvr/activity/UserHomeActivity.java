@@ -66,6 +66,7 @@ public class UserHomeActivity extends BaseActivity {
             case R.id.ivBack:
                 AppManager.getAppManager().finishActivity(this);
                 break;
+                default:break;
         }
     }
 
@@ -74,7 +75,7 @@ public class UserHomeActivity extends BaseActivity {
     public void initView() {
         sdvHead.setImageURI(SPUtils.instance(this).getUser().getHeadUrl());
         List<String> mTitles = new ArrayList<>();
-        mTitles.add("直播");
+        mTitles.add("回放");
         mTitles.add("作品");
         mTitles.add("动态");
         mFragments = new ArrayList<>();

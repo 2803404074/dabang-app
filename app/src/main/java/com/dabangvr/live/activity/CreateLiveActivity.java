@@ -233,7 +233,7 @@ public class CreateLiveActivity extends BaseActivity {
 
             @Override
             public void onFailed(String msg) {
-
+                ToastUtil.showShort(getContext(),msg);
             }
         });
     }

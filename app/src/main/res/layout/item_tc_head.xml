@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
-    xmlns:roundiv="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dp_200">
+    android:layout_height="@dimen/dp_200"
+    xmlns:roundiv="http://schemas.android.com/apk/res-auto">
+
     <com.dbvr.baselibrary.ui.MyImageView
         android:id="@+id/mivIcon"
         android:layout_width="match_parent"

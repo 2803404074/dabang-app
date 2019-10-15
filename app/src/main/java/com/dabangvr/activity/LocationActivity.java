@@ -8,12 +8,14 @@ import com.dabangvr.R;
 import com.dbvr.baselibrary.ui.ShowButtonLayout;
 import com.dbvr.baselibrary.ui.ShowButtonLayoutData;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
+import com.dbvr.baselibrary.view.AppManager;
 import com.dbvr.baselibrary.view.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class LocationActivity extends BaseActivity {
 
@@ -34,8 +36,8 @@ public class LocationActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        for (int i = 0; i < 100; i++) {
-            listHots.add("广西壮族自治区");
+        for (int i = 0; i < 36; i++) {
+            listHots.add("广西省");
         }
 
         ShowButtonLayoutData data1 = new ShowButtonLayoutData<String>(this, showButtonLayout,
@@ -55,5 +57,15 @@ public class LocationActivity extends BaseActivity {
     @Override
     public void initData() {
 
+    }
+
+    @OnClick({R.id.ivBack})
+    public void onclick(View view){
+        switch (view.getId()){
+            case R.id.ivBack:
+                AppManager.getAppManager().finishActivity(this);
+                break;
+                default:break;
+        }
     }
 }

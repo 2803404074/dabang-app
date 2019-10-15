@@ -73,7 +73,7 @@ public class GetDzActivity extends BaseActivity {
                     TextView tvComment = holder.getView(R.id.tvComment);
                     tvComment.setVisibility(View.VISIBLE);
 
-                    holder.setText(R.id.tvTips,"评论你的动态      18:55    2019/10/25");
+                    holder.setText(R.id.tvTips,"评论你的动态    18:55  2019/10/25");
                 }
 
                 SimpleDraweeView sdvHead =  holder.getView(R.id.sdvHead);

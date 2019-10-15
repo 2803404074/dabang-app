@@ -33,9 +33,6 @@ public class SameCityFragment extends BaseFragment {
     @BindView(R.id.recycler_tc)
     RecyclerView recyclerView;
 
-    @BindView(R.id.mivIcon)
-    MyImageView myImageView;
-
     @BindView(R.id.tvLocationName)
     TextView tvLocationName;
 
@@ -51,7 +48,6 @@ public class SameCityFragment extends BaseFragment {
 
     @Override
     public void initView() {
-        myImageView.setImageResource(R.mipmap.test15);
         for (int i = 0; i < 15; i++) {
             mData.add(R.mipmap.test5);
         }

@@ -152,11 +152,16 @@ public class HomeFragmentFollow extends BaseFragment {
             switch (msg.what) {
                 case 1:         //刷新加载
                     obj = (String) msg.obj;
-                    refreshLayout.finishRefresh(true);
+                    if (refreshLayout!=null){
+                        refreshLayout.finishRefresh(true);
+                    }
+
                     break;
                 case 2:         //加载更多
                     obj = (String) msg.obj;
-                    refreshLayout.finishLoadMore(true);
+                    if (refreshLayout!=null){
+                        refreshLayout.finishLoadMore(true);
+                    }
                     break;
             }
             Log.d("luhuas", "onRefresh: " + obj);
