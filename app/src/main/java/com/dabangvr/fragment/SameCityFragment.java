@@ -1,14 +1,19 @@
 package com.dabangvr.fragment;
 
 import android.content.Context;
+import android.content.Intent;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dabangvr.R;
+import com.dabangvr.activity.LocationActivity;
 import com.dabangvr.adapter.BaseRecyclerHolder;
 import com.dabangvr.adapter.RecyclerAdapterPosition;
 import com.dbvr.baselibrary.ui.MyImageView;
@@ -18,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * 同城fragment
@@ -29,6 +35,9 @@ public class SameCityFragment extends BaseFragment {
 
     @BindView(R.id.mivIcon)
     MyImageView myImageView;
+
+    @BindView(R.id.tvLocationName)
+    TextView tvLocationName;
 
     private RecyclerAdapterPosition adapter;
 
@@ -69,5 +78,25 @@ public class SameCityFragment extends BaseFragment {
     @Override
     public void initData() {
 
+    }
+
+    @OnClick({R.id.llLocation})
+    public void onclick(View view){
+        switch (view.getId()){
+            case R.id.llLocation:
+                goTActivityForResult(LocationActivity.class,null,101);//101请求码，用于返回设置定位值
+                break;
+                default:break;
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //此处可以根据两个Code进行判断，本页面和结果页面跳过来的值
+        if (requestCode == 101 && resultCode == 103) {
+            String result = data.getStringExtra("result");
+            tvLocationName.setText(result);
+        }
     }
 }

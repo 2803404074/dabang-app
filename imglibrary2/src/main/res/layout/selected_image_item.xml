@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.dbvr.imglibrary2.widget.SquareFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:roundiv="http://schemas.android.com/apk/res-auto">
+
+    <com.dbvr.baselibrary.ui.MyImageView
+        android:id="@+id/iv_selected_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        roundiv:radius="@dimen/dp_5"
+        android:scaleType="centerCrop"/>
+</com.dbvr.imglibrary2.widget.SquareFrameLayout>

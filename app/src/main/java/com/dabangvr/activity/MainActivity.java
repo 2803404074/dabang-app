@@ -258,6 +258,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
             view.findViewById(R.id.tvOpenDynamic).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    goTActivity(CreateDynamicActivity.class,null);
                     BottomDialogUtil2.getInstance(MainActivity.this).dess();
                 }
             });

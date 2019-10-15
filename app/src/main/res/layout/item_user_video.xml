@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:roundiv="http://schemas.android.com/apk/res-auto"
+    android:layout_marginVertical="@dimen/dp_5"
+    android:layout_marginHorizontal="@dimen/dp_5"
+    android:layout_height="@dimen/dp_250">
+
+   <com.dbvr.baselibrary.ui.MyImageView
+       android:id="@+id/miv_view"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:layout_alignParentStart="true"
+       android:layout_alignParentLeft="true"
+       android:layout_alignParentEnd="true"
+       android:layout_alignParentRight="true"
+       android:layout_marginStart="0dp"
+       android:layout_marginLeft="0dp"
+       android:layout_marginEnd="0dp"
+       android:layout_marginRight="0dp"
+       android:scaleType="centerCrop"
+       android:src="@mipmap/test17"
+       roundiv:radius="@dimen/dp_5" />
+
+   <ImageView
+       android:layout_width="@dimen/dp_70"
+       android:layout_height="@dimen/dp_70"
+       android:layout_centerHorizontal="true"
+       android:layout_centerVertical="true"
+       android:src="@mipmap/play"/>
+
+   <TextView
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:textColor="@android:color/white"
+       android:textSize="@dimen/sp_15"
+       android:layout_alignParentBottom="true"
+       android:layout_margin="@dimen/dp_5"
+       android:text="今天好多人跳舞啊，好多人唱歌啊，好多人吃海鲜啊，哈哈哈哈"/>
+
+
+   <LinearLayout
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_centerVertical="true"
+       android:layout_marginRight="@dimen/dp_5"
+       android:layout_alignParentRight="true"
+       android:orientation="vertical">
+      <ImageView
+          android:layout_width="@dimen/dp_20"
+          android:layout_height="@dimen/dp_20"
+          android:layout_gravity="center"
+          android:src="@mipmap/comment"/>
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="1998"
+          android:textColor="@android:color/white"
+          android:layout_gravity="center"/>
+      <ImageView
+          android:layout_width="@dimen/dp_20"
+          android:layout_height="@dimen/dp_20"
+          android:layout_gravity="center"
+          android:layout_marginTop="@dimen/dp_10"
+          android:src="@mipmap/love"/>
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="1998"
+          android:textColor="@android:color/white"
+          android:layout_gravity="center"/>
+      <ImageView
+          android:layout_gravity="center"
+          android:layout_width="@dimen/dp_20"
+          android:layout_height="@dimen/dp_20"
+          android:layout_marginTop="@dimen/dp_10"
+          android:src="@mipmap/share"/>
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="1998"
+          android:textColor="@android:color/white"
+          android:layout_gravity="center"/>
+   </LinearLayout>
+
+</RelativeLayout>

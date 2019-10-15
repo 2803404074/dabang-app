@@ -24,16 +24,25 @@ public class ShowButtonLayoutData<T> {
 
     //自定义接口，用于回调按钮点击事件到Activity
     public interface MyClickListener{
-        public void clickListener(View v, double lot, double lat, boolean isCheck);
+        public void clickListener(View v,String txt, double lot, double lat, boolean isCheck);
     }
 
 
+    private int drawableBg = 0;
+
+    public void setDrawableBg(int drawableBg) {
+        this.drawableBg = drawableBg;
+    }
 
     public void setData() {
+        if (drawableBg == 0){
+            drawableBg = R.drawable.shape_db_search;
+        }
         CheckBox views[] = new CheckBox[data.size()];
         //热门数据源
         for (int i = 0; i < data.size(); i++) {
             final CheckBox view = (CheckBox) LayoutInflater.from(context).inflate(R.layout.item_search, layout, false);
+            view.setBackgroundResource(drawableBg);
             if (data.get(i) instanceof String){
                 view.setText((String)data.get(i));
                 view.setTag(data.get(i));
@@ -47,7 +56,7 @@ public class ShowButtonLayoutData<T> {
                     //String tag = (String) v.getTag();
 
                     if(data.get(finalI) instanceof String){
-                        mListener.clickListener(v,0,0,view.isChecked());
+                        mListener.clickListener(v,view.getText().toString(),0,0,view.isChecked());
                     }
                     if(view.isChecked()){
                         view.setTextColor(context.getResources().getColor(R.color.colorWhite));
@@ -79,7 +88,7 @@ public class ShowButtonLayoutData<T> {
                     //String tag = (String) v.getTag();
 
                     if(data.get(finalI) instanceof String){
-                        mListener.clickListener(v,0,0,view.isChecked());
+                        mListener.clickListener(v,view.getText().toString(),0,0,view.isChecked());
                     }
                     if(view.isChecked()){
                         view.setTextColor(context.getResources().getColor(R.color.colorWhite));

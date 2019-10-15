@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dabangvr.R;
+import com.dabangvr.activity.FansActivity;
 import com.dabangvr.activity.GetDzActivity;
 import com.dabangvr.adapter.BaseRecyclerHolder;
 import com.dabangvr.adapter.RecyclerAdapter;
@@ -25,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -100,11 +102,21 @@ public class MessageFragment extends BaseFragment {
 
     }
 
-    @OnClick({R.id.ivDz})
+    @OnClick({R.id.ivDz,R.id.ivComment,R.id.ivFans})
     public void onclick(View view){
         switch (view.getId()){
             case R.id.ivDz:
-                goTActivity(GetDzActivity.class,null);
+                Map<String,Object>map = new HashMap<>();
+                map.put("tag","dz");
+                goTActivity(GetDzActivity.class,map);
+                break;
+            case R.id.ivComment:
+                Map<String,Object>map2 = new HashMap<>();
+                map2.put("tag","comment");
+                goTActivity(GetDzActivity.class,map2);
+                break;
+            case R.id.ivFans:
+                goTActivity(FansActivity.class,null);
                 break;
                 default:break;
         }

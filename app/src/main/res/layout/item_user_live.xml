@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:roundiv="http://schemas.android.com/apk/res-auto"
+    android:layout_marginVertical="@dimen/dp_5"
+    android:layout_marginHorizontal="@dimen/dp_5"
+    android:layout_height="@dimen/dp_250">
+
+   <com.dbvr.baselibrary.ui.MyImageView
+       android:id="@+id/miv_view"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:layout_alignParentStart="true"
+       android:layout_alignParentLeft="true"
+       android:layout_alignParentEnd="true"
+       android:layout_alignParentRight="true"
+       android:layout_marginStart="0dp"
+       android:layout_marginLeft="0dp"
+       android:layout_marginEnd="0dp"
+       android:layout_marginRight="0dp"
+       android:scaleType="centerCrop"
+       android:src="@mipmap/test2"
+       roundiv:radius="@dimen/dp_5" />
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_alignParentBottom="true"
+       android:background="@color/colorTouMing2"
+       android:padding="@dimen/dp_5"
+       android:orientation="vertical">
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal">
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:textColor="@android:color/white"
+             android:textSize="@dimen/sp_15"
+             android:text="观看人数："/>
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:textColor="@android:color/white"
+             android:textSize="@dimen/sp_15"
+             android:text="2995"/>
+      </LinearLayout>
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginVertical="@dimen/dp_5"
+          android:orientation="horizontal">
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:textColor="@android:color/white"
+             android:textSize="@dimen/sp_15"
+             android:text="点赞人数："/>
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:textColor="@android:color/white"
+             android:textSize="@dimen/sp_15"
+             android:text="29995"/>
+      </LinearLayout>
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal">
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:textColor="@android:color/white"
+             android:textSize="@dimen/sp_15"
+             android:text="类型："/>
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:textColor="@android:color/white"
+             android:textSize="@dimen/sp_15"
+             android:text="出海"/>
+      </LinearLayout>
+   </LinearLayout>
+
+
+</RelativeLayout>

@@ -71,7 +71,7 @@ public class SearchActivity extends BaseActivity {
         ShowButtonLayoutData data1 = new ShowButtonLayoutData<String>(this, hotLayout,
                 listHots, new ShowButtonLayoutData.MyClickListener() {
             @Override
-            public void clickListener(View v, double arg1, double arg2 , boolean isCheck) {
+            public void clickListener(View v,String txt, double arg1, double arg2 , boolean isCheck) {
 
             }
         });
@@ -80,7 +80,7 @@ public class SearchActivity extends BaseActivity {
         ShowButtonLayoutData data2 = new ShowButtonLayoutData<String>(this,
                 historyLayout, listHistory, new ShowButtonLayoutData.MyClickListener() {
             @Override
-            public void clickListener(View v,  double arg1,double arg2 ,boolean isCheck) {
+            public void clickListener(View v,String txt,   double arg1,double arg2 ,boolean isCheck) {
 
             }
         });

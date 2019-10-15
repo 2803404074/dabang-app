@@ -74,6 +74,25 @@ public abstract class BaseActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void goTActivityForResult(final Class T, Map<String,Object> map,int requestCode){
+        if (T == null)return;
+        Intent intent = new Intent(getContext(),T);
+        if (map!=null){
+            for (String key : map.keySet()) {
+                if (map.get(key) instanceof Boolean){
+                    intent.putExtra(key,(boolean)map.get(key));
+                }
+                if (map.get(key) instanceof String){
+                    intent.putExtra(key,(String)map.get(key));
+                }
+                if (map.get(key) instanceof Integer){
+                    intent.putExtra(key,(Integer)map.get(key));
+                }
+            }
+        }
+        startActivityForResult(intent,requestCode);
+    }
+
     // 设置布局
     public abstract int setLayout();
 

@@ -45,7 +45,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.CreateDynamicActivity"></activity>
+        <activity android:name=".activity.UserHomeActivity"></activity>
+        <activity android:name=".activity.FansActivity" />
+        <activity android:name=".activity.LocationActivity" />
+        <activity android:name=".activity.CreateDynamicActivity" />
         <activity android:name=".activity.GetDzActivity" />
         <activity android:name=".activity.SearchActivity" />
 
@@ -70,6 +73,8 @@
         <activity android:name=".live.activity.LiveActivity" />
         <activity android:name=".live.activity.CreateLiveActivity" />
         <activity android:name=".im.ChatActivity" />
+        <activity android:name="com.dbvr.imglibrary2.ui.SelectImageActivity" />
+        <activity android:name="com.dbvr.imglibrary2.ui.PreviewImageActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

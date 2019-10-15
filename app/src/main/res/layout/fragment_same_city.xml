@@ -12,22 +12,31 @@
         android:paddingTop="@dimen/dp_35"
         android:background="@drawable/shape_style_db_green">
 
-        <ImageView
-            android:layout_width="@dimen/dp_30"
-            android:layout_height="@dimen/dp_30"
-            android:src="@mipmap/hots"/>
-        <TextView
+        <LinearLayout
+            android:id="@+id/llLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="广西"
-            android:layout_marginHorizontal="@dimen/dp_5"
-            android:textSize="@dimen/sp_20"
-            android:textColor="@android:color/white"
-            android:textStyle="bold"/>
-        <ImageView
-            android:layout_width="@dimen/dp_20"
-            android:layout_height="@dimen/dp_20"
-            android:src="@mipmap/dsj"/>
+            android:gravity="center"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="@dimen/dp_30"
+                android:layout_height="@dimen/dp_30"
+                android:src="@mipmap/hots"/>
+            <TextView
+                android:id="@+id/tvLocationName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="广西"
+                android:layout_marginHorizontal="@dimen/dp_5"
+                android:textSize="@dimen/sp_20"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"/>
+            <ImageView
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_20"
+                android:src="@mipmap/dsj"/>
+        </LinearLayout>
+
     </LinearLayout>
 
     <androidx.core.widget.NestedScrollView

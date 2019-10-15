@@ -92,14 +92,11 @@ public class HomeFragment extends BaseFragment {
         });
     }
 
-    @OnClick({R.id.ivSearch,R.id.ivMess})
+    @OnClick({R.id.ivSearch})
     public void onclick(View view){
         switch (view.getId()){
             case R.id.ivSearch:
                 goTActivity(SearchActivity.class,null);
-                break;
-            case R.id.ivMess:
-                changeCallBack.change(false,true);
                 break;
                 default:break;
         }
