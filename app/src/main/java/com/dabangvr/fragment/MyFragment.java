@@ -44,6 +44,8 @@ public class MyFragment extends BaseFragment {
     //头像
     @BindView(R.id.sdvHead)
     SimpleDraweeView sdvHead;
+    @BindView(R.id.cicrle)
+    SimpleDraweeView cicrle;
     //昵称
     @BindView(R.id.tv_name)
     TextView tvName;
@@ -120,6 +122,7 @@ public class MyFragment extends BaseFragment {
     @Override
     public void initData() {
         setLoaddingView(true);
+
         //初始化用户信息
         UserMess userMess = SPUtils.instance(getContext()).getUser();
         if (userMess != null) {

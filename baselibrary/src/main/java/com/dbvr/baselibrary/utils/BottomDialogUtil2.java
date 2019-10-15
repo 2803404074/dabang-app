@@ -9,13 +9,13 @@ import android.view.View;
 import com.dbvr.baselibrary.R;
 import com.rey.material.app.BottomSheetDialog;
 
-public class BottomDialogUtil2{
+public class BottomDialogUtil2 {
     private Activity mContext;
-    private  BottomSheetDialog dialog;
+    private BottomSheetDialog dialog;
     private static BottomDialogUtil2 bottomDialogUtil2;
 
-    public static BottomDialogUtil2 getInstance(Activity context){
-        if (bottomDialogUtil2== null){
+    public static BottomDialogUtil2 getInstance(Activity context) {
+        if (bottomDialogUtil2 == null) {
             bottomDialogUtil2 = new BottomDialogUtil2(context);
         }
         return bottomDialogUtil2;
@@ -23,12 +23,15 @@ public class BottomDialogUtil2{
 
     private OnDismissCallBack onDismissCallBack;
     private OnShowCallBack onShowCallBack;
-    public interface OnDismissCallBack{
+
+    public interface OnDismissCallBack {
         void onDismiss();
     }
-    public interface OnShowCallBack{
+
+    public interface OnShowCallBack {
         void onShow();
     }
+
     public void setOnShowCallBack(OnShowCallBack onShowCallBack) {
         this.onShowCallBack = onShowCallBack;
     }
@@ -40,7 +43,8 @@ public class BottomDialogUtil2{
     public BottomDialogUtil2(Activity mContext) {
         this.mContext = mContext;
     }
-    public void show(int layoutId, double h,Conver convers) {
+
+    public void show(int layoutId, double h, Conver convers) {
         dialog = new BottomSheetDialog(mContext, R.style.dialog);
 
         View view = LayoutInflater.from(mContext).inflate(layoutId, null);
@@ -49,7 +53,8 @@ public class BottomDialogUtil2{
         dialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
             public void onShow(DialogInterface dialogInterface) {
-                if (onShowCallBack!=null){
+
+                if (onShowCallBack != null) {
                     onShowCallBack.onShow();
                 }
             }
@@ -58,24 +63,23 @@ public class BottomDialogUtil2{
         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialogInterface) {
-                if (onDismissCallBack!=null){
+                if (onDismissCallBack != null) {
                     onDismissCallBack.onDismiss();
                 }
             }
         });
 
-        if (mContext.isFinishing())
-        {
+        if (mContext.isFinishing()) {
             return;
         }
 
-        if (h == 0){
+        if (h == 0) {
             dialog.contentView(view)
                     .inDuration(200)
                     .outDuration(200)
                     .cancelable(true)
                     .show();
-        }else {
+        } else {
             dialog.contentView(view)
                     .heightParam(height)
                     .inDuration(200)
@@ -84,9 +88,10 @@ public class BottomDialogUtil2{
                     .show();
         }
     }
-    public void dess(){
-        if (bottomDialogUtil2!=null){
-            if (dialog!=null){
+
+    public void dess() {
+        if (bottomDialogUtil2 != null) {
+            if (dialog != null) {
                 dialog.dismiss();
                 dialog = null;
             }
