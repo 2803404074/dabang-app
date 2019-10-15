@@ -45,7 +45,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.GetDzActivity"></activity>
+        <activity android:name=".activity.CreateDynamicActivity"></activity>
+        <activity android:name=".activity.GetDzActivity" />
         <activity android:name=".activity.SearchActivity" />
 
         <uses-library

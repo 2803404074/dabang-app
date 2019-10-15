@@ -142,16 +142,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         });
     }
 
-    @OnClick({R.id.tvPublish,R.id.tvPlay})
-    public void onclick(View view){
-//        if (view.getId() == R.id.tvPublish){
-//            goTActivity(PublishActivity.class,null);
-//        }
-//        if (view.getId() == R.id.tvPlay){
-//            goTActivity(VideoActivity.class,null);
-//        }
-    }
-
     public void changeFragment(int index) {
         FragmentTransaction beginTransaction = fragmentManager.beginTransaction();
         hideFragments(beginTransaction);
