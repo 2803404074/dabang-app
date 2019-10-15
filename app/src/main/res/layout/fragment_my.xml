@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FCFCFC">
+    android:paddingBottom="@dimen/dp_70"
+    android:background="#F5F5F5">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -20,49 +22,40 @@
                 android:layout_height="@dimen/dp_220"
                 android:background="@drawable/list_style_theme_top">
 
-                <FrameLayout
+                <RelativeLayout
                     android:id="@+id/fl"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
+                    android:layout_width="@dimen/dp_80"
+                    android:layout_height="@dimen/dp_80"
                     android:layout_marginLeft="@dimen/dp_5"
-                    android:layout_marginTop="@dimen/dp_55">
+                    android:layout_marginTop="@dimen/dp_55"
+                    android:background="@mipmap/ruone">
 
-                    <ImageView
-                        android:scaleType="fitXY"
-                        android:src="@mipmap/ruone"
-                        android:id="@+id/cicrle"
-                        android:layout_width="@dimen/dp_85"
-                        android:layout_height="@dimen/dp_85"
-                        />
                     <com.facebook.drawee.view.SimpleDraweeView
                         android:id="@+id/sdvHead"
-                        android:visibility="visible"
-                        android:layout_width="@dimen/dp_75"
-                        android:layout_height="@dimen/dp_75"
+                        android:layout_width="@dimen/dp_65"
+                        android:layout_height="@dimen/dp_65"
+                        android:layout_centerInParent="true"
                         fresco:roundAsCircle="true" />
-                </FrameLayout>
+                </RelativeLayout>
 
                 <TextView
                     android:id="@+id/tv_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginLeft="@dimen/dp_10"
                     android:layout_marginTop="@dimen/dp_65"
                     android:layout_toRightOf="@+id/fl"
                     android:drawableRight="@mipmap/back_b"
                     android:drawablePadding="@dimen/dp_5"
                     android:text="无敌风火轮"
                     android:textColor="@android:color/white"
-                    android:textSize="@dimen/sp_18" />
+                    android:textSize="@dimen/sp_13" />
 
                 <!--会员等级-->
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_name"
-                    android:layout_marginLeft="@dimen/dp_20"
                     android:layout_marginTop="@dimen/dp_5"
                     android:layout_toRightOf="@+id/fl"
                     android:background="@drawable/shape_touming"
@@ -78,11 +71,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center"
                         android:text="青铜会员"
                         android:textColor="@android:color/white"
-                        android:textSize="@dimen/sp_15" />
+                        android:textSize="@dimen/sp_13" />
                 </LinearLayout>
 
                 <!--动态、关注、粉丝、跳币-->
@@ -98,7 +89,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
                         <TextView
                             android:id="@+id/tv_dyNum"
@@ -123,7 +115,8 @@
                         android:layout_width="@dimen/dp_1"
                         android:layout_height="match_parent"
                         android:layout_marginVertical="@dimen/dp_5"
-                        android:background="@android:color/white" />
+                        android:background="@android:color/white"
+                        android:visibility="gone" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -215,130 +208,256 @@
             </RelativeLayout>
 
             <!--订单信息-->
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_100"
-                android:layout_margin="@dimen/dp_10"
-                android:background="@drawable/view_yinying"
-                android:paddingTop="@dimen/dp_10">
+                android:layout_height="match_parent"
+                android:background="@drawable/list_style_theme_top">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp_10"
-                    android:text="我的订单"
-                    android:textColor="@color/textTitle"
-                    android:textSize="@dimen/sp_16" />
 
-                <TextView
-                    android:id="@+id/tv_order"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@+id/iv_order"
-                    android:gravity="center"
-                    android:padding="@dimen/dp_5"
-                    android:text="全部订单"
-                    android:textSize="@dimen/sp_14" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_100"
+                    android:background="@drawable/btn_ban_round_bg">
 
-                <ImageView
-                    android:id="@+id/iv_order"
-                    android:layout_width="@dimen/dp_30"
-                    android:layout_height="@dimen/dp_30"
-                    android:layout_alignParentRight="true"
-                    android:padding="@dimen/dp_10"
-                    android:src="@mipmap/back_b_black" />
+
+                    <LinearLayout
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:id="@+id/ll_dynamic"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="@dimen/dp_45"
+                                android:layout_height="@dimen/dp_45"
+                                android:layout_gravity="center"
+                                android:src="@mipmap/main_function_dynamic" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="@dimen/dp_5"
+                                android:drawablePadding="@dimen/dp_10"
+                                android:gravity="center"
+                                android:text="@string/dynamic"
+                                android:textSize="@dimen/sp_14" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_my_work"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="@dimen/dp_45"
+                                android:layout_height="@dimen/dp_45"
+                                android:layout_gravity="center"
+                                android:src="@mipmap/icon_works" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="@dimen/dp_5"
+                                android:gravity="center"
+                                android:text="@string/my_work"
+                                android:textSize="@dimen/sp_14" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_order"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="@dimen/dp_45"
+                                android:layout_height="@dimen/dp_45"
+                                android:layout_gravity="center"
+                                android:src="@mipmap/icon_order" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="@dimen/dp_5"
+                                android:gravity="center"
+                                android:text="@string/my_order"
+                                android:textSize="@dimen/sp_14" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_history"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="@dimen/dp_45"
+                                android:layout_height="@dimen/dp_45"
+                                android:layout_gravity="center"
+                                android:src="@mipmap/icon_history" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="@dimen/dp_5"
+                                android:gravity="center"
+                                android:text="@string/browsing_history"
+                                android:textSize="@dimen/sp_14" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:background="#F5F5F5"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="@dimen/dp_5"
-                    android:orientation="horizontal">
+                    android:layout_marginHorizontal="@dimen/dp_5"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:background="@drawable/btn_round_bg"
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/tv_dfk"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:drawableTop="@mipmap/dfk"
-                        android:drawablePadding="@dimen/dp_5"
-                        android:gravity="center"
-                        android:text="待付款"
-                        android:textSize="@dimen/sp_14" />
+                    <com.dbvr.baselibrary.view.RowView
+                        android:id="@+id/rv_coupon"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_50"
+                        app:move_image="@mipmap/icon_coupon"
+                        app:move_title="优惠卷" />
+                    <View
+                        android:background="#F5F5F5"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"/>
+                    <com.dbvr.baselibrary.view.RowView
+                        android:id="@+id/rv_evaluate"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_50"
+                        app:move_image="@mipmap/icon_evaluate"
+                        app:move_title="我的评价" />
+                    <View
+                        android:background="#F5F5F5"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"/>
 
-                    <TextView
-                        android:id="@+id/tv_dfh"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:drawableTop="@mipmap/dfh"
-                        android:drawablePadding="@dimen/dp_5"
-                        android:gravity="center"
-                        android:text="待发货"
-                        android:textSize="@dimen/sp_14" />
-
-                    <TextView
-                        android:id="@+id/tv_dsh"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:drawableTop="@mipmap/dsh"
-                        android:drawablePadding="@dimen/dp_5"
-                        android:gravity="center"
-                        android:text="待收货"
-                        android:textSize="@dimen/sp_14" />
-
-                    <TextView
-                        android:id="@+id/tv_dpj"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:drawableTop="@mipmap/dpj"
-                        android:drawablePadding="@dimen/dp_5"
-                        android:gravity="center"
-                        android:text="待评价"
-                        android:textSize="@dimen/sp_14" />
-
-                    <TextView
-                        android:id="@+id/tv_tkth"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:drawableTop="@mipmap/tkth"
-                        android:drawablePadding="@dimen/dp_5"
-                        android:gravity="center"
-                        android:text="退款退货"
-                        android:textSize="@dimen/sp_14" />
+                    <com.dbvr.baselibrary.view.RowView
+                        android:id="@+id/rv_shopping_cart"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_50"
+                        app:move_image="@mipmap/icon_shopping_cart"
+                        app:move_title="购物车" />
                 </LinearLayout>
-            </RelativeLayout>
 
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp_5"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:background="@drawable/btn_round_bg"
+                    android:orientation="vertical">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/server_recy"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/dp_10"
-                android:nestedScrollingEnabled="false" />
+                    <com.dbvr.baselibrary.view.RowView
+                        android:id="@+id/rv_personal_data"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_50"
+                        app:move_image="@mipmap/icon_personal_data"
+                        app:move_title="个人资料" />
+                    <View
+                        android:background="#F5F5F5"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"/>
+                    <com.dbvr.baselibrary.view.RowView
+                        android:id="@+id/rv_merchant"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_50"
+                        app:move_image="@mipmap/icon_merchant"
+                        app:move_title="商家入驻" />
+                    <View
+                        android:background="#F5F5F5"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"/>
+                    <com.dbvr.baselibrary.view.RowView
+                        android:id="@+id/rv_apply"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_50"
+                        app:move_image="@mipmap/icon_zb_apply"
+                        app:move_title="主播申请" />
+                </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp_5"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:background="@drawable/btn_round_bg"
+                    android:orientation="vertical">
+
+                    <com.dbvr.baselibrary.view.RowView
+                        android:id="@+id/rv_setting"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_50"
+                        app:move_image="@mipmap/icon_setting"
+                        app:move_title="设置" />
+                    <View
+                        android:background="#F5F5F5"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"/>
+                    <com.dbvr.baselibrary.view.RowView
+                        android:id="@+id/rv_feedback"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_50"
+                        app:move_image="@mipmap/icon_feedback"
+                        app:move_title="反馈" />
+                    <View
+                        android:background="#F5F5F5"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"/>
+                    <com.dbvr.baselibrary.view.RowView
+                        android:id="@+id/rv_service"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_50"
+                        app:move_image="@mipmap/icon_customer_service"
+                        app:move_title="官方客服" />
+                    <View
+                        android:background="#F5F5F5"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"/>
+                    <com.dbvr.baselibrary.view.RowView
+                        android:id="@+id/rv_about"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_50"
+                        app:move_image="@mipmap/icon_about"
+                        app:move_title="关于我们" />
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
+
 
     </androidx.core.widget.NestedScrollView>
 
-    <ImageView
-        android:id="@+id/tv_set"
-        android:layout_width="@dimen/dp_35"
-        android:layout_height="@dimen/dp_35"
-        android:layout_marginTop="@dimen/dp_30"
-        android:layout_toLeftOf="@+id/iv_message"
-        android:padding="@dimen/dp_5"
-        android:src="@mipmap/p_setup" />
 
-    <ImageView
-        android:id="@+id/iv_message"
-        android:layout_width="@dimen/dp_35"
-        android:layout_height="@dimen/dp_35"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="@dimen/dp_30"
-        android:padding="@dimen/dp_5"
-        android:src="@mipmap/my_message" />
 </RelativeLayout>

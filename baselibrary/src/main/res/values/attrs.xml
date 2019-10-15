@@ -7,4 +7,13 @@
         <attr name="right_bottom_radius" format="dimension"/>
         <attr name="left_bottom_radius" format="dimension"/>
     </declare-styleable>
+
+
+    <!--更多自定义view-->
+    <declare-styleable name="MoveView">
+        <attr name="move_title" format="reference|string" />
+        <attr name="move_image" format="reference" />
+
+    </declare-styleable>
+
 </resources>

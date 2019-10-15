@@ -44,8 +44,7 @@ public class MyFragment extends BaseFragment {
     //头像
     @BindView(R.id.sdvHead)
     SimpleDraweeView sdvHead;
-    @BindView(R.id.cicrle)
-    SimpleDraweeView cicrle;
+
     //昵称
     @BindView(R.id.tv_name)
     TextView tvName;
@@ -62,14 +61,7 @@ public class MyFragment extends BaseFragment {
     @BindView(R.id.tv_tbNum)
     TextView tvTbNum;
 
-    //功能列表
-    @BindView(R.id.server_recy)
-    RecyclerView recyclerViewServer;
-
-    private RecyclerAdapter adapter;
-
     private List<MenuMo> serverData = new ArrayList<>();
-
 
     @Override
     public int layoutId() {
@@ -78,19 +70,7 @@ public class MyFragment extends BaseFragment {
 
     @Override
     public void initView() {
-        recyclerViewServer.setLayoutManager(new GridLayoutManager(getContext(), 4));
-        adapter = new RecyclerAdapter <MenuMo>(getContext(),serverData, R.layout.item_my_server) {
-            @Override
-            public void convert(Context mContext, BaseRecyclerHolder holder, MenuMo o) {
-                holder.setText(R.id.tv_tag, o.getTitle());
-                holder.setImageByUrl(R.id.iv_icon, o.getIconUrl());
-            }
-        };
-        recyclerViewServer.setAdapter(adapter);
 
-        adapter.setOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
 //                switch (serverData.get(position).getJumpUrl()) {
 //                    case ParameterContens.yhq:
 ////                        ToastUtil.showShort(getContext(), "优惠券更新中");
@@ -115,13 +95,12 @@ public class MyFragment extends BaseFragment {
 //                        ToastUtil.showShort(getContext(), "服务更新中");
 //                        break;
 //                }
-            }
-        });
+
     }
 
     @Override
     public void initData() {
-        setLoaddingView(true);
+
 
         //初始化用户信息
         UserMess userMess = SPUtils.instance(getContext()).getUser();
@@ -134,29 +113,10 @@ public class MyFragment extends BaseFragment {
             //AppManager.getAppManager().finishActivity(MainActivity.class);
             return;
         }
-        //初始化菜单
-        Map<String,Object> map = new HashMap<>();
-        map.put("mallSpeciesId","8");
-        OkHttp3Utils.getInstance(getContext()).doPostJson(DyUrl.getChannelMenuList, map, new ObjectCallback<String>(getContext()) {
-            @Override
-            public void onUi(String result) throws JSONException {
-                JSONObject object = new JSONObject(result);
-                String str = object.optString("channelMenuList");
-                serverData = new Gson().fromJson(str, new TypeToken<List<MenuMo>>() {}.getType());
-                if (serverData != null && serverData.size() > 0) {
-                    adapter.updateDataa(serverData);
-                }
-                setLoaddingView(false);
-            }
-            @Override
-            public void onFailed(String msg) {
-                ToastUtil.showShort(getContext(), msg);
-                setLoaddingView(false);
-            }
-        });
+
     }
 
-    @OnClick({R.id.tv_order, R.id.tv_dfk, R.id.tv_dfh, R.id.tv_dsh, R.id.tv_dpj, R.id.tv_tkth, R.id.tv_name, R.id.sdvHead, R.id.tv_set,R.id.iv_message})
+    @OnClick({  R.id.tv_name, R.id.sdvHead})
     public void onTouchClick(View view) {
 //        switch (view.getId()) {
 //            case R.id.tv_order:

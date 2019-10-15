@@ -4,4 +4,8 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="dynamic">动态</string>
+    <string name="my_work">我的作品</string>
+    <string name="my_order">我的订单</string>
+    <string name="browsing_history">我的足迹</string>
 </resources>
