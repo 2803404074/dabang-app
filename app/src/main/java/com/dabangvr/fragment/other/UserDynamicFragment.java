@@ -1,6 +1,7 @@
 package com.dabangvr.fragment.other;
 
 import android.content.Context;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -26,6 +27,8 @@ import butterknife.BindView;
  */
 public class UserDynamicFragment extends BaseFragment {
 
+
+
     @BindView(R.id.recycler_head)
     RecyclerView recyclerView;
 
@@ -35,6 +38,19 @@ public class UserDynamicFragment extends BaseFragment {
     @Override
     public int layoutId() {
         return R.layout.recy_no_bg;
+    }
+
+
+    private HeadCallBack headCallBack;
+    public interface  HeadCallBack{
+        void onclickCallBack();
+    }
+
+    public UserDynamicFragment() {
+    }
+
+    public UserDynamicFragment(HeadCallBack headCallBack) {
+        this.headCallBack = headCallBack;
     }
 
     @Override
@@ -51,6 +67,14 @@ public class UserDynamicFragment extends BaseFragment {
                 //头像
                 SimpleDraweeView simpleDraweeView = holder.getView(R.id.sdvHead);
                 simpleDraweeView.setImageURI(head);
+                simpleDraweeView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (headCallBack!=null){
+                            headCallBack.onclickCallBack();
+                        }
+                    }
+                });
                 RecyclerView recyclerViewx = holder.getView(R.id.recycle_img);
                 recyclerViewx.setNestedScrollingEnabled(false);
                 recyclerViewx.setLayoutManager(new GridLayoutManager(getContext(),3));

@@ -15,8 +15,13 @@
     <style name="Tabtext">
         <item name="android:textColor">@color/selector_tab_text</item>
         <item name="android:textSize">@dimen/sp_21</item>
-        <item name="android:unselectedAlpha">150</item>
     </style>
+
+    <style name="TabtextBlack">
+        <item name="android:textColor">@color/selector_tab_text_black</item>
+        <item name="android:textSize">@dimen/sp_21</item>
+    </style>
+
 
     <style name="TransparentDialog" parent="Theme.AppCompat.Dialog">
         <item name="android:windowBackground">@color/lsq_color_transparent</item>

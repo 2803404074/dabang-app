@@ -47,6 +47,7 @@ public class HomeFragmentRecommend extends LazyFragment{
             public void convert(Context mContext, BaseRecyclerHolder holder, String s) {
                     SimpleDraweeView sdvHead = holder.getView(R.id.sdvHead);
                     sdvHead.setImageURI(userMess==null?"":userMess.getHeadUrl());
+
             }
         };
         recyclerView.setAdapter(adapter);
@@ -60,13 +61,24 @@ public class HomeFragmentRecommend extends LazyFragment{
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-
+        if (!isVisibleToUser){
+            if (adapter!=null){
+                if (adapter.getmVideoView()!=null){
+                    adapter.getmVideoView().pause();
+                }
+            }
+        }else {
+            if (adapter!=null){
+                if (adapter.getmVideoView()!=null){
+                    adapter.startPlay();
+                }
+            }
         }
     }
 
     @Override
     public void loadData() {
+        mData.add("http://pili-clickplay.vrzbgw.com/edea7ad390363af68691d0fa879058a9.mp4");
         mData.add("http://pili-clickplay.vrzbgw.com/WeChat_20191003172307.mp4");
         mData.add("http://pili-clickplay.vrzbgw.com/WeChat_20191003172317.mp4");
         mData.add("http://pili-clickplay.vrzbgw.com/WeChat_20191003172340.mp4");
@@ -81,14 +93,16 @@ public class HomeFragmentRecommend extends LazyFragment{
     }
 
     @Override
-    public void isVisibleToUserFunction(boolean isDataInitiated) {
-
-    }
+    public void isVisibleToUserFunction(boolean isDataInitiated) { }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-
+        if (adapter!=null){
+            if (adapter.getmVideoView()!=null){
+                adapter.getmVideoView().stopPlayback();
+            }
+        }
     }
 
     @Override
@@ -99,7 +113,10 @@ public class HomeFragmentRecommend extends LazyFragment{
     @Override
     public void onPause() {
         super.onPause();
+        if (adapter!=null){
+            if (adapter.getmVideoView()!=null){
+                adapter.getmVideoView().pause();
+            }
+        }
     }
-
-
 }

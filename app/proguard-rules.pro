@@ -21,6 +21,9 @@
 #-renamesourcefileattribute SourceFile
 
 -keep class com.qiniu.pili.droid.streaming.** { *; }
+-keep class com.pili.pldroid.player.** { *; }
+-keep class com.qiniu.qplayer.mediaEngine.MediaPlayer{*;}
+
 
 -keep class com.hyphenate.** {*;}
 -dontwarn  com.hyphenate.**

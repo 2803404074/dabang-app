@@ -2,64 +2,55 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
-    android:layout_height="@dimen/dp_80"
+    android:layout_height="wrap_content"
     android:paddingHorizontal="@dimen/dp_5"
-    android:layout_marginVertical="@dimen/dp_5"
-    xmlns:roundiv="http://schemas.android.com/tools">
-
-   <com.facebook.drawee.view.SimpleDraweeView
-       android:id="@+id/sdvHead"
-       android:layout_width="@dimen/dp_50"
-       android:layout_height="@dimen/dp_50"
-       android:layout_centerVertical="true"
-       fresco:roundAsCircle="true" />
+    android:layout_marginVertical="@dimen/dp_5">
 
    <LinearLayout
-       android:id="@+id/llContent"
-       android:layout_toRightOf="@+id/sdvHead"
-       android:layout_toLeftOf="@+id/mivImg"
+       android:id="@+id/ll_content"
        android:layout_width="match_parent"
-       android:gravity="center|left"
-       android:paddingHorizontal="@dimen/dp_5"
-       android:layout_height="@dimen/dp_75"
-       android:orientation="vertical">
+       android:layout_height="wrap_content"
+       android:orientation="horizontal">
+      <com.facebook.drawee.view.SimpleDraweeView
+          android:id="@+id/sdvHead"
+          android:layout_width="@dimen/dp_40"
+          android:layout_height="@dimen/dp_40"
+          android:layout_centerVertical="true"
+          fresco:roundAsCircle="true" />
+
       <TextView
           android:id="@+id/tvName"
-          android:layout_width="wrap_content"
+          android:layout_width="0dp"
+          android:layout_weight="1"
           android:layout_height="wrap_content"
           android:text="天使的眼没毛病"
+          android:layout_marginHorizontal="@dimen/sp_10"
+          android:layout_gravity="center"
           android:textSize="@dimen/sp_17"
           android:textColor="@color/textTitle"/>
 
       <TextView
-          android:id="@+id/tvTips"
-          android:layout_width="wrap_content"
+          android:id="@+id/tvGz"
+          android:layout_width="@dimen/dp_60"
           android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/dp_8"
-          android:text="关注了你     18:55    2019/10/25"/>
-
+         android:layout_gravity="center"
+          android:text="关注"
+          android:gravity="center"
+          android:textSize="@dimen/sp_14"
+          android:textStyle="bold"
+          android:paddingVertical="@dimen/dp_3"
+          android:textColor="@android:color/white"
+          android:paddingHorizontal="@dimen/dp_8"
+          android:background="@drawable/shape_red"
+          />
    </LinearLayout>
 
-   <TextView
-       android:id="@+id/tvGz"
-       android:layout_width="@dimen/dp_70"
-       android:layout_height="wrap_content"
-       android:layout_alignParentRight="true"
-       android:layout_centerVertical="true"
-       android:text="关注"
-       android:gravity="center"
-       android:textSize="@dimen/sp_15"
-       android:textStyle="bold"
-       android:paddingVertical="@dimen/dp_5"
-       android:textColor="@android:color/white"
-       android:paddingHorizontal="@dimen/dp_10"
-       android:background="@drawable/shape_red"
-       />
-
    <View
-       android:layout_below="@+id/llContent"
+       android:layout_below="@+id/ll_content"
        android:layout_width="match_parent"
-       android:layout_height="1.5px"
-       android:layout_marginLeft="@dimen/dp_55"
+       android:layout_height="1px"
+       android:layout_marginBottom="@dimen/dp_3"
+       android:layout_marginTop="@dimen/dp_5"
+       android:layout_marginLeft="@dimen/dp_45"
        android:background="@color/lsq_color_gray"/>
 </RelativeLayout>

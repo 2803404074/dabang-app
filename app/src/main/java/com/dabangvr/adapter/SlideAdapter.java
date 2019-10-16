@@ -7,7 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import com.dabangvr.R;
+import com.dabangvr.play.widget.MediaController;
 import com.dabangvr.ui.VideoPlayAdapter;
+import com.pili.pldroid.player.AVOptions;
+import com.pili.pldroid.player.widget.PLVideoTextureView;
+import com.pili.pldroid.player.widget.PLVideoView;
 
 import java.util.List;
 
@@ -22,8 +26,9 @@ public abstract class SlideAdapter<T> extends VideoPlayAdapter<BaseRecyclerHolde
 
     private AdapterInter adapterInter;
 
-//    private PLVideoTextureView mVideoView;
-//    private MediaController mMediaController;
+    private PLVideoTextureView mVideoView;
+    private MediaController mMediaController;
+    private AVOptions options;
     private View loadingView;
 
     public void updateData( List<T> mDatas){
@@ -36,6 +41,8 @@ public abstract class SlideAdapter<T> extends VideoPlayAdapter<BaseRecyclerHolde
         this.mDatas = mDatas;
         this.loadingView = view;
         this.mLayoutId = mLayoutId;
+        mMediaController = new MediaController(mContext);
+        setAvOption();
     }
 
     public void setAdapterInter(AdapterInter adapterInter) {
@@ -67,18 +74,51 @@ public abstract class SlideAdapter<T> extends VideoPlayAdapter<BaseRecyclerHolde
                 }
             }
         });
+
     }
-
-
 
     @Override
     public int getItemCount() {
         return mDatas.size();
     }
 
+    private int position;
     @Override
     public void onPageSelected(int itemPosition, View itemView) {
+        position = itemPosition;
         //这里处理视频播放逻辑
+        if (mVideoView!=null){
+            mVideoView.stopPlayback();
+            mVideoView = null;
+        }
+        mVideoView = itemView.findViewById(R.id.video_view);
+        mVideoView.setMediaController(mMediaController);
+        mVideoView.setDisplayAspectRatio(PLVideoView.ASPECT_RATIO_PAVED_PARENT);
+        mVideoView.setLooping(true);
+        mVideoView.setVideoPath((String) mDatas.get(itemPosition));
+        mVideoView.setAVOptions(options);
+        mVideoView.setBufferingIndicator(loadingView);
+        mVideoView.start();
+    }
 
+    private void setAvOption() {
+        options = new AVOptions();
+        // 解码方式:
+        // codec＝AVOptions.MEDIA_CODEC_HW_DECODE，硬解
+        // codec=AVOptions.MEDIA_CODEC_SW_DECODE, 软解
+        int codec = AVOptions.MEDIA_CODEC_AUTO; //硬解优先，失败后自动切换到软解
+        // 默认值是：MEDIA_CODEC_SW_DECODE
+        options.setInteger(AVOptions.KEY_MEDIACODEC, codec);
+
+        // 快开模式，启用后会加快该播放器实例再次打开相同协议的视频流的速度
+        options.setInteger(AVOptions.KEY_FAST_OPEN, 1);
+    }
+
+    public PLVideoTextureView getmVideoView(){
+        return mVideoView;
+    }
+
+    public void startPlay(){
+        mVideoView.start();
     }
 }

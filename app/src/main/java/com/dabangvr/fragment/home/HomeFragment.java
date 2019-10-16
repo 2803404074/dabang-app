@@ -57,7 +57,7 @@ public class HomeFragment extends BaseFragment {
         mFragments = new ArrayList<>();
         mFragments.add(new HomeFragmentFollow());
         mFragments.add(new HomeFragmentFind());
-        mFragments.add(new HomeFragmentFind());
+        mFragments.add(new HomeFragmentTiaoTiao());
         homeFragmentRecommend = new HomeFragmentRecommend();
         mFragments.add(homeFragmentRecommend);
         ContentPagerAdapter contentAdapter = new ContentPagerAdapter(getFragmentManager(),mTitles);

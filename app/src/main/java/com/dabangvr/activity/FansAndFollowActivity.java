@@ -24,10 +24,14 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * 粉丝页面
+ * 粉丝或关注页面
  */
-public class FansActivity extends BaseActivity {
+public class FansAndFollowActivity extends BaseActivity {
 
+    private String tag;
+
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
     @BindView(R.id.recycle_dz)
     RecyclerView recyclerView;
     private RecyclerAdapter adapter;
@@ -38,7 +42,6 @@ public class FansActivity extends BaseActivity {
         //用来设置整体下移，状态栏沉浸
         StatusBarUtil.setRootViewFitsSystemWindows(this, false);
     }
-
     @Override
     public int setLayout() {
         return R.layout.activity_fans;
@@ -46,6 +49,14 @@ public class FansActivity extends BaseActivity {
 
     @Override
     public void initView() {
+
+        tag = getIntent().getStringExtra("tag");
+        if (tag.equals("fans")){
+            tvTitle.setText("粉丝");
+        }else {
+            tvTitle.setText("关注");
+        }
+
         String str = "https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3278119589,2651626912&fm=26&gp=0.jpg";
         mData.add(new FansMo("用户1",str,"08:47",false));
         mData.add(new FansMo("用户2",str,"08:47",true));
@@ -77,8 +88,6 @@ public class FansActivity extends BaseActivity {
                     holder.getView(R.id.tvGz).setBackgroundResource(R.drawable.shape_red);
                 }
                 holder.setText(R.id.tvName,o.getName());
-                holder.setText(R.id.tvTips,"关注了你\t"+o.getDate());
-
             }
         };
         recyclerView.setAdapter(adapter);

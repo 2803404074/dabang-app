@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activity.FansActivity">
+    tools:context=".activity.FansAndFollowActivity">
 
     <RelativeLayout
         android:background="@drawable/shape_style_db_green"

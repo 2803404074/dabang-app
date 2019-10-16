@@ -5,7 +5,7 @@
     <gradient
         android:angle="180"
         android:endColor="@color/colorDb4"
-        android:startColor="@color/colorDb5"
+        android:startColor="#C1FFC1"
          />
 
     <!--圆角-->

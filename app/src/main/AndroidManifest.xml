@@ -46,7 +46,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".activity.UserHomeActivity"></activity>
-        <activity android:name=".activity.FansActivity" />
+        <activity android:name=".activity.FansAndFollowActivity" />
         <activity android:name=".activity.LocationActivity" />
         <activity android:name=".activity.CreateDynamicActivity" />
         <activity android:name=".activity.GetDzActivity" />
