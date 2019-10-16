@@ -4,12 +4,8 @@
         <shape
             android:shape="rectangle">
             <!-- 圆角红色按钮 -->
+            <solid android:color="@color/dividerGrey"/>
             <corners android:radius="@dimen/dp_10"/>
-            <solid android:color="#18dadc" />
-            <gradient
-                android:startColor="#18dadc"
-                android:endColor="#15c7e7"
-                android:angle="45" />
         </shape>
     </item>
 </selector>

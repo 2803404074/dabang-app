@@ -8,6 +8,7 @@ import com.dbvr.baselibrary.ui.ShowButtonLayout;
 import com.dbvr.baselibrary.ui.ShowButtonLayoutData;
 import com.dbvr.baselibrary.utils.SPUtils;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
+import com.dbvr.baselibrary.view.AppManager;
 import com.dbvr.baselibrary.view.BaseActivity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * 搜索页面
@@ -92,5 +94,12 @@ public class SearchActivity extends BaseActivity {
     @Override
     public void initData() {
 
+    }
+
+    @OnClick({R.id.tvCancel})
+    public void onclick(View view){
+        if (view.getId() ==R.id.tvCancel ){
+            AppManager.getAppManager().finishActivity(this);
+        }
     }
 }

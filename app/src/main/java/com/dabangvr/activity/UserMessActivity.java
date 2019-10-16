@@ -1,10 +1,8 @@
 package com.dabangvr.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-
 import com.dabangvr.R;
 import com.dbvr.baselibrary.model.UserMess;
 import com.dbvr.baselibrary.utils.DialogUtil;
@@ -14,7 +12,6 @@ import com.dbvr.baselibrary.utils.StringUtils;
 import com.dbvr.baselibrary.view.AppManager;
 import com.dbvr.baselibrary.view.BaseActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -23,7 +20,6 @@ import butterknife.OnClick;
  */
 public class UserMessActivity extends BaseActivity {
 
-    private DialogUtil dialogUtil;
     @BindView(R.id.sdvHead)
     SimpleDraweeView sdvHead;
     @BindView(R.id.tvNickName)
@@ -115,18 +111,8 @@ public class UserMessActivity extends BaseActivity {
                 break;
             case R.id.tvLogOut:
                 DialogUtil.getInstance(this).show(R.layout.dialog_tip, holder -> {
-                    holder.findViewById(R.id.tvCancel).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            DialogUtil.getInstance(getContext()).des();
-                        }
-                    });
-                    holder.findViewById(R.id.tvConfirm).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            logOut();
-                        }
-                    });
+                    holder.findViewById(R.id.tvCancel).setOnClickListener(view1 -> DialogUtil.getInstance(getContext()).des());
+                    holder.findViewById(R.id.tvConfirm).setOnClickListener(view12 -> logOut());
                 });
                 break;
         }
@@ -134,7 +120,6 @@ public class UserMessActivity extends BaseActivity {
 
     private void logOut() {
         SPUtils.instance(this).removeUser();
-        AppManager.getAppManager().finishAllActivity();
-        goTActivity(LoginActivity.class,null);
+        AppManager.getAppManager().finishAllActivityTo(UserMessActivity.class);
     }
 }

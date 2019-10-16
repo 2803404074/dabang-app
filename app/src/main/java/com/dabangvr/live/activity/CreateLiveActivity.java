@@ -5,11 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Build;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -27,6 +29,7 @@ import com.dbvr.baselibrary.ui.MyImageView;
 import com.dbvr.baselibrary.utils.BottomDialogUtil2;
 import com.dbvr.baselibrary.utils.OnUploadListener;
 import com.dbvr.baselibrary.utils.QiniuUploadManager;
+import com.dbvr.baselibrary.utils.StatusBarUtil;
 import com.dbvr.baselibrary.utils.StringUtils;
 import com.dbvr.baselibrary.utils.ToastUtil;
 import com.dbvr.baselibrary.view.BaseActivity;
@@ -51,8 +54,8 @@ import butterknife.OnClick;
 @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
 public class CreateLiveActivity extends BaseActivity {
 
-    @BindView(R.id.tvAdd)
-    TextView tvAdd;
+    @BindView(R.id.ivAdd)
+    ImageView ivAdd;
     @BindView(R.id.iv_content)
     MyImageView imageView;
     @BindView(R.id.etTitle)
@@ -65,6 +68,13 @@ public class CreateLiveActivity extends BaseActivity {
     LinearLayout llTagContent;
 
     private String picturePath;//封面地址
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        //用来设置整体下移，状态栏沉浸
+        StatusBarUtil.setRootViewFitsSystemWindows(this, false);
+    }
 
     @Override
     public int setLayout() {
@@ -110,11 +120,9 @@ public class CreateLiveActivity extends BaseActivity {
                 .selectPicture(true, 130, 156, 5, 6);
     }
 
-    @OnClick({R.id.tvAdd,R.id.tvAddTag,R.id.tvCreate})
+    @OnClick({R.id.tvAddTag,R.id.tvCreate})
     public void onTuch(View view){
         switch (view.getId()){
-            case R.id.tvAdd:
-                break;
             case R.id.tvAddTag:
                 showBottomDialog();
                 break;
@@ -309,6 +317,7 @@ public class CreateLiveActivity extends BaseActivity {
             if (data != null) {
                 picturePath = data.getStringExtra(PictureSelector.PICTURE_PATH);
                 imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+                ivAdd.setVisibility(View.GONE);
             }
         }
     }

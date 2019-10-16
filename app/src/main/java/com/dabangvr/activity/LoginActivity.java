@@ -313,7 +313,12 @@ public class LoginActivity extends BaseActivity implements IUiListener {
                 try {
                     JSONObject data = new JSONObject(result);
                     String userStr = data.optString("user");
-                    SPUtils.instance(getContext()).putUser(userStr);
+                    try {
+                        SPUtils.instance(getContext()).putUser(userStr);
+                    }catch (Exception e){
+                        ToastUtil.showShort(getContext(),"用户信息里的token为空");
+                    }
+
                     //判断是否首次登陆
                     boolean isFirst = (boolean) SPUtils.instance(getContext()).getkey("isFirst",true);
                     if (isFirst){

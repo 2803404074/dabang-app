@@ -94,6 +94,22 @@ public class AppManager {
     }
 
     /**
+     * 结束所有activity
+     * @param cls 除了这个activity不结束，其余的都结束
+     */
+    public void finishAllActivityTo(Class<?> cls) {
+        for (int i = 0, size = activityStack.size(); i < size; i++) {
+            if (null != activityStack.get(i)) {
+                if (cls.equals(activityStack.get(i).getClass())){
+                    continue;
+                }
+                activityStack.get(i).finish();
+            }
+        }
+        activityStack.clear();
+    }
+
+    /**
      * 退出应用程序
      */
     @SuppressWarnings("deprecation")

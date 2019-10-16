@@ -69,7 +69,7 @@ public class MyFragment extends BaseFragment {
         mFragments.add(new UserLiveFragment());
         mFragments.add(new UserVideoFragment());
         mFragments.add(new UserDynamicFragment());
-        ContentPagerAdapter contentAdapter = new ContentPagerAdapter(getFragmentManager(), mTitles, mFragments);
+        ContentPagerAdapter contentAdapter = new ContentPagerAdapter(getChildFragmentManager(), mTitles, mFragments);
         viewPager.setAdapter(contentAdapter);
         tabLayout.setViewPager(viewPager);
         viewPager.setCurrentItem(0);

@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.dabangvr.R;
+import com.dabangvr.application.MyApplication;
 import com.dabangvr.fragment.DynamicFragment;
 import com.dabangvr.fragment.MyFragment;
 import com.dabangvr.fragment.SameCityFragment;
@@ -278,7 +279,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
                 Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
                 exitTime = System.currentTimeMillis();
             } else {
-                finish();
+                AppManager.getAppManager().AppExit(this);
             }
             return true;
         }
