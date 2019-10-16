@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.dabangvr.R;
+import com.dabangvr.activity.MessageActivity;
 import com.dabangvr.activity.SearchActivity;
 import com.dbvr.baselibrary.eventBus.ReadEvent;
 import com.dbvr.baselibrary.view.BaseFragment;
@@ -63,6 +64,9 @@ public class HomeFragment extends BaseFragment {
         viewPager.setAdapter(contentAdapter);
         tabLayout.setViewPager(viewPager);
         viewPager.setCurrentItem(1);
+
+
+
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -92,11 +96,14 @@ public class HomeFragment extends BaseFragment {
         });
     }
 
-    @OnClick({R.id.ivSearch})
+    @OnClick({R.id.ivSearch,R.id.ivMess})
     public void onclick(View view){
         switch (view.getId()){
             case R.id.ivSearch:
                 goTActivity(SearchActivity.class,null);
+                break;
+            case R.id.ivMess:
+                goTActivity(MessageActivity.class,null);
                 break;
                 default:break;
         }

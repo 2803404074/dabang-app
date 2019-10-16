@@ -14,16 +14,14 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.dabangvr.R;
-import com.dabangvr.fragment.MessageFragment;
+import com.dabangvr.fragment.DynamicFragment;
 import com.dabangvr.fragment.MyFragment;
 import com.dabangvr.fragment.SameCityFragment;
 import com.dabangvr.fragment.home.HomeFragment;
 import com.dabangvr.live.activity.CreateLiveActivity;
-import com.dabangvr.live.activity.LiveActivity;
 import com.dbvr.baselibrary.eventBus.ReadEvent;
 import com.dbvr.baselibrary.model.UserMess;
 import com.dbvr.baselibrary.utils.BottomDialogUtil2;
-import com.dbvr.baselibrary.utils.Conver;
 import com.dbvr.baselibrary.utils.SPUtils;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
 import com.dbvr.baselibrary.view.AppManager;
@@ -37,7 +35,6 @@ import com.hyphenate.exceptions.HyphenateException;
 import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 
 public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener, HomeFragment.ChangeCallBack {
@@ -53,7 +50,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 
     private HomeFragment homeFragment;
     private SameCityFragment sameCityFragment;
-    private MessageFragment messageFragment;
+    private DynamicFragment dynamicFragment;
     private MyFragment myFragment;
     private FragmentManager fragmentManager;
 
@@ -164,11 +161,11 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
                 }
                 break;
             case 2:
-                if (messageFragment == null) {
-                    messageFragment = new MessageFragment();
-                    beginTransaction.add(R.id.fg_content, messageFragment);
+                if (dynamicFragment == null) {
+                    dynamicFragment = new DynamicFragment();
+                    beginTransaction.add(R.id.fg_content, dynamicFragment);
                 } else {
-                    beginTransaction.show(messageFragment);
+                    beginTransaction.show(dynamicFragment);
                 }
                 break;
             case 3:
@@ -196,8 +193,8 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
             transaction.hide(sameCityFragment);
         }
 
-        if (messageFragment != null) {
-            transaction.hide(messageFragment);
+        if (dynamicFragment != null) {
+            transaction.hide(dynamicFragment);
         }
 
         if (myFragment != null) {

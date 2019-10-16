@@ -1,7 +1,8 @@
-package com.dabangvr.fragment;
+package com.dabangvr.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Pair;
 import android.view.View;
 import android.widget.TextView;
@@ -10,13 +11,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dabangvr.R;
-import com.dabangvr.activity.FansActivity;
-import com.dabangvr.activity.GetDzActivity;
 import com.dabangvr.adapter.BaseRecyclerHolder;
 import com.dabangvr.adapter.RecyclerAdapter;
 import com.dabangvr.im.ChatActivity;
+import com.dbvr.baselibrary.utils.StatusBarUtil;
 import com.dbvr.baselibrary.utils.StringUtils;
-import com.dbvr.baselibrary.view.BaseFragment;
+import com.dbvr.baselibrary.view.BaseActivity;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
@@ -36,7 +36,7 @@ import butterknife.OnClick;
 /**
  * 消息fragment
  */
-public class MessageFragment extends BaseFragment {
+public class MessageActivity extends BaseActivity {
 
     @BindView(R.id.recycler_mess)
     RecyclerView recyclerView;
@@ -44,8 +44,15 @@ public class MessageFragment extends BaseFragment {
     private RecyclerAdapter adapter;
 
     @Override
-    public int layoutId() {
-        return R.layout.fragment_message;
+    public int setLayout() {
+        return R.layout.activity_message;
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        //用来设置整体下移，状态栏沉浸
+        StatusBarUtil.setRootViewFitsSystemWindows(this, false);
     }
 
     @Override

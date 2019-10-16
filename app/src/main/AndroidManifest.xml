@@ -72,9 +72,11 @@
         <activity android:name=".live.activity.LiveFinishActivity" />
         <activity android:name=".live.activity.LiveActivity" />
         <activity android:name=".live.activity.CreateLiveActivity" />
+        <activity android:name=".activity.MessageActivity"/>
         <activity android:name=".im.ChatActivity" />
         <activity android:name="com.dbvr.imglibrary2.ui.SelectImageActivity" />
         <activity android:name="com.dbvr.imglibrary2.ui.PreviewImageActivity" />
+
 
         <provider
             android:name="androidx.core.content.FileProvider"
