@@ -8,6 +8,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.dabangvr.R;
+import com.dabangvr.activity.UserMessActivity;
 import com.dabangvr.application.MyApplication;
 import com.dabangvr.fragment.other.UserPersonalFragment;
 import com.dabangvr.fragment.other.UserDynamicFragment;
@@ -96,7 +97,7 @@ public class MyFragment extends BaseFragment {
     public void onTouchClick(View view) {
         switch (view.getId()){
             case R.id.tv_edit:
-                Log.d("luhuas", "onTouchClick: 点击编辑资料");
+                goTActivity(UserMessActivity.class,null);
                 break;
         }
 

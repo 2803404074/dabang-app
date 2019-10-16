@@ -24,7 +24,6 @@ import android.view.View;
 import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -39,7 +38,6 @@ import com.dbvr.baselibrary.model.GiftMo;
 import com.dbvr.baselibrary.model.LiveComment;
 import com.dbvr.baselibrary.model.UserMess;
 import com.dbvr.baselibrary.other.Contents;
-import com.dbvr.baselibrary.utils.BottomDialogUtil;
 import com.dbvr.baselibrary.utils.BottomDialogUtil2;
 import com.dbvr.baselibrary.utils.Conver;
 import com.dbvr.baselibrary.utils.DataUtil;
@@ -47,7 +45,6 @@ import com.dbvr.baselibrary.utils.DialogUtil;
 import com.dbvr.baselibrary.utils.SPUtils;
 import com.dbvr.baselibrary.utils.StringUtils;
 import com.dbvr.baselibrary.view.AppManager;
-import com.dbvr.httplibrart.constans.DyUrl;
 import com.dbvr.httplibrart.utils.ObjectCallback;
 import com.dbvr.httplibrart.utils.OkHttp3Utils;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -704,7 +701,7 @@ public class LiveActivity extends Activity implements
 
     //弹窗提示直播间信息
     private void showTips() {
-        DialogUtil.getInstance(this).show(R.layout.dialog_tip, holder -> {
+        DialogUtil.getInstance(this).show(R.layout.dialog_live_tip, holder -> {
             holder.findViewById(R.id.tvConfirm).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
