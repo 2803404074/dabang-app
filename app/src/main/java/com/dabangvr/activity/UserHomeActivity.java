@@ -17,6 +17,8 @@ import com.dabangvr.R;
 import com.dabangvr.fragment.other.UserDynamicFragment;
 import com.dabangvr.fragment.other.UserLiveFragment;
 import com.dabangvr.fragment.other.UserVideoFragment;
+
+import com.dbvr.baselibrary.adapter.ContentPagerAdapter;
 import com.dbvr.baselibrary.utils.SPUtils;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
 import com.dbvr.baselibrary.view.AppManager;
@@ -47,6 +49,7 @@ public class UserHomeActivity extends BaseActivity {
     @BindView(R.id.view_pager)
     ViewPager viewPager;
     private ArrayList<Fragment> mFragments;
+    private ContentPagerAdapter contentAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +85,7 @@ public class UserHomeActivity extends BaseActivity {
         mFragments.add(new UserLiveFragment());
         mFragments.add(new UserVideoFragment());
         mFragments.add(new UserDynamicFragment());
-        ContentPagerAdapter contentAdapter = new ContentPagerAdapter(getSupportFragmentManager(),mTitles);
+        contentAdapter = new ContentPagerAdapter(getSupportFragmentManager(),mTitles,mFragments);
         viewPager.setAdapter(contentAdapter);
         tabLayout.setViewPager(viewPager);
         viewPager.setCurrentItem(1);
@@ -93,29 +96,4 @@ public class UserHomeActivity extends BaseActivity {
 
     }
 
-    class ContentPagerAdapter extends FragmentPagerAdapter {
-
-        private List<String>mTitles;
-
-        public ContentPagerAdapter(FragmentManager fm, List<String>mTitles) {
-            super(fm);
-            this.mTitles = mTitles;
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragments.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragments.size();
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mTitles.get(position);
-        }
-
-    }
 }

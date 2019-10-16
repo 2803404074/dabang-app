@@ -13,6 +13,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.dabangvr.R;
 import com.dabangvr.activity.MessageActivity;
 import com.dabangvr.activity.SearchActivity;
+import com.dbvr.baselibrary.adapter.ContentPagerAdapter;
 import com.dbvr.baselibrary.eventBus.ReadEvent;
 import com.dbvr.baselibrary.view.BaseFragment;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
@@ -38,6 +39,8 @@ public class HomeFragment extends BaseFragment {
     private HomeFragmentRecommend homeFragmentRecommend;
 
     private ChangeCallBack changeCallBack;
+    private ContentPagerAdapter contentAdapter;
+
     public void setChangeCallBack(ChangeCallBack changeCallBack) {
         this.changeCallBack = changeCallBack;
     }
@@ -60,7 +63,7 @@ public class HomeFragment extends BaseFragment {
         mFragments.add(new HomeFragmentTiaoTiao());
         homeFragmentRecommend = new HomeFragmentRecommend();
         mFragments.add(homeFragmentRecommend);
-        ContentPagerAdapter contentAdapter = new ContentPagerAdapter(getFragmentManager(),mTitles);
+        contentAdapter = new ContentPagerAdapter(getFragmentManager(),mTitles,mFragments);
         viewPager.setAdapter(contentAdapter);
         tabLayout.setViewPager(viewPager);
         viewPager.setCurrentItem(1);
@@ -118,30 +121,6 @@ public class HomeFragment extends BaseFragment {
         void change(boolean isCheck,boolean isClickMess);//isClickMess是否点击到消息
     }
 
-    class ContentPagerAdapter extends FragmentPagerAdapter {
 
-        private List<String>mTitles;
-
-        public ContentPagerAdapter(FragmentManager fm,List<String>mTitles) {
-            super(fm);
-            this.mTitles = mTitles;
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragments.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragments.size();
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mTitles.get(position);
-        }
-
-    }
 
 }

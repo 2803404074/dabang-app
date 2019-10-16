@@ -1,5 +1,6 @@
 package com.dabangvr.fragment.other;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.View;
 
@@ -25,8 +26,8 @@ import butterknife.BindView;
 /**
  * 纯列表的fragment
  */
+@SuppressLint("ValidFragment")
 public class UserDynamicFragment extends BaseFragment {
-
 
 
     @BindView(R.id.recycler_head)
@@ -42,12 +43,14 @@ public class UserDynamicFragment extends BaseFragment {
 
 
     private HeadCallBack headCallBack;
-    public interface  HeadCallBack{
+
+    public interface HeadCallBack {
         void onclickCallBack();
     }
 
     public UserDynamicFragment() {
     }
+
 
     public UserDynamicFragment(HeadCallBack headCallBack) {
         this.headCallBack = headCallBack;
@@ -70,23 +73,23 @@ public class UserDynamicFragment extends BaseFragment {
                 simpleDraweeView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (headCallBack!=null){
+                        if (headCallBack != null) {
                             headCallBack.onclickCallBack();
                         }
                     }
                 });
                 RecyclerView recyclerViewx = holder.getView(R.id.recycle_img);
                 recyclerViewx.setNestedScrollingEnabled(false);
-                recyclerViewx.setLayoutManager(new GridLayoutManager(getContext(),3));
+                recyclerViewx.setLayoutManager(new GridLayoutManager(getContext(), 3));
                 recyclerViewx.addItemDecoration(new SpaceGridItemDecoration((int) TDevice.dipToPx(getResources(), 1)));
-                List<String>list = new ArrayList<>();
+                List<String> list = new ArrayList<>();
                 for (int i = 0; i < 9; i++) {
                     list.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1571136024322&di=9bdf31e105ad39fabe72e7ebc685e401&imgtype=0&src=http%3A%2F%2Fcdnimg103.lizhi.fm%2Faudio_cover%2F2016%2F11%2F28%2F2570760571378577415_320x320.jpg");
                 }
                 RecyclerAdapter adapterx = new RecyclerAdapter<String>(getContext(), list, R.layout.selected_image_item) {
                     @Override
                     public void convert(Context mContext, BaseRecyclerHolder holder, String o) {
-                        holder.setImageByUrl(R.id.iv_selected_image,o);
+                        holder.setImageByUrl(R.id.iv_selected_image, o);
                     }
                 };
                 recyclerViewx.setAdapter(adapterx);

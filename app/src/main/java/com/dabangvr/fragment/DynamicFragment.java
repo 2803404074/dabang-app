@@ -8,6 +8,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.dabangvr.R;
 import com.dabangvr.activity.UserHomeActivity;
 import com.dabangvr.fragment.other.UserDynamicFragment;
+import com.dbvr.baselibrary.adapter.ContentPagerAdapter;
 import com.dbvr.baselibrary.view.BaseFragment;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
@@ -46,7 +47,7 @@ public class DynamicFragment extends BaseFragment implements UserDynamicFragment
         mFragments.add(new UserDynamicFragment(this));
         mFragments.add(new UserDynamicFragment(this));
         mFragments.add(new UserDynamicFragment(this));
-        ContentPagerAdapter contentAdapter = new ContentPagerAdapter(getChildFragmentManager(),mTitles);
+        ContentPagerAdapter contentAdapter = new ContentPagerAdapter(getChildFragmentManager(),mTitles,mFragments);
         viewPager.setAdapter(contentAdapter);
         tabLayout.setViewPager(viewPager);
         viewPager.setCurrentItem(1);
@@ -64,29 +65,4 @@ public class DynamicFragment extends BaseFragment implements UserDynamicFragment
         goTActivity(UserHomeActivity.class,map);
     }
 
-    class ContentPagerAdapter extends FragmentPagerAdapter {
-
-        private List<String>mTitles;
-
-        public ContentPagerAdapter(FragmentManager fm, List<String>mTitles) {
-            super(fm);
-            this.mTitles = mTitles;
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragments.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragments.size();
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mTitles.get(position);
-        }
-
-    }
 }

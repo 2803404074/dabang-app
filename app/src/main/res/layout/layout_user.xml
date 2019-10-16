@@ -82,6 +82,7 @@
                    android:layout_height="@dimen/dp_20"
                    android:src="@mipmap/edit"/>
                <TextView
+                   android:id="@+id/tv_edit"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:textColor="@color/textTitle"
@@ -194,7 +195,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="关注"
+                android:text="粉丝"
                 android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/dp_5"
                 android:textSize="@dimen/sp_16"
@@ -216,7 +217,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="关注"
+                android:text="跳币"
                 android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/dp_5"
                 android:textSize="@dimen/sp_16"

@@ -6,9 +6,6 @@ public class DyUrl {
     public static final String BASE = "http://192.168.0.112:443/demo/";
 
 
-    //我的-服务列表
-    public static final String getChannelMenuList = "api/index/getChannelMenuList";
-
     //首页主播列表
     public static final String indexAnchorList = "api/pili/indexAnchorList";
 
@@ -23,4 +20,8 @@ public class DyUrl {
 
     //直播标签列表
     public static final String getLiveCategoryList = "api/live/getLiveCategoryList";
+
+
+    // 个人中心菜单接口
+    public static final String getChannelMenuList = "/api/config/getChannelMenuList";
 }

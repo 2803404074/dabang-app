@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -55,10 +56,21 @@ public class RowView extends FrameLayout {
         mRow_image = view.findViewById(R.id.row_image);
         mRl_ma = view.findViewById(R.id.rl_ma);
         try {
-            mRow_title.setText(mTitleMsg+"");
+            mRow_title.setText(mTitleMsg + "");
             mRow_image.setImageDrawable(context.getResources().getDrawable(miamg));
         } catch (Resources.NotFoundException e) {
             e.printStackTrace();
+        }
+    }
+
+    public String getTitle() {
+
+        return mRow_title.getText().toString().trim();
+    }
+
+    public void setTitle(String title) {
+        if (!TextUtils.isEmpty(title)) {
+            mRow_title.setText(title);
         }
     }
 

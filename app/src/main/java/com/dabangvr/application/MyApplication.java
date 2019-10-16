@@ -33,7 +33,7 @@ public class MyApplication extends Application {
 
     private NetWorkStateReceiver netWorkStateReceiver;
     public static IWXAPI api;
-
+    private static MyApplication instance;
 
     static {
         //设置全局的Header构建器
@@ -53,10 +53,11 @@ public class MyApplication extends Application {
             }
         });
     }
+
     @Override
     public void onCreate() {
         super.onCreate();
-
+        instance = this;
         //网络变化
         if (netWorkStateReceiver == null) {
             netWorkStateReceiver = new NetWorkStateReceiver();
@@ -70,7 +71,7 @@ public class MyApplication extends Application {
         Fresco.initialize(this);
 
         //微信
-        api = WXAPIFactory.createWXAPI(this,WECHART_APP_ID,true);
+        api = WXAPIFactory.createWXAPI(this, WECHART_APP_ID, true);
         api.registerApp(WECHART_APP_ID);
 
         //七牛云
@@ -83,6 +84,10 @@ public class MyApplication extends Application {
 
     }
 
+    public static MyApplication getInstance() {
+
+        return instance;
+    }
 
     private void initHy() {
         // 第一步
@@ -97,6 +102,7 @@ public class MyApplication extends Application {
             //initDbDao(context);
         }
     }
+
     private EMOptions initChatOptions() {
         // 获取到EMChatOptions对象
         EMOptions options = new EMOptions();

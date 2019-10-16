@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_ma"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_40"
+    android:layout_marginLeft="@dimen/dp_5"
+    android:layout_marginRight="@dimen/dp_5"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/row_image"
+        android:layout_width="@dimen/dp_25"
+        android:layout_height="@dimen/dp_25"
+        android:layout_alignParentLeft="true"
+        android:layout_centerInParent="true" />
+
+    <TextView
+        android:id="@+id/row_title"
+        android:layout_width="@dimen/dp_100"
+        android:layout_height="@dimen/dp_50"
+        android:layout_marginLeft="@dimen/dp_5"
+        android:layout_toRightOf="@id/row_image"
+        android:gravity="left|center"
+        android:text="小盧"
+        android:textColor="@color/lsq_color_gray"
+        android:textSize="@dimen/sp_14" />
+
+    <ImageView
+        android:layout_width="@dimen/dp_25"
+        android:layout_height="@dimen/dp_25"
+        android:layout_alignParentRight="true"
+        android:layout_centerInParent="true"
+        android:src="@drawable/to_right" />
+
+    <View
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#F5F5F5" />
+
+</RelativeLayout>
