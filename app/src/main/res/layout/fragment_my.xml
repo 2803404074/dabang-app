@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:paddingBottom="@dimen/dp_70"
     android:background="@color/white"
     tools:context=".activity.UserHomeActivity">
 
@@ -20,21 +21,21 @@
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:background="@android:color/white"
-            android:layout_height="@dimen/dp_365"
+            android:layout_height="@dimen/dp_380"
             android:fitsSystemWindows="true">
 
 
             <RelativeLayout
                 android:id="@+id/rlTop"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_320"
+                android:layout_height="@dimen/dp_315"
                 app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
                 <include layout="@layout/layout_user"/>
             </RelativeLayout>
             <com.ogaclejapan.smarttablayout.SmartTabLayout
                 android:id="@+id/tab_layout"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_40"
+                android:layout_height="@dimen/dp_60"
                 android:layout_gravity="center"
                 app:stl_indicatorWithoutPadding="true"
                 app:stl_indicatorInterpolation="smart"
@@ -64,5 +65,10 @@
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-
+    <ImageView
+        android:id="@+id/ivBack"
+        android:layout_marginTop="@dimen/dp_33"
+        android:layout_width="@dimen/dp_30"
+        android:layout_height="@dimen/dp_30"
+        android:padding="@dimen/dp_5" />
 </FrameLayout>

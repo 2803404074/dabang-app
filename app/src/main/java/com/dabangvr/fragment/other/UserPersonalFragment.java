@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 
@@ -44,11 +45,10 @@ public class UserPersonalFragment extends BaseFragment {
 
     @Override
     public void initView() {
-        for (int i = 0; i < 10; i++) {
-            mData.add("");
-        }
 
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
         adapter = new RecyclerAdapter<String>(getContext(),mData,R.layout.item_user_personal) {
             @Override
             public void convert(Context mContext, BaseRecyclerHolder holder, String o) {
@@ -60,9 +60,12 @@ public class UserPersonalFragment extends BaseFragment {
 
     @Override
     public void initData() {
+        for (int i = 0; i < 10; i++) {
+            mData.add("");
+        }
         Map<String,Object> map = new HashMap<>();
-        map.put("page",1);
-        map.put("limit",20);
+        map.put("mallSpeciesId",8);
+
         //获取标签
         OkHttp3Utils.getInstance(MyApplication.getInstance()).doPostJson(DyUrl.getChannelMenuList, map, new ObjectCallback<String>(MyApplication.getInstance()) {
             @Override
