@@ -52,6 +52,7 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     public void initView() {
+        setLoaddingView(true);
         List<String> mTitles = new ArrayList<>();
         mTitles.add("关注");
         mTitles.add("发现");
@@ -63,7 +64,7 @@ public class HomeFragment extends BaseFragment {
         mFragments.add(new HomeFragmentTiaoTiao());
         homeFragmentRecommend = new HomeFragmentRecommend();
         mFragments.add(homeFragmentRecommend);
-        contentAdapter = new ContentPagerAdapter(getFragmentManager(),mTitles,mFragments);
+        contentAdapter = new ContentPagerAdapter(getChildFragmentManager(),mTitles,mFragments);
         viewPager.setAdapter(contentAdapter);
         tabLayout.setViewPager(viewPager);
         viewPager.setCurrentItem(1);
@@ -97,6 +98,7 @@ public class HomeFragment extends BaseFragment {
                 EventBus.getDefault().post(new ReadEvent("1001", 1001, String.valueOf(position)));
             }
         });
+        setLoaddingView(false);
     }
 
     @OnClick({R.id.ivSearch,R.id.ivMess})

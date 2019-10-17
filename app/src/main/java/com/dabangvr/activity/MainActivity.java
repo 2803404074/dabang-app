@@ -70,11 +70,11 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     @SuppressLint("WrongConstant")
     @Override
     public void initView() {
+        setLoaddingView(true);
         navView.setLabelVisibilityMode(1);
         fragmentManager = getSupportFragmentManager();
         navView.setOnNavigationItemSelectedListener(this);
         changeFragment(0);
-
     }
 
     @Override
@@ -84,6 +84,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         if (null == userMess){
             goTActivity(LoginActivity.class,null);
             AppManager.getAppManager().finishActivity(MainActivity.class);
+            return;
         }
 
         if (userMess.isNewsUser()){
@@ -91,6 +92,8 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         }else {
             loginToHx(String.valueOf(userMess.getId()),"123");
         }
+
+        setLoaddingView(false);
     }
 
     private void registerHX(final String name, final String pass) {
@@ -102,7 +105,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
                     loginToHx(name, pass);
                     UserMess userMess =  SPUtils.instance(getContext()).getUser();
                     userMess .setNewsUser(false);
-                    SPUtils.instance(getContext()).putUser(userMess.toString());
+                    SPUtils.instance(getContext()).putUser(userMess);
                 } catch (final HyphenateException e) {
                     e.printStackTrace();
                     int errorCode=e.getErrorCode();
@@ -289,9 +292,8 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     @Override
     public void change(boolean isCheck,boolean s) {
         if (isCheck) {
-            navView.getBackground().setAlpha(0);
+            navView.setVisibility(View.GONE);
         } else {
-            navView.getBackground().setAlpha(255);
             navView.setVisibility(View.VISIBLE);
         }
     }

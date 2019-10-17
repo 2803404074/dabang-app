@@ -21,7 +21,6 @@ public class DyUrl {
     //直播标签列表
     public static final String getLiveCategoryList = "api/live/getLiveCategoryList";
 
-
     // 个人中心菜单接口
     public static final String getChannelMenuList = "/api/config/getChannelMenuList";
 }

@@ -1,101 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
-    android:background="@mipmap/test"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/test">
 
     <com.pili.pldroid.player.widget.PLVideoTextureView
         android:id="@+id/video_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center" />
 
 
     <LinearLayout
         android:id="@+id/llmess"
-        android:layout_above="@+id/tvTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/dp_10"
-        android:orientation="horizontal">
+        android:layout_above="@+id/tvTitle"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp_10">
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/sdvHead"
-            android:layout_centerHorizontal="true"
             android:layout_width="@dimen/dp_45"
             android:layout_height="@dimen/dp_45"
+            android:layout_centerHorizontal="true"
             fresco:roundAsCircle="true" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/sp_21"
-            android:layout_gravity="center"
-            android:layout_marginHorizontal="@dimen/dp_5"
-            android:textColor="@color/colorWhite"
-            android:text="1299酒庄"
-            android:textStyle="bold"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="关注"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="@dimen/dp_5"
+            android:text="1299酒庄"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/sp_21"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/shape_style_yellow_org"
             android:paddingHorizontal="@dimen/dp_10"
             android:paddingVertical="@dimen/dp_2"
-            android:layout_gravity="center"
-            android:textColor="@android:color/white"
-            android:background="@drawable/shape_style_yellow_org"/>
+            android:text="关注"
+            android:textColor="@android:color/white" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/tvTitle"
-        android:layout_alignParentBottom="true"
         android:layout_width="@dimen/dp_250"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/sp_15"
+        android:layout_alignParentBottom="true"
         android:padding="@dimen/dp_10"
-        android:layout_marginBottom="@dimen/dp_70"
-        android:text="欢迎各位新老顾客买酒啦，买一送一啦，买一红酒送白酒"/>
+        android:text="欢迎各位新老顾客买酒啦，买一送一啦，买一红酒送白酒"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp_15" />
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/sdvMusic"
+        android:layout_width="@dimen/dp_55"
+        android:layout_height="@dimen/dp_55"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/dp_10"
+        fresco:roundAsCircle="true" />
 
     <LinearLayout
-        android:layout_above="@+id/llmess"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_above="@+id/llmess"
+        android:layout_alignParentRight="true"
         android:layout_marginRight="@dimen/dp_5"
-        android:layout_alignParentRight="true">
+        android:orientation="vertical">
 
         <ImageView
             android:layout_width="@dimen/dp_40"
             android:layout_height="@dimen/dp_40"
             android:padding="@dimen/dp_5"
-            android:src="@mipmap/love"/>
+            android:src="@mipmap/love" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="156"
-            android:textColor="@android:color/white"
-            android:layout_gravity="center"/>
+            android:textColor="@android:color/white" />
+
         <ImageView
             android:layout_width="@dimen/dp_40"
             android:layout_height="@dimen/dp_40"
-            android:padding="@dimen/dp_5"
             android:layout_marginTop="@dimen/dp_15"
-            android:src="@mipmap/comment"/>
+            android:padding="@dimen/dp_5"
+            android:src="@mipmap/comment" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="156"
-            android:textColor="@android:color/white"
-            android:layout_gravity="center"/>
+            android:textColor="@android:color/white" />
+
         <ImageView
             android:layout_width="@dimen/dp_40"
             android:layout_height="@dimen/dp_40"
-            android:padding="@dimen/dp_5"
             android:layout_marginTop="@dimen/dp_15"
-            android:src="@mipmap/share"/>
+            android:padding="@dimen/dp_5"
+            android:src="@mipmap/share" />
     </LinearLayout>
 
 

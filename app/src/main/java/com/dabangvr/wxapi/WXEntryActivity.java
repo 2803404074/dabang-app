@@ -27,11 +27,13 @@ import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.HashMap;
+
 import okhttp3.Call;
 
 public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
@@ -125,7 +127,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                     JSONObject object = new JSONObject(result);
                     if (StringUtils.isEmpty(result)) {
                         finish();
-                        return ;
+                        return;
                     }
                     String openId = object.optString("openid");
                     String nickname = object.optString("nickname");
@@ -146,6 +148,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
             }
         });
     }
+
     private void senMyServer(final String openID, final String uName, final String icon, final String type) {
         OkHttp3Utils.desInstance();
         HashMap<String, String> map = new HashMap<>();
@@ -157,27 +160,20 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
         OkHttp3Utils.getInstance(this).doPost(UserUrl.login, map, new ObjectCallback<String>(this) {
             @Override
             public void onUi(String result) {
-                try {
-                    JSONObject data = new JSONObject(result);
-                    String userStr = data.optString("user");
-                    SPUtils.instance(WXEntryActivity.this).putUser(userStr);
-
-                    //判断是否首次登陆
-                    boolean isFirst = (boolean) SPUtils.instance(getApplicationContext()).getkey("isFirst",true);
-                    if (isFirst){//首次
-                        Intent intent = new Intent(WXEntryActivity.this,WellComePageActivity.class);
-                        startActivity(intent);
-                    }else {
-                        Intent intent = new Intent(WXEntryActivity.this,MainActivity.class);
-                        startActivity(intent);
-                    }
-                    AppManager.getAppManager().finishActivity(WXEntryActivity.class);
-                    AppManager.getAppManager().finishActivity(LoginActivity.class);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    AppManager.getAppManager().finishActivity(WXEntryActivity.class);
+                SPUtils.instance(WXEntryActivity.this).putUser(result);
+                //判断是否首次登陆
+                boolean isFirst = (boolean) SPUtils.instance(getApplicationContext()).getkey("isFirst", true);
+                if (isFirst) {//首次
+                    Intent intent = new Intent(WXEntryActivity.this, WellComePageActivity.class);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(WXEntryActivity.this, MainActivity.class);
+                    startActivity(intent);
                 }
+                AppManager.getAppManager().finishActivity(WXEntryActivity.class);
+                AppManager.getAppManager().finishActivity(LoginActivity.class);
             }
+
             @Override
             public void onFailed(String msg) {
                 Toast.makeText(WXEntryActivity.this, "登陆失败", Toast.LENGTH_LONG).show();

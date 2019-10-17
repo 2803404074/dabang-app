@@ -1,6 +1,5 @@
 package com.dabangvr.live.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -14,9 +13,6 @@ import android.graphics.Rect;
 import android.graphics.Shader;
 import android.graphics.Xfermode;
 import android.hardware.Camera;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -26,13 +22,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.bumptech.glide.Glide;
+
 import com.dabangvr.R;
 import com.dabangvr.adapter.BaseRecyclerHolder;
 import com.dabangvr.adapter.RecyclerAdapter;
-import com.dabangvr.live.widget.CameraPreviewFrameView;
 import com.dabangvr.live.widget.LiveFunctionView;
 import com.dbvr.baselibrary.model.GiftMo;
 import com.dbvr.baselibrary.model.LiveComment;
@@ -43,8 +39,8 @@ import com.dbvr.baselibrary.utils.Conver;
 import com.dbvr.baselibrary.utils.DataUtil;
 import com.dbvr.baselibrary.utils.DialogUtil;
 import com.dbvr.baselibrary.utils.SPUtils;
-import com.dbvr.baselibrary.utils.StringUtils;
 import com.dbvr.baselibrary.view.AppManager;
+import com.dbvr.httplibrart.constans.DyUrl;
 import com.dbvr.httplibrart.utils.ObjectCallback;
 import com.dbvr.httplibrart.utils.OkHttp3Utils;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -56,51 +52,31 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.exceptions.HyphenateException;
-import com.qiniu.android.dns.DnsManager;
-import com.qiniu.android.dns.IResolver;
-import com.qiniu.android.dns.NetworkInfo;
-import com.qiniu.android.dns.http.DnspodFree;
-import com.qiniu.android.dns.local.AndroidDnsServer;
-import com.qiniu.android.dns.local.Resolver;
-import com.qiniu.pili.droid.streaming.AudioSourceCallback;
 import com.qiniu.pili.droid.streaming.CameraStreamingSetting;
 import com.qiniu.pili.droid.streaming.MediaStreamingManager;
-import com.qiniu.pili.droid.streaming.StreamStatusCallback;
 import com.qiniu.pili.droid.streaming.StreamingProfile;
-import com.qiniu.pili.droid.streaming.StreamingSessionListener;
 import com.qiniu.pili.droid.streaming.StreamingState;
-import com.qiniu.pili.droid.streaming.StreamingStateChangedListener;
 import com.qiniu.pili.droid.streaming.WatermarkSetting;
 
 import org.json.JSONException;
 
-import java.io.IOException;
-import java.net.InetAddress;
 import java.net.URISyntaxException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
+
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.qiniu.pili.droid.streaming.AVCodecType.SW_VIDEO_WITH_SW_AUDIO_CODEC;
 
-public class LiveActivity extends Activity implements
-        StreamingStateChangedListener,
-        StreamStatusCallback,
-        AudioSourceCallback,
-        StreamingSessionListener {
-    @BindView(R.id.cameraPreview_surfaceView)
-    CameraPreviewFrameView cameraPreviewFrameView;
+public class LiveActivity extends BaseLiveActivity {
 
-    private MediaStreamingManager mMediaStreamingManager;
+    private CameraStreamingSetting camerasetting;
+    private WatermarkSetting watermarkSetting;
+
     private StreamingProfile mProfile;
     private String TAG = "StreamingByCameraActivity";
-    //更新评论内容，handle
-    private final int handleMessRequestCode = 100;
-
-    private Context mContext;
 
     @BindView(R.id.ll_notice)
     LinearLayout llNotice;//预览提示
@@ -127,7 +103,6 @@ public class LiveActivity extends Activity implements
     @BindView(R.id.charCounter)
     Chronometer chronometer;//计时器
     private int miss = 0;//总秒数
-
 
     private boolean isStart = false;//未开始直播或正在直播标志
     @BindView(R.id.tvFinishLive)
@@ -162,116 +137,29 @@ public class LiveActivity extends Activity implements
     //礼物数据源
     private List<GiftMo> giftList = new ArrayList<>();
 
-    //消息数量，始终将最新消息显示在recycelview的底部
-    private int dataSize;
-
-    private UserMess userMess;
-    Handler handler = new Handler(new Handler.Callback() {
-        @Override
-        public boolean handleMessage(Message msg) {
-            if (msg.what == handleMessRequestCode) {
-                ArrayList data = msg.getData().getParcelableArrayList("data");
-                dataSize++;
-                recyclerView.smoothScrollToPosition(dataSize);
-                commentAdapter.addAll(data);
-            }
-            return false;
-        }
-    });
-
-
-    private void setNotifyUi(LiveComment liveComment) {
-        Log.e("HyListener", "收到消息:" + liveComment.toString());
-        switch (liveComment.getMsgTag()) {
-            case Contents.HY_JOIN://评论消息
-                Bundle bundle3 = new Bundle();
-                ArrayList arr3 = new ArrayList();
-                arr3.add(liveComment);
-                bundle3.putStringArrayList("data", arr3);
-                Message message3 = new Message();
-                message3.what = handleMessRequestCode;
-                message3.setData(bundle3);
-                handler.sendMessage(message3);
-                break;
-            case Contents.HY_SERVER://评论消息
-                Bundle bundle2 = new Bundle();
-                ArrayList arr2 = new ArrayList();
-                arr2.add(liveComment);
-                bundle2.putStringArrayList("data", arr2);
-                Message message2 = new Message();
-                message2.what = handleMessRequestCode;
-                message2.setData(bundle2);
-                handler.sendMessage(message2);
-                break;
-            case Contents.HY_COMMENT://评论消息
-                Bundle bundle = new Bundle();
-                ArrayList arr = new ArrayList();
-                arr.add(liveComment);
-                bundle.putStringArrayList("data", arr);
-                Message message = new Message();
-                message.what = handleMessRequestCode;
-                message.setData(bundle);
-                handler.sendMessage(message);
-                break;
-            case Contents.HY_DM://弹幕消息
-                break;
-            case Contents.HY_DS://打赏消息
-                Log.e("HyListener", "收到打赏消息:" + liveComment.toString());
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        //打赏人头像
-                        sdvDsHead.setImageURI(liveComment.getHeadUrl());
-                        tvDsName.setText(liveComment.getUserName());
-                        for (int i = 0; i < giftList.size(); i++) {
-                            if (giftList.get(i).getId() == liveComment.getMsgDsComment().getGiftTag()) {
-                                Glide.with(getApplicationContext()).load(giftList.get(i).getGiftUrl()).into(ivDsContent);
-                                tvTbSy.setText("收益+" + giftList.get(i).getGiftCoins());
-                                giftNum += Double.valueOf(giftList.get(i).getGiftCoins());
-                                break;
-                            }
-                        }
-                        List<View> list = new ArrayList<>();
-                        list.add(llDsView);
-                        list.add(tvTbSy);
-                    }
-                });
-                break;
-            case Contents.HY_ORDER://下单消息
-                break;
-            case Contents.HY_DZ://点赞消息,收到一条累计
-                tvDzNum.setText("赞 "+dzNum);
-                break;
-        }
-    }
     private int dzNum = 0;//点赞累加
     private double giftNum = 0;//礼物收益累加
 
+    private UserMess userMess;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_live);
-        mContext = this;
-        ButterKnife.bind(this);
-
-        //初始化用户信息
-        initUserDate();
-
-        //初始化直播控件
-        initLive();
-
-        //初始化评论框
-        initCommentUi();
-
-        //初始化礼物列表
-        initGift();
-
+    public int setLayout() {
+        return R.layout.activity_live;
     }
 
-    private CameraStreamingSetting camerasetting;
-    private WatermarkSetting watermarkSetting;
+    @Override
+    public void initUser() {
+        llNotice.setVisibility(View.VISIBLE);
+        userMess = SPUtils.instance(this).getUser();
+        tvNickName.setText(userMess.getNickName());
+        sdvHead.setImageURI(userMess.getHeadUrl());
+        tvOnLine.setText("在线  " + 0);
+        tvDzNum.setText("赞  " + userMess.getPraisedNumber());
+        tvFinishLive.setText("开始直播");
+    }
 
-    private void initLive() {
+    @Override
+    public void initLiveView() {
         String publishURLFromServer = getIntent().getStringExtra("streamUrl");
         mProfile = new StreamingProfile();
         try {
@@ -322,26 +210,12 @@ public class LiveActivity extends Activity implements
         watermarkSetting = new WatermarkSetting(this);
         watermarkSetting.setInJustDecodeBoundsEnabled(false);
         mMediaStreamingManager.updateWatermarkSetting(watermarkSetting);
+    }
+
+    @Override
+    public void initCommentView() {
         doTopGradualEffect();
-    }
-
-    private void initGift() {
-        OkHttp3Utils.getInstance(mContext).doPostJson("", null, new ObjectCallback<String>(mContext) {
-            @Override
-            public void onUi(String result) throws JSONException {
-                Gson gson = new Gson();
-                List<GiftMo> list = gson.fromJson(result, new TypeToken<List<GiftMo>>() {}.getType());
-                giftList = list;
-            }
-            @Override
-            public void onFailed(String msg) {
-
-            }
-        });
-    }
-
-    private void initCommentUi() {
-        commentAdapter = new RecyclerAdapter<LiveComment>(mContext, commentData, R.layout.item_comment) {
+        commentAdapter = new RecyclerAdapter<LiveComment>(getContext(), commentData, R.layout.item_comment) {
             @Override
             public void convert(Context mContext, BaseRecyclerHolder holder, LiveComment o) {
                 TextView tvMess = holder.getView(R.id.tvMess);
@@ -354,46 +228,92 @@ public class LiveActivity extends Activity implements
                     tvMess.setTextColor(getResources().getColor(R.color.colorWhite));
                 }
 
-                SimpleDraweeView sdvHead = holder.getView(R.id.sdvItemHead);
-                if (StringUtils.isEmpty(o.getHeadUrl())) {
-                    sdvHead.setVisibility(View.GONE);
-                } else {
-                    sdvHead.setImageURI(o.getHeadUrl());
-                    sdvHead.setVisibility(View.VISIBLE);
-                }
+//                SimpleDraweeView sdvHead = holder.getView(R.id.sdvItemHead);
+//                if (StringUtils.isEmpty(o.getHeadUrl())) {
+//                    sdvHead.setVisibility(View.GONE);
+//                } else {
+//                    sdvHead.setImageURI(o.getHeadUrl());
+//                    sdvHead.setVisibility(View.VISIBLE);
+//                }
             }
         };
         recyclerView.setAdapter(commentAdapter);
     }
 
-    private void initUserDate() {
+    @Override
+    public void initGift() {
+        OkHttp3Utils.getInstance(getContext()).doPostJson(DyUrl.getLiveGiftList, null, new ObjectCallback<String>(getContext()) {
+            @Override
+            public void onUi(String result) throws JSONException {
+                Gson gson = new Gson();
+                List<GiftMo> list = gson.fromJson(result, new TypeToken<List<GiftMo>>() {
+                }.getType());
+                giftList = list;
+            }
 
-        llNotice.setVisibility(View.VISIBLE);
+            @Override
+            public void onFailed(String msg) {
 
-        userMess = SPUtils.instance(this).getUser();
-        tvNickName.setText(userMess.getNickName());
-        sdvHead.setImageURI(userMess.getHeadUrl());
-        tvOnLine.setText("在线  " + 0);
-        tvDzNum.setText("赞  " + userMess.getPraisedNumber());
+            }
+        });
+    }
 
-        tvFinishLive.setText("开始直播");
+    /**
+     * 普通评论消息回调
+     * @param data
+     * @param dataSize
+     */
+    @Override
+    public void commentMessCallBack(ArrayList data, int dataSize) {
+        recyclerView.smoothScrollToPosition(dataSize);
+        commentAdapter.addAll(data);
+    }
+
+    /**
+     * 礼物消息回调
+     * @param head
+     * @param uName
+     * @param num
+     * @param gName
+     * @param money
+     */
+    @Override
+    public void giftMessCallBack(String head, String uName, int num, String gName, int money) {
 
     }
 
     /**
-     * 推流成功后执行的方法
+     * 点赞消息回调
+     */
+    @Override
+    public void dzMessCallBack() {
+
+    }
+
+    /**
+     * 弹幕消息回调
+     * @param head
+     * @param name
+     * @param content
+     */
+    @Override
+    public void dmMessCallBack(String head, String name, String content) {
+
+    }
+
+
+    /**
+     * 推流方法
      * 1):联系环信，创建房间，
      * 2):倒计时即使，重连情况下获取上次最后断开连接的时间，继续计时
      */
     private void startFunction() {
-
         //开始推流
         new Thread(new Runnable() {
             @Override
             public void run() {
                 if (mMediaStreamingManager != null) {
                     mMediaStreamingManager.startStreaming();
-
                 }
             }
         }).start();
@@ -405,7 +325,7 @@ public class LiveActivity extends Activity implements
 
         llNotice.setVisibility(View.GONE);//隐藏提示
         tvFinishLive.setText("结束直播");
-        tvFinishLive.setBackgroundResource(R.drawable.shape_style_db_green);
+        tvFinishLive.setBackgroundResource(R.drawable.shape_red);
 
     }
 
@@ -475,64 +395,25 @@ public class LiveActivity extends Activity implements
         });
     }
 
-    /**
-     * 推流结束（主播主动结束）执行的方法
-     * 大邦这无敌牛逼的需求
-     * 1）：结束流
-     * 2）：释放计时资源
-     * 3）：释放弹幕资源
-     * 4）：释放静态引用资源
-     * 5）：获取总直播时间（计时器）
-     * 6）：获取本次获赞数
-     * 7）：获取本次关注数
-     * 8）：获取本次观看数
-     * 9）：获取本次礼物收益
-     * 10）：获取本次成交的订单数
-     */
     public void stopFunction() {
-
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     EMClient.getInstance().chatroomManager().destroyChatRoom(roomNumber);
+                    Intent intent = new Intent(getContext(), LiveFinishActivity.class);
+                    intent.putExtra("liveTime", DataUtil.formatMiss(miss));
+                    intent.putExtra("liveSeeNum", String.valueOf(onLineNumber));
+                    intent.putExtra("liveAddFansNum", "0");//没做
+                    intent.putExtra("liveDzNum", String.valueOf(dzNum));
+                    intent.putExtra("liveGiftNum", String.valueOf(giftNum));
+                    startActivity(intent);
+                    finish();
                 } catch (HyphenateException e) {
                     e.printStackTrace();
                 }
             }
         }).start();
-
-        Intent intent = new Intent(mContext, LiveFinishActivity.class);
-        intent.putExtra("liveTime", DataUtil.formatMiss(miss));
-        intent.putExtra("liveSeeNum",String.valueOf(onLineNumber));
-        intent.putExtra("liveAddFansNum","0");//没做
-        intent.putExtra("liveDzNum",String.valueOf(dzNum));
-        intent.putExtra("liveGiftNum",String.valueOf(giftNum));
-        startActivity(intent);
-        finish();
-    }
-
-    /**
-     * 创建环信房间
-     * 后端创建
-     */
-    private String roomNumber;
-
-    private void createHyRoom() {
-        OkHttp3Utils.getInstance(mContext).doPostJson("", null, new ObjectCallback<String>(mContext) {
-            @Override
-            public void onUi(String result) throws JSONException {
-                roomNumber = result;
-                tvRoomNumber.setText("房间号:" + roomNumber);
-                //注册消息监听
-                EMClient.getInstance().chatManager().addMessageListener(msgListener);
-            }
-
-            @Override
-            public void onFailed(String msg) {
-
-            }
-        });
     }
 
     @OnClick({R.id.tvFinishLive, R.id.ll_goods, R.id.ivFunction, R.id.ivChangeCame})
@@ -554,8 +435,8 @@ public class LiveActivity extends Activity implements
                     @Override
                     public void setView(View view) {
                         RecyclerView recycleGoods = view.findViewById(R.id.recycler_head);
-                        recycleGoods.setLayoutManager(new LinearLayoutManager(mContext));
-                        RecyclerAdapter adapter = new RecyclerAdapter<String>(mContext, test, R.layout.item_live_goods) {
+                        recycleGoods.setLayoutManager(new LinearLayoutManager(getContext()));
+                        RecyclerAdapter adapter = new RecyclerAdapter<String>(getContext(), test, R.layout.item_live_goods) {
                             @Override
                             public void convert(Context mContext, BaseRecyclerHolder holder, String o) {
 
@@ -591,16 +472,7 @@ public class LiveActivity extends Activity implements
                                 break;
                             //开启闪光
                             case R.id.llOpenLight:
-                                TextView textView = view1.findViewById(R.id.tvOnOffLine);
-                                if (isLight) {
-                                    mMediaStreamingManager.turnLightOff();
-                                    isLight = false;
-                                    textView.setText("打开闪光灯");
-                                } else {
-                                    mMediaStreamingManager.turnLightOn();
-                                    isLight = true;
-                                    textView.setText("关闭闪光灯");
-                                }
+
                                 break;
                             //录屏
                             case R.id.llScreen:
@@ -618,8 +490,6 @@ public class LiveActivity extends Activity implements
                 break;
         }
     }
-
-    private boolean isLight = false;//闪光灯打开标志
 
     private int mp = 0;//磨皮
     private int mb = 0;//美白
@@ -715,9 +585,9 @@ public class LiveActivity extends Activity implements
                 }
             });
             TextView tvDate = holder.findViewById(R.id.tv_tips);
-            tvDate.setText("你已直播时长："+DataUtil.formatMiss(miss));
+            tvDate.setText("你已直播时长：" + DataUtil.formatMiss(miss));
             TextView tvSeeNum = holder.findViewById(R.id.tvPersonNum);
-            tvSeeNum.setText("当前人数已到达："+dzNum+"人");
+            tvSeeNum.setText("当前人数已到达：" + dzNum + "人");
 
         });
     }
@@ -726,88 +596,6 @@ public class LiveActivity extends Activity implements
     protected void onResume() {
         super.onResume();
         mMediaStreamingManager.resume();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        LiveFunctionView.getInstance(LiveActivity.this).destroy();
-        BottomDialogUtil2.getInstance(this).dess();
-        DialogUtil.getInstance(this).des();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        // You must invoke pause here.
-        mMediaStreamingManager.pause();
-        //mediaPlayer.pause();
-    }
-
-
-    @Override
-    public void onStateChanged(StreamingState streamingState, Object extra) {
-        switch (streamingState) {
-            case PREPARING:
-                Log.e(TAG, "PREPARING");
-                break;
-            case READY:
-                Log.e(TAG, "READY");
-                if (!isStart) {
-                    setNotifyUi(new LiveComment(Contents.HY_SERVER, "跳跳直播", Contents.appLogo, "正在连接..."));
-                }
-                break;
-            case CONNECTING:
-                Log.e(TAG, "连接中");
-                setNotifyUi(new LiveComment(Contents.HY_SERVER, "跳跳直播", Contents.appLogo, "连接成功..."));
-                break;
-            case STREAMING:
-                Log.e(TAG, "推流中");
-                if (!isStart) {
-                    setNotifyUi(new LiveComment(Contents.HY_SERVER, "跳跳直播", Contents.appLogo, "跳跳已万事具备，只欠您的表演,开始吧！"));
-                    //开始计时
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            chronometer.setBase(SystemClock.elapsedRealtime());
-                            int hour = (int) ((SystemClock.elapsedRealtime() - chronometer.getBase()) / 1000 / 60);
-                            chronometer.setFormat("0" + String.valueOf(hour) + ":%s");
-                            chronometer.start();
-
-                            chronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
-
-                                @Override
-                                public void onChronometerTick(Chronometer ch) {
-                                    miss++;
-                                }
-                            });
-                        }
-                    });
-                    isStart = true;
-                }
-                break;
-            case SHUTDOWN:
-                Log.e(TAG, "直播中断");
-                chronometer.stop();
-                setNotifyUi(new LiveComment(Contents.HY_SERVER, "跳跳直播", Contents.appLogo, "跳跳中断..."));
-                break;
-            case IOERROR:
-                Log.e(TAG, "网络连接失败");
-                chronometer.stop();
-                setNotifyUi(new LiveComment(Contents.HY_SERVER, "跳跳直播", Contents.appLogo, "网络连接失败..."));
-                break;
-            case OPEN_CAMERA_FAIL:
-                Log.e(TAG, "摄像头打开失败");
-                break;
-            case DISCONNECTED:
-                Log.e(TAG, "已经断开连接");
-                chronometer.stop();
-                setNotifyUi(new LiveComment(Contents.HY_SERVER, "跳跳直播", Contents.appLogo, "已经断开连接..."));
-                break;
-            case TORCH_INFO:
-                Log.e(TAG, "开启闪光灯");
-                break;
-        }
     }
 
     @Override
@@ -910,58 +698,6 @@ public class LiveActivity extends Activity implements
         return super.onKeyDown(keyCode, event);
     }
 
-    EMMessageListener msgListener = new EMMessageListener() {
-
-        @Override
-        public void onMessageReceived(List<EMMessage> messages) {
-            Log.e("HyListener", "onMessageReceived:" + messages.toString());
-            for (EMMessage message : messages) {
-                String username = null;
-                // 群组消息
-                if (message.getChatType() == EMMessage.ChatType.GroupChat || message.getChatType() == EMMessage.ChatType.ChatRoom) {
-                    username = message.getTo();
-                } else {
-                    // 单聊消息
-                    username = message.getFrom();
-                }
-                Log.e("HyListener", "onMessageReceived:" + username);
-                // 如果是当前会话的消息，刷新聊天页面
-                if (username.equals(roomNumber)) {
-                    EMTextMessageBody txtBody = (EMTextMessageBody) message.getBody();
-                    Gson gson = new Gson();
-                    LiveComment liveComment = gson.fromJson(txtBody.getMessage(), LiveComment.class);
-                    setNotifyUi(liveComment);
-                }
-            }
-        }
-
-        @Override
-        public void onCmdMessageReceived(List<EMMessage> messages) {
-            // 收到透传消息
-            Log.e("HyListener", "onCmdMessageReceived:" + messages.toString());
-        }
-
-        @Override
-        public void onMessageRead(List<EMMessage> list) {
-            Log.e("HyListener", "onMessageRead:" + list.toString());
-        }
-
-        @Override
-        public void onMessageDelivered(List<EMMessage> list) {
-            Log.e("HyListener", "onMessageDelivered:" + list.toString());
-        }
-
-        @Override
-        public void onMessageRecalled(List<EMMessage> list) {
-            Log.e("HyListener", "onMessageRecalled:" + list.toString());
-        }
-
-        @Override
-        public void onMessageChanged(EMMessage emMessage, Object o) {
-            Log.e("HyListener", "onMessageChanged:" + o.toString());
-        }
-    };
-
     private int mCurrentCamFacingIndex;
 
     private void changeCamera() {
@@ -983,23 +719,6 @@ public class LiveActivity extends Activity implements
                 mMediaStreamingManager.switchCamera(facingId);
             }
         }).start();
-    }
-
-    /**
-     * @author:
-     * @create at: 2018/11/14  10:57
-     * @Description: 防止 Dns 被劫持
-     */
-    private static DnsManager getMyDnsManager() {
-        IResolver r0 = null;
-        IResolver r1 = new DnspodFree();
-        IResolver r2 = AndroidDnsServer.defaultResolver();
-        try {
-            r0 = new Resolver(InetAddress.getByName("119.29.29.29"));
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        return new DnsManager(NetworkInfo.normal, new IResolver[]{r0, r1, r2});
     }
 
 }
