@@ -89,6 +89,7 @@ public class UserPersonalFragment extends BaseFragment {
                         break;
                     case ParameterContens.CLIENT_SZ:  //设置
                         goTActivity(UserSettingActivity.class, null);
+
                         break;
                     case ParameterContens.CLIENT_FK://反馈
                         break;
