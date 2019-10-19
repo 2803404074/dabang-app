@@ -8,7 +8,7 @@ import com.dbvr.baselibrary.ui.LoadingUtils;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
 import com.r0adkll.slidr.Slidr;
 
-import org.greenrobot.eventbus.EventBus;
+
 
 import java.util.Map;
 import butterknife.ButterKnife;

@@ -16,11 +16,14 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.dabangvr.R;
+import com.dabangvr.adapter.AddHeaderAdapter;
 import com.dabangvr.adapter.BaseRecyclerHolder;
 import com.dabangvr.adapter.MoreItemAdapter;
 import com.dabangvr.adapter.RecyclerAdapter;
 import com.dabangvr.adapter.RecyclerAdapterPosition;
+import com.dabangvr.application.MyApplication;
 import com.dbvr.baselibrary.eventBus.ReadEvent;
 import com.dbvr.baselibrary.model.HomeFindMo;
 import com.dbvr.baselibrary.model.PlayMode;
@@ -79,8 +82,9 @@ public class HomeFragmentFind extends BaseFragment {
         }
         //橫型主播類型
         String str = (String) SPUtils.instance(getActivity()).getkey("AnchorList", "");
-        List<PlayMode> data = new Gson().fromJson(str, new TypeToken<List<PlayMode>>() {}.getType());
-        if (data == null){
+        List<PlayMode> data = new Gson().fromJson(str, new TypeToken<List<PlayMode>>() {
+        }.getType());
+        if (data == null) {
             data = new ArrayList<>();
         }
 
@@ -118,24 +122,18 @@ public class HomeFragmentFind extends BaseFragment {
                 RecyclerView recyclerView = holder.getView(R.id.recycler_head);
                 switch (s.getmType()) {
                     case 0:
-                        LinearLayoutManager manager = new LinearLayoutManager(getContext());
-                        manager.setOrientation(RecyclerView.HORIZONTAL);
+                        LinearLayoutManager manager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
                         recyclerView.setLayoutManager(manager);
-
-                        RecyclerAdapter adapter = new RecyclerAdapter<PlayMode>(getContext(), finalData, R.layout.item_head) {
+                        AddHeaderAdapter addHeaderAdapter = new AddHeaderAdapter(finalData, getContext());
+                        View view = View.inflate(getContext(), R.layout.fragment_find_head, null);
+                        ImageView headimage = view.findViewById(R.id.v_user_hean);
+                        Glide.with(getActivity()).load(R.mipmap.gif_zb).into(headimage);
+                        addHeaderAdapter.addHeaderView(view);
+                        recyclerView.setAdapter(addHeaderAdapter);
+                        addHeaderAdapter.setItemOnClickListener(new AddHeaderAdapter.ItemOnClickListener() {
                             @Override
-                            public void convert(Context mContext, BaseRecyclerHolder holder, PlayMode mode) {
-                                SimpleDraweeView sdvHead = holder.getView(R.id.sdvHead);
-                                holder.setText(R.id.tv_nickName, mode.getNickName());
-                                sdvHead.setImageURI(mode.getHeadUrl());
-
-                            }
-                        };
-                        recyclerView.setAdapter(adapter);
-                        adapter.setOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(View view, int position) {
-                                Log.d("luhuas", "onItemClick: item0==" + position);
+                            public void onClickListener(int position) {
+                                Log.d("luhuas", "onItemClick: item0==" + position + "==" + finalData.get(position).getNickName());
                             }
                         });
                         break;

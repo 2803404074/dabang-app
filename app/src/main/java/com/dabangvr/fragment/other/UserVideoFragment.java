@@ -2,6 +2,8 @@ package com.dabangvr.fragment.other;
 
 import android.content.Context;
 import android.os.Build;
+import android.util.Log;
+import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -55,8 +57,12 @@ public class UserVideoFragment extends BaseFragment {
             }
         };
         recyclerView.setAdapter(adapter);
-
-
+        adapter.setOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Log.d("luhuas", "ovider=nItemClick: "+position);
+            }
+        });
 
 
 

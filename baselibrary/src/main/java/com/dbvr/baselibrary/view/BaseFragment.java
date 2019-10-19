@@ -10,12 +10,14 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+
 
 import com.dbvr.baselibrary.ui.LoadingUtils;
+import com.dbvr.baselibrary.utils.SPUtils;
 
 import java.util.Map;
 
+import androidx.fragment.app.Fragment;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -112,6 +114,9 @@ public abstract class BaseFragment extends Fragment {
             }
         }
         startActivityForResult(intent,requestCode);
+    }
+    public String getToken(){
+        return (String) SPUtils.instance(BaseFragment.this.getContext()).getkey("token","");
     }
 
     @Override

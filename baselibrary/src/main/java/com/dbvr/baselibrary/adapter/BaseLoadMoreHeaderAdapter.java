@@ -1,16 +1,15 @@
-package com.dabangvr.adapter;
+package com.dbvr.baselibrary.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.List;
 
-public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<BaseRecyclerHolder> {
+import androidx.recyclerview.widget.RecyclerView;
+
+public abstract class BaseLoadMoreHeaderAdapter<T> extends RecyclerView.Adapter<BaseRecyclerHolder> {
     private Context mContext;
     private boolean isLoading = false;
     private OnLoadMoreListener mOnLoadMoreListener;
@@ -27,11 +26,12 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<BaseRecycl
     public static final int TYPE_FOOTER = 1;  //说明是带有Footer的
     public static final int TYPE_NORMAL = 2;  //说明是不带有header和footer的
 
-    public RecyclerAdapter(Context mContext, List<T> mDatas, int mLayoutId) {
+    public BaseLoadMoreHeaderAdapter(Context mContext, RecyclerView recyclerView, List<T> mDatas, int mLayoutId) {
         this.mContext = mContext;
         this.mDatas = mDatas;
         this.mLayoutId = mLayoutId;
     }
+
 
     public void updateData(List<T> data) {
         mDatas.clear();
@@ -53,8 +53,8 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<BaseRecycl
         notifyDataSetChanged();
     }
 
-    public void addPosition(T data,int position) {
-        mDatas.add(position, data);
+    public void addAll2(T data) {
+        mDatas.add(0, data);
         notifyDataSetChanged();
     }
 

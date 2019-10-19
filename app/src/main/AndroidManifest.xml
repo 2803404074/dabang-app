@@ -46,6 +46,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".activity.UserMessActivity"></activity>
+        <activity android:name=".activity.UserSettingActivity"></activity>
         <activity android:name=".activity.UserHomeActivity" />
         <activity android:name=".activity.FansAndFollowActivity" />
         <activity android:name=".activity.LocationActivity" />
@@ -74,9 +75,11 @@
         <activity android:name=".live.activity.LiveActivity" />
         <activity android:name=".live.activity.CreateLiveActivity" />
         <activity android:name=".activity.MessageActivity" />
+
         <activity android:name=".im.ChatActivity" />
         <activity android:name="com.dbvr.imglibrary2.ui.SelectImageActivity" />
         <activity android:name="com.dbvr.imglibrary2.ui.PreviewImageActivity" />
+        <activity android:name=".fragment.other.Order.MyOrtherActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -101,6 +104,7 @@
                 <data android:scheme="tencent1109644507" /> <!-- 开放平台获取的APPID -->
             </intent-filter>
         </activity>
+
         <activity
             android:name="com.tencent.connect.common.AssistActivity"
             android:screenOrientation="portrait"

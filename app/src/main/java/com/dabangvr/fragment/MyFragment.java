@@ -66,7 +66,6 @@ public class MyFragment extends BaseFragment {
         mTitles.add("回放");
         mFragments = new ArrayList<>();
         mFragments.add(new UserPersonalFragment());
-        mFragments.add(new UserLiveFragment());
         mFragments.add(new UserVideoFragment());
         mFragments.add(new UserDynamicFragment());
         mFragments.add(new UserLiveFragment());

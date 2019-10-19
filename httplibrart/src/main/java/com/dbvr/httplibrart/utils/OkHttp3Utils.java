@@ -69,7 +69,7 @@ public class OkHttp3Utils {
 
     private static OkHttpClient okHttpClient = null;
 
-    public synchronized  OkHttpClient getOkHttpClient() {
+    public synchronized OkHttpClient getOkHttpClient() {
         if (okHttpClient == null) {
             okHttpClient = new OkHttpClient.Builder().connectTimeout(5, TimeUnit.SECONDS)
                     //添加OkHttp3的拦截器
@@ -110,6 +110,7 @@ public class OkHttp3Utils {
 
     /**
      * 請求其他服務的get方法
+     *
      * @param url
      * @param callback
      */
@@ -157,6 +158,7 @@ public class OkHttp3Utils {
 
     /**
      * 表单请求
+     *
      * @param url
      * @param params
      * @param callback
@@ -187,7 +189,7 @@ public class OkHttp3Utils {
      * 参数二：请求的JSON
      * 参数三：请求回调
      */
-    public  void doPostJson(String url, Map<String, Object> map,Callback callback) {
+    public void doPostJson(String url, Map<String, Object> map, Callback callback) {
         Gson gson = new Gson();
         String jsonParams = gson.toJson(map);
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonParams);
@@ -196,10 +198,20 @@ public class OkHttp3Utils {
         call.enqueue(callback);
     }
 
+    public void doPostJson(String url, Map<String, Object> map, String token, Callback callback) {
+        Gson gson = new Gson();
+        String jsonParams = gson.toJson(map);
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonParams);
+        Request request = new Request.Builder().url(DyUrl.BASE + url).addHeader(DyUrl.TOKEN_NAME, token).post(requestBody).build();
+        Call call = getOkHttpClient().newCall(request);
+        call.enqueue(callback);
+    }
+
     /**
      * 上传文件到服务器
+     *
      * @param url
-     * @param map 可以放一个文件，也可以放文件列表
+     * @param map      可以放一个文件，也可以放文件列表
      * @param callback
      */
     public void upLoadFile(String url, Map<String, Object> map, Callback callback) {
@@ -208,17 +220,17 @@ public class OkHttp3Utils {
         MultipartBody.Builder requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM);
         if (map != null) {
             for (Map.Entry entry : map.entrySet()) {
-                if(entry.getValue() instanceof File){
+                if (entry.getValue() instanceof File) {
                     File file = (File) entry.getValue();
                     RequestBody body = RequestBody.create(MediaType.parse("image/*"), file);
                     requestBody.addFormDataPart(valueOf(entry.getKey()), file.getName(), body);
-                }else if(entry.getValue() instanceof java.util.List){
+                } else if (entry.getValue() instanceof java.util.List) {
                     List<File> list = (List<File>) entry.getValue();
-                    for (int i=0;i<list.size();i++){
+                    for (int i = 0; i < list.size(); i++) {
                         RequestBody body = RequestBody.create(MediaType.parse("image/*"), list.get(i));
                         requestBody.addFormDataPart(valueOf(entry.getKey()), list.get(i).getName(), body);
                     }
-                }else {
+                } else {
                     requestBody.addFormDataPart(valueOf(entry.getKey()), valueOf(entry.getValue()));
                 }
             }
@@ -229,7 +241,6 @@ public class OkHttp3Utils {
         Call call = client.newCall(request);
         call.enqueue(callback);
     }
-
 
 
 }

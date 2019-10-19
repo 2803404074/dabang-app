@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#22505151"
+ >
+
+    <androidx.recyclerview.widget.RecyclerView
+
+        android:layout_marginTop="@dimen/dp_5"
+        android:id="@+id/recycler_head"
+        android:layout_marginHorizontal="@dimen/dp_5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/btn_ban_round_bg" />
+</LinearLayout>

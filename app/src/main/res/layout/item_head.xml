@@ -19,7 +19,7 @@
         fresco:progressBarImage="@mipmap/loading"
         fresco:roundAsCircle="true"
         fresco:roundingBorderColor="@color/colorWhite"
-        fresco:roundingBorderWidth="@dimen/dp_5" />
+        fresco:roundingBorderWidth="@dimen/dp_3" />
 
     <TextView
         android:id="@+id/tv_nickName"
