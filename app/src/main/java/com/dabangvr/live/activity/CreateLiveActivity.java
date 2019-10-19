@@ -128,6 +128,7 @@ public class CreateLiveActivity extends BaseActivity {
                 break;
             case R.id.tvCreate:
                 //createLive("http://i2.sinaimg.cn/gm/cr/2015/0113/1969148222.jpg");
+                setLoaddingView(true);
                 judge();
                 break;
                 default:break;
@@ -141,18 +142,22 @@ public class CreateLiveActivity extends BaseActivity {
     private void judge(){
         if (StringUtils.isEmpty(etTitle.getText().toString())){
             ToastUtil.showShort(getContext(),"标题不能留空");
+            setLoaddingView(false);
             return;
         }
         if (StringUtils.isEmpty(etContent.getText().toString())){
             ToastUtil.showShort(getContext(),"内容不能留空");
+            setLoaddingView(false);
             return;
         }
         if (StringUtils.isEmpty(picturePath)){
             ToastUtil.showShort(getContext(),"请添加封面");
+            setLoaddingView(false);
             return;
         }
         if (null == checkItemData || checkItemData.size() == 0){
             ToastUtil.showShort(getContext(),"请添加标签");
+            setLoaddingView(false);
             return;
         }
         OkHttp3Utils.getInstance(this).doPostJson(DyUrl.getUploadConfigToken, null, new ObjectCallback<String>(this) {
@@ -164,7 +169,7 @@ public class CreateLiveActivity extends BaseActivity {
 
             @Override
             public void onFailed(String msg) {
-
+                setLoaddingView(false);
             }
         });
     }
@@ -237,10 +242,12 @@ public class CreateLiveActivity extends BaseActivity {
                 map.put("streamUrl",streamMo.getPublishURL());
                 map.put("streamTag",streamMo.getTag());
                 goTActivity(LiveActivity.class,map);
+                setLoaddingView(false);
             }
 
             @Override
             public void onFailed(String msg) {
+                setLoaddingView(false);
                 ToastUtil.showShort(getContext(),msg);
             }
         });

@@ -2,6 +2,9 @@ package com.dabangvr.fragment.home;
 
 import android.content.Context;
 import android.util.Log;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 import android.widget.ProgressBar;
 
 import com.dabangvr.R;
@@ -47,7 +50,6 @@ public class HomeFragmentRecommend extends LazyFragment{
             public void convert(Context mContext, BaseRecyclerHolder holder, String s) {
                     SimpleDraweeView sdvHead = holder.getView(R.id.sdvHead);
                     sdvHead.setImageURI(userMess==null?"":userMess.getHeadUrl());
-
             }
         };
         recyclerView.setAdapter(adapter);

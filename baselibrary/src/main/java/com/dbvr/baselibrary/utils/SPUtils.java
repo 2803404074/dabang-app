@@ -170,6 +170,12 @@ public class SPUtils {
         put("token",userMess.getToken());
     }
 
+    public void putUser(UserMess userMess){
+        Gson gson = new Gson();
+        String str = gson.toJson(userMess);
+        put("userStr",str);
+    }
+
     public void removeUser(){
         remove("userStr");
         remove("token");

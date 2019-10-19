@@ -1,9 +1,11 @@
 package com.dbvr.baselibrary.model;
 
+import java.io.Serializable;
+
 /**
  * 用户实体类
  */
-public class UserMess {
+public class UserMess implements Serializable {
     private Integer id;
 
     private boolean isNewsUser;

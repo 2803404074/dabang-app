@@ -73,6 +73,7 @@ public class HomeFragmentFind extends BaseFragment {
 
     @Override
     public void initView() {
+        setLoaddingView(true);
         Log.e("eeee", "HomeFragmentFind----initView");
         for (int i = 0; i < 4; i++) {
             dataOn.add("");
@@ -228,6 +229,8 @@ public class HomeFragmentFind extends BaseFragment {
                 mHandler.sendMessageDelayed(message, 2000);
             }
         });
+
+        setLoaddingView(false);
     }
 
     private Handler mHandler = new Handler(new Handler.Callback() {

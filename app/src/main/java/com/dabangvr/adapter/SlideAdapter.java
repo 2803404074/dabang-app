@@ -5,10 +5,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
+
 import androidx.annotation.NonNull;
 import com.dabangvr.R;
 import com.dabangvr.play.widget.MediaController;
 import com.dabangvr.ui.VideoPlayAdapter;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.pili.pldroid.player.AVOptions;
 import com.pili.pldroid.player.widget.PLVideoTextureView;
 import com.pili.pldroid.player.widget.PLVideoView;
@@ -31,6 +36,9 @@ public abstract class SlideAdapter<T> extends VideoPlayAdapter<BaseRecyclerHolde
     private AVOptions options;
     private View loadingView;
 
+    private RotateAnimation rotateAnimation;
+    private SimpleDraweeView sdvMusic;
+
     public void updateData( List<T> mDatas){
         this.mDatas = mDatas;
         notifyDataSetChanged();
@@ -43,6 +51,11 @@ public abstract class SlideAdapter<T> extends VideoPlayAdapter<BaseRecyclerHolde
         this.mLayoutId = mLayoutId;
         mMediaController = new MediaController(mContext);
         setAvOption();
+
+        rotateAnimation = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        rotateAnimation.setInterpolator(new LinearInterpolator());
+        rotateAnimation.setDuration(4000);
+        rotateAnimation.setRepeatCount(Animation.INFINITE);
     }
 
     public void setAdapterInter(AdapterInter adapterInter) {
@@ -99,6 +112,15 @@ public abstract class SlideAdapter<T> extends VideoPlayAdapter<BaseRecyclerHolde
         mVideoView.setAVOptions(options);
         mVideoView.setBufferingIndicator(loadingView);
         mVideoView.start();
+
+        if (sdvMusic!=null){
+            sdvMusic = null;
+        }
+        sdvMusic = itemView.findViewById(R.id.sdvMusic);
+        sdvMusic.setImageURI("http://img3.redocn.com/20120425/20120423_26097b1c1a637f35f136IxLTd9O3lW0a.jpg");
+        sdvMusic.startAnimation(rotateAnimation);
+
+
     }
 
     private void setAvOption() {

@@ -14,7 +14,7 @@
 
     <style name="Tabtext">
         <item name="android:textColor">@color/selector_tab_text</item>
-        <item name="android:textSize">@dimen/sp_21</item>
+        <item name="android:textSize">@dimen/sp_18</item>
     </style>
 
     <style name="TabtextBlack">

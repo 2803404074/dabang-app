@@ -98,49 +98,50 @@ public class LoginActivity extends BaseActivity implements IUiListener {
      */
     private BottomDialogUtil dialogUtil;
     private TextView tvGetCode;
+
     private void showBottomView() {
-        dialogUtil  = new BottomDialogUtil(this,R.layout.dialog_login,1.02) {
+        dialogUtil = new BottomDialogUtil(this, R.layout.dialog_login, 1.02) {
             @Override
             public void convert(View holder) {
 
                 //返回
-               holder.findViewById(R.id.ivCancel).setOnClickListener(new View.OnClickListener() {
-                   @Override
-                   public void onClick(View view) {
-                       dialogUtil.dess();
-                   }
-               });
+                holder.findViewById(R.id.ivCancel).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialogUtil.dess();
+                    }
+                });
 
-               //验证码
+                //验证码
                 EditText etCode = holder.findViewById(R.id.etCode);
 
-               //获取验证码
-               tvGetCode = holder.findViewById(R.id.tvGetCode);
-               EditText etPhone = holder.findViewById(R.id.etPhone);
-               tvGetCode.setOnClickListener(new View.OnClickListener() {
-                   @Override
-                   public void onClick(View view) {
-                       if (TextUtils.isEmpty(etPhone.getText().toString()))return;
+                //获取验证码
+                tvGetCode = holder.findViewById(R.id.tvGetCode);
+                EditText etPhone = holder.findViewById(R.id.etPhone);
+                tvGetCode.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (TextUtils.isEmpty(etPhone.getText().toString())) return;
                         getMessage(etPhone.getText().toString());
-                   }
-               });
+                    }
+                });
 
-               //登陆
-               holder.findViewById(R.id.tvLogin).setOnClickListener(new View.OnClickListener() {
-                   @Override
-                   public void onClick(View view) {
-                       if (TextUtils.isEmpty(etPhone.getText().toString())){
-                           ToastUtil.showShort(getContext(),"请输入手机号");
-                           return;
-                       }
-                       if (TextUtils.isEmpty(etCode.getText().toString())){
-                           ToastUtil.showShort(getContext(),"请输入验证码");
-                           return;
-                       }
-                       setLoaddingView(true);
-                       phoneLogin(etPhone.getText().toString(),etCode.getText().toString());
-                   }
-               });
+                //登陆
+                holder.findViewById(R.id.tvLogin).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (TextUtils.isEmpty(etPhone.getText().toString())) {
+                            ToastUtil.showShort(getContext(), "请输入手机号");
+                            return;
+                        }
+                        if (TextUtils.isEmpty(etCode.getText().toString())) {
+                            ToastUtil.showShort(getContext(), "请输入验证码");
+                            return;
+                        }
+                        setLoaddingView(true);
+                        phoneLogin(etPhone.getText().toString(), etCode.getText().toString());
+                    }
+                });
             }
         };
         dialogUtil.show();
@@ -149,30 +150,31 @@ public class LoginActivity extends BaseActivity implements IUiListener {
     /**
      * 手机登录方法
      */
-    private void phoneLogin(String phone,String code) {
+    private void phoneLogin(String phone, String code) {
         HashMap<String, Object> map = new HashMap<>();
         map.put("phone", phone);
         map.put("code", code);
         map.put("loginType", "PHONE");
         OkHttp3Utils.getInstance(this).doPostJson(UserUrl.login, map, new ObjectCallback<String>(this) {
             @Override
-            public void onUi(String result){
+            public void onUi(String result) {
                 setLoaddingView(false);
                 Gson gson = new Gson();
-                UserMess userMess = gson.fromJson(result,UserMess.class);
-                if (userMess!=null){
+                UserMess userMess = gson.fromJson(result, UserMess.class);
+                if (userMess != null) {
                     SPUtils.instance(getContext()).putUser(result);
-                    SPUtils.instance(getContext()).putObj("token",userMess.getToken());
-                    goTActivity(MainActivity.class,null);
+                    SPUtils.instance(getContext()).putObj("token", userMess.getToken());
+                    goTActivity(MainActivity.class, null);
                     AppManager.getAppManager().finishActivity(LoginActivity.class);
-                }else {
-                    ToastUtil.showShort(getContext(),"登陆异常");
+                } else {
+                    ToastUtil.showShort(getContext(), "登陆异常");
                 }
             }
+
             @Override
             public void onFailed(String msg) {
                 setLoaddingView(false);
-                ToastUtil.showShort(getContext(),msg);
+                ToastUtil.showShort(getContext(), msg);
             }
         });
     }
@@ -180,30 +182,31 @@ public class LoginActivity extends BaseActivity implements IUiListener {
     /**
      * 请求后端发送短信
      */
-    private void getMessage(String phone){
-        Map<String,Object>map = new HashMap<>();
-        map.put("phone",phone);
+    private void getMessage(String phone) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("phone", phone);
         OkHttp3Utils.getInstance(this).doPostJson(UserUrl.sendCode, map, new ObjectCallback<String>(this) {
             @Override
-            public void onUi(String result){
+            public void onUi(String result) {
                 downDate();
             }
 
             @Override
             public void onFailed(String msg) {
-                ToastUtil.showShort(getContext(),msg);
+                ToastUtil.showShort(getContext(), msg);
             }
         });
     }
+
     /**
      * 倒计时开始
      */
-    private void downDate(){
-        new CountDownTimer(60*1000, 1000) {
+    private void downDate() {
+        new CountDownTimer(60 * 1000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
 
-                tvGetCode.setText(millisUntilFinished/1000+"秒");
+                tvGetCode.setText(millisUntilFinished / 1000 + "秒");
                 tvGetCode.setClickable(false);
             }
 
@@ -234,7 +237,6 @@ public class LoginActivity extends BaseActivity implements IUiListener {
         req.state = "wechat_sdk_xb_live_state";//官方说明：用于保持请求和回调的状态，授权请求后原样带回给第三方。该参数可用于防止csrf攻击（跨站请求伪造攻击），建议第三方带上该参数，可设置为简单的随机数加session进行校验
         MyApplication.api.sendReq(req);
     }
-
 
 
     @Override
@@ -307,29 +309,17 @@ public class LoginActivity extends BaseActivity implements IUiListener {
         map.put("icon", icon);
         map.put("loginType", type);
         OkHttp3Utils.getInstance(this).doPostJson(UserUrl.login, map, new ObjectCallback<String>(this) {
-
             @Override
             public void onUi(String result) {
-                try {
-                    JSONObject data = new JSONObject(result);
-                    String userStr = data.optString("user");
-                    try {
-                        SPUtils.instance(getContext()).putUser(userStr);
-                    }catch (Exception e){
-                        ToastUtil.showShort(getContext(),"用户信息里的token为空");
-                    }
-
-                    //判断是否首次登陆
-                    boolean isFirst = (boolean) SPUtils.instance(getContext()).getkey("isFirst",true);
-                    if (isFirst){
-                        goTActivity(WellComePageActivity.class,null);
-                    }else {
-                        goTActivity(MainActivity.class,null);
-                    }
-                    AppManager.getAppManager().finishActivity(LoginActivity.class);
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                SPUtils.instance(getContext()).putUser(result);
+                //判断是否首次登陆
+                boolean isFirst = (boolean) SPUtils.instance(getContext()).getkey("isFirst", true);
+                if (isFirst) {
+                    goTActivity(WellComePageActivity.class, null);
+                } else {
+                    goTActivity(MainActivity.class, null);
                 }
+                AppManager.getAppManager().finishActivity(LoginActivity.class);
             }
 
             @Override
