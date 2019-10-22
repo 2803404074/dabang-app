@@ -2,8 +2,9 @@ package com.dbvr.httplibrart.constans;
 
 public class DyUrl {
     public static final String TOKEN_NAME = "DABANG-TOKEN";
-    //public static final String BASE = "http://www.vrzbgw.com/dabang/";//远程
-    public static final String BASE = "http://192.168.0.112:443/demo/";
+    //public static final String BASE = "http://www.vrzbgw.com/dabang/";
+//    public static final String BASE = "http://192.168.0.112:443/demo/";
+    public static final String BASE = "http://api.vrzbgw.com:8085/dabang";//远程
 
 
     //首页主播列表
@@ -38,4 +39,18 @@ public class DyUrl {
     public static String prepayOrder = "/api/payorder/prepayOrder";
     //重新支付
     public static String prepayOrderAgain = "/api/payorder/prepayOrderAgain";
+
+
+
+    //购物车获取确认订单
+    public static String confirmGoods2Cart = "/api/buygoods/confirmGoods2Cart";
+
+    //修改购物车数量
+    public static String updateNumber2Cart = "/api/buygoods/updateNumber2Cart";
+    //删除购物车
+    public static String delete2Cart = "/api/buygoods/delete2Cart";
+
+    //购物车列表
+    public static String getGoods2CartList = "/api/goods/getGoods2CartList";
+
 }

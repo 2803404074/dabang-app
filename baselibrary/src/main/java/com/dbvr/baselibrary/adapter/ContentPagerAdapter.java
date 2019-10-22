@@ -18,6 +18,12 @@ public  class ContentPagerAdapter extends FragmentPagerAdapter {
         this.mTitles = mTitles;
         this.mFragments=fragments;
     }
+    public ContentPagerAdapter(FragmentManager fm, ArrayList<Fragment> fragments) {
+        super(fm);
+
+        this.mFragments=fragments;
+    }
+
 
 
     @Override
@@ -32,6 +38,7 @@ public  class ContentPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
+
         return mTitles.get(position);
     }
 

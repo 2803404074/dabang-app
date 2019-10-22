@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import com.dbvr.baselibrary.ui.LoadingUtils;
+import com.dbvr.baselibrary.utils.SPUtils;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
 import com.r0adkll.slidr.Slidr;
 
@@ -118,5 +119,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public Context getContext() {
         return this;
+    }
+    public String getToken(){
+        return (String) SPUtils.instance(this.getContext()).getkey("token","");
     }
 }

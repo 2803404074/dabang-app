@@ -98,4 +98,7 @@ dependencies {
      */
     api 'com.github.wildma:PictureSelector:1.1.4'
 
+    //superbutton 按钮
+    api 'top.androidman:superbutton:1.1.1'
+
 }

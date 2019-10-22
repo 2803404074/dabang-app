@@ -13,6 +13,9 @@ import com.dabangvr.adapter.BaseRecyclerHolder;
 import com.dabangvr.adapter.RecyclerAdapter;
 import com.dabangvr.application.MyApplication;
 import com.dabangvr.fragment.other.Order.MyOrtherActivity;
+import com.dabangvr.fragment.other.Order.MyShoppingCartActivity;
+import com.dabangvr.fragment.other.Order.MyYhjActivity;
+import com.dabangvr.fragment.other.Order.MyYhjRecordActivity;
 import com.dbvr.baselibrary.base.ParameterContens;
 import com.dbvr.baselibrary.model.MenuBean;
 import com.dbvr.baselibrary.model.PlayMode;
@@ -76,10 +79,12 @@ public class UserPersonalFragment extends BaseFragment {
                         goTActivity(MyOrtherActivity.class, null);
                         break;
                     case ParameterContens.CLIENT_YHQ://优惠卷
+                        goTActivity(MyYhjActivity.class, null);
                         break;
                     case ParameterContens.CLIENT_WDPJ://我的评价
                         break;
                     case ParameterContens.CLIENT_GWC://购物车
+                        goTActivity(MyShoppingCartActivity.class, null);
                         break;
                     case ParameterContens.CLIENT_GRZL://个人资料
                         break;

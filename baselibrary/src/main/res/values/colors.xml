@@ -137,6 +137,7 @@
     <color name="color_00d8d6d6">#00ffffff</color>
     <color name="color_00141414">#141414</color>
     <color name="color_33000000">#33000000</color>
+    <color name="color_CCCCCC">#CCCCCC</color>
 
 
 </resources>

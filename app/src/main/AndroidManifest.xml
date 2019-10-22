@@ -82,6 +82,9 @@
         <activity android:name="com.dbvr.imglibrary2.ui.SelectImageActivity" />
         <activity android:name="com.dbvr.imglibrary2.ui.PreviewImageActivity" />
         <activity android:name=".fragment.other.Order.MyOrtherActivity" />
+        <activity android:name=".fragment.other.Order.MyYhjRecordActivity" />
+        <activity android:name=".fragment.other.Order.MyYhjActivity" />
+        <activity android:name=".fragment.other.Order.MyShoppingCartActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
