@@ -39,7 +39,7 @@ public class ImageAdapter extends CommonRecycleAdapter<Image> {
             final View maskView = holder.getView(R.id.mask);
             ImageView iv_image = holder.getView(R.id.iv_image);
             Glide.with(mContext).load(image.getPath()).into(iv_image);
-            chb_selected.setOnClickListener(new View.OnClickListener() {
+            iv_image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (image.isSelect()) {

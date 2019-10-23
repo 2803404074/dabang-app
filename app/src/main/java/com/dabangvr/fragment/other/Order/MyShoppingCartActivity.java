@@ -2,6 +2,7 @@ package com.dabangvr.fragment.other.Order;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -112,20 +113,22 @@ public class MyShoppingCartActivity extends BaseActivity implements ShoppingCarA
     @Override
     public void initData() {
         HashMap<String, Object> map = new HashMap<>();
-        map.put(DyUrl.TOKEN_NAME, getToken());
         map.put("page", "1");
         map.put("limit", "10");
         OkHttp3Utils.getInstance(MyApplication.getInstance()).doPostJson(DyUrl.getGoods2CartList, map, new ObjectCallback<String>(MyApplication.getInstance()) {
             @Override
             public void onUi(String result) throws JSONException {
                 try {
-                    ShoppingCarDataBean bean = new Gson().fromJson(result,ShoppingCarDataBean.class);
-                    datas = bean.getData().getGoods2CartList();
-                    initExpandableListViewData(datas);
+                    if (!TextUtils.isEmpty(result)) {
+                        ShoppingCarDataBean bean = new Gson().fromJson(result, ShoppingCarDataBean.class);
+                        datas = bean.getData().getGoods2CartList();
+                        initExpandableListViewData(datas);
+                    }
                 } catch (JsonSyntaxException e) {
                     e.printStackTrace();
                 }
             }
+
             @Override
             public void onFailed(String msg) {
             }
@@ -163,7 +166,7 @@ public class MyShoppingCartActivity extends BaseActivity implements ShoppingCarA
                  */
                 // TODO: 2019/10/21 token 加入方式修改
                 HashMap<String, Object> map = new HashMap<>();
-                map.put(DyUrl.TOKEN_NAME, getToken());
+
                 map.put("cartId", goods_id);
                 map.put("number", String.valueOf(count));
 
@@ -325,8 +328,8 @@ public class MyShoppingCartActivity extends BaseActivity implements ShoppingCarA
         Map<String, Object> map = new HashMap<>();
         // TODO: 2019/10/21 原來是list轉string
 //        map.put("cartIds", JsonUtil.obj2String(cartIdArr));
-        map.put("cartIds",cartIdArr);
-        map.put(DyUrl.TOKEN_NAME, getToken());
+        map.put("cartIds", cartIdArr);
+
 
         OkHttp3Utils.getInstance(MyApplication.getInstance()).doPostJson(DyUrl.delete2Cart, map, new ObjectCallback<String>(MyApplication.getInstance()) {
             @Override
@@ -353,10 +356,10 @@ public class MyShoppingCartActivity extends BaseActivity implements ShoppingCarA
         }
     };
 
-    @OnClick({R.id.back, R.id.tv_titlebar_right})
+    @OnClick({R.id.tv_titlebar_left, R.id.tv_titlebar_right})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.back:
+            case R.id.tv_titlebar_left:
                 AppManager.getAppManager().finishActivity(this);
                 break;
             case R.id.tv_titlebar_right://编辑

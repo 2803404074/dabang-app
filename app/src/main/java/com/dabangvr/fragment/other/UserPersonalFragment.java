@@ -8,6 +8,8 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.dabangvr.R;
+import com.dabangvr.fragment.other.Order.ProblemActivity;
+import com.dabangvr.fragment.other.Order.UserMessActivity;
 import com.dabangvr.fragment.other.Order.UserSettingActivity;
 import com.dabangvr.adapter.BaseRecyclerHolder;
 import com.dabangvr.adapter.RecyclerAdapter;
@@ -86,6 +88,7 @@ public class UserPersonalFragment extends BaseFragment {
                         goTActivity(MyShoppingCartActivity.class, null);
                         break;
                     case ParameterContens.CLIENT_GRZL://个人资料
+                        goTActivity(UserMessActivity.class, null);
                         break;
                     case ParameterContens.CLIENT_SJRZ://商家入驻
                         break;
@@ -95,7 +98,7 @@ public class UserPersonalFragment extends BaseFragment {
                         goTActivity(UserSettingActivity.class, null);
                         break;
                     case ParameterContens.CLIENT_FK://反馈
-
+                        goTActivity(ProblemActivity.class, null);
                         break;
                     case ParameterContens.CLIENT_GFKF://官方客服
                         break;

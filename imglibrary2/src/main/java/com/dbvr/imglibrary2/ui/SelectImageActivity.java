@@ -139,7 +139,7 @@ public class SelectImageActivity extends BaseActivity implements ImageFolderView
 
         if (mSelectedImages.size() > 0 && mSelectedImages.size() <= MAX_SIZE) {
             mTvPreview.setClickable(true);
-            mTvPreview.setText(String.format("预览(%d/9) ", mSelectedImages.size()));
+            mTvPreview.setText(String.format("预览(%d/"+MAX_SIZE+") ", mSelectedImages.size()));
             mTvPreview.setTextColor(ContextCompat.getColor(SelectImageActivity.this, R.color.colorAccent));
         }
     }
@@ -185,7 +185,7 @@ public class SelectImageActivity extends BaseActivity implements ImageFolderView
                 mTvPreview.setTextColor(ContextCompat.getColor(SelectImageActivity.this, R.color.colorAccentGray));
             } else if (count > 0 && count <= MAX_SIZE) {
                 mTvPreview.setClickable(true);
-                mTvPreview.setText(String.format("预览(%d/9) ", count));
+                mTvPreview.setText(String.format("预览(%d/"+MAX_SIZE+") ", count));
                 mTvPreview.setTextColor(ContextCompat.getColor(SelectImageActivity.this, R.color.colorAccent));
             }
         }

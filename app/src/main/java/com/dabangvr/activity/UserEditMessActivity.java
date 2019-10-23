@@ -26,7 +26,7 @@ import butterknife.OnClick;
 /**
  * 用户编辑信息
  */
-public class UserMessActivity extends BaseActivity {
+public class UserEditMessActivity extends BaseActivity {
 
     @BindView(R.id.sdvHead)
     SimpleDraweeView sdvHead;
@@ -55,7 +55,7 @@ public class UserMessActivity extends BaseActivity {
 
     @Override
     public int setLayout() {
-        return R.layout.activity_user_mess;
+        return R.layout.activity_user_edit_mess;
     }
 
     @Override
@@ -159,6 +159,6 @@ public class UserMessActivity extends BaseActivity {
 
     private void logOut() {
         SPUtils.instance(this).removeUser();
-        AppManager.getAppManager().finishAllActivityTo(UserMessActivity.class);
+        AppManager.getAppManager().finishAllActivityTo(UserEditMessActivity.class);
     }
 }

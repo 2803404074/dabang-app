@@ -48,7 +48,7 @@
         <activity android:name=".activity.PhoneBindActivity"></activity>
         <activity android:name=".activity.PhoneSetActivity" />
         <activity android:name=".activity.IntroduceActivity" />
-        <activity android:name=".activity.UserMessActivity" />
+        <activity android:name=".activity.UserEditMessActivity" />
         <activity android:name=".activity.UserHomeActivity" />
         <activity android:name=".activity.FansAndFollowActivity" />
         <activity android:name=".activity.LocationActivity" />
@@ -91,13 +91,13 @@
         <activity android:name=".fragment.other.Order.MyShoppingCartActivity" />
         <activity android:name=".fragment.other.Order.ProblemActivity" />
         <activity android:name=".fragment.other.Order.UserSettingActivity"></activity>
+        <activity android:name=".fragment.other.Order.UserMessActivity"></activity>
 
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.dabangvr.fileProvider"
             android:exported="false"
-            android:grantUriPermissions="true"
-            tools:replace="android:authorities">
+            android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />

@@ -109,8 +109,8 @@ public class PayDialog {
         map.put("orderSn", orderSn);
         map.put("payOrderSnType", payType);//orderSnTotal
 
-        String token = (String) SPUtils.instance(mContext).getkey("token", "");
-        OkHttp3Utils.getInstance(MyApplication.getInstance()).doPostJson(DyUrl.prepayOrder,map,token,new ObjectCallback<String>(MyApplication.getInstance()) {
+
+        OkHttp3Utils.getInstance(MyApplication.getInstance()).doPostJson(DyUrl.prepayOrder,map,new ObjectCallback<String>(MyApplication.getInstance()) {
             @Override
             public void onUi(String result) throws JSONException {
                 // TODO: 2019/10/17 微信支付需要重新解析
@@ -132,11 +132,7 @@ public class PayDialog {
         HashMap<String, Object> map = new HashMap<>();
         map.put("orderId", orderId);
         map.put("payOrderSnType", payType);
-        String token = (String) SPUtils.instance(mContext).getkey("token", "");
-
-
-
-        OkHttp3Utils.getInstance(MyApplication.getInstance()).doPostJson(DyUrl.prepayOrder,map,token,new ObjectCallback<String>(MyApplication.getInstance()) {
+        OkHttp3Utils.getInstance(MyApplication.getInstance()).doPostJson(DyUrl.prepayOrder,map,new ObjectCallback<String>(MyApplication.getInstance()) {
             @Override
             public void onUi(String result) throws JSONException {
                 // TODO: 2019/10/17 微信支付需要重新解析

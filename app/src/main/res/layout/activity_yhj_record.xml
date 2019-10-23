@@ -9,8 +9,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/dp_30"
-        android:background="@color/colorDb3">
+        android:background="@color/colorDb3"
+        android:paddingTop="@dimen/dp_40"
+        android:paddingBottom="@dimen/dp_10">
 
         <ImageView
             android:id="@+id/back"
@@ -41,19 +42,19 @@
             android:layout_width="1dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_weight="0.3"
+            android:layout_weight="0.4"
             android:gravity="center" />
 
         <TextView
-            android:layout_gravity="center"
             android:id="@+id/already_used"
             android:layout_width="1dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1.2"
+            android:layout_gravity="center"
+            android:layout_weight="0.8"
             android:background="@drawable/btn_background_selector"
-            android:textColor="@drawable/selecl_color"
             android:gravity="center"
             android:text="已使用"
+            android:textColor="@drawable/selecl_color"
             android:textSize="@dimen/dp_15"
             android:textStyle="bold" />
 
@@ -61,28 +62,29 @@
             android:layout_width="1dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_weight="0.5"
+            android:layout_weight="0.8"
             android:gravity="center"
             android:text="|"
             android:textSize="@dimen/dp_20" />
 
         <TextView
-            android:layout_gravity="center"
             android:id="@+id/expired"
             android:layout_width="1dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1.2"
+            android:layout_gravity="center"
+            android:layout_weight="0.8"
             android:background="@drawable/btn_background_selector"
             android:gravity="center"
             android:text="已过期"
             android:textColor="@drawable/selecl_color"
             android:textSize="@dimen/dp_15"
             android:textStyle="bold" />
+
         <TextView
             android:layout_width="1dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_weight="0.3"
+            android:layout_weight="0.4"
             android:gravity="center" />
 
     </LinearLayout>

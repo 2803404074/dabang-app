@@ -259,7 +259,7 @@ public class MyOrtherPageFragment extends BaseFragment {
         map.put("page", String.valueOf(page));
         map.put("limit", "10");
 
-        OkHttp3Utils.getInstance(MyApplication.getInstance()).doPostJson(DyUrl.getOrderList, map,getToken(), new ObjectCallback<String>(MyApplication.getInstance()) {
+        OkHttp3Utils.getInstance(MyApplication.getInstance()).doPostJson(DyUrl.getOrderList, map, new ObjectCallback<String>(MyApplication.getInstance()) {
             @Override
             public void onUi(String result) throws JSONException {
 
@@ -291,7 +291,7 @@ public class MyOrtherPageFragment extends BaseFragment {
         map.put("orderId", orderId);
         map.put("orderState", "301");
 
-        OkHttp3Utils.getInstance(MyApplication.getInstance()).doPostJson(DyUrl.updateOrderState, map,getToken(), new ObjectCallback<String>(MyApplication.getInstance()) {
+        OkHttp3Utils.getInstance(MyApplication.getInstance()).doPostJson(DyUrl.updateOrderState, map, new ObjectCallback<String>(MyApplication.getInstance()) {
             @Override
             public void onUi(String result) throws JSONException {
 
@@ -339,9 +339,7 @@ public class MyOrtherPageFragment extends BaseFragment {
     private void canCelOrder(String orderId) {
         Map<String, Object> map = new HashMap<>();
         map.put("orderId", orderId);
-
-
-        OkHttp3Utils.getInstance(MyApplication.getInstance()).doPostJson(DyUrl.refundRequest, map, getToken(), new ObjectCallback<String>(MyApplication.getInstance()) {
+        OkHttp3Utils.getInstance(MyApplication.getInstance()).doPostJson(DyUrl.refundRequest, map, new ObjectCallback<String>(MyApplication.getInstance()) {
             @Override
             public void onUi(String result) throws JSONException {
 

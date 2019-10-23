@@ -3,7 +3,7 @@ package com.dbvr.httplibrart.constans;
 public class DyUrl {
     public static final String TOKEN_NAME = "DABANG-TOKEN";
     //public static final String BASE = "http://www.vrzbgw.com/dabang/";
-    public static final String BASE = "http://192.168.0.112:443/demo/";
+    public static final String BASE = "http://192.168.0.112:8085/dabang";
     //public static final String BASE = "http://api.vrzbgw.com:8085/dabang";//远程
 
 

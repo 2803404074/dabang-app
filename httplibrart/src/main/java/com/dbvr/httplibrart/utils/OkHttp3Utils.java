@@ -198,15 +198,6 @@ public class OkHttp3Utils {
         call.enqueue(callback);
     }
 
-    public void doPostJson(String url, Map<String, Object> map, String token, Callback callback) {
-        Gson gson = new Gson();
-        String jsonParams = gson.toJson(map);
-        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonParams);
-        Request request = new Request.Builder().url(DyUrl.BASE + url).addHeader(DyUrl.TOKEN_NAME, token).post(requestBody).build();
-        Call call = getOkHttpClient().newCall(request);
-        call.enqueue(callback);
-    }
-
     /**
      * 上传文件到服务器
      *
