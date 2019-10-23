@@ -1,37 +1,26 @@
-package com.dabangvr.activity;
+package com.dabangvr.fragment.other.Order;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 import com.dabangvr.R;
-import com.dbvr.baselibrary.model.UserMess;
 import com.dbvr.baselibrary.utils.CacheUtil;
 import com.dbvr.baselibrary.utils.DialogUtil;
 import com.dbvr.baselibrary.utils.SPUtils;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
-import com.dbvr.baselibrary.utils.StringUtils;
-import com.dbvr.baselibrary.utils.ToastUtil;
 import com.dbvr.baselibrary.view.AppManager;
 import com.dbvr.baselibrary.view.BaseActivity;
-import com.dbvr.httplibrart.constans.DyUrl;
-import com.dbvr.httplibrart.utils.OkHttp3Utils;
-import com.facebook.drawee.view.SimpleDraweeView;
-
-import java.io.IOException;
-import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import okhttp3.Call;
 
 /**
  * 用户编辑信息
  */
-public class UserSettingActivity extends BaseActivity {
+public class ProblemActivity extends BaseActivity {
 
     @BindView(R.id.tv_memory_size)
     TextView tv_memory_size;
@@ -46,7 +35,7 @@ public class UserSettingActivity extends BaseActivity {
 
     @Override
     public int setLayout() {
-        return R.layout.activity_user_setting;
+        return R.layout.activity_user_problem;
     }
 
     @Override
@@ -86,7 +75,7 @@ public class UserSettingActivity extends BaseActivity {
 
     private void logOut() {
         SPUtils.instance(this).removeUser();
-        AppManager.getAppManager().finishAllActivityTo(UserSettingActivity.class);
+        AppManager.getAppManager().finishAllActivityTo(ProblemActivity.class);
     }
 
     private void show(String mess) {
@@ -96,7 +85,7 @@ public class UserSettingActivity extends BaseActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
-                CacheUtil.clearAllCache(UserSettingActivity.this);
+                CacheUtil.clearAllCache(ProblemActivity.this);
                 try {
                     tv_memory_size.setText("缓存已清除");
                 } catch (Exception e) {

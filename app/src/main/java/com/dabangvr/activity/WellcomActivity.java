@@ -11,6 +11,8 @@ import android.widget.TextView;
 import okhttp3.Call;
 
 import com.dabangvr.R;
+import com.dabangvr.application.MyApplication;
+import com.dbvr.baselibrary.model.MenuBean;
 import com.dbvr.baselibrary.model.UserMess;
 import com.dbvr.baselibrary.utils.SPUtils;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
@@ -19,12 +21,15 @@ import com.dbvr.baselibrary.view.BaseActivity;
 import com.dbvr.httplibrart.constans.DyUrl;
 import com.dbvr.httplibrart.utils.ObjectCallback;
 import com.dbvr.httplibrart.utils.OkHttp3Utils;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class WellcomActivity extends BaseActivity {
@@ -57,6 +62,7 @@ public class WellcomActivity extends BaseActivity {
             goTActivity(MainActivity.class);
             SPUtils.instance(this).put("token", userMess.getToken());
         }
+        getInitializationData();
     }
 
     private void goTActivity(final Class T) {
@@ -69,6 +75,7 @@ public class WellcomActivity extends BaseActivity {
             }
         }, 1500);
     }
+
     //获取版本号
     private String getVersion() {
         PackageManager packageManager = getPackageManager();
@@ -84,5 +91,27 @@ public class WellcomActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    private void getInitializationData() {
+        getChannelMenu();
+    }
+
+    private void getChannelMenu() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("mallSpeciesId", 8);
+        //获取标签
+        OkHttp3Utils.getInstance(MyApplication.getInstance()).doPostJson(DyUrl.getChannelMenuList, map, new ObjectCallback<String>(MyApplication.getInstance()) {
+            @Override
+            public void onUi(String result) throws JSONException {
+
+                SPUtils.instance(WellcomActivity.this).put("getChannelMenuList", result);
+            }
+
+            @Override
+            public void onFailed(String msg) {
+
+            }
+        });
     }
 }

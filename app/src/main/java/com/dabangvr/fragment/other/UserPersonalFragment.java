@@ -1,30 +1,29 @@
 package com.dabangvr.fragment.other;
 
 import android.content.Context;
-import android.content.Intent;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.dabangvr.R;
-import com.dabangvr.activity.UserSettingActivity;
+import com.dabangvr.fragment.other.Order.UserSettingActivity;
 import com.dabangvr.adapter.BaseRecyclerHolder;
 import com.dabangvr.adapter.RecyclerAdapter;
 import com.dabangvr.application.MyApplication;
 import com.dabangvr.fragment.other.Order.MyOrtherActivity;
 import com.dabangvr.fragment.other.Order.MyShoppingCartActivity;
 import com.dabangvr.fragment.other.Order.MyYhjActivity;
-import com.dabangvr.fragment.other.Order.MyYhjRecordActivity;
 import com.dbvr.baselibrary.base.ParameterContens;
 import com.dbvr.baselibrary.model.MenuBean;
-import com.dbvr.baselibrary.model.PlayMode;
+import com.dbvr.baselibrary.utils.SPUtils;
 import com.dbvr.baselibrary.view.BaseFragment;
 import com.dbvr.httplibrart.constans.DyUrl;
 import com.dbvr.httplibrart.utils.ObjectCallback;
 import com.dbvr.httplibrart.utils.OkHttp3Utils;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONException;
@@ -94,9 +93,9 @@ public class UserPersonalFragment extends BaseFragment {
                         break;
                     case ParameterContens.CLIENT_SZ:  //设置
                         goTActivity(UserSettingActivity.class, null);
-
                         break;
                     case ParameterContens.CLIENT_FK://反馈
+
                         break;
                     case ParameterContens.CLIENT_GFKF://官方客服
                         break;
@@ -115,9 +114,26 @@ public class UserPersonalFragment extends BaseFragment {
     }
 
     private void getData() {
+
+        String menuBeanStr = (String) SPUtils.instance(getContext()).getkey("getChannelMenuList", "");
+        if (!TextUtils.isEmpty(menuBeanStr)) {
+            try {
+                menuBeanList = new Gson().fromJson(menuBeanStr, new TypeToken<List<MenuBean>>() {
+                }.getType());
+                adapter.updateData(menuBeanList);
+            } catch (JsonSyntaxException e) {
+                e.printStackTrace();
+                getChannelMenu();
+            }
+        } else {
+
+            getChannelMenu();
+        }
+    }
+
+    private void getChannelMenu() {
         Map<String, Object> map = new HashMap<>();
         map.put("mallSpeciesId", 8);
-
         //获取标签
         OkHttp3Utils.getInstance(MyApplication.getInstance()).doPostJson(DyUrl.getChannelMenuList, map, new ObjectCallback<String>(MyApplication.getInstance()) {
             @Override
