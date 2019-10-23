@@ -227,14 +227,6 @@ public class LiveActivity extends BaseLiveActivity {
                 } else {
                     tvMess.setTextColor(getResources().getColor(R.color.colorWhite));
                 }
-
-//                SimpleDraweeView sdvHead = holder.getView(R.id.sdvItemHead);
-//                if (StringUtils.isEmpty(o.getHeadUrl())) {
-//                    sdvHead.setVisibility(View.GONE);
-//                } else {
-//                    sdvHead.setImageURI(o.getHeadUrl());
-//                    sdvHead.setVisibility(View.VISIBLE);
-//                }
             }
         };
         recyclerView.setAdapter(commentAdapter);
