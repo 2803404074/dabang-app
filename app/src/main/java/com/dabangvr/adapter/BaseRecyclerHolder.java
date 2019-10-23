@@ -95,7 +95,7 @@ public class BaseRecyclerHolder extends RecyclerView.ViewHolder {
 
             RequestOptions options = new RequestOptions();
             options.placeholder(R.mipmap.ic_launcher); //设置加载未完成时的占位图
-            options.error(R.mipmap.ic_launcher);
+            options.error(R.mipmap.err);
             //GlideLoadUtils.getInstance().glideLoad(context,url,(ImageView) getView(viewId));
             Glide.with(context).load(url).apply(options).into((ImageView) getView(viewId));
         }

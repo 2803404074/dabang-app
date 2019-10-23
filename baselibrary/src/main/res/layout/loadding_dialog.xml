@@ -15,6 +15,6 @@
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
         android:layout_centerVertical="true"
-        app:SpinKit_Color="@color/colorPrimaryDark" />
+        app:SpinKit_Color="@color/colorDb5" />
 
 </LinearLayout>

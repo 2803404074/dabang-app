@@ -241,6 +241,7 @@ public class CreateLiveActivity extends BaseActivity {
                 Map<String,Object>map = new HashMap<>();
                 map.put("streamUrl",streamMo.getPublishURL());
                 map.put("streamTag",streamMo.getTag());
+                map.put("roomNumber",streamMo.getRoomId());
                 goTActivity(LiveActivity.class,map);
                 setLoaddingView(false);
             }
@@ -327,5 +328,11 @@ public class CreateLiveActivity extends BaseActivity {
                 ivAdd.setVisibility(View.GONE);
             }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        BottomDialogUtil2.getInstance(this).dess();
     }
 }

@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import com.dabangvr.R;
+import com.dabangvr.fragment.other.Order.UserMessActivity;
 import com.dbvr.baselibrary.model.UserMess;
 import com.dbvr.baselibrary.utils.BottomDialogUtil2;
 import com.dbvr.baselibrary.utils.Conver;
@@ -55,7 +56,7 @@ public class UserEditMessActivity extends BaseActivity {
 
     @Override
     public int setLayout() {
-        return R.layout.activity_user_edit_mess;
+        return R.layout.activity_user_mess;
     }
 
     @Override
@@ -159,6 +160,6 @@ public class UserEditMessActivity extends BaseActivity {
 
     private void logOut() {
         SPUtils.instance(this).removeUser();
-        AppManager.getAppManager().finishAllActivityTo(UserEditMessActivity.class);
+        AppManager.getAppManager().finishAllActivityTo(UserMessActivity.class);
     }
 }

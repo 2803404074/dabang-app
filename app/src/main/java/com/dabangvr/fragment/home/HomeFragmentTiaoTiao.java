@@ -1,34 +1,17 @@
 package com.dabangvr.fragment.home;
 
 import android.content.Context;
-import android.os.Handler;
-import android.os.Message;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dabangvr.R;
 import com.dabangvr.adapter.BaseRecyclerHolder;
-import com.dabangvr.adapter.MoreItemAdapter;
 import com.dabangvr.adapter.RecyclerAdapterPosition;
-import com.dbvr.baselibrary.eventBus.ReadEvent;
-import com.dbvr.baselibrary.model.HomeFindMo;
 import com.dbvr.baselibrary.view.BaseFragment;
-import com.facebook.drawee.view.SimpleDraweeView;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +28,7 @@ public class HomeFragmentTiaoTiao extends BaseFragment {
 
     @Override
     public int layoutId() {
-        return R.layout.fragment_home_follow;
+        return R.layout.fragment_home_find;
     }
 
     @Override

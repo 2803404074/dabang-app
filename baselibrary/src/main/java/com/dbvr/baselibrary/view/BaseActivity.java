@@ -58,21 +58,27 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public void goTActivity(final Class T, Map<String,Object>map){
-        Intent intent = new Intent(this,T);
-        if (map!=null){
-            for (String key : map.keySet()) {
-                if (map.get(key) instanceof Boolean){
-                    intent.putExtra(key,(boolean)map.get(key));
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(BaseActivity.this,T);
+                if (map!=null){
+                    for (String key : map.keySet()) {
+                        if (map.get(key) instanceof Boolean){
+                            intent.putExtra(key,(boolean)map.get(key));
+                        }
+                        if (map.get(key) instanceof String){
+                            intent.putExtra(key,(String)map.get(key));
+                        }
+                        if (map.get(key) instanceof Integer){
+                            intent.putExtra(key,(Integer)map.get(key));
+                        }
+                    }
                 }
-                if (map.get(key) instanceof String){
-                    intent.putExtra(key,(String)map.get(key));
-                }
-                if (map.get(key) instanceof Integer){
-                    intent.putExtra(key,(Integer)map.get(key));
-                }
+                startActivity(intent);
             }
-        }
-        startActivity(intent);
+        }).start();
+
     }
 
     public void goTActivityForResult(final Class T, Map<String,Object> map,int requestCode){

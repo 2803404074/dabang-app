@@ -5,9 +5,18 @@ package com.dbvr.baselibrary.model;
  */
 public class StreamMo {
     private String publishURL;
+    private String roomId;
     private String tag;
 
     public StreamMo() {
+    }
+
+    public String getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(String roomId) {
+        this.roomId = roomId;
     }
 
     public String getPublishURL() {
