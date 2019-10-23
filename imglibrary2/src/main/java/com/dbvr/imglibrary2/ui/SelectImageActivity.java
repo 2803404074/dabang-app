@@ -55,7 +55,7 @@ import java.util.Locale;
 public class SelectImageActivity extends BaseActivity implements ImageFolderView.ImageFolderViewListener, ImageAdapter.onCameraClickListener, View.OnClickListener {
     // 返回选择图片列表的EXTRA_KEY
     public static final String EXTRA_RESULT = "EXTRA_RESULT";
-    public static final int MAX_SIZE = 9;
+    public  int MAX_SIZE = 9;
     private static final int PERMISSION_REQUEST_CODE = 88;
     private static final int TAKE_PHOTO = 99;
 
@@ -85,10 +85,15 @@ public class SelectImageActivity extends BaseActivity implements ImageFolderView
         return R.layout.activity_select_image;
     }
 
-
     @SuppressLint("WrongConstant")
     @Override
     protected void init() {
+
+        int size = getIntent().getIntExtra("size",9);
+        if (size != 9){
+            MAX_SIZE = size;
+        }
+
         mTvBack = findViewById(R.id.tv_back);
         mTvBack.setOnClickListener(this);
 
