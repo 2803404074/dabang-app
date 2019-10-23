@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.PhoneSetActivity">
+    <RelativeLayout
+        android:paddingTop="@dimen/dp_30"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:padding="@dimen/dp_5"
+            android:src="@mipmap/back_w_black"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_18"
+            android:textColor="@color/textTitle"
+            android:layout_centerHorizontal="true"
+            android:text="手机绑定"/>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/sp_15"
+        android:textColor="@color/textTitle"
+        android:layout_marginTop="@dimen/dp_50"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:text="我绑定的手机"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_function"
+        android:paddingVertical="@dimen/dp_3"
+        android:text="188********000"
+        android:layout_marginTop="@dimen/dp_5"
+        android:layout_marginHorizontal="@dimen/dp_10"
+        android:paddingHorizontal="@dimen/dp_5"
+        android:textSize="@dimen/sp_15"
+        android:textColor="@color/colorWhite"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="*该手机已绑定本账户。可用于登陆、收货等校验，请务必保管好您的手机号，如有更换，可通过解除绑定->重新绑定操作。"
+        android:layout_marginTop="@dimen/dp_5"
+        android:textColor="@color/sectionDrawColor"
+        android:textSize="@dimen/sp_12"
+        android:layout_marginHorizontal="@dimen/dp_10"/>
+
+
+    <TextView
+        android:id="@+id/tvCancelBind"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/dp_50"
+        android:paddingVertical="@dimen/dp_5"
+        android:background="@drawable/shape_style_green_blue"
+        android:layout_marginHorizontal="@dimen/dp_10"
+        android:textSize="@dimen/sp_15"
+        android:textColor="@android:color/white"
+        android:text="解除绑定"/>
+</LinearLayout>

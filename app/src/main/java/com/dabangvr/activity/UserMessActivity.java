@@ -1,17 +1,25 @@
 package com.dabangvr.activity;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.TextView;
 import com.dabangvr.R;
 import com.dbvr.baselibrary.model.UserMess;
+import com.dbvr.baselibrary.utils.BottomDialogUtil2;
+import com.dbvr.baselibrary.utils.Conver;
 import com.dbvr.baselibrary.utils.DialogUtil;
 import com.dbvr.baselibrary.utils.SPUtils;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
 import com.dbvr.baselibrary.utils.StringUtils;
+import com.dbvr.baselibrary.utils.ToastUtil;
 import com.dbvr.baselibrary.view.AppManager;
 import com.dbvr.baselibrary.view.BaseActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
+
+import java.util.Calendar;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -99,15 +107,20 @@ public class UserMessActivity extends BaseActivity {
                 break;
             case R.id.llNick:
                 break;
-            case R.id.llSex:
+            case R.id.llSex://性别
+                showSexDialog();
                 break;
-            case R.id.llDate:
+            case R.id.llDate://日期选择
+                showDateDialog();
                 break;
             case R.id.llLocation:
+                goTActivity(LocationActivity.class,null);
                 break;
             case R.id.llIntroduce:
+                goTActivity(IntroduceActivity.class,null);
                 break;
             case R.id.llPhone:
+                goTActivity(PhoneSetActivity.class,null);
                 break;
             case R.id.tvLogOut:
                 DialogUtil.getInstance(this).show(R.layout.dialog_tip, holder -> {
@@ -116,6 +129,32 @@ public class UserMessActivity extends BaseActivity {
                 });
                 break;
         }
+    }
+
+    private void showSexDialog() {
+        BottomDialogUtil2.getInstance(this).show(R.layout.dialog_sex, 0, new Conver() {
+            @Override
+            public void setView(View view) {
+
+            }
+        });
+    }
+
+    private void showDateDialog() {
+        Calendar ca = Calendar.getInstance();
+        int  mYear = ca.get(Calendar.YEAR);
+        int  mMonth = ca.get(Calendar.MONTH);
+        int  mDay = ca.get(Calendar.DAY_OF_MONTH);
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        final String data =  (month+1) + "月-" + dayOfMonth + "日 ";
+                        ToastUtil.showShort(getContext(),data);
+                    }
+                },
+                mYear, mMonth, mDay);
+        datePickerDialog.show();
     }
 
     private void logOut() {

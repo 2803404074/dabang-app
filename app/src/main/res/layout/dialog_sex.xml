@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:roundiv="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/dp_5"
+    android:paddingVertical="@dimen/dp_10"
+    android:background="@drawable/shape_white"
+    tools:context=".activity.MainActivity">
+
+    <TextView
+        android:id="@+id/tv_nan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="男"
+        android:paddingVertical="@dimen/dp_5"
+        android:textColor="@color/textTitle"
+        android:textSize="@dimen/sp_21"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5px"
+        android:background="@color/lsq_color_gray"/>
+    <TextView
+        android:id="@+id/tv_nv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="女"
+        android:paddingVertical="@dimen/dp_5"
+        android:textColor="@color/textTitle"
+        android:textSize="@dimen/sp_21"/>
+    <TextView
+        android:id="@+id/tvConfirm"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@drawable/shape_style_green_blue"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorWhite"
+        android:paddingHorizontal="@dimen/dp_10"
+        android:paddingVertical="@dimen/dp_5"
+        android:textSize="@dimen/sp_21"
+        android:text="确定"/>
+</LinearLayout>
