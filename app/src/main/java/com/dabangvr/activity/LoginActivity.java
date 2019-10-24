@@ -121,7 +121,7 @@ public class LoginActivity extends BaseActivity implements IUiListener {
                 tvGetCode.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (TextUtils.isEmpty(etPhone.getText().toString())) return;
+                        if (TextUtils.isEmpty(etPhone.getText().toString().trim())) return;
                         getMessage(etPhone.getText().toString());
                     }
                 });

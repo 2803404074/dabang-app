@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide;
 import com.dabangvr.R;
 import com.dabangvr.fragment.other.Order.ProblemActivity;
 import com.dabangvr.fragment.other.Order.UserMessActivity;
+import com.dabangvr.fragment.other.Order.UserSJRZOneActivity;
 import com.dabangvr.fragment.other.Order.UserSettingActivity;
 import com.dabangvr.adapter.BaseRecyclerHolder;
 import com.dabangvr.adapter.RecyclerAdapter;
@@ -17,6 +18,7 @@ import com.dabangvr.application.MyApplication;
 import com.dabangvr.fragment.other.Order.MyOrtherActivity;
 import com.dabangvr.fragment.other.Order.MyShoppingCartActivity;
 import com.dabangvr.fragment.other.Order.MyYhjActivity;
+import com.dabangvr.fragment.other.Order.UserZBSQOneActivity;
 import com.dbvr.baselibrary.base.ParameterContens;
 import com.dbvr.baselibrary.model.MenuBean;
 import com.dbvr.baselibrary.utils.SPUtils;
@@ -91,8 +93,10 @@ public class UserPersonalFragment extends BaseFragment {
                         goTActivity(UserMessActivity.class, null);
                         break;
                     case ParameterContens.CLIENT_SJRZ://商家入驻
+                        goTActivity(UserSJRZOneActivity.class, null);
                         break;
                     case ParameterContens.CLIENT_ZBSQ://主播申请
+                        goTActivity(UserZBSQOneActivity.class, null);
                         break;
                     case ParameterContens.CLIENT_SZ:  //设置
                         goTActivity(UserSettingActivity.class, null);

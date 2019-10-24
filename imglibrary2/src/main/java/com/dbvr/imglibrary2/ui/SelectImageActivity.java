@@ -350,7 +350,6 @@ public class SelectImageActivity extends BaseActivity implements ImageFolderView
         }
     }
 
-
     private void takePhoto() {
         //用来打开相机的Intent
         Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -361,7 +360,7 @@ public class SelectImageActivity extends BaseActivity implements ImageFolderView
                 Log.i("take photo", takePhotoImageFile.getAbsolutePath());
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     ///7.0以上要通过FileProvider将File转化为Uri
-                    mImageUri = FileProvider.getUriForFile(this, this.getPackageName() + ".fileprovider", takePhotoImageFile);
+                    mImageUri = FileProvider.getUriForFile(this, this.getPackageName() + ".fileProvider", takePhotoImageFile);
                 } else {
                     //7.0以下则直接使用Uri的fromFile方法将File转化为Uri
                     mImageUri = Uri.fromFile(takePhotoImageFile);

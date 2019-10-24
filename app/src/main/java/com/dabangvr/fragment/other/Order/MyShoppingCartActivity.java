@@ -15,15 +15,9 @@ import android.widget.TextView;
 import com.dabangvr.R;
 import com.dabangvr.application.MyApplication;
 import com.dabangvr.fragment.other.Order.order_fragment.ShoppingCarAdapter;
-import com.dabangvr.fragment.other.Order.order_fragment.Yhjadapter;
-import com.dbvr.baselibrary.adapter.BaseLoadMoreHeaderAdapter;
-import com.dbvr.baselibrary.model.CouponBean;
 import com.dbvr.baselibrary.model.ShoppingCarDataBean;
-import com.dbvr.baselibrary.model.StreamMo;
-import com.dbvr.baselibrary.model.TagMo;
 import com.dbvr.baselibrary.ui.RoundCornerDialog;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
-import com.dbvr.baselibrary.utils.StringUtils;
 import com.dbvr.baselibrary.utils.ToastUtil;
 import com.dbvr.baselibrary.view.AppManager;
 import com.dbvr.baselibrary.view.BaseActivity;
@@ -32,19 +26,13 @@ import com.dbvr.httplibrart.utils.ObjectCallback;
 import com.dbvr.httplibrart.utils.OkHttp3Utils;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
-import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 import okhttp3.Call;

@@ -92,7 +92,13 @@
         <activity android:name=".fragment.other.Order.ProblemActivity" />
         <activity android:name=".fragment.other.Order.UserSettingActivity"></activity>
         <activity android:name=".fragment.other.Order.UserMessActivity"></activity>
-
+        <activity android:name=".fragment.other.Order.UserSJRZOneActivity"></activity>
+        <activity android:name=".fragment.other.Order.UserSJRZTwoActivity"></activity>
+        <activity android:name=".fragment.other.Order.UserAgreeActivity"></activity>
+        <activity android:name=".fragment.other.Order.UserSJRZThreeActivity"></activity>
+        <activity android:name=".fragment.other.Order.UserZBSQOneActivity"></activity>
+        <activity android:name=".fragment.other.Order.UserZBSQTwoActivity"></activity>
+        <activity android:name=".fragment.other.Order.UserApplySuccessActivity"></activity>
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.dabangvr.fileProvider"

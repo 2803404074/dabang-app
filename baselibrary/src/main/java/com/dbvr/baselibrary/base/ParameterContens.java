@@ -25,4 +25,5 @@ public interface ParameterContens {
     String sjrz="sjrz";//商家入驻
     String zbsq="zbsq";//主播申请
     String kf="kf";//客服
+    long clickTime=2000l;
 }

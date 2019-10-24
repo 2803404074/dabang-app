@@ -1,19 +1,15 @@
 package com.dabangvr.fragment.other.Order;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import android.view.View;
-import android.widget.RelativeLayout;
 
 import com.dabangvr.R;
 
-import com.dabangvr.fragment.other.Order.MyYhjRecordActivity;
 import com.dabangvr.fragment.other.Order.order_fragment.Yhjadapter;
 import com.dbvr.baselibrary.adapter.BaseLoadMoreHeaderAdapter;
 import com.dbvr.baselibrary.model.CouponBean;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
-import com.dbvr.baselibrary.utils.ThreadUtil;
 import com.dbvr.baselibrary.view.AppManager;
 import com.dbvr.baselibrary.view.BaseActivity;
 

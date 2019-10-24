@@ -14,7 +14,6 @@ import com.dbvr.baselibrary.view.BaseActivity;
 
 
 import java.util.ArrayList;
-import java.util.List;
 
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;

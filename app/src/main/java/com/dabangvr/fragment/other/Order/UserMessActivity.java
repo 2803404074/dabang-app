@@ -1,28 +1,19 @@
 package com.dabangvr.fragment.other.Order;
 
-import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.DatePicker;
 import android.widget.TextView;
 
 import com.dabangvr.R;
-import com.dabangvr.activity.IntroduceActivity;
-import com.dabangvr.activity.LocationActivity;
-import com.dabangvr.activity.PhoneSetActivity;
 import com.dbvr.baselibrary.model.UserMess;
-import com.dbvr.baselibrary.utils.BottomDialogUtil2;
-import com.dbvr.baselibrary.utils.Conver;
 import com.dbvr.baselibrary.utils.DialogUtil;
 import com.dbvr.baselibrary.utils.SPUtils;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
 import com.dbvr.baselibrary.utils.StringUtils;
-import com.dbvr.baselibrary.utils.ToastUtil;
 import com.dbvr.baselibrary.view.AppManager;
 import com.dbvr.baselibrary.view.BaseActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 
-import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.OnClick;

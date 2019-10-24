@@ -1,12 +1,9 @@
 package com.dabangvr.fragment.other.Order;
 
 import android.Manifest;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -18,9 +15,6 @@ import android.widget.Toast;
 
 import com.dabangvr.R;
 import com.dbvr.baselibrary.model.Search;
-import com.dbvr.baselibrary.utils.CacheUtil;
-import com.dbvr.baselibrary.utils.DialogUtil;
-import com.dbvr.baselibrary.utils.SPUtils;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
 import com.dbvr.baselibrary.utils.ToastUtil;
 import com.dbvr.baselibrary.view.AppManager;
@@ -41,7 +35,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -117,7 +110,6 @@ public class ProblemActivity extends BaseActivity {
             String result = data.getStringExtra("result");
 //            tvLocationName.setText(result);
         }
-
     }
 
     @Override

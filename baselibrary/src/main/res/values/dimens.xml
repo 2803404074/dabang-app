@@ -451,5 +451,6 @@
     <dimen name="sp_42">42sp</dimen>
     <dimen name="sp_48">48sp</dimen>
     <dimen name="dp_380">380dp</dimen>
+    <dimen name="dp_390">390dp</dimen>
 
 </resources>
