@@ -1,6 +1,9 @@
 package com.dbvr.httplibrart.constans;
 
 public class DyUrl {
+
+    public static final String QINIUDOMAN = "http://image.vrzbgw.com/";
+
     public static final String TOKEN_NAME = "DABANG-TOKEN";
     //public static final String BASE = "http://www.vrzbgw.com/dabang/";
     public static final String BASE = "http://192.168.0.112:8085/dabang/";
@@ -23,34 +26,39 @@ public class DyUrl {
     public static final String getLiveCategoryList = "api/live/getLiveCategoryList";
 
     // 个人中心菜单接口
-    public static final String getChannelMenuList = "/api/config/getChannelMenuList";
+    public static final String getChannelMenuList = "api/config/getChannelMenuList";
 
 
     //我的订单列表
-    public static String getOrderList = "/api/order/getOrderList";
+    public static String getOrderList = "api/order/getOrderList";
 
     //修改订单状态
-    public static String updateOrderState = "/api/order/updateOrderState";
+    public static String updateOrderState = "api/order/updateOrderState";
 
 
     //微信退款
-    public static String refundRequest = "/api/payorder/refundRequest";
+    public static String refundRequest = "api/payorder/refundRequest";
     //微信支付统一入口，获取订单号
-    public static String prepayOrder = "/api/payorder/prepayOrder";
+    public static String prepayOrder = "api/payorder/prepayOrder";
     //重新支付
-    public static String prepayOrderAgain = "/api/payorder/prepayOrderAgain";
+    public static String prepayOrderAgain = "api/payorder/prepayOrderAgain";
 
 
 
     //购物车获取确认订单
-    public static String confirmGoods2Cart = "/api/buygoods/confirmGoods2Cart";
+    public static String confirmGoods2Cart = "api/buygoods/confirmGoods2Cart";
 
     //修改购物车数量
-    public static String updateNumber2Cart = "/api/buygoods/updateNumber2Cart";
+    public static String updateNumber2Cart = "api/buygoods/updateNumber2Cart";
     //删除购物车
-    public static String delete2Cart = "/api/buygoods/delete2Cart";
+    public static String delete2Cart = "api/buygoods/delete2Cart";
 
     //购物车列表
-    public static String getGoods2CartList = "/api/goods/getGoods2CartList";
+    public static String getGoods2CartList = "api/goods/getGoods2CartList";
 
+
+
+    //--------------------------------------首页---------------------------------------------------
+    //发现(大头像以及大头像下面的列表)
+    public static final String indexFind = "api/index/indexFind";
 }
