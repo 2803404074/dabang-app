@@ -75,8 +75,10 @@ public class HomeFindMo implements Serializable {
         private String fname;
         private String liveTitle;
         private String coverUrl;
+        private String roomId;
         private String liveDescribe;
         private String lookNum;
+        private String liveTag;
 
         //短视频类型的字段
         private String videoUrl;
@@ -85,9 +87,34 @@ public class HomeFindMo implements Serializable {
         private String praseCount;
 
         private String nickName;
+        private String headUrl;
 
 
         public TowMo() {
+        }
+
+        public String getHeadUrl() {
+            return headUrl;
+        }
+
+        public void setHeadUrl(String headUrl) {
+            this.headUrl = headUrl;
+        }
+
+        public String getRoomId() {
+            return roomId;
+        }
+
+        public void setRoomId(String roomId) {
+            this.roomId = roomId;
+        }
+
+        public String getLiveTag() {
+            return liveTag;
+        }
+
+        public void setLiveTag(String liveTag) {
+            this.liveTag = liveTag;
         }
 
         public int getId() {

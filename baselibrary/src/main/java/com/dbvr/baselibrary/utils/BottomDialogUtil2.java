@@ -89,6 +89,41 @@ public class BottomDialogUtil2 {
         }
     }
 
+
+    public void showLive(int layoutId,Conver convers) {
+        dialog = new BottomSheetDialog(mContext, R.style.dialog2);
+        View view = LayoutInflater.from(mContext).inflate(layoutId, null);
+        convers.setView(view);
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+
+                if (onShowCallBack != null) {
+                    onShowCallBack.onShow();
+                }
+            }
+        });
+
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                if (onDismissCallBack != null) {
+                    onDismissCallBack.onDismiss();
+                }
+            }
+        });
+
+        if (mContext.isFinishing()) {
+            return;
+        }
+        dialog.contentView(view)
+                .inDuration(200)
+                .outDuration(200)
+                .cancelable(true)
+                .show();
+    }
+
+
     public void dess() {
         if (bottomDialogUtil2 != null) {
             if (dialog != null) {

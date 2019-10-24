@@ -1,9 +1,11 @@
 package com.dbvr.baselibrary.model;
 
+import java.io.Serializable;
+
 /**
  * 直播间消息体
  */
-public class LiveComment {
+public class LiveComment implements Serializable {
     private int msgTag;//标签
     private int dzNum;
     private String userName;//打赏的用户名
@@ -62,9 +64,28 @@ public class LiveComment {
 
     //礼物消息类
     public static class GifMo{
+        private String giftId;
         private int giftTag;//礼物类型，区别是飞机还是大炮
         private String giftName;//打赏的礼品的名称
         private int giftNum ;//打赏的礼品的数量
+
+        public GifMo() {
+        }
+
+        public GifMo(String giftId, int giftTag, String giftName, int giftNum) {
+            this.giftId = giftId;
+            this.giftTag = giftTag;
+            this.giftName = giftName;
+            this.giftNum = giftNum;
+        }
+
+        public String getGiftId() {
+            return giftId;
+        }
+
+        public void setGiftId(String giftId) {
+            this.giftId = giftId;
+        }
 
         public int getGiftTag() {
             return giftTag;

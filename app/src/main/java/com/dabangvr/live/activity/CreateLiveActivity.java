@@ -127,9 +127,9 @@ public class CreateLiveActivity extends BaseActivity {
                 showBottomDialog();
                 break;
             case R.id.tvCreate:
-                //createLive("http://i2.sinaimg.cn/gm/cr/2015/0113/1969148222.jpg");
+                createLive("http://01.imgmini.eastday.com/mobile/20180102/20180102151744_85ddb15157c913becb8f437db95991e8_4.jpeg");
                 setLoaddingView(true);
-                judge();
+                //judge();
                 break;
                 default:break;
         }
@@ -181,6 +181,7 @@ public class CreateLiveActivity extends BaseActivity {
     private void upCover(QiniuUploadFile qiniuUploadFile){
         qiniuUploadFile.setFilePath(picturePath);
         qiniuUploadFile.setKey("live-cover"+ UUID.randomUUID());
+        Log.e("live","path="+picturePath+",key="+qiniuUploadFile.getKey());
         QiniuUploadManager.getInstance(this).upload(qiniuUploadFile, new OnUploadListener() {
             @Override
             public void onStartUpload() {
@@ -233,7 +234,7 @@ public class CreateLiveActivity extends BaseActivity {
         map.put("liveTitle",etTitle.getText().toString());
         map.put("liveContent",etContent.getText().toString());
         map.put("liveTag", tagListStr);
-        map.put("liveGImg",imgKey);
+        map.put("liveGImg",DyUrl.QINIUDOMAN+imgKey);
         OkHttp3Utils.getInstance(this).doPostJson(DyUrl.createStream, map, new ObjectCallback<String>(this) {
             @Override
             public void onUi(String result){

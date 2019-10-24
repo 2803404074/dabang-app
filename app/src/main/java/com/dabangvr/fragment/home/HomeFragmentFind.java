@@ -117,17 +117,32 @@ public class HomeFragmentFind extends BaseFragment {
                 } else if (adapter.getViewTypeForMyTask(mType) == adapter.mTypeOne) {
                     List<HomeFindMo.TowMo> list = mData.get(mType).getTowMos();
                     String liveId;
+                    String roomId;
+                    String nickName;
+                    String liveTag;
+                    String lookNum;
+                    String headUrl;
                     for (int i = 0; i < list.size(); i++) {
                         if (!StringUtils.isEmpty(list.get(i).getCoverUrl())){
                             holder.setImageByUrl(R.id.ivTitle,list.get(i).getCoverUrl());
                             holder.setText(R.id.tvName,list.get(i).getNickName());
                             holder.setText(R.id.tvTitle,list.get(i).getLiveTitle());
                             liveId = list.get(i).getFname();
+                            roomId = list.get(i).getRoomId();
+                            nickName = list.get(i).getNickName();
+                            liveTag = list.get(i).getLiveTag();
+                            lookNum = list.get(i).getLookNum();
+                            headUrl = list.get(i).getHeadUrl();
                             holder.itemView.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
                                     Map<String,Object>map = new HashMap<>();
-                                    map.put("liveId",liveId);
+                                    map.put("url",liveId);
+                                    map.put("roomId",roomId);
+                                    map.put("nickName",nickName);
+                                    map.put("liveTag",liveTag);
+                                    map.put("lookNum",lookNum);
+                                    map.put("headUrl",headUrl);
                                     goTActivity(VideoActivityTest.class,map);
                                 }
                             });
@@ -174,6 +189,19 @@ public class HomeFragmentFind extends BaseFragment {
                         }
                     };
                     recyclerTow.setAdapter(adapter);
+                    adapter.setOnItemClickListener(new RecyclerAdapterPosition.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(View view, int position) {
+                            Map<String,Object>map = new HashMap<>();
+                            map.put("url",list.get(position).getFname());
+                            map.put("roomId",list.get(position).getRoomId());
+                            map.put("nickName",list.get(position).getNickName());
+                            map.put("liveTag",list.get(position).getLiveTag());
+                            map.put("lookNum",list.get(position).getLookNum());
+                            map.put("headUrl",list.get(position).getHeadUrl());
+                            goTActivity(VideoActivityTest.class,map);
+                        }
+                    });
                 //轮播图
                 } else if (adapter.getViewTypeForMyTask(mType) == adapter.mTypeTow) {
                     List<HomeFindMo.ThreeMo> list = mData.get(mType).getThreeMos();
@@ -279,6 +307,7 @@ public class HomeFragmentFind extends BaseFragment {
             switch (msg.what) {
                 case 1:         //刷新加载
                     obj = (String) msg.obj;
+                    initData();
                     refreshLayout.finishRefresh(true);
                     break;
                 case 2:         //加载更多

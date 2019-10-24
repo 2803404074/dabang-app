@@ -101,4 +101,7 @@ dependencies {
     //superbutton 按钮
     api 'top.androidman:superbutton:1.1.1'
 
+    //直播中的动画？？
+    api 'com.github.hust201010701:XDanmuku:-SNAPSHOT'
+
 }

@@ -61,4 +61,7 @@ public class DyUrl {
     //--------------------------------------首页---------------------------------------------------
     //发现(大头像以及大头像下面的列表)
     public static final String indexFind = "api/index/indexFind";
+
+    //根据类型查询直播列表
+    public static final String getOnlineList = "api/live/getOnlineList";
 }

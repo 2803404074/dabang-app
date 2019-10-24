@@ -11,6 +11,7 @@
         android:layout_height="match_parent" />
 
     <LinearLayout
+        android:id="@+id/llTop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -94,73 +95,54 @@
         </androidx.recyclerview.widget.RecyclerView>
     </LinearLayout>
 
+    <com.dabangvr.play.widget.HeartLayout
+        android:id="@+id/heart_layout"
+        android:layout_width="86dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="4dp" />
 
-    <LinearLayout
-        android:id="@+id/zb_bootom"
+    <com.orzangleli.xdanmuku.DanmuContainerView
+        android:id="@+id/danmuContainerView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@id/llTop" />
+
+    <com.dabangvr.live.gift.GiftView
+        android:id="@+id/giftView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:padding="@dimen/dp_10"
-        android:orientation="horizontal">
+        android:layout_below="@id/llTop" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@drawable/shape_touming"
-            android:paddingHorizontal="@dimen/dp_10"
-            android:paddingVertical="@dimen/dp_3"
-            android:orientation="horizontal">
-            <ImageView
-                android:layout_width="@dimen/dp_20"
-                android:layout_height="@dimen/dp_20"
-                android:src="@mipmap/comment"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="来聊聊天吧..."
-                android:layout_marginLeft="@dimen/dp_5"
-                android:textSize="@dimen/sp_15"
-                android:layout_gravity="center"
-                android:textColor="#cdcdcd"/>
 
-        </LinearLayout>
 
-        <ImageView
-            android:layout_width="@dimen/dp_30"
-            android:layout_height="@dimen/dp_30"
-            android:layout_marginLeft="@dimen/dp_5"
-            android:src="@mipmap/gift" />
-        <ImageView
-            android:layout_width="@dimen/dp_30"
-            android:layout_height="@dimen/dp_30"
-            android:src="@mipmap/goods"
-            android:layout_marginHorizontal="@dimen/dp_5" />
 
-        <ImageView
-            android:layout_width="@dimen/dp_30"
-            android:layout_height="@dimen/dp_30"
-            android:src="@mipmap/wechat_frends" />
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1px"
-            android:layout_weight="1"/>
-        <ImageView
-            android:layout_width="@dimen/dp_30"
-            android:layout_height="@dimen/dp_30"
-            android:src="@mipmap/cancel"
-            />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/tvTest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="送礼测试"
+        android:padding="@dimen/dp_5"
+        android:textSize="@dimen/sp_15"
+        android:layout_above="@id/recycle_comment"
+        android:textColor="@android:color/white"
+        android:background="@drawable/shape_db"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycle_comment"
-        android:layout_above="@+id/zb_bootom"
-        android:layout_width="@dimen/dp_200"
+        android:layout_above="@+id/bottom_bar"
+        android:layout_width="@dimen/dp_250"
         android:layout_height="@dimen/dp_250"/>
 
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    <include layout="@layout/live_bottombar"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/bottom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 </RelativeLayout>

@@ -17,55 +17,59 @@
         android:id="@+id/ll_mess"
         android:layout_marginTop="@dimen/dp_25"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dp_50"
         android:orientation="horizontal">
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/sdvHead"
-            android:layout_width="@dimen/dp_30"
-            android:layout_height="@dimen/dp_30"
+            android:layout_width="@dimen/dp_35"
+            android:layout_height="@dimen/dp_35"
             android:layout_gravity="center"
             android:layout_marginHorizontal="@dimen/dp_5"
             fresco:roundAsCircle="true" />
-
-
-        <TextView
-            android:id="@+id/tvRoomNumber"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/dp_3"
-            android:background="@mipmap/room_bg"
-            android:paddingLeft="@dimen/dp_5"
-            android:paddingRight="@dimen/dp_10"
-            android:text="房间号:111"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/sp_14" />
-
         <LinearLayout
-            android:id="@+id/llConDown"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_gravity="center"
-            android:layout_marginLeft="-10dp"
-            android:background="@mipmap/room_bg_red">
-
+            android:gravity="center|left"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
             <TextView
+                android:id="@+id/tvRoomNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:background="@mipmap/room_bg"
                 android:paddingLeft="@dimen/dp_5"
-                android:text="直播中"
-                android:textColor="@android:color/white" />
+                android:paddingRight="@dimen/dp_10"
+                android:text="房间号:111"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/sp_14" />
 
-            <Chronometer
-                android:id="@+id/charCounter"
+            <LinearLayout
+                android:id="@+id/llConDown"
+                android:layout_marginTop="@dimen/dp_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:format="%s"
-                android:textColor="@android:color/white" />
+                android:background="@mipmap/room_bg_red">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:paddingLeft="@dimen/dp_5"
+                    android:text="直播中"
+                    android:textColor="@android:color/white" />
+
+                <Chronometer
+                    android:id="@+id/charCounter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:format="%s"
+                    android:textColor="@android:color/white" />
+            </LinearLayout>
         </LinearLayout>
+
 
         <View
             android:layout_width="0dp"
@@ -77,6 +81,7 @@
             android:layout_width="@dimen/dp_35"
             android:layout_height="@dimen/dp_35"
             android:padding="@dimen/dp_5"
+            android:layout_gravity="center"
             android:src="@mipmap/function" />
 
         <ImageView
@@ -84,6 +89,7 @@
             android:layout_width="@dimen/dp_35"
             android:layout_height="@dimen/dp_35"
             android:padding="@dimen/dp_5"
+            android:layout_gravity="center"
             android:layout_marginRight="@dimen/dp_5"
             android:src="@mipmap/came_round" />
     </LinearLayout>

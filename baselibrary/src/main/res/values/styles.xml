@@ -51,4 +51,9 @@
         <!--弹窗背景是否变暗-->
         <item name="android:backgroundDimEnabled">false</item>
     </style>
+
+    <style name="dialog2">
+        <!--弹窗背景是否变暗-->
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
 </resources>

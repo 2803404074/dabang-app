@@ -159,7 +159,8 @@ public class UserEditMessActivity extends BaseActivity {
     }
 
     private void logOut() {
+        AppManager.getAppManager().finishAllActivity();
         SPUtils.instance(this).removeUser();
-        AppManager.getAppManager().finishAllActivityTo(UserMessActivity.class);
+        goTActivity(LoginActivity.class,null);
     }
 }

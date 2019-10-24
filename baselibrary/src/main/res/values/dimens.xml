@@ -11,6 +11,19 @@
     <dimen name="text_more_large">22sp</dimen>		    <!-- 特大字体 -->
     <dimen name="text_max">30sp</dimen>				    <!-- 最大字体 -->
 
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="heart_anim_bezier_x_rand">40.0dp</dimen>
+    <dimen name="heart_anim_init_x">50.0dp</dimen>
+    <dimen name="heart_anim_init_y">25.0dp</dimen>
+    <dimen name="heart_anim_length">100.0dp</dimen>
+    <dimen name="heart_anim_length_rand">150.0dp</dimen>
+    <dimen name="heart_anim_x_point_factor">30.0dp</dimen>
+
+    <dimen name="heart_size_height">27.3dp</dimen>
+    <dimen name="heart_size_width">32.5dp</dimen>
+
 
     <dimen name="margin_min">3dp</dimen>               <!-- 比标准边距最小 -->
     <dimen name="margin_little">5dp</dimen>             <!-- 比标准边距较小 -->

@@ -6,7 +6,7 @@
         <item name="colorPrimary">@color/colorDb3</item>
         <item name="colorPrimaryDark">@color/colorWhite</item>
         <item name="android:windowNoTitle">true</item>
-        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowIsTranslucent">true</item>
 
         <!--无标题-->
         <item name="android:windowActionBar">false</item>

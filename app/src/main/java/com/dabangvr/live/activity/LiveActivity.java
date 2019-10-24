@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -192,7 +193,9 @@ public class LiveActivity extends Activity implements
     private void setNotifyUi(LiveComment liveComment) {
         Log.e("HyListener", "收到消息:" + liveComment.toString());
         switch (liveComment.getMsgTag()) {
-            case Contents.HY_JOIN://评论消息
+            case Contents.HY_JOIN://加入房间消息
+                onLineNumber++;
+                upDateOnline();
                 Bundle bundle3 = new Bundle();
                 ArrayList arr3 = new ArrayList();
                 arr3.add(liveComment);
@@ -201,6 +204,18 @@ public class LiveActivity extends Activity implements
                 message3.what = handleMessRequestCode;
                 message3.setData(bundle3);
                 handler.sendMessage(message3);
+                break;
+            case Contents.HY_LEAVE://退出房间消息
+                onLineNumber--;
+                upDateOnline();
+                Bundle bundle4 = new Bundle();
+                ArrayList arr4 = new ArrayList();
+                arr4.add(liveComment);
+                bundle4.putStringArrayList("data", arr4);
+                Message message4 = new Message();
+                message4.what = handleMessRequestCode;
+                message4.setData(bundle4);
+                handler.sendMessage(message4);
                 break;
             case Contents.HY_SERVER://评论消息
                 Bundle bundle2 = new Bundle();
@@ -249,13 +264,39 @@ public class LiveActivity extends Activity implements
             case Contents.HY_ORDER://下单消息
                 break;
             case Contents.HY_DZ://点赞消息,收到一条累计
-                tvDzNum.setText("赞 "+dzNum);
+                upDateDz(liveComment.getDzNum());
+                Bundle bundle5 = new Bundle();
+                ArrayList arr5 = new ArrayList();
+                arr5.add(liveComment);
+                bundle5.putStringArrayList("data", arr5);
+                Message message5 = new Message();
+                message5.what = handleMessRequestCode;
+                message5.setData(bundle5);
+                handler.sendMessage(message5);
                 break;
+                default:break;
         }
     }
     private int dzNum = 0;//点赞累加
     private double giftNum = 0;//礼物收益累加
 
+    /**
+     * 更新点赞量
+     */
+    private void upDateDz(int count){
+        dzNum+=count;
+        runOnUiThread(() -> {
+            tvDzNum.setText("赞"+dzNum);
+        });
+    }
+    /**
+     * 更新在线量
+     */
+    private void upDateOnline(){
+        runOnUiThread(() -> {
+            tvOnLine.setText(String.valueOf(onLineNumber++));
+        });
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -289,6 +330,10 @@ public class LiveActivity extends Activity implements
 
         //初始化礼物列表
         initGift();
+
+        //注册消息监听
+        EMClient.getInstance().chatManager().addMessageListener(msgListener);
+
 
     }
 
@@ -371,22 +416,24 @@ public class LiveActivity extends Activity implements
             @Override
             public void convert(Context mContext, BaseRecyclerHolder holder, LiveComment o) {
                 TextView tvMess = holder.getView(R.id.tvMess);
-                tvMess.setText(o.getMsgComment());
                 holder.setText(R.id.tvUser, o.getUserName());
                 //进入直播间
                 if (o.getMsgTag() == Contents.HY_JOIN) {
                     tvMess.setTextColor(getResources().getColor(R.color.colorAccent));
-                } else {
+                    tvMess.setText(o.getMsgComment());
+                } else if (o.getMsgTag() == Contents.HY_COMMENT){//评论消息-白体字
                     tvMess.setTextColor(getResources().getColor(R.color.colorWhite));
+                    tvMess.setText(o.getMsgComment());
+                }else if (o.getMsgTag() == Contents.HY_DZ){//点赞消息-紫色字体
+                    tvMess.setTextColor(getResources().getColor(R.color.colorZi));
+                    tvMess.setText("送给你"+o.getDzNum()+"个赞");
+                }else if (o.getMsgTag() == Contents.HY_SERVER){//系统消息-系统字体
+                    tvMess.setTextColor(getResources().getColor(R.color.colorDb3));
+                    tvMess.setText(o.getMsgComment());
+                }else if (o.getMsgTag() == Contents.HY_LEAVE){
+                    tvMess.setTextColor(getResources().getColor(R.color.color_e2e2e2));
+                    tvMess.setText(o.getMsgComment());
                 }
-
-//                SimpleDraweeView sdvHead = holder.getView(R.id.sdvItemHead);
-//                if (StringUtils.isEmpty(o.getHeadUrl())) {
-//                    sdvHead.setVisibility(View.GONE);
-//                } else {
-//                    sdvHead.setImageURI(o.getHeadUrl());
-//                    sdvHead.setVisibility(View.VISIBLE);
-//                }
             }
         };
         recyclerView.setAdapter(commentAdapter);
@@ -423,82 +470,10 @@ public class LiveActivity extends Activity implements
             }
         }).start();
 
-        //客户进入退出房间监听
-        initJoin();
-
         llNotice.setVisibility(View.GONE);//隐藏提示
         tvFinishLive.setText("结束直播");
         tvFinishLive.setBackgroundResource(R.drawable.shape_red);
 
-    }
-
-    /**
-     * 客户进入退出房间监听
-     */
-    private void initJoin() {
-        EMClient.getInstance().chatroomManager().addChatRoomChangeListener(new EMChatRoomChangeListener() {
-
-            @Override
-            public void onChatRoomDestroyed(String roomId, String roomName) {
-                Log.e("HyListener", "onChatRoomDestroyed:roomId=" + roomId + ",roomName=" + roomName);
-
-            }
-
-            @Override
-            public void onMemberJoined(String roomId, String participant) {
-                if (participant.equals("系统管理员")) return;
-                //有人进来
-                onLineNumber++;
-                tvOnLine.setText("在线 " + onLineNumber);
-                setNotifyUi(new LiveComment(Contents.HY_JOIN, participant, "", "进入直播间"));
-                Log.e("HyListener", "onMemberJoined:roomId=" + roomId + ",participant=" + participant);
-            }
-
-            @Override
-            public void onMemberExited(String roomId, String roomName, String participant) {
-                //用户退出
-                onLineNumber--;
-                tvOnLine.setText("在线 " + onLineNumber);
-                Log.e("HyListener", "onMemberExited:roomId=" + roomId + ",roomName=" + roomName + ",participant=" + participant);
-                setNotifyUi(new LiveComment(Contents.HY_JOIN, participant, "", "离开直播间"));
-            }
-
-            @Override
-            public void onRemovedFromChatRoom(int i, String s, String s1, String s2) {
-                Log.e("HyListener", "onRemovedFromChatRoom:");
-            }
-
-
-            @Override
-            public void onMuteListAdded(final String chatRoomId, final List<String> mutes, final long expireTime) {
-                Log.e("HyListener", "onMuteListAdded:");
-            }
-
-            @Override
-            public void onMuteListRemoved(final String chatRoomId, final List<String> mutes) {
-                Log.e("HyListener", "onMuteListRemoved:");
-            }
-
-            @Override
-            public void onAdminAdded(final String chatRoomId, final String admin) {
-                Log.e("HyListener", "onAdminAdded:");
-            }
-
-            @Override
-            public void onAdminRemoved(final String chatRoomId, final String admin) {
-                Log.e("HyListener", "onAdminRemoved:");
-            }
-
-            @Override
-            public void onOwnerChanged(final String chatRoomId, final String newOwner, final String oldOwner) {
-                Log.e("HyListener", "onOwnerChanged:");
-            }
-
-            @Override
-            public void onAnnouncementChanged(String chatRoomId, final String announcement) {
-                Log.e("HyListener", "onAnnouncementChanged:");
-            }
-        });
     }
 
     /**
@@ -726,7 +701,7 @@ public class LiveActivity extends Activity implements
             TextView tvDate = holder.findViewById(R.id.tv_tips);
             tvDate.setText("你已直播时长："+DataUtil.formatMiss(miss));
             TextView tvSeeNum = holder.findViewById(R.id.tvPersonNum);
-            tvSeeNum.setText("当前人数已到达："+dzNum+"人");
+            tvSeeNum.setText("当前人数已到达："+onLineNumber+"人");
 
         });
     }
@@ -743,6 +718,11 @@ public class LiveActivity extends Activity implements
         LiveFunctionView.getInstance(LiveActivity.this).destroy();
         BottomDialogUtil2.getInstance(this).dess();
         DialogUtil.getInstance(this).des();
+        try {
+            EMClient.getInstance().chatroomManager().destroyChatRoom(roomNumber);
+        } catch (HyphenateException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -937,8 +917,9 @@ public class LiveActivity extends Activity implements
                 // 如果是当前会话的消息，刷新聊天页面
                 if (username.equals(roomNumber)) {
                     EMTextMessageBody txtBody = (EMTextMessageBody) message.getBody();
+                    String str = StringUtils.removeStr(txtBody.getMessage());
                     Gson gson = new Gson();
-                    LiveComment liveComment = gson.fromJson(txtBody.getMessage(), LiveComment.class);
+                    LiveComment liveComment = gson.fromJson(str, LiveComment.class);
                     setNotifyUi(liveComment);
                 }
             }

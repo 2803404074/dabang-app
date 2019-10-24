@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_55"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="horizontal"
+    android:background="@color/colorWhite"
+    android:paddingHorizontal="@dimen/dp_5">
+
+
+    <ImageView
+        android:id="@+id/iv_jianp"
+        android:layout_width="@dimen/dp_35"
+        android:layout_height="@dimen/dp_35"
+        android:padding="@dimen/dp_5"
+        android:layout_gravity="center"
+        android:src="@mipmap/jianp" />
+
+    <EditText
+        android:id="@+id/et_content_chart"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="@dimen/dp_5"
+        android:layout_marginVertical="@dimen/dp_5"
+        android:layout_weight="1"
+        android:background="@drawable/gray_ruang_left_right"
+        android:paddingLeft="@dimen/dp_5"
+        android:textSize="14sp" />
+
+
+    <ImageView
+        android:id="@+id/iv_add"
+        android:layout_width="@dimen/dp_35"
+        android:layout_height="@dimen/dp_35"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="@dimen/dp_5"
+        android:src="@mipmap/add_mess" />
+
+    <TextView
+        android:id="@+id/btn_send"
+        android:layout_width="@dimen/dp_50"
+        android:layout_height="@dimen/dp_35"
+        android:layout_gravity="center"
+        android:background="@drawable/shape_style_db_green"
+        android:gravity="center"
+        android:onClick="tvSand"
+        android:paddingHorizontal="@dimen/dp_8"
+        android:paddingVertical="@dimen/dp_3"
+        android:text="发送"
+        android:textColor="#fff"
+        android:textSize="@dimen/sp_16" />
+</LinearLayout>
