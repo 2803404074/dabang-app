@@ -22,6 +22,7 @@ public class LocationActivity extends BaseActivity {
     @BindView(R.id.sblLocation)
     ShowButtonLayout showButtonLayout;
     private List<String> listHots = new ArrayList<>();//地区
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +44,7 @@ public class LocationActivity extends BaseActivity {
         ShowButtonLayoutData data1 = new ShowButtonLayoutData<String>(this, showButtonLayout,
                 listHots, new ShowButtonLayoutData.MyClickListener() {
             @Override
-            public void clickListener(View v,String txt, double arg1, double arg2 , boolean isCheck) {
+            public void clickListener(View v, String txt, double arg1, double arg2, boolean isCheck) {
                 Intent i = new Intent();
                 i.putExtra("result", txt);
                 setResult(103, i);
@@ -60,12 +61,13 @@ public class LocationActivity extends BaseActivity {
     }
 
     @OnClick({R.id.ivBack})
-    public void onclick(View view){
-        switch (view.getId()){
+    public void onclick(View view) {
+        switch (view.getId()) {
             case R.id.ivBack:
                 AppManager.getAppManager().finishActivity(this);
                 break;
-                default:break;
+            default:
+                break;
         }
     }
 }

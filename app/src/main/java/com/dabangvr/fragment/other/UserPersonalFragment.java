@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.dabangvr.R;
 import com.dabangvr.fragment.other.Order.ProblemActivity;
+import com.dabangvr.fragment.other.Order.UserAboutActivity;
 import com.dabangvr.fragment.other.Order.UserMessActivity;
 import com.dabangvr.fragment.other.Order.UserSJRZOneActivity;
 import com.dabangvr.fragment.other.Order.UserSettingActivity;
@@ -107,6 +108,7 @@ public class UserPersonalFragment extends BaseFragment {
                     case ParameterContens.CLIENT_GFKF://官方客服
                         break;
                     case ParameterContens.CLIENT_GYWM://关于我们
+                        goTActivity(UserAboutActivity.class,null);
                         break;
 
                 }

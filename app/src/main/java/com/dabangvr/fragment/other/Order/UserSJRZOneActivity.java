@@ -25,6 +25,7 @@ import com.dbvr.httplibrart.utils.OkHttp3Utils;
 import java.util.HashMap;
 import java.util.Map;
 
+import androidx.annotation.NonNull;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -54,6 +55,7 @@ public class UserSJRZOneActivity extends BaseActivity {
     EditText etCode;
 
     private boolean isChecked;
+    private CountDownTimer count;
 
 
     @Override
@@ -94,7 +96,7 @@ public class UserSJRZOneActivity extends BaseActivity {
         long time = SystemClock.uptimeMillis();//防止多次响应
         if (time - lastonclickTime >= ParameterContens.clickTime) {
             lastonclickTime = time;
-        }else {
+        } else {
             return;
         }
         switch (view.getId()) {
@@ -109,19 +111,18 @@ public class UserSJRZOneActivity extends BaseActivity {
                 goTActivity(UserAgreeActivity.class, null);
                 break;
             case R.id.tv_next:
-
                 String phone = etPhone.getText().toString().trim();
                 String code = etCode.getText().toString().trim();
-                if (!StringUtils.isMobileNO(phone)||TextUtils.isEmpty(code)){
-                    ToastUtil.showShort(this,"请输入正确的手机号码和验证码");
+                if (!StringUtils.isMobileNO(phone) || TextUtils.isEmpty(code)) {
+                    ToastUtil.showShort(this, "请输入正确的手机号码和验证码");
                     return;
                 }
-                if (!isChecked){
-                    ToastUtil.showShort(this,"请确认我已了解");
+                if (!isChecked) {
+                    ToastUtil.showShort(this, "请确认我已了解");
                     return;
                 }
+                next(phone, code, "1");
 
-                goTActivity(UserSJRZTwoActivity.class, null);
                 break;
         }
 
@@ -150,10 +151,36 @@ public class UserSJRZOneActivity extends BaseActivity {
     }
 
     /**
+     * 验证手机验证码
+     *
+     * @param phone
+     */
+    private void next(String phone, String code, String agreedAgreement) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("phone", phone);
+        map.put("code", code);
+        map.put("agreedAgreement", agreedAgreement);
+        OkHttp3Utils.getInstance(this).doPostJson(UserUrl.toValidateDeptCode, map, new ObjectCallback<String>(this) {
+            @Override
+            public void onUi(String result) {
+                Log.d("luhuas", "onUi: " + result);
+                goTActivity(UserSJRZTwoActivity.class, null);
+            }
+            @Override
+            public void onFailed(String msg) {
+                ToastUtil.showShort(getContext(), msg);
+            }
+        });
+    }
+
+    /**
      * 倒计时开始
      */
     private void downDate() {
-        new CountDownTimer(60 * 1000, 1000) {
+        if (count != null) {
+            count = null;
+        }
+        count = new CountDownTimer(60 * 1000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
 
