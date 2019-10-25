@@ -4,8 +4,7 @@
     android:id="@+id/RelativeRootView"
     android:layout_width="match_parent"
     android:keepScreenOn="true"
-    android:layout_height="match_parent"
-    android:background="@color/background_floating_material_dark">
+    android:layout_height="match_parent">
 
     <com.dabangvr.live.widget.CameraPreviewFrameView
         android:id="@+id/cameraPreview_surfaceView"
@@ -28,7 +27,7 @@
             android:layout_marginHorizontal="@dimen/dp_5"
             fresco:roundAsCircle="true" />
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_weight="1"
             android:layout_gravity="center"
             android:gravity="center|left"
@@ -40,7 +39,6 @@
                 android:layout_height="wrap_content"
                 android:background="@mipmap/room_bg"
                 android:paddingLeft="@dimen/dp_5"
-                android:paddingRight="@dimen/dp_10"
                 android:text="房间号:111"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/sp_14" />
@@ -95,6 +93,8 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/llTops"
+        android:layout_marginVertical="@dimen/dp_5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ll_mess"
@@ -130,28 +130,24 @@
 
     </LinearLayout>
 
-
-
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycle_comment"
         android:layout_width="@dimen/dp_250"
         android:layout_height="@dimen/dp_250"
         android:layout_above="@+id/rl_bottom" />
 
-    <TextView
-        android:id="@+id/tvTbSy"
-        android:layout_width="0dp"
+    <com.orzangleli.xdanmuku.DanmuContainerView
+        android:id="@+id/danmuContainerView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@id/llTops" />
+
+    <com.dabangvr.live.gift.GiftView
+        android:id="@+id/giftView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_above="@+id/rl_bottom"
-        android:textSize="@dimen/sp_15"
-        android:background="@drawable/shape_style_yellow_org"
-        android:paddingHorizontal="@dimen/dp_10"
-        android:paddingVertical="@dimen/dp_3"
-        android:layout_marginBottom="@dimen/dp_10"
-        android:textColor="@android:color/white"
-        android:text="跳币+3"/>
+        android:layout_below="@id/llTops" />
+
     <RelativeLayout
         android:id="@+id/rl_bottom"
         android:layout_width="match_parent"
@@ -235,37 +231,4 @@
             android:textColor="@android:color/white" />
     </LinearLayout>
 
-
-    <!--打赏弹出的视图-->
-    <LinearLayout
-        android:id="@+id/llDsView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:visibility="invisible"
-        android:layout_above="@+id/recycle_comment">
-
-        <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/sdvDsHead"
-            android:layout_width="@dimen/dp_50"
-            android:layout_height="@dimen/dp_50"
-            android:layout_gravity="center"
-            fresco:roundAsCircle="true" />
-
-        <TextView
-            android:id="@+id/tv_ds_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginHorizontal="@dimen/dp_5"
-            android:text="西西老板"
-            android:textColor="@color/colorAccent"
-            android:textSize="@dimen/sp_18" />
-
-        <ImageView
-            android:id="@+id/ivDsContent"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/dp_100"
-            android:layout_gravity="center"
-            android:src="@mipmap/test" />
-    </LinearLayout>
 </RelativeLayout>

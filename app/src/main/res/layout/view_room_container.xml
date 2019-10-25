@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/room_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+
 
     <com.pili.pldroid.player.widget.PLVideoTextureView
         android:id="@+id/texture_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    <com.opensource.svgaplayer.SVGAImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:autoPlay="true"
+        android:id="@+id/sVGAImageView"/>
 
     <LinearLayout
         android:id="@+id/llTop"
@@ -113,21 +122,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/llTop" />
-
-
-
-
-
-    <TextView
-        android:id="@+id/tvTest"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="送礼测试"
-        android:padding="@dimen/dp_5"
-        android:textSize="@dimen/sp_15"
-        android:layout_above="@id/recycle_comment"
-        android:textColor="@android:color/white"
-        android:background="@drawable/shape_db"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycle_comment"

@@ -1,4 +1,4 @@
-package com.dabangvr.activity;
+package com.dabangvr.play.activity;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -15,34 +15,24 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import androidx.fragment.app.FragmentManager;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 
-import com.bumptech.glide.Glide;
 import com.dabangvr.R;
 import com.dabangvr.adapter.BaseRecyclerHolder;
 import com.dabangvr.adapter.RecyclerAdapter;
-import com.dabangvr.fragment.RoomFragment;
-import com.dabangvr.im.Constant;
-import com.dabangvr.live.gift.GiftSendModel;
 import com.dabangvr.live.gift.GiftView;
 import com.dabangvr.live.gift.danmu.DanmuAdapter;
 import com.dabangvr.live.gift.danmu.DanmuEntity;
-import com.dabangvr.live.gift.util.DataInterface;
 import com.dabangvr.play.widget.HeartLayout;
 import com.dabangvr.play.widget.MediaController;
-import com.dabangvr.play.widget.MyPagerAdapter;
-import com.dabangvr.play.widget.PlayUtils;
-import com.dbvr.baselibrary.model.HomeFindMo;
+import com.dbvr.baselibrary.model.GiftMo;
 import com.dbvr.baselibrary.model.LiveComment;
 import com.dbvr.baselibrary.model.UserMess;
 import com.dbvr.baselibrary.other.Contents;
@@ -66,28 +56,27 @@ import com.hyphenate.chat.EMChatRoom;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMTextMessageBody;
+import com.opensource.svgaplayer.SVGACallback;
+import com.opensource.svgaplayer.SVGAImageView;
+import com.opensource.svgaplayer.SVGAParser;
+import com.opensource.svgaplayer.SVGAVideoEntity;
 import com.orzangleli.xdanmuku.DanmuContainerView;
 import com.pili.pldroid.player.AVOptions;
 import com.pili.pldroid.player.PLOnErrorListener;
 import com.pili.pldroid.player.widget.PLVideoTextureView;
 
-import org.greenrobot.eventbus.EventBus;
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import fr.castorflex.android.verticalviewpager.VerticalViewPager;
-import rx.Subscription;
-import rx.subscriptions.Subscriptions;
 
-public class VideoActivityTest extends BaseActivity implements PLOnErrorListener{
-    public static final String TAG = "VideoActivityTest";
+public class PlayActivity extends BaseActivity implements PLOnErrorListener{
+    public static final String TAG = "PlayActivity";
 
     private UserMess userMess;
 
@@ -121,6 +110,8 @@ public class VideoActivityTest extends BaseActivity implements PLOnErrorListener
     private RecyclerAdapter commentAdapter;
     //评论数据源
     private List<LiveComment> commentData = new ArrayList<>();
+
+    private List<GiftMo> giftList = new ArrayList<>();
 
     //消息数量，始终将最新消息显示在recycelview的底部
     private int dataSize;
@@ -268,6 +259,33 @@ public class VideoActivityTest extends BaseActivity implements PLOnErrorListener
         //初始化礼物
         initGift();
 
+        //炫酷礼物初始化
+        initGiftMall();
+
+    }
+
+    private void initGiftMall() {
+        animationView.setCallback(new SVGACallback() {
+            @Override
+            public void onPause() {
+                Log.e("aaaaaa","onPause~~~~");
+            }
+
+            @Override
+            public void onFinished() {
+                Log.e("aaaaaa","onFinished~~~~");
+            }
+
+            @Override
+            public void onRepeat() {
+                animationView.stopAnimation();
+            }
+
+            @Override
+            public void onStep(int frame, double percentage) {
+
+            }
+        });
     }
 
     private void initGift() {
@@ -324,19 +342,18 @@ public class VideoActivityTest extends BaseActivity implements PLOnErrorListener
         mVideoView.start();
     }
 
-    @OnClick({R.id.tvTest,R.id.btn_barrage,R.id.ivLove,R.id.llComment,R.id.play_follow})
+
+    private RecyclerAdapter giftAdapter;
+    private String giftName;//选中礼物的名字
+    private String giftUrl;//选中礼物的图片地址
+    private int giftPrice;//礼物价钱
+    private int giftId;//选中礼物的ID
+
+    @OnClick({R.id.btn_barrage,R.id.ivLove,R.id.llComment,R.id.play_follow,R.id.ivGift})
     public void onclick(View view){
         switch (view.getId()){
-            case R.id.tvTest:
-                LiveComment liveComment = new LiveComment();
-                liveComment.setUserName(userMess.getNickName());
-                liveComment.setMsgTag(Contents.HY_DS);
-                liveComment.setHeadUrl(userMess.getHeadUrl());
-                liveComment.setMsgDsComment(new LiveComment.GifMo("101",R.mipmap.test,"送出10个测试",10));
-                setNotifyUi(liveComment);
-                break;
             case R.id.btn_barrage:
-                BottomDialogUtil2.getInstance(VideoActivityTest.this).showLive(R.layout.dialog_input,new Conver() {
+                BottomDialogUtil2.getInstance(PlayActivity.this).showLive(R.layout.dialog_input,new Conver() {
                     @Override
                     public void setView(View view) {
                         EditText editText = view.findViewById(R.id.et_content_chart);
@@ -349,47 +366,158 @@ public class VideoActivityTest extends BaseActivity implements PLOnErrorListener
                                 liveComment.setHeadUrl(userMess.getHeadUrl());
                                 liveComment.setMsgComment(editText.getText().toString());
                                 goComment(liveComment);
-                                BottomDialogUtil2.getInstance(VideoActivityTest.this).dess();
+                                BottomDialogUtil2.getInstance(PlayActivity.this).dess();
                             }
                         });
                     }
                 });
                 break;
             case R.id.ivLove:
-                heartLayout.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        int rgb = Color.rgb(random.nextInt(255), random.nextInt(255), random.nextInt(255));
-                        heartLayout.addHeart(rgb);
-                    }
+                heartLayout.post(() -> {//new Runable
+                    int rgb = Color.rgb(random.nextInt(255), random.nextInt(255), random.nextInt(255));
+                    heartLayout.addHeart(rgb);
                 });
                 clickCount++;
                 currentTime = System.currentTimeMillis();
                 checkAfter(currentTime);
                 break;
             case R.id.llComment:
-                BottomDialogUtil2.getInstance(VideoActivityTest.this).showLive(R.layout.dialog_input,new Conver() {
+                BottomDialogUtil2.getInstance(PlayActivity.this).showLive(R.layout.dialog_input,new Conver() {
                     @Override
                     public void setView(View view) {
                         EditText editText = view.findViewById(R.id.et_content_chart);
-                        view.findViewById(R.id.btn_send).setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                LiveComment liveComment = new LiveComment();
-                                liveComment.setMsgTag(Contents.HY_COMMENT);
-                                liveComment.setUserName(userMess.getNickName());
-                                liveComment.setMsgComment(editText.getText().toString());
-                                goComment(liveComment);
-                                BottomDialogUtil2.getInstance(VideoActivityTest.this).dess();
-                            }
+                        view.findViewById(R.id.btn_send).setOnClickListener(view1 -> {
+                            LiveComment liveComment1 = new LiveComment();
+                            liveComment1.setMsgTag(Contents.HY_COMMENT);
+                            liveComment1.setUserName(userMess.getNickName());
+                            liveComment1.setMsgComment(editText.getText().toString());
+                            goComment(liveComment1);
+                            BottomDialogUtil2.getInstance(PlayActivity.this).dess();
                         });
                     }
                 });
                 break;
             case R.id.play_follow://关注点击
                 break;
+            case R.id.ivGift://弹出礼物视图
+                BottomDialogUtil2.getInstance(PlayActivity.this).showLive(R.layout.dialog_gift,new Conver() {
+                    @Override
+                    public void setView(View view) {
+                        TextView tvTiaoB = view.findViewById(R.id.tvTiaoB);
+                        if (StringUtils.isEmpty(userMess.getDiamond())){
+                            tvTiaoB.setText("0");
+                        }else {
+                            tvTiaoB.setText(userMess.getDiamond());
+                        }
+
+                        EditText editText = view.findViewById(R.id.etNumber);
+                        view.findViewById(R.id.tvSend).setOnClickListener(view12 -> {
+                            if (Integer.parseInt(editText.getText().toString())>99){
+                                ToastUtil.showShort(getContext(),"赠送数量不能超过99个~");
+                                return;
+                            }
+                            if (Integer.parseInt(editText.getText().toString())<1){
+                                ToastUtil.showShort(getContext(),"赠送数量不能少于1个~");
+                                return;
+                            }
+                            if (StringUtils.isEmpty(giftUrl)){
+                                ToastUtil.showShort(getContext(),"选择你要送的礼物");
+                                return;
+                            }
+                            int price = Integer.parseInt(editText.getText().toString())*giftPrice;
+                            if (price>Float.parseFloat(userMess.getDiamond())){
+                                ToastUtil.showShort(getContext(),"跳币不足");
+                                return;
+                            }
+
+                            //贵重礼物，全屏展示
+                            if (giftPrice>500){
+                                loadAnimation();
+                            }else {
+                                LiveComment liveComment = new LiveComment();
+                                liveComment.setUserName(userMess.getNickName());
+                                liveComment.setMsgTag(Contents.HY_DS);
+                                liveComment.setHeadUrl(userMess.getHeadUrl());
+                                liveComment.setMsgDsComment(new LiveComment.GifMo(
+                                        giftUrl,
+                                        giftId,
+                                        "送出"+editText.getText().toString()+"个"+giftName,Integer.parseInt(editText.getText().toString())));
+                                goComment(liveComment);
+                            }
+                            BottomDialogUtil2.getInstance(PlayActivity.this).dess();
+                        });
+                        RecyclerView recyclerView = view.findViewById(R.id.recycler_head);
+                        recyclerView.setNestedScrollingEnabled(false);
+                        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),4));
+                        giftAdapter = new RecyclerAdapter<GiftMo>(getContext(),giftList,R.layout.item_gift) {
+                            @Override
+                            public void convert(Context mContext, BaseRecyclerHolder holder, GiftMo o) {
+                                    holder.setImageByUrl(R.id.mivIcon,o.getGiftUrl());
+                                    holder.setText(R.id.tvName,o.getGiftName());
+                                    holder.setText(R.id.tvPrice,o.getGiftCoins()+"跳币");
+
+                                    if (o.isClick()){
+                                        holder.itemView.setBackgroundResource(R.drawable.shape_w_stroke);
+                                    }else {
+                                        holder.itemView.setBackgroundResource(R.drawable.shape_white);
+                                    }
+                            }
+                        };
+                        recyclerView.setAdapter(giftAdapter);
+                        giftAdapter.setOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(View view, int position) {
+                                giftName = giftList.get(position).getGiftName();
+                                giftId = giftList.get(position).getId();
+                                giftUrl = giftList.get(position).getGiftUrl();
+                                giftPrice = giftList.get(position).getGiftCoins();
+                                for (int i = 0; i < giftList.size(); i++) {
+                                    if (i==position){
+                                        giftList.get(position).setClick(true);
+                                        continue;
+                                    }
+                                    giftList.get(i).setClick(false);
+                                }
+                                giftAdapter.updateDataa(giftList);
+                            }
+                        });
+                    }
+                });
+                break;
                 default:break;
         }
+    }
+
+    private void loadAnimation() {
+        SVGAParser parser = new SVGAParser(this);
+        parser.decodeFromAssets(this.randomSample(), new SVGAParser.ParseCompletion() {
+            @Override
+            public void onComplete(@NotNull SVGAVideoEntity videoItem) {
+                animationView.setVideoItem(videoItem);
+                animationView.stepToFrame(0, true);
+            }
+            @Override
+            public void onError() {
+
+            }
+        });
+    }
+    @BindView(R.id.sVGAImageView)
+    SVGAImageView animationView;
+    private ArrayList<String> samples = new ArrayList();
+    private String randomSample() {
+        if (samples.size() == 0) {
+            samples.add("angel.svga");
+            samples.add("alarm.svga");
+            samples.add("EmptyState.svga");
+            samples.add("heartbeat.svga");
+            samples.add("posche.svga");
+            samples.add("rose_1.5.0.svga");
+            samples.add("rose_2.0.0.svga");
+            samples.add("test.svga");
+            samples.add("test2.svga");
+        }
+        return samples.get((int) Math.floor(Math.random() * samples.size()));
     }
 
     private void initCommentUi() {
@@ -411,6 +539,9 @@ public class VideoActivityTest extends BaseActivity implements PLOnErrorListener
                 }else if (o.getMsgTag() == Contents.HY_SERVER){//系统消息-系统字体
                     tvMess.setTextColor(getResources().getColor(R.color.colorDb3));
                     tvMess.setText(o.getMsgComment());
+                }else if (o.getMsgTag() == Contents.HY_LEAVE){
+                    tvMess.setTextColor(getResources().getColor(R.color.color_e2e2e2));
+                    tvMess.setText(o.getMsgComment());
                 }
             }
         };
@@ -421,25 +552,33 @@ public class VideoActivityTest extends BaseActivity implements PLOnErrorListener
     int clickCount = 0;
     //500毫秒后做检查，如果没有继续点击了，发点赞消息
     public void checkAfter(final long lastTime) {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (lastTime == currentTime) {
-                    //更新UI
-                    LiveComment liveComment = new LiveComment();
-                    liveComment.setMsgTag(Contents.HY_DZ);
-                    liveComment.setUserName(userMess.getNickName());
-                    liveComment.setDzNum(clickCount);
-                    goComment(liveComment);
-                    clickCount = 0;
-                }
+        new Handler().postDelayed(() -> {
+            if (lastTime == currentTime) {
+                //更新UI
+                LiveComment liveComment = new LiveComment();
+                liveComment.setMsgTag(Contents.HY_DZ);
+                liveComment.setUserName(userMess.getNickName());
+                liveComment.setDzNum(clickCount);
+                goComment(liveComment);
+                clickCount = 0;
             }
         }, 500);
     }
 
     @Override
     public void initData() {
+        OkHttp3Utils.getInstance(getContext()).doPostJson(DyUrl.getLiveGiftList, null, new ObjectCallback<String>(getContext()) {
+            @Override
+            public void onUi(String result) throws JSONException {
+                Gson gson = new Gson();
+                List<GiftMo> list = gson.fromJson(result, new TypeToken<List<GiftMo>>() {}.getType());
+                giftList = list;
+            }
+            @Override
+            public void onFailed(String msg) {
 
+            }
+        });
     }
 
     private AVOptions initAVOptions() {
@@ -558,22 +697,22 @@ public class VideoActivityTest extends BaseActivity implements PLOnErrorListener
     public boolean onError(int errorCode) {
         switch (errorCode) {
             case MEDIA_ERROR_UNKNOWN:
-                ToastUtil.showShort(VideoActivityTest.this,"未知错误...");
+                ToastUtil.showShort(PlayActivity.this,"未知错误...");
                 break;
             case ERROR_CODE_OPEN_FAILED:
-                ToastUtil.showShort(VideoActivityTest.this,"播放器打开失败...");
+                ToastUtil.showShort(PlayActivity.this,"播放器打开失败...");
                 break;
             case ERROR_CODE_IO_ERROR:
-                ToastUtil.showShort(VideoActivityTest.this,"网络异常...");
+                ToastUtil.showShort(PlayActivity.this,"网络异常...");
                 break;
             case ERROR_CODE_CACHE_FAILED:
-                ToastUtil.showShort(VideoActivityTest.this,"预加载失败...");
+                ToastUtil.showShort(PlayActivity.this,"预加载失败...");
                 break;
             case ERROR_CODE_PLAYER_DESTROYED:
-                ToastUtil.showShort(VideoActivityTest.this,"播放器已被销毁，需要再次 setVideoURL 或 prepareAsync...");
+                ToastUtil.showShort(PlayActivity.this,"播放器已被销毁，需要再次 setVideoURL 或 prepareAsync...");
                 break;
             default:
-                ToastUtil.showShort(VideoActivityTest.this,"unknown error !...");
+                ToastUtil.showShort(PlayActivity.this,"unknown error !...");
                 break;
         }
         return true;
@@ -628,11 +767,12 @@ public class VideoActivityTest extends BaseActivity implements PLOnErrorListener
                     // 单聊消息
                     username = message.getFrom();
                 }
-                Log.e("HyListener", "onMessageReceived--111:" + username);
+                Log.e("HyListenerx", "onMessageReceived--111:" + username);
 
                 EMTextMessageBody txtBody = (EMTextMessageBody) message.getBody();
+                String str = StringUtils.removeStr(txtBody.getMessage());
                 Gson gson = new Gson();
-                LiveComment liveComment = gson.fromJson(txtBody.getMessage(), LiveComment.class);
+                LiveComment liveComment = gson.fromJson(str, LiveComment.class);
                 setNotifyUi(liveComment);
             }
         }

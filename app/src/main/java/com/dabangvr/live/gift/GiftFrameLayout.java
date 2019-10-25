@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.dabangvr.R;
+import com.dabangvr.application.MyApplication;
 import com.dbvr.baselibrary.model.LiveComment;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -101,10 +102,11 @@ public class GiftFrameLayout extends FrameLayout {
         if (!TextUtils.isEmpty(model.getMsgDsComment().getGiftName())) {
             anim_sign.setText(model.getMsgDsComment().getGiftName());
         }
-
-        if (0 != model.getMsgDsComment().getGiftTag()) {
-            anim_gift.setImageResource(model.getMsgDsComment().getGiftTag());
-        }
+        Glide.with(MyApplication.getInstance()).load(model.getMsgDsComment().getGiftId()).into(anim_gift);
+//        if (0 != ) {
+//            Glide.with(MyApplication.getInstance()).load(model.getMsgDsComment().getGiftId()).into(anim_gift);
+//            anim_gift.setImageResource(model.getMsgDsComment().getGiftTag());
+//        }
         if (!TextUtils.isEmpty(model.getHeadUrl())) {
             anim_header.setImageURI(model.getHeadUrl());
         }

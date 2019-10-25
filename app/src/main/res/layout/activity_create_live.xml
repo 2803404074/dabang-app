@@ -18,7 +18,7 @@
 
         <TextView
             android:id="@+id/tvBack"
-            android:textSize="@dimen/sp_15"
+            android:textSize="@dimen/sp_16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/dp_5"
@@ -49,28 +49,63 @@
         android:paddingVertical="@dimen/dp_5"
         android:background="@drawable/shape_gray_w"/>
 
-    <RelativeLayout
-        android:layout_width="@dimen/dp_130"
-        android:layout_height="@dimen/dp_156">
-        <com.dbvr.baselibrary.ui.MyImageView
-            android:id="@+id/iv_content"
-            android:onClick="onClickImage"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="fitXY"
-            android:layout_margin="@dimen/dp_10"
-            roundiv:radius="@dimen/dp_10"
-            android:src="@mipmap/test"
-            tools:ignore="OnClick" />
-        <ImageView
-            android:id="@+id/ivAdd"
-            android:layout_width="@dimen/dp_50"
-            android:layout_height="@dimen/dp_50"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            android:src="@mipmap/add_main"/>
-    </RelativeLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/sp_15"
+        android:textColor="@color/colorDb5"
+        android:layout_marginHorizontal="@dimen/dp_10"
+        android:text="请分别选择1:1.5 以及 2:1.6的封面图"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <RelativeLayout
+            android:layout_width="@dimen/dp_130"
+            android:layout_height="@dimen/dp_156">
+            <com.dbvr.baselibrary.ui.MyImageView
+                android:id="@+id/iv_content"
+                android:onClick="onClickImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:layout_margin="@dimen/dp_10"
+                roundiv:radius="@dimen/dp_10"
+                android:src="@mipmap/test"
+                tools:ignore="OnClick" />
+            <ImageView
+                android:id="@+id/ivAdd"
+                android:layout_width="@dimen/dp_50"
+                android:layout_height="@dimen/dp_50"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:src="@mipmap/add_main"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="@dimen/dp_156">
+            <com.dbvr.baselibrary.ui.MyImageView
+                android:id="@+id/iv_content2"
+                android:onClick="onClickImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:layout_margin="@dimen/dp_10"
+                roundiv:radius="@dimen/dp_10"
+                android:src="@mipmap/test"
+                tools:ignore="OnClick" />
+            <ImageView
+                android:id="@+id/ivAdd2"
+                android:layout_width="@dimen/dp_50"
+                android:layout_height="@dimen/dp_50"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:src="@mipmap/add_main"/>
+        </RelativeLayout>
+    </LinearLayout>
 
 
 

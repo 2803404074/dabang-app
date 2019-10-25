@@ -1,1 +1,1 @@
-include ':app', ':baselibrary', ':httplibrart', ':imglibrary2'
+include ':app', ':baselibrary', ':httplibrart', ':imglibrary2', ':svgalibrary'

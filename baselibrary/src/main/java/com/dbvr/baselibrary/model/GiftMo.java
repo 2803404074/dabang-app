@@ -7,9 +7,18 @@ public class GiftMo {
     private int id;
     private String giftName;
     private String giftUrl;
-    private String giftCoins;
+    private int giftCoins;
+    private boolean isClick;
 
     public GiftMo() {
+    }
+
+    public boolean isClick() {
+        return isClick;
+    }
+
+    public void setClick(boolean click) {
+        isClick = click;
     }
 
     public int getId() {
@@ -36,11 +45,11 @@ public class GiftMo {
         this.giftUrl = giftUrl;
     }
 
-    public String getGiftCoins() {
+    public int getGiftCoins() {
         return giftCoins;
     }
 
-    public void setGiftCoins(String giftCoins) {
+    public void setGiftCoins(int giftCoins) {
         this.giftCoins = giftCoins;
     }
 }

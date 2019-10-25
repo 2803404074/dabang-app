@@ -32,6 +32,7 @@ import com.dbvr.baselibrary.utils.QiniuUploadManager;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
 import com.dbvr.baselibrary.utils.StringUtils;
 import com.dbvr.baselibrary.utils.ToastUtil;
+import com.dbvr.baselibrary.view.AppManager;
 import com.dbvr.baselibrary.view.BaseActivity;
 import com.dbvr.httplibrart.constans.DyUrl;
 import com.dbvr.httplibrart.utils.ObjectCallback;
@@ -120,9 +121,12 @@ public class CreateLiveActivity extends BaseActivity {
                 .selectPicture(true, 130, 156, 5, 6);
     }
 
-    @OnClick({R.id.tvAddTag,R.id.tvCreate})
+    @OnClick({R.id.tvAddTag,R.id.tvCreate,R.id.tvBack})
     public void onTuch(View view){
         switch (view.getId()){
+            case R.id.tvBack:
+                AppManager.getAppManager().finishActivity(this);
+                break;
             case R.id.tvAddTag:
                 showBottomDialog();
                 break;

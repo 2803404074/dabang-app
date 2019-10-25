@@ -64,7 +64,7 @@ public class LiveComment implements Serializable {
 
     //礼物消息类
     public static class GifMo{
-        private String giftId;
+        private String giftId;//礼物url
         private int giftTag;//礼物类型，区别是飞机还是大炮
         private String giftName;//打赏的礼品的名称
         private int giftNum ;//打赏的礼品的数量

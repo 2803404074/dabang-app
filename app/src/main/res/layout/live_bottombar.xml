@@ -53,11 +53,10 @@
 
 
             <ImageView
-                android:id="@+id/btn_heart"
+                android:id="@+id/ivGift"
                 android:layout_width="@dimen/dp_30"
                 android:layout_height="@dimen/dp_30"
                 android:layout_marginHorizontal="@dimen/dp_5"
-                android:layout_alignParentRight="true"
                 android:src="@mipmap/gift" />
 
             <ImageView
@@ -65,7 +64,6 @@
                 android:layout_width="@dimen/dp_30"
                 android:layout_height="@dimen/dp_30"
                 android:layout_marginRight="10dp"
-                android:layout_toLeftOf="@id/btn_heart"
                 android:src="@mipmap/goods" />
 
 
@@ -73,14 +71,12 @@
                 android:layout_width="@dimen/dp_30"
                 android:layout_height="@dimen/dp_30"
                 android:layout_marginRight="10dp"
-                android:layout_toLeftOf="@id/btn_gift"
                 android:src="@mipmap/wechat_frends" />
 
             <ImageView
                 android:id="@+id/ivLove"
                 android:layout_width="@dimen/dp_30"
                 android:layout_height="@dimen/dp_30"
-                android:layout_alignParentRight="true"
                 android:src="@mipmap/live_heart" />
         </LinearLayout>
 

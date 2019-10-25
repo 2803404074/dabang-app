@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.dabangvr.R;
-import com.dabangvr.activity.VideoActivityTest;
+import com.dabangvr.play.activity.PlayActivity;
 import com.dabangvr.adapter.AddHeaderAdapter;
 import com.dabangvr.adapter.BaseRecyclerHolder;
 import com.dabangvr.adapter.HomeAdapter;
@@ -143,7 +143,7 @@ public class HomeFragmentFind extends BaseFragment {
                                     map.put("liveTag",liveTag);
                                     map.put("lookNum",lookNum);
                                     map.put("headUrl",headUrl);
-                                    goTActivity(VideoActivityTest.class,map);
+                                    goTActivity(PlayActivity.class,map);
                                 }
                             });
                             list.remove(i);
@@ -199,7 +199,7 @@ public class HomeFragmentFind extends BaseFragment {
                             map.put("liveTag",list.get(position).getLiveTag());
                             map.put("lookNum",list.get(position).getLookNum());
                             map.put("headUrl",list.get(position).getHeadUrl());
-                            goTActivity(VideoActivityTest.class,map);
+                            goTActivity(PlayActivity.class,map);
                         }
                     });
                 //轮播图

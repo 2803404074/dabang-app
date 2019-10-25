@@ -11,5 +11,5 @@ public class Contents {
     public final static int HY_DM = 1;//弹幕
     public final static int HY_DS = 2;//打赏
     public final static int HY_ORDER = 3;//下单
-    public final static int HY_DZ = 4;//下单
+    public final static int HY_DZ = 4;//点赞
 }
