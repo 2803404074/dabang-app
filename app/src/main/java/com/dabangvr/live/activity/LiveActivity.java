@@ -62,6 +62,10 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.exceptions.HyphenateException;
+import com.opensource.svgaplayer.SVGACallback;
+import com.opensource.svgaplayer.SVGAImageView;
+import com.opensource.svgaplayer.SVGAParser;
+import com.opensource.svgaplayer.SVGAVideoEntity;
 import com.orzangleli.xdanmuku.DanmuContainerView;
 import com.qiniu.android.dns.DnsManager;
 import com.qiniu.android.dns.IResolver;
@@ -79,6 +83,7 @@ import com.qiniu.pili.droid.streaming.StreamingState;
 import com.qiniu.pili.droid.streaming.StreamingStateChangedListener;
 import com.qiniu.pili.droid.streaming.WatermarkSetting;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 
 import java.io.IOException;
@@ -101,6 +106,10 @@ public class LiveActivity extends Activity implements
         StreamingSessionListener {
     @BindView(R.id.cameraPreview_surfaceView)
     CameraPreviewFrameView cameraPreviewFrameView;
+
+    private CameraStreamingSetting camerasetting;
+
+    private WatermarkSetting watermarkSetting;
 
     private MediaStreamingManager mMediaStreamingManager;
     private StreamingProfile mProfile;
@@ -166,6 +175,9 @@ public class LiveActivity extends Activity implements
     //礼物相关控件
     @BindView(R.id.danmuContainerView)
     DanmuContainerView danmuContainerView;
+
+    @BindView(R.id.sVGAImageView)
+    SVGAImageView animationView;
 
     @BindView(R.id.giftView)
     GiftView giftView;
@@ -271,6 +283,17 @@ public class LiveActivity extends Activity implements
                 message6.setData(bundle6);
                 handler.sendMessage(message6);
                 break;
+            case Contents.HY_DS_MAX://打赏消息
+                loadAnimation(liveComment.getMsgDsComment().getGiftId());
+                Bundle bundle8 = new Bundle();
+                ArrayList arr8 = new ArrayList();
+                arr8.add(liveComment);
+                bundle8.putStringArrayList("data", arr8);
+                Message message8 = new Message();
+                message8.what = handleMessRequestCode;
+                message8.setData(bundle8);
+                handler.sendMessage(message8);
+                break;
             case Contents.HY_ORDER://下单消息
                 break;
             case Contents.HY_DZ://点赞消息,收到一条累计
@@ -286,6 +309,25 @@ public class LiveActivity extends Activity implements
                 break;
                 default:break;
         }
+    }
+
+    /**
+     *
+     * @param str svga的资源名称
+     */
+    private void loadAnimation(String str) {
+        SVGAParser parser = new SVGAParser(this);
+        parser.decodeFromAssets(str, new SVGAParser.ParseCompletion() {
+            @Override
+            public void onComplete(@NotNull SVGAVideoEntity videoItem) {
+                animationView.setVideoItem(videoItem);
+                animationView.stepToFrame(0, true);
+            }
+            @Override
+            public void onError() {
+
+            }
+        });
     }
     private int dzNum = 0;//点赞累加
     private double giftNum = 0;//礼物收益累加
@@ -304,7 +346,7 @@ public class LiveActivity extends Activity implements
      */
     private void upDateOnline(){
         runOnUiThread(() -> {
-            tvOnLine.setText("在线"+onLineNumber++);
+            tvOnLine.setText("在线"+onLineNumber);
         });
     }
     @Override
@@ -344,11 +386,9 @@ public class LiveActivity extends Activity implements
         //注册消息监听
         EMClient.getInstance().chatManager().addMessageListener(msgListener);
 
-
+        //炫酷礼物初始化
+        initGiftMall();
     }
-
-    private CameraStreamingSetting camerasetting;
-    private WatermarkSetting watermarkSetting;
 
     private void initLive() {
         String publishURLFromServer = getIntent().getStringExtra("streamUrl");
@@ -428,6 +468,9 @@ public class LiveActivity extends Activity implements
                 }else if (o.getMsgTag() == Contents.HY_DZ){//点赞消息-紫色字体
                     tvMess.setTextColor(getResources().getColor(R.color.colorZi));
                     tvMess.setText("送给你"+o.getDzNum()+"个赞");
+                }else if (o.getMsgTag() == Contents.HY_DS_MAX){//点赞消息-紫色字体
+                    tvMess.setTextColor(getResources().getColor(R.color.colorOrag));
+                    tvMess.setText("送给你-----"+o.getMsgDsComment().getGiftName());
                 }else if (o.getMsgTag() == Contents.HY_SERVER){//系统消息-系统字体
                     tvMess.setTextColor(getResources().getColor(R.color.colorDb3));
                     tvMess.setText(o.getMsgComment());
@@ -452,6 +495,30 @@ public class LiveActivity extends Activity implements
 
         tvFinishLive.setText("开始直播");
 
+    }
+
+    private void initGiftMall() {
+        animationView.setCallback(new SVGACallback() {
+            @Override
+            public void onPause() {
+                Log.e("aaaaaa","onPause~~~~");
+            }
+
+            @Override
+            public void onFinished() {
+                Log.e("aaaaaa","onFinished~~~~");
+            }
+
+            @Override
+            public void onRepeat() {
+                animationView.stopAnimation();
+            }
+
+            @Override
+            public void onStep(int frame, double percentage) {
+
+            }
+        });
     }
 
     /**
@@ -493,14 +560,11 @@ public class LiveActivity extends Activity implements
      */
     public void stopFunction() {
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    EMClient.getInstance().chatroomManager().destroyChatRoom(roomNumber);
-                } catch (HyphenateException e) {
-                    e.printStackTrace();
-                }
+        new Thread(() -> {
+            try {
+                EMClient.getInstance().chatroomManager().destroyChatRoom(roomNumber);
+            } catch (HyphenateException e) {
+                e.printStackTrace();
             }
         }).start();
 
@@ -834,12 +898,9 @@ public class LiveActivity extends Activity implements
     @Override
     public boolean onRestartStreamingHandled(int code) {
         Log.i(TAG, "onRestartStreamingHandled");
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if (mMediaStreamingManager != null) {
-                    mMediaStreamingManager.startStreaming();
-                }
+        new Thread(() -> {
+            if (mMediaStreamingManager != null) {
+                mMediaStreamingManager.startStreaming();
             }
         }).start();
         return false;
@@ -972,23 +1033,20 @@ public class LiveActivity extends Activity implements
     private int mCurrentCamFacingIndex;
 
     private void changeCamera() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                //mCurrentCamFacingIndex = (mCurrentCamFacingIndex + 1) % CameraStreamingSetting.getNumberOfCameras();
-                CameraStreamingSetting.CAMERA_FACING_ID facingId;
-                if (mCurrentCamFacingIndex == CameraStreamingSetting.CAMERA_FACING_ID.CAMERA_FACING_BACK.ordinal()) {
-                    facingId = CameraStreamingSetting.CAMERA_FACING_ID.CAMERA_FACING_BACK;
-                    mCurrentCamFacingIndex = CameraStreamingSetting.CAMERA_FACING_ID.CAMERA_FACING_FRONT.ordinal();
-                } else if (mCurrentCamFacingIndex == CameraStreamingSetting.CAMERA_FACING_ID.CAMERA_FACING_FRONT.ordinal()) {
-                    facingId = CameraStreamingSetting.CAMERA_FACING_ID.CAMERA_FACING_FRONT;
-                    mCurrentCamFacingIndex = CameraStreamingSetting.CAMERA_FACING_ID.CAMERA_FACING_BACK.ordinal();
-                } else {
-                    facingId = CameraStreamingSetting.CAMERA_FACING_ID.CAMERA_FACING_3RD;
-                }
-                Log.i(TAG, "switchCamera:" + facingId);
-                mMediaStreamingManager.switchCamera(facingId);
+        new Thread(() -> {
+            //mCurrentCamFacingIndex = (mCurrentCamFacingIndex + 1) % CameraStreamingSetting.getNumberOfCameras();
+            CameraStreamingSetting.CAMERA_FACING_ID facingId;
+            if (mCurrentCamFacingIndex == CameraStreamingSetting.CAMERA_FACING_ID.CAMERA_FACING_BACK.ordinal()) {
+                facingId = CameraStreamingSetting.CAMERA_FACING_ID.CAMERA_FACING_BACK;
+                mCurrentCamFacingIndex = CameraStreamingSetting.CAMERA_FACING_ID.CAMERA_FACING_FRONT.ordinal();
+            } else if (mCurrentCamFacingIndex == CameraStreamingSetting.CAMERA_FACING_ID.CAMERA_FACING_FRONT.ordinal()) {
+                facingId = CameraStreamingSetting.CAMERA_FACING_ID.CAMERA_FACING_FRONT;
+                mCurrentCamFacingIndex = CameraStreamingSetting.CAMERA_FACING_ID.CAMERA_FACING_BACK.ordinal();
+            } else {
+                facingId = CameraStreamingSetting.CAMERA_FACING_ID.CAMERA_FACING_3RD;
             }
+            Log.i(TAG, "switchCamera:" + facingId);
+            mMediaStreamingManager.switchCamera(facingId);
         }).start();
     }
 

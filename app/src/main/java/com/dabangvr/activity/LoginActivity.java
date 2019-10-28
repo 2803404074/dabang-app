@@ -87,6 +87,7 @@ public class LoginActivity extends BaseActivity implements IUiListener {
                 setLoaddingView(true);
                 break;
             case R.id.phone_login:
+
                 showBottomView();
                 break;
             default:
@@ -122,7 +123,11 @@ public class LoginActivity extends BaseActivity implements IUiListener {
                 tvGetCode.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (TextUtils.isEmpty(etPhone.getText().toString().trim())) return;
+                        setLoaddingView(true);
+                        if (TextUtils.isEmpty(etPhone.getText().toString().trim())){
+                            setLoaddingView(false);
+                            return;
+                        }
                         getMessage(etPhone.getText().toString());
                     }
                 });
@@ -189,11 +194,13 @@ public class LoginActivity extends BaseActivity implements IUiListener {
         OkHttp3Utils.getInstance(this).doPostJson(UserUrl.sendCode, map, new ObjectCallback<String>(this) {
             @Override
             public void onUi(String result) {
+                setLoaddingView(false);
                 downDate();
             }
 
             @Override
             public void onFailed(String msg) {
+                setLoaddingView(false);
                 ToastUtil.showShort(getContext(), msg);
             }
         });

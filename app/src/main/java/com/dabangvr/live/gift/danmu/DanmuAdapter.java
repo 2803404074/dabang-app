@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.dabangvr.R;
+import com.dabangvr.application.MyApplication;
 import com.orzangleli.xdanmuku.XAdapter;
 import java.util.Random;
 
@@ -44,7 +45,7 @@ public class DanmuAdapter extends XAdapter<DanmuEntity> {
         }
 
 //        holder.image.setImageURI(danmuEntity.getPortrait());
-        Glide.with(context).load(danmuEntity.getPortrait()).into(holder.image);
+        Glide.with(MyApplication.getInstance()).load(danmuEntity.getPortrait()).into(holder.image);
         holder.content.setText(danmuEntity.getContent());
         // holder.content.setTextColor(Color.rgb(random.nextInt(256), random.nextInt(256), random.nextInt(256)));
         holder.tvName.setText(danmuEntity.getName());

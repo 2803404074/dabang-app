@@ -71,6 +71,7 @@ public class HomeFindMo implements Serializable {
     public static class TowMo{
         private int id;
         private int userId;
+        private boolean isFollow;//是否已关注
         //直播类型的字段
         private String fname;
         private String liveTitle;
@@ -91,6 +92,14 @@ public class HomeFindMo implements Serializable {
 
 
         public TowMo() {
+        }
+
+        public boolean isFollow() {
+            return isFollow;
+        }
+
+        public void setFollow(boolean follow) {
+            isFollow = follow;
         }
 
         public String getHeadUrl() {

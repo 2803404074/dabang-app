@@ -7,10 +7,19 @@ public class GiftMo {
     private int id;
     private String giftName;
     private String giftUrl;
+    private String tag;
     private int giftCoins;
     private boolean isClick;
 
     public GiftMo() {
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 
     public boolean isClick() {

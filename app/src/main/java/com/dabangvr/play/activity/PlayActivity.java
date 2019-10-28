@@ -69,7 +69,9 @@ import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import butterknife.BindView;
@@ -94,6 +96,9 @@ public class PlayActivity extends BaseActivity implements PLOnErrorListener{
 
     @BindView(R.id.auth_name)
     TextView tvNickName;
+
+    @BindView(R.id.play_follow)
+    TextView playFollow;
 
     @BindView(R.id.sdvHead)
     SimpleDraweeView sdvHead;
@@ -209,6 +214,18 @@ public class PlayActivity extends BaseActivity implements PLOnErrorListener{
                 message6.setData(bundle6);
                 mHandler.sendMessage(message6);
                 break;
+            case Contents.HY_DS_MAX://打赏消息
+                loadAnimation(liveComment.getMsgDsComment().getGiftId());
+                Bundle bundle8 = new Bundle();
+                ArrayList arr8 = new ArrayList();
+                arr8.add(liveComment);
+                bundle8.putStringArrayList("data", arr8);
+                Message message8 = new Message();
+                message8.what = handleMessRequestCode;
+                message8.setData(bundle8);
+                mHandler.sendMessage(message8);
+
+                break;
             case Contents.HY_ORDER://下单消息
                 break;
             case Contents.HY_DZ://点赞消息,收到一条累计
@@ -224,6 +241,7 @@ public class PlayActivity extends BaseActivity implements PLOnErrorListener{
         }
     }
 
+    private boolean isFollow;//是否已经关注
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -298,6 +316,18 @@ public class PlayActivity extends BaseActivity implements PLOnErrorListener{
         sdvHead.setImageURI(getIntent().getStringExtra("headUrl"));
         tvNickName.setText(getIntent().getStringExtra("nickName"));
         tvHots.setText(getIntent().getStringExtra("lookNum"));
+
+        //是否已经关注
+        isFollow = getIntent().getBooleanExtra("isFollow",false);
+        if (isFollow){
+            playFollow.setText("已关注");
+            playFollow.setBackgroundResource(R.drawable.shape_gray_w);
+            playFollow.setTextColor(getResources().getColor(R.color.textTitle));
+        }else {
+            playFollow.setText("关注");
+            playFollow.setBackgroundResource(R.drawable.shape_style_green_blue);
+            playFollow.setTextColor(getResources().getColor(R.color.white));
+        }
     }
 
     private void initRoom() {
@@ -398,18 +428,14 @@ public class PlayActivity extends BaseActivity implements PLOnErrorListener{
                 });
                 break;
             case R.id.play_follow://关注点击
+                followFunction();
                 break;
             case R.id.ivGift://弹出礼物视图
                 BottomDialogUtil2.getInstance(PlayActivity.this).showLive(R.layout.dialog_gift,new Conver() {
                     @Override
                     public void setView(View view) {
                         TextView tvTiaoB = view.findViewById(R.id.tvTiaoB);
-                        if (StringUtils.isEmpty(userMess.getDiamond())){
-                            tvTiaoB.setText("0");
-                        }else {
-                            tvTiaoB.setText(userMess.getDiamond());
-                        }
-
+                        tvTiaoB.setText(String.valueOf(userMess.getDiamond()));
                         EditText editText = view.findViewById(R.id.etNumber);
                         view.findViewById(R.id.tvSend).setOnClickListener(view12 -> {
                             if (Integer.parseInt(editText.getText().toString())>99){
@@ -425,25 +451,16 @@ public class PlayActivity extends BaseActivity implements PLOnErrorListener{
                                 return;
                             }
                             int price = Integer.parseInt(editText.getText().toString())*giftPrice;
-                            if (price>Float.parseFloat(userMess.getDiamond())){
+                            if (price>userMess.getDiamond()){
                                 ToastUtil.showShort(getContext(),"跳币不足");
                                 return;
                             }
 
-                            //贵重礼物，全屏展示
-                            if (giftPrice>500){
-                                loadAnimation();
-                            }else {
-                                LiveComment liveComment = new LiveComment();
-                                liveComment.setUserName(userMess.getNickName());
-                                liveComment.setMsgTag(Contents.HY_DS);
-                                liveComment.setHeadUrl(userMess.getHeadUrl());
-                                liveComment.setMsgDsComment(new LiveComment.GifMo(
-                                        giftUrl,
-                                        giftId,
-                                        "送出"+editText.getText().toString()+"个"+giftName,Integer.parseInt(editText.getText().toString())));
-                                goComment(liveComment);
-                            }
+                            //送礼
+                            setLoaddingView(true);
+                            rewardGiftFunction(editText.getText().toString());
+
+
                             BottomDialogUtil2.getInstance(PlayActivity.this).dess();
                         });
                         RecyclerView recyclerView = view.findViewById(R.id.recycler_head);
@@ -464,22 +481,25 @@ public class PlayActivity extends BaseActivity implements PLOnErrorListener{
                             }
                         };
                         recyclerView.setAdapter(giftAdapter);
-                        giftAdapter.setOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(View view, int position) {
-                                giftName = giftList.get(position).getGiftName();
-                                giftId = giftList.get(position).getId();
+                        giftAdapter.setOnItemClickListener((view13, position) -> {
+                            giftId = giftList.get(position).getId();
+                            giftName = giftList.get(position).getGiftName();
+                            if (giftList.get(position).getGiftCoins()>=300){
+                                giftUrl = giftList.get(position).getTag();
+                                Log.e("giftaaa",giftUrl);
+                            }else {
                                 giftUrl = giftList.get(position).getGiftUrl();
-                                giftPrice = giftList.get(position).getGiftCoins();
-                                for (int i = 0; i < giftList.size(); i++) {
-                                    if (i==position){
-                                        giftList.get(position).setClick(true);
-                                        continue;
-                                    }
-                                    giftList.get(i).setClick(false);
-                                }
-                                giftAdapter.updateDataa(giftList);
                             }
+
+                            giftPrice = giftList.get(position).getGiftCoins();
+                            for (int i = 0; i < giftList.size(); i++) {
+                                if (i==position){
+                                    giftList.get(position).setClick(true);
+                                    continue;
+                                }
+                                giftList.get(i).setClick(false);
+                            }
+                            giftAdapter.updateDataa(giftList);
                         });
                     }
                 });
@@ -488,9 +508,90 @@ public class PlayActivity extends BaseActivity implements PLOnErrorListener{
         }
     }
 
-    private void loadAnimation() {
+    private void followFunction() {
+        setLoaddingView(true);
+        Map<String,Object>map = new HashMap<>();
+        map.put("fansUserId",getIntent().getIntExtra("userId",0));
+        OkHttp3Utils.getInstance(this).doPostJson(DyUrl.updateFans, map, new ObjectCallback<String>(this) {
+            @Override
+            public void onUi(String result){
+                if (isFollow){
+                    playFollow.setText("关注");
+                    playFollow.setBackgroundResource(R.drawable.shape_style_green_blue);
+                    playFollow.setTextColor(getResources().getColor(R.color.white));
+                }else {
+                    playFollow.setText("已关注");
+                    playFollow.setBackgroundResource(R.drawable.shape_gray_w);
+                    playFollow.setTextColor(getResources().getColor(R.color.lsq_color_red));
+                }
+                isFollow = !isFollow;
+                setLoaddingView(false);
+            }
+
+            @Override
+            public void onFailed(String msg) {
+                ToastUtil.showShort(getContext(),msg);
+                setLoaddingView(false);
+            }
+        });
+    }
+
+    /**
+     * 打赏礼物的方法（后端）
+     *
+     */
+    private void rewardGiftFunction(String number){
+
+        Map<String,Object>map = new HashMap<>();
+        map.put("giftId",giftId);
+        map.put("number",number);
+        map.put("anchorUserId",getIntent().getIntExtra("userId",0));
+        OkHttp3Utils.getInstance(this).doPostJson(DyUrl.rewardGift, map, new ObjectCallback<String>(this) {
+            @Override
+            public void onUi(String result){
+                int lastPrice = userMess.getDiamond() - giftPrice*Integer.parseInt(number);
+                userMess.setDiamond(lastPrice);
+                SPUtils.instance(getContext()).putUser(userMess);
+                Log.e("hahaha","成功："+result);
+                if (giftPrice>=300){//贵重礼物，全屏展示
+                    loadAnimation(giftUrl);
+                    LiveComment liveComment = new LiveComment();
+                    liveComment.setMsgTag(Contents.HY_DS_MAX);
+                    LiveComment.GifMo gifMo = new LiveComment.GifMo();
+                    gifMo.setGiftId(giftUrl);//posche.svga
+                    gifMo.setGiftName(giftName);
+                    liveComment.setMsgDsComment(gifMo);
+                    liveComment.setUserName(userMess.getNickName());
+                    goComment(liveComment);
+                }else {
+                    LiveComment liveComment = new LiveComment();
+                    liveComment.setUserName(userMess.getNickName());
+                    liveComment.setMsgTag(Contents.HY_DS);
+                    liveComment.setHeadUrl(userMess.getHeadUrl());
+                    liveComment.setMsgDsComment(new LiveComment.GifMo(
+                            giftUrl,/*礼物url*/
+                            "送出"+number+"个"+giftName,/*礼物说明*/
+                            Integer.parseInt(number)));/*礼物数量*/
+                    goComment(liveComment);
+                }
+
+                setLoaddingView(false);
+            }
+
+            @Override
+            public void onFailed(String msg) {
+                Log.e("hahaha",msg);
+                ToastUtil.showShort(getContext(),msg);
+                setLoaddingView(false);
+            }
+        });
+    }
+    /**
+     * 资源名称
+     */
+    private void loadAnimation(String str) {
         SVGAParser parser = new SVGAParser(this);
-        parser.decodeFromAssets(this.randomSample(), new SVGAParser.ParseCompletion() {
+        parser.decodeFromAssets(str, new SVGAParser.ParseCompletion() {
             @Override
             public void onComplete(@NotNull SVGAVideoEntity videoItem) {
                 animationView.setVideoItem(videoItem);
@@ -504,21 +605,6 @@ public class PlayActivity extends BaseActivity implements PLOnErrorListener{
     }
     @BindView(R.id.sVGAImageView)
     SVGAImageView animationView;
-    private ArrayList<String> samples = new ArrayList();
-    private String randomSample() {
-        if (samples.size() == 0) {
-            samples.add("angel.svga");
-            samples.add("alarm.svga");
-            samples.add("EmptyState.svga");
-            samples.add("heartbeat.svga");
-            samples.add("posche.svga");
-            samples.add("rose_1.5.0.svga");
-            samples.add("rose_2.0.0.svga");
-            samples.add("test.svga");
-            samples.add("test2.svga");
-        }
-        return samples.get((int) Math.floor(Math.random() * samples.size()));
-    }
 
     private void initCommentUi() {
         commentAdapter = new RecyclerAdapter<LiveComment>(getContext(), commentData, R.layout.item_comment) {
@@ -536,6 +622,9 @@ public class PlayActivity extends BaseActivity implements PLOnErrorListener{
                 }else if (o.getMsgTag() == Contents.HY_DZ){//点赞消息-紫色字体
                     tvMess.setTextColor(getResources().getColor(R.color.colorZi));
                     tvMess.setText("送给主播"+o.getDzNum()+"个赞");
+                }else if (o.getMsgTag() == Contents.HY_DS_MAX){//点赞消息-紫色字体
+                    tvMess.setTextColor(getResources().getColor(R.color.colorOrag));
+                    tvMess.setText("送给主播-----"+o.getMsgDsComment().getGiftName());
                 }else if (o.getMsgTag() == Contents.HY_SERVER){//系统消息-系统字体
                     tvMess.setTextColor(getResources().getColor(R.color.colorDb3));
                     tvMess.setText(o.getMsgComment());
@@ -691,6 +780,7 @@ public class PlayActivity extends BaseActivity implements PLOnErrorListener{
         goComment(liveComment);
         //退出房间
         EMClient.getInstance().chatroomManager().leaveChatRoom(getIntent().getStringExtra("roomId"));
+        BottomDialogUtil2.getInstance(this).dess();
     }
 
     @Override

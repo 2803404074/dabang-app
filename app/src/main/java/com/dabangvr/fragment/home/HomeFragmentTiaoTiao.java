@@ -7,6 +7,7 @@ import android.widget.RelativeLayout;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.dabangvr.R;
 import com.dabangvr.adapter.BaseRecyclerHolder;
@@ -36,7 +37,7 @@ public class HomeFragmentTiaoTiao extends BaseFragment {
         for (int i = 0; i < 15; i++) {
             mData.add(R.mipmap.test5);
         }
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
         recyclerView.setNestedScrollingEnabled(false);
         adapter = new RecyclerAdapterPosition<Integer>(getContext(),mData,R.layout.item_conver_match) {
             @Override

@@ -64,17 +64,16 @@ public class LiveComment implements Serializable {
 
     //礼物消息类
     public static class GifMo{
-        private String giftId;//礼物url
-        private int giftTag;//礼物类型，区别是飞机还是大炮
+        private String giftId;//礼物Id
+        private String giftUrl;//礼物url
         private String giftName;//打赏的礼品的名称
         private int giftNum ;//打赏的礼品的数量
 
         public GifMo() {
         }
 
-        public GifMo(String giftId, int giftTag, String giftName, int giftNum) {
-            this.giftId = giftId;
-            this.giftTag = giftTag;
+        public GifMo(String giftUrl, String giftName, int giftNum) {
+            this.giftUrl = giftUrl;
             this.giftName = giftName;
             this.giftNum = giftNum;
         }
@@ -87,12 +86,12 @@ public class LiveComment implements Serializable {
             this.giftId = giftId;
         }
 
-        public int getGiftTag() {
-            return giftTag;
+        public String getGiftUrl() {
+            return giftUrl;
         }
 
-        public void setGiftTag(int giftTag) {
-            this.giftTag = giftTag;
+        public void setGiftUrl(String giftUrl) {
+            this.giftUrl = giftUrl;
         }
 
         public String getGiftName() {

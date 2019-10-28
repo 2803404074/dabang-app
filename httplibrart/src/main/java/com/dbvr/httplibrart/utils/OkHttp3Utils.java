@@ -71,7 +71,7 @@ public class OkHttp3Utils {
 
     public synchronized OkHttpClient getOkHttpClient() {
         if (okHttpClient == null) {
-            okHttpClient = new OkHttpClient.Builder().connectTimeout(5, TimeUnit.SECONDS)
+            okHttpClient = new OkHttpClient.Builder().connectTimeout(10, TimeUnit.SECONDS)
                     //添加OkHttp3的拦截器
                     .writeTimeout(20, TimeUnit.SECONDS).readTimeout(20, TimeUnit.SECONDS)
                     .addInterceptor(new MyInterceptor(mContext))

@@ -60,19 +60,33 @@ public class WellcomActivity extends BaseActivity {
             goTActivity(LoginActivity.class);
         } else {
             goTActivity(MainActivity.class);
-            SPUtils.instance(this).put("token", userMess.getToken());
+            getUserInfo();
         }
         getInitializationData();
     }
 
-    private void goTActivity(final Class T) {
-        new Handler().postDelayed(new Runnable() {
+    private void getUserInfo() {
+        OkHttp3Utils.getInstance(this).doPostJson(DyUrl.getUserInfo, null, new ObjectCallback<String>(this) {
             @Override
-            public void run() {
-                Intent intent = new Intent(WellcomActivity.this, T);
-                startActivity(intent);
-                finish();
+            public void onUi(String result){
+                UserMess userMess = new Gson().fromJson(result,UserMess.class);
+                SPUtils.instance(getContext()).put("token", userMess.getToken());
+                SPUtils.instance(getContext()).putUser(userMess);
             }
+
+            @Override
+            public void onFailed(String msg) {
+
+            }
+        });
+    }
+
+
+    private void goTActivity(final Class T) {
+        new Handler().postDelayed(() -> {
+            Intent intent = new Intent(WellcomActivity.this, T);
+            startActivity(intent);
+            finish();
         }, 1500);
     }
 

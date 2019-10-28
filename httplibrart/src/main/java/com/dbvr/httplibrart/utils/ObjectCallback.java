@@ -9,7 +9,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.net.ConnectException;
 import java.util.List;
+import java.util.concurrent.TimeoutException;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -87,6 +89,30 @@ public abstract class ObjectCallback<T> implements Callback {
                     onFailed(e.getMessage());
                 }
             });
+        } catch (Exception e){
+            if (e instanceof ConnectException){
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            onUi((T) "连接异常");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }else if (e instanceof TimeoutException){
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            onUi((T) "连接超时");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
         }
     }
 }

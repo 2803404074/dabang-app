@@ -6,18 +6,26 @@ public class DyUrl {
 
     public static final String TOKEN_NAME = "DABANG-TOKEN";
     //public static final String BASE = "http://www.vrzbgw.com/dabang/";
-    public static final String BASE = "http://192.168.0.112:8085/dabang/";
+    public static final String BASE = "http://192.168.0.112:8087/dabang/";
     //public static final String BASE = "http://api.vrzbgw.com:8085/dabang/";//远程
 
+    //获取用户信息
+    public static final String getUserInfo = "api/getUserInfo";
 
     //首页主播列表
     public static final String indexAnchorList = "api/pili/indexAnchorList";
+
+    //关注主播
+    public static final String updateFans = "api/my/updateFans";
 
     //创建推流
     public static final String createStream = "api/live/createStream";
 
     //直播礼物列表;
     public static final String getLiveGiftList = "api/live/getLiveGiftList";
+
+    //打赏礼物
+    public static final String rewardGift = "api/live/rewardGift";
 
     //获取七牛token
     public static final String getUploadConfigToken = "api/config/getUploadConfigToken";

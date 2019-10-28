@@ -10,6 +10,7 @@ public class Contents {
     public final static int HY_COMMENT = 0;//评论
     public final static int HY_DM = 1;//弹幕
     public final static int HY_DS = 2;//打赏
+    public final static int HY_DS_MAX = 22;//打赏(贵重礼物)
     public final static int HY_ORDER = 3;//下单
     public final static int HY_DZ = 4;//点赞
 }

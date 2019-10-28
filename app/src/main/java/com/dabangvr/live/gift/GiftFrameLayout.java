@@ -102,7 +102,7 @@ public class GiftFrameLayout extends FrameLayout {
         if (!TextUtils.isEmpty(model.getMsgDsComment().getGiftName())) {
             anim_sign.setText(model.getMsgDsComment().getGiftName());
         }
-        Glide.with(MyApplication.getInstance()).load(model.getMsgDsComment().getGiftId()).into(anim_gift);
+        Glide.with(MyApplication.getInstance()).load(model.getMsgDsComment().getGiftUrl()).into(anim_gift);
 //        if (0 != ) {
 //            Glide.with(MyApplication.getInstance()).load(model.getMsgDsComment().getGiftId()).into(anim_gift);
 //            anim_gift.setImageResource(model.getMsgDsComment().getGiftTag());

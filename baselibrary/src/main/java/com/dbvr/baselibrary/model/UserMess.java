@@ -30,7 +30,7 @@ public class UserMess implements Serializable {
 
     private String followNumber;//关注量
 
-    private String diamond;//鲜币
+    private int diamond;//鲜币
 
     private String integral;//积分
 
@@ -93,11 +93,11 @@ public class UserMess implements Serializable {
         this.isNew = isNew;
     }
 
-    public String getDiamond() {
+    public int getDiamond() {
         return diamond;
     }
 
-    public void setDiamond(String diamond) {
+    public void setDiamond(int diamond) {
         this.diamond = diamond;
     }
 

@@ -73,7 +73,7 @@ public class GiftQueue {
         } else {
             boolean isRepeat = false;
             for (LiveComment giftModel : mapList) {
-                if (giftModel.getMsgDsComment().getGiftTag() == model.getMsgDsComment().getGiftTag()) {
+                if (giftModel.getMsgDsComment().getGiftId() == model.getMsgDsComment().getGiftId()) {
                     //礼物相同时
                     giftModel.getMsgDsComment().setGiftNum(model.getMsgDsComment().getGiftNum());
                     isRepeat = true;

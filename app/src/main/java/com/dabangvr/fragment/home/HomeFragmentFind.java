@@ -27,6 +27,7 @@ import com.dbvr.baselibrary.eventBus.ReadEvent;
 import com.dbvr.baselibrary.model.HomeFindMo;
 import com.dbvr.baselibrary.model.PlayMode;
 import com.dbvr.baselibrary.utils.BannerUtil;
+import com.dbvr.baselibrary.utils.SPUtils;
 import com.dbvr.baselibrary.utils.StringUtils;
 import com.dbvr.baselibrary.view.BaseFragment;
 import com.dbvr.httplibrart.constans.DyUrl;
@@ -122,6 +123,8 @@ public class HomeFragmentFind extends BaseFragment {
                     String liveTag;
                     String lookNum;
                     String headUrl;
+                    boolean isFollow;
+                    int userId;
                     for (int i = 0; i < list.size(); i++) {
                         if (!StringUtils.isEmpty(list.get(i).getCoverUrl())){
                             holder.setImageByUrl(R.id.ivTitle,list.get(i).getCoverUrl());
@@ -133,6 +136,8 @@ public class HomeFragmentFind extends BaseFragment {
                             liveTag = list.get(i).getLiveTag();
                             lookNum = list.get(i).getLookNum();
                             headUrl = list.get(i).getHeadUrl();
+                            userId = list.get(i).getUserId();
+                            isFollow = list.get(i).isFollow();
                             holder.itemView.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
@@ -143,6 +148,8 @@ public class HomeFragmentFind extends BaseFragment {
                                     map.put("liveTag",liveTag);
                                     map.put("lookNum",lookNum);
                                     map.put("headUrl",headUrl);
+                                    map.put("userId",userId);
+                                    map.put("isFollow",isFollow);
                                     goTActivity(PlayActivity.class,map);
                                 }
                             });
@@ -199,6 +206,8 @@ public class HomeFragmentFind extends BaseFragment {
                             map.put("liveTag",list.get(position).getLiveTag());
                             map.put("lookNum",list.get(position).getLookNum());
                             map.put("headUrl",list.get(position).getHeadUrl());
+                            map.put("userId",list.get(position).getUserId());
+                            map.put("isFollow",list.get(position).isFollow());
                             goTActivity(PlayActivity.class,map);
                         }
                     });
@@ -280,6 +289,7 @@ public class HomeFragmentFind extends BaseFragment {
     private Map<String,Object> map = new HashMap<>();
     @Override
     public void initData() {
+        //map.put("userId", SPUtils.instance(getContext()).getUser().getId());
         OkHttp3Utils.getInstance(getContext()).doPostJson(DyUrl.indexFind, map, new ObjectCallback<String>(getContext()) {
             @Override
             public void onUi(String result){
@@ -289,7 +299,6 @@ public class HomeFragmentFind extends BaseFragment {
                     adapter.update(mData);
                     Log.e("ssss",new Gson().toJson(mData));
                 }
-
                 setLoaddingView(false);
             }
 
