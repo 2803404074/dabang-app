@@ -15,6 +15,9 @@ public class DyUrl {
     //首页主播列表
     public static final String indexAnchorList = "api/pili/indexAnchorList";
 
+    //首页关注的主播正在直播的列表
+    public static final String indexFollowList = "api/index/indexFollowList";
+
     //关注主播
     public static final String updateFans = "api/my/updateFans";
 

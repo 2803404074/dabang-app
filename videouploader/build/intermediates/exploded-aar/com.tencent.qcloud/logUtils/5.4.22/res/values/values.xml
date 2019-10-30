@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="burlywood">#55deb887</color>
+    <color name="translucent_background">#00ffffff</color>
+    <string name="dialog_title">是否查看COS本地日志</string>
+    <string name="no">否</string>
+    <string name="yes">是</string>
+</resources>

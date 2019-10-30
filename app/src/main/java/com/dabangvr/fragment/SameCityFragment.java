@@ -61,9 +61,9 @@ public class SameCityFragment extends BaseFragment {
                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
                 if (position % 2 != 0){
-                    params.setMargins(2,2,0,0);//左边的item
+                    params.setMargins(1,1,0,0);//左边的item
                 } else{
-                    params.setMargins(0, 2, 2, 0);//右边的item
+                    params.setMargins(0, 1, 1, 0);//右边的item
                 }
                 myImageView.setLayoutParams(params);
             }

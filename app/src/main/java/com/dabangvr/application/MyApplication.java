@@ -22,6 +22,7 @@ import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+import com.tencent.ugc.TXUGCBase;
 
 import java.util.Iterator;
 import java.util.List;
@@ -30,6 +31,8 @@ import static com.dbvr.baselibrary.other.ThirdParty.WECHART_APP_ID;
 
 public class MyApplication extends Application {
 
+    String ugcLicenceUrl = "http://license.vod2.myqcloud.com/license/v1/8c1a438e5d22efa5e67c1c0b9f951fa9/TXUgcSDK.licence"; //您从控制台申请的 licence url
+    String ugcKey = "3b74ed96b09b26753502311596ef08a5";
 
     private NetWorkStateReceiver netWorkStateReceiver;
     public static IWXAPI api;
@@ -80,7 +83,7 @@ public class MyApplication extends Application {
         initHy();
 
         //腾讯云短视频
-//        TXUGCBase.getInstance().setLicence(this, ugcLicenceUrl, ugcKey);
+        TXUGCBase.getInstance().setLicence(this, ugcLicenceUrl, ugcKey);
 
     }
 

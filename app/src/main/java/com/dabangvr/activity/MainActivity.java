@@ -32,6 +32,7 @@ import com.hyphenate.EMCallBack;
 import com.hyphenate.EMError;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.exceptions.HyphenateException;
+import com.tencent.liteav.demo.videorecord.TCVideoSettingActivity;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -253,6 +254,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
             view.findViewById(R.id.tvOpenVideo).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    goTActivity(TCVideoSettingActivity.class,null);
                     BottomDialogUtil2.getInstance(MainActivity.this).dess();
                 }
             });

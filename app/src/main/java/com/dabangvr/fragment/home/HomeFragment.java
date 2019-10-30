@@ -68,6 +68,7 @@ public class HomeFragment extends BaseFragment {
         viewPager.setAdapter(contentAdapter);
         tabLayout.setViewPager(viewPager);
         viewPager.setCurrentItem(1);
+        viewPager.setOffscreenPageLimit(4);
 
 
 

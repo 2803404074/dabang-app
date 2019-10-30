@@ -19,6 +19,9 @@ allprojects {
     repositories {
         jcenter()
 
+        flatDir {
+            dirs '../videorecorder/libs','libs'
+        }
         maven {
             url 'https://maven.google.com/'
             name 'Google'

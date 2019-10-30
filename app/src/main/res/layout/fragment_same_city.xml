@@ -7,7 +7,7 @@
     <LinearLayout
         android:id="@+id/llTop"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_70"
+        android:layout_height="@dimen/dp_90"
         android:orientation="horizontal"
         android:gravity="center|top"
         android:paddingTop="@dimen/dp_35"
@@ -42,8 +42,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_tc"
-        android:layout_marginTop="@dimen/dp_1"
-        android:layout_below="@+id/llTop"
+        android:layout_marginTop="@dimen/dp_70"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

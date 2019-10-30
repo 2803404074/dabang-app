@@ -29,6 +29,7 @@ import com.dbvr.baselibrary.model.PlayMode;
 import com.dbvr.baselibrary.utils.BannerUtil;
 import com.dbvr.baselibrary.utils.SPUtils;
 import com.dbvr.baselibrary.utils.StringUtils;
+import com.dbvr.baselibrary.utils.ToastUtil;
 import com.dbvr.baselibrary.view.BaseFragment;
 import com.dbvr.httplibrart.constans.DyUrl;
 import com.dbvr.httplibrart.utils.ObjectCallback;
@@ -74,26 +75,21 @@ public class HomeFragmentFind extends BaseFragment {
     }
     @Override
     public void initView() {
+        Log.e("chaungjian","HomeFragmentFind 执行initView()");
         setLoaddingView(true);
         refreshLayout.setPrimaryColorsId(R.color.colorTM, android.R.color.white);
         refreshLayout.setEnableLoadMore(true);
-        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(RefreshLayout refreshLayout) {
-                Message message = new Message();
-                message.what = 1;
-                message.obj = "刷新";
-                mHandler.sendMessageDelayed(message, 2000);
-            }
+        refreshLayout.setOnRefreshListener(refreshLayout -> {
+            Message message = new Message();
+            message.what = 1;
+            message.obj = "刷新";
+            mHandler.sendMessageDelayed(message, 2000);
         });
-        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore(RefreshLayout refreshLayout) {
-                Message message = new Message();
-                message.what = 2;
-                message.obj = "加载更多";
-                mHandler.sendMessageDelayed(message, 1000);
-            }
+        refreshLayout.setOnLoadMoreListener(refreshLayout -> {
+            Message message = new Message();
+            message.what = 2;
+            message.obj = "加载更多";
+            mHandler.sendMessageDelayed(message, 1000);
         });
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -150,6 +146,7 @@ public class HomeFragmentFind extends BaseFragment {
                                     map.put("headUrl",headUrl);
                                     map.put("userId",userId);
                                     map.put("isFollow",isFollow);
+                                    ToastUtil.showShort(getContext(),"是否已经关注="+isFollow);
                                     goTActivity(PlayActivity.class,map);
                                 }
                             });
@@ -196,20 +193,18 @@ public class HomeFragmentFind extends BaseFragment {
                         }
                     };
                     recyclerTow.setAdapter(adapter);
-                    adapter.setOnItemClickListener(new RecyclerAdapterPosition.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(View view, int position) {
-                            Map<String,Object>map = new HashMap<>();
-                            map.put("url",list.get(position).getFname());
-                            map.put("roomId",list.get(position).getRoomId());
-                            map.put("nickName",list.get(position).getNickName());
-                            map.put("liveTag",list.get(position).getLiveTag());
-                            map.put("lookNum",list.get(position).getLookNum());
-                            map.put("headUrl",list.get(position).getHeadUrl());
-                            map.put("userId",list.get(position).getUserId());
-                            map.put("isFollow",list.get(position).isFollow());
-                            goTActivity(PlayActivity.class,map);
-                        }
+                    adapter.setOnItemClickListener((view, position) -> {
+                        Map<String,Object>map = new HashMap<>();
+                        map.put("url",list.get(position).getFname());
+                        map.put("roomId",list.get(position).getRoomId());
+                        map.put("nickName",list.get(position).getNickName());
+                        map.put("liveTag",list.get(position).getLiveTag());
+                        map.put("lookNum",list.get(position).getLookNum());
+                        map.put("headUrl",list.get(position).getHeadUrl());
+                        map.put("userId",list.get(position).getUserId());
+                        map.put("isFollow",list.get(position).isFollow());
+                        ToastUtil.showShort(getContext(),"是否已经关注="+list.get(position).isFollow());
+                        goTActivity(PlayActivity.class,map);
                     });
                 //轮播图
                 } else if (adapter.getViewTypeForMyTask(mType) == adapter.mTypeTow) {
@@ -240,12 +235,12 @@ public class HomeFragmentFind extends BaseFragment {
 
                 //底部列表
                 } else if (adapter.getViewTypeForMyTask(mType) == adapter.mTypeFour) {
-                    List<HomeFindMo.FiveMo> list = mData.get(mType).getFiveMos();
+                    List<HomeFindMo.TowMo> list = mData.get(mType).getFiveMos();
                     RecyclerView recyclerTow =  holder.getView(R.id.recycler_head);
                     recyclerTow.setLayoutManager(new GridLayoutManager(getContext(),2));
-                    RecyclerAdapterPosition adapter = new RecyclerAdapterPosition<HomeFindMo.FiveMo>(getContext(),list,R.layout.item_conver_match) {
+                    RecyclerAdapterPosition adapter = new RecyclerAdapterPosition<HomeFindMo.TowMo>(getContext(),list,R.layout.item_conver_match) {
                         @Override
-                        public void convert(Context mContext, BaseRecyclerHolder holder,int position, HomeFindMo.FiveMo o) {
+                        public void convert(Context mContext, BaseRecyclerHolder holder,int position, HomeFindMo.TowMo o) {
 
                             SimpleDraweeView myImageView = holder.getView(R.id.miv_view);
                             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
@@ -289,7 +284,8 @@ public class HomeFragmentFind extends BaseFragment {
     private Map<String,Object> map = new HashMap<>();
     @Override
     public void initData() {
-        //map.put("userId", SPUtils.instance(getContext()).getUser().getId());
+        map.put("page",page);
+        map.put("userId", SPUtils.instance(getContext()).getUser().getId());
         OkHttp3Utils.getInstance(getContext()).doPostJson(DyUrl.indexFind, map, new ObjectCallback<String>(getContext()) {
             @Override
             public void onUi(String result){
@@ -298,6 +294,8 @@ public class HomeFragmentFind extends BaseFragment {
                     mData = list;
                     adapter.update(mData);
                     Log.e("ssss",new Gson().toJson(mData));
+                }else {
+                    page--;
                 }
                 setLoaddingView(false);
             }
@@ -322,11 +320,8 @@ public class HomeFragmentFind extends BaseFragment {
                 case 2:         //加载更多
                     // TODO: 2019/10/9 加载更多
                     //adapter.addData(mData1);
-                    if (page>1){
-                        map.put("limit",10);
-                        map.put("page",page++);
-                    }
-
+                    map.put("limit",10);
+                    page++;
                     initData();
                     obj = (String) msg.obj;
                     refreshLayout.finishLoadMore(true);

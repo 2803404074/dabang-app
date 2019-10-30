@@ -104,4 +104,7 @@ dependencies {
     //直播中的动画？？
     api 'com.github.hust201010701:XDanmuku:-SNAPSHOT'
 
+    //高德定位
+    api 'com.amap.api:location:4.7.2'
+
 }

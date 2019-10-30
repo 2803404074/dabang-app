@@ -1,0 +1,262 @@
+[
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\abc_screen_simple.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout\\abc_screen_simple.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\activity_log.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\com.tencent.qcloud\\logUtils\\5.4.22\\res\\layout\\activity_log.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\abc_search_dropdown_item_icons_2line.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout\\abc_search_dropdown_item_icons_2line.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\vod_controller_small.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\Demo\\player\\unspecified\\res\\layout\\vod_controller_small.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\vod_controller_large.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\Demo\\player\\unspecified\\res\\layout\\vod_controller_large.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\abc_alert_dialog_button_bar_material.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout\\abc_alert_dialog_button_bar_material.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\titlebar.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\Demo\\player\\unspecified\\res\\layout\\titlebar.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\item_new_vod.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\Demo\\player\\unspecified\\res\\layout\\item_new_vod.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\abc_dialog_title_material.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout\\abc_dialog_title_material.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\video_volume_brightness_progress_layout.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\Demo\\player\\unspecified\\res\\layout\\video_volume_brightness_progress_layout.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\activity_picture_publish.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\src\\main\\res\\layout\\activity_picture_publish.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\player_quality_popup_view.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\Demo\\player\\unspecified\\res\\layout\\player_quality_popup_view.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\merge_camera_preview_view_finder.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\me.dm7.barcodescanner\\core\\1.8.4\\res\\layout\\merge_camera_preview_view_finder.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\player_quality_item_view.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\Demo\\player\\unspecified\\res\\layout\\player_quality_item_view.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\abc_popup_menu_header_item_layout.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout\\abc_popup_menu_header_item_layout.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\notification_action_tombstone.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout\\notification_action_tombstone.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\dialog_new_vod_player_fileid.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\Demo\\player\\unspecified\\res\\layout\\dialog_new_vod_player_fileid.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\layout_uploader_progress.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\src\\main\\res\\layout\\layout_uploader_progress.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\abc_screen_content_include.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout\\abc_screen_content_include.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\abc_list_menu_item_radio.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout\\abc_list_menu_item_radio.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\dialog_ugc_tip.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\src\\main\\res\\layout\\dialog_ugc_tip.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\abc_screen_toolbar.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout\\abc_screen_toolbar.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_mode_bar.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout\\abc_action_mode_bar.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\video_progress_layout.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\Demo\\player\\unspecified\\res\\layout\\video_progress_layout.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\abc_expanded_menu_layout.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout\\abc_expanded_menu_layout.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\sample_bitrate_view.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\Demo\\player\\unspecified\\res\\layout\\sample_bitrate_view.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\item_log.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\com.tencent.qcloud\\logUtils\\5.4.22\\res\\layout\\item_log.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\abc_screen_simple_overlay_action_mode.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout\\abc_screen_simple_overlay_action_mode.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\support_simple_spinner_dropdown_item.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout\\support_simple_spinner_dropdown_item.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\abc_list_menu_item_layout.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout\\abc_list_menu_item_layout.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\notification_action.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout\\notification_action.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_menu_item_layout.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout\\abc_action_menu_item_layout.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\layout_new_vod_snap.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\Demo\\player\\unspecified\\res\\layout\\layout_new_vod_snap.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\dialog_log.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\com.tencent.qcloud\\logUtils\\5.4.22\\res\\layout\\dialog_log.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_media.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout\\notification_template_media.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\activity_qrcode.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\Demo\\player\\unspecified\\res\\layout\\activity_qrcode.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\select_dialog_item_material.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout\\select_dialog_item_material.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_part_time.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout\\notification_template_part_time.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\abc_list_menu_item_checkbox.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout\\abc_list_menu_item_checkbox.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\select_dialog_singlechoice_material.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout\\select_dialog_singlechoice_material.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_bar_title_item.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout\\abc_action_bar_title_item.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_media_custom.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout\\notification_template_media_custom.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_lines_media.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout\\notification_template_lines_media.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_bar_view_list_nav_layout.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout\\abc_action_bar_view_list_nav_layout.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\super_vod_player_view.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\Demo\\player\\unspecified\\res\\layout\\super_vod_player_view.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\abc_alert_dialog_title_material.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout\\abc_alert_dialog_title_material.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\select_dialog_multichoice_material.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout\\select_dialog_multichoice_material.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\activity_vod.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\Demo\\player\\unspecified\\res\\layout\\activity_vod.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\abc_select_dialog_material.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout\\abc_select_dialog_material.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_mode_close_item_material.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout\\abc_action_mode_close_item_material.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_menu_layout.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout\\abc_action_menu_layout.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_part_chronometer.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout\\notification_template_part_chronometer.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\abc_popup_menu_item_layout.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout\\abc_popup_menu_item_layout.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_bar_up_container.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout\\abc_action_bar_up_container.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\abc_activity_chooser_view.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout\\abc_activity_chooser_view.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\abc_search_view.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout\\abc_search_view.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\player_more_popup_view.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\Demo\\player\\unspecified\\res\\layout\\player_more_popup_view.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\vod_controller_float.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\Demo\\player\\unspecified\\res\\layout\\vod_controller_float.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\abc_activity_chooser_view_list_item.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout\\abc_activity_chooser_view_list_item.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\activity_supervod_player.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\Demo\\player\\unspecified\\res\\layout\\activity_supervod_player.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\activity_video_publish.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\src\\main\\res\\layout\\activity_video_publish.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_icon_group.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout\\notification_template_icon_group.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\activity_compress.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\src\\main\\res\\layout\\activity_compress.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\abc_alert_dialog_material.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout\\abc_alert_dialog_material.xml"
+    },
+    {
+        "merged": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\res\\merged\\debug\\layout\\abc_list_menu_item_icon.xml",
+        "source": "E:\\android-demo\\LiteAVSDK_UGC_Android_6.6.7551\\Demo\\videouploader\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout\\abc_list_menu_item_icon.xml"
+    }
+]

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingTop="@dimen/dp_90"
+    android:paddingTop="@dimen/dp_80"
     android:paddingBottom="@dimen/dp_70">
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
@@ -29,9 +29,12 @@
                     android:paddingRight="@dimen/dp_1" />
 
                 <TextView
+                    android:id="@+id/tvTui"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="为你推荐"
+                    android:textColor="@android:color/white"
+                    android:layout_margin="@dimen/dp_5"
                     android:textSize="@dimen/sp_16"/>
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_tuijian"

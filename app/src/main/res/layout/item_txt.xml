@@ -10,15 +10,16 @@
 
     <CheckBox
         android:id="@+id/cb_txt"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:text="标题"
+        android:gravity="center"
         android:button="@null"
         android:padding="@dimen/dp_5"
         android:clickable="false"
         android:textColor="@color/green01"
         android:background="@drawable/check_style"
-        android:textSize="@dimen/sp_15"
+        android:textSize="@dimen/sp_18"
         />
 </RelativeLayout>

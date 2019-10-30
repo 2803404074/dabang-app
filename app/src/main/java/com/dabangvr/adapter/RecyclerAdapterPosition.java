@@ -52,6 +52,11 @@ public abstract class RecyclerAdapterPosition<T> extends RecyclerView.Adapter<Ba
         notifyDataSetChanged();
     }
 
+    public void addAllFor(List<T> data) {
+        mDatas.addAll(data);
+        notifyItemInserted(getItemCount()+1);
+    }
+
     public void addPosition(T data,int position) {
         mDatas.add(position, data);
         notifyDataSetChanged();

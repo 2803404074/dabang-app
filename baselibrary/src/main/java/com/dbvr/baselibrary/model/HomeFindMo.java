@@ -9,7 +9,7 @@ public class HomeFindMo implements Serializable {
     private List<TowMo> towMos;//大封面图和下面四个封面图
     private List<ThreeMo> threeMos;//轮播图
     private List<FourMo> fourMos;//分类列表
-    private List<FiveMo> fiveMos;//底下的列表
+    private List<TowMo> fiveMos;//底下的列表
 
     public int getPosition() {
         return position;
@@ -51,11 +51,11 @@ public class HomeFindMo implements Serializable {
         this.fourMos = fourMos;
     }
 
-    public List<FiveMo> getFiveMos() {
+    public List<TowMo> getFiveMos() {
         return fiveMos;
     }
 
-    public void setFiveMos(List<FiveMo> fiveMos) {
+    public void setFiveMos(List<TowMo> fiveMos) {
         this.fiveMos = fiveMos;
     }
 
