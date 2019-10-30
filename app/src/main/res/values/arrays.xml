@@ -4,9 +4,8 @@
         <item>北京</item>
         <item>上海 </item>
         <item>广东</item>
+        <item>广西</item>
         <item>江苏</item>
-        <item>东兴</item>
-        <item>南宁</item>
     </string-array>
 
     <string-array name="province">
@@ -18,8 +17,7 @@
         <item>安徽</item>
         <item>福建</item>
         <item>江西</item>
-        <item>广东</item>
-        <item>广西</item>
+
         <item>海南</item>
         <item>河南</item>
         <item>湖南</item>
