@@ -123,6 +123,7 @@
         <activity android:name=".fragment.other.Order.UserZBSQTwoActivity"/>
         <activity android:name=".fragment.other.Order.UserApplySuccessActivity"/>
         <activity android:name=".fragment.other.Order.UserAboutActivity"/>
+        <activity android:name=".activity.AddressActivity"/>
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.dabangvr.fileProvider"

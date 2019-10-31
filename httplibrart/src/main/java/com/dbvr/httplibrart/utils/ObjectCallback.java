@@ -3,16 +3,12 @@ package com.dbvr.httplibrart.utils;
 import android.content.Context;
 import android.os.Handler;
 
-import com.google.gson.Gson;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.ConnectException;
-import java.util.List;
 import java.util.concurrent.TimeoutException;
-
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;

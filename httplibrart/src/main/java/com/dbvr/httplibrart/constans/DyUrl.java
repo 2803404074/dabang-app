@@ -6,8 +6,8 @@ public class DyUrl {
 
     public static final String TOKEN_NAME = "DABANG-TOKEN";
     //public static final String BASE = "http://www.vrzbgw.com/dabang/";
-    public static final String BASE = "http://192.168.0.112:8085/dabang/";
-    //public static final String BASE = "http://api.vrzbgw.com:8085/dabang/";//远程
+//    public static final String BASE = "http://192.168.0.112:8087/dabang/";
+    public static final String BASE = "http://api.vrzbgw.com:8085/dabang/";//远程
 
     //获取用户信息
     public static final String getUserInfo = "api/getUserInfo";
@@ -51,8 +51,7 @@ public class DyUrl {
     public static String refundRequest = "api/payorder/refundRequest";
     //微信支付统一入口，获取订单号
     public static String prepayOrder = "api/payorder/prepayOrder";
-    //重新支付
-    public static String prepayOrderAgain = "api/payorder/prepayOrderAgain";
+
 
 
 
@@ -86,4 +85,7 @@ public class DyUrl {
     public static final String sendSay = "api/my/sendSay";
     //获取动态列表
     public static final String getSayList = "api/my/getSayList";
+
+    //获取高德省市县三级联动json
+    public static final String getAmapDistrict = "api/config/getAmapDistrict";
 }

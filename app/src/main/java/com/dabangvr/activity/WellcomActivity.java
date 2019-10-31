@@ -5,11 +5,17 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.TextView;
 
 import okhttp3.Call;
 
+import com.addressselection.bean.AddressBEAN;
+import com.addressselection.bean.AdressBean;
+import com.addressselection.bean.AdressBean_two;
+import com.addressselection.manager.AddressDictManager;
+import com.addressselection.manager.DBUtils;
 import com.dabangvr.R;
 import com.dabangvr.application.MyApplication;
 import com.dbvr.baselibrary.model.MenuBean;
@@ -24,16 +30,19 @@ import com.dbvr.httplibrart.utils.OkHttp3Utils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class WellcomActivity extends BaseActivity {
     private TextView text_version;
+    private AddressBEAN addressBeans;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +77,8 @@ public class WellcomActivity extends BaseActivity {
     private void getUserInfo() {
         OkHttp3Utils.getInstance(this).doPostJson(DyUrl.getUserInfo, null, new ObjectCallback<String>(this) {
             @Override
-            public void onUi(String result){
-                UserMess userMess = new Gson().fromJson(result,UserMess.class);
+            public void onUi(String result) {
+                UserMess userMess = new Gson().fromJson(result, UserMess.class);
                 SPUtils.instance(getContext()).put("token", userMess.getToken());
                 SPUtils.instance(getContext()).putUser(userMess);
             }
@@ -109,7 +118,9 @@ public class WellcomActivity extends BaseActivity {
 
     private void getInitializationData() {
         getChannelMenu();
+        getAddressIfno();
     }
+
 
     private void getChannelMenu() {
         Map<String, Object> map = new HashMap<>();
@@ -128,4 +139,50 @@ public class WellcomActivity extends BaseActivity {
             }
         });
     }
+
+    private void getAddressIfno() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("mallSpeciesId", 8);
+        //获取标签
+        OkHttp3Utils.getInstance(MyApplication.getInstance()).doPostJson(DyUrl.getAmapDistrict, map, new ObjectCallback<String>(MyApplication.getInstance()) {
+            @Override
+            public void onUi(String result) throws JSONException {
+                String rep = "\"citycode\":[]";
+                String repe = "\"citycode\":\"0\"";
+                String replace = result.replace(rep, repe);
+                List<AdressBean_two> list = new Gson().fromJson(replace, new TypeToken<List<AdressBean_two>>() {
+                }.getType());
+
+                for (int i = 0; i < list.size(); i++) {
+                  if (TextUtils.equals(list.get(i).getName(),"新疆维吾尔自治区")){
+                      for (int j = 0; j < list.get(i).getDistricts().size(); j++) {
+                          Log.d("luhuas", "11onUi: "+list.get(i).getName());
+                          if (TextUtils.equals(list.get(i).getDistricts().get(j).getName(),"北屯市")){
+                              for (int k = 0; k < list.get(i).getDistricts().get(j).getDistricts().size(); k++) {
+                                  Log.d("luhuas", "22onUi: "+list.get(i).getDistricts().get(j).getDistricts().get(k).getName());
+
+                              }
+                          }
+                      }
+                  }
+                }
+
+                inidSql(list);
+            }
+
+            @Override
+            public void onFailed(String msg) {
+
+            }
+        });
+    }
+
+    private void inidSql(List<AdressBean_two> list) {
+        if (list != null && list.size() > 0) {
+           new AddressDictManager(this,true,list);
+
+        }
+
+    }
+
 }

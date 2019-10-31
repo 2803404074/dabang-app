@@ -101,6 +101,7 @@ dependencies {
     implementation project(path: ':svgalibrary')
     implementation project(path: ':player')
     implementation project(path: ':videorecorder')
+    implementation project(path: ':addressselection')
 
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.5.1'
     implementation files('libs/hyphenatechat_3.6.1.jar')

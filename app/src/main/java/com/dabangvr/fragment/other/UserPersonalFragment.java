@@ -1,6 +1,7 @@
 package com.dabangvr.fragment.other;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.dabangvr.R;
+import com.dabangvr.activity.AddressActivity;
 import com.dabangvr.fragment.other.Order.ProblemActivity;
 import com.dabangvr.fragment.other.Order.UserAboutActivity;
 import com.dabangvr.fragment.other.Order.UserMessActivity;
@@ -38,15 +40,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * 纯列表的fragment
  */
 public class UserPersonalFragment extends BaseFragment {
 
+    private static final int SELECT_IMAGE_REQUEST = 0x1111;
     @BindView(R.id.recycler_head)
     RecyclerView recyclerView;
 
@@ -106,9 +112,11 @@ public class UserPersonalFragment extends BaseFragment {
                         goTActivity(ProblemActivity.class, null);
                         break;
                     case ParameterContens.CLIENT_GFKF://官方客服
+                        Intent intent = new Intent(getContext(), AddressActivity.class);
+                        startActivityForResult(intent, SELECT_IMAGE_REQUEST);
                         break;
                     case ParameterContens.CLIENT_GYWM://关于我们
-                        goTActivity(UserAboutActivity.class,null);
+                        goTActivity(UserAboutActivity.class, null);
                         break;
 
                 }
@@ -158,5 +166,16 @@ public class UserPersonalFragment extends BaseFragment {
 
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == SELECT_IMAGE_REQUEST && data != null) {
+                String address = data.getStringExtra("address");
+                Log.d("luhuas", "onActivityResultaddress=: " + address);
+            }
+        }
     }
 }

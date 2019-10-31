@@ -3,3 +3,4 @@ hyphenatechat.....环信相关
 LiteAVSDK_UGC...短视频相关
 open_sdk.....qq开放平台
 pldroid...七牛云直播相关
+addressselection...地址选择
