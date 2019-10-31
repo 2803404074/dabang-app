@@ -74,12 +74,7 @@ public class FansAndFollowActivity extends BaseActivity {
 
                 SimpleDraweeView sdvHead =  holder.getView(R.id.sdvHead);
                 sdvHead.setImageURI(o.getHead());
-                sdvHead.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        goTActivity(UserHomeActivity.class,null);
-                    }
-                });
+                sdvHead.setOnClickListener(view -> goTActivity(UserHomeActivity.class,null));
 
                 if (o.isFollow()){
                     holder.getView(R.id.tvGz).setBackgroundResource(R.drawable.shape_gray);

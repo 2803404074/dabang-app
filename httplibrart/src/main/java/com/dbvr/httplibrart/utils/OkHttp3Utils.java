@@ -14,6 +14,7 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
+import okhttp3.HttpUrl;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -94,13 +95,23 @@ public class OkHttp3Utils {
      * 参数1 url
      * 参数2 回调Callback
      */
-    public void doGet(String url, Callback callback) {
+    public void doGet(String url,Map<String,String>map, Callback callback) {
         //创建OkHttpClient请求对象
         OkHttpClient okHttpClient = getOkHttpClient();
-        //补全请求地址
-        String requestUrl = DyUrl.BASE + url;
+
+        Request.Builder reqBuild = new Request.Builder();
+        HttpUrl.Builder urlBuilder =HttpUrl.parse(url)
+                .newBuilder();
+        if (map!=null){
+            for (String key : map.keySet()) {
+                urlBuilder.addQueryParameter(key, map.get(key));
+            }
+        }
+
+
+        reqBuild.url(urlBuilder.build());
         //创建Request
-        Request request = new Request.Builder().url(requestUrl).build();
+        Request request = reqBuild.build();
         //得到Call对象
         Call call = okHttpClient.newCall(request);
         //执行异步请求

@@ -1,6 +1,7 @@
 package com.dabangvr.im;
 
 import android.content.Context;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -8,6 +9,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -24,6 +27,7 @@ import com.dbvr.baselibrary.utils.SPUtils;
 import com.dbvr.baselibrary.utils.ScreenUtils;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
 import com.dbvr.baselibrary.utils.StringUtils;
+import com.dbvr.baselibrary.view.AppManager;
 import com.dbvr.baselibrary.view.BaseActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.hyphenate.EMMessageListener;
@@ -217,9 +221,12 @@ public class ChatActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.iv_add, R.id.iv_selectPhoto, R.id.iv_selectCame})
+    @OnClick({R.id.ivBack,R.id.iv_add, R.id.iv_selectPhoto, R.id.iv_selectCame})
     public void onTouchClick(View view) {
         switch (view.getId()) {
+            case R.id.ivBack:
+                AppManager.getAppManager().finishActivity(this);
+                break;
             case R.id.iv_add:
                 // 将键盘隐藏
                 if (ScreenUtils.isInputShow(this)){

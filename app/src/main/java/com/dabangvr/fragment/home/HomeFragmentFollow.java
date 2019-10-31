@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -23,6 +24,7 @@ import com.dbvr.baselibrary.eventBus.ReadEvent;
 import com.dbvr.baselibrary.model.HomeFindMo;
 import com.dbvr.baselibrary.model.HomeFollowMo;
 import com.dbvr.baselibrary.utils.StringUtils;
+import com.dbvr.baselibrary.utils.ToastUtil;
 import com.dbvr.baselibrary.view.BaseFragment;
 import com.dbvr.httplibrart.constans.DyUrl;
 import com.dbvr.httplibrart.utils.ObjectCallback;
@@ -48,6 +50,11 @@ import java.util.Map;
 import butterknife.BindView;
 
 public class HomeFragmentFollow extends BaseFragment {
+
+    @BindView(R.id.ivTips)
+    ImageView ivTips;
+    @BindView(R.id.tvTips)
+    TextView tvTips;
 
     @BindView(R.id.tvTui)
     TextView tvTui;
@@ -79,23 +86,17 @@ public class HomeFragmentFollow extends BaseFragment {
     public void initView() {
         refreshLayout.setPrimaryColorsId(R.color.colorTM, android.R.color.white);
         refreshLayout.setEnableLoadMore(true);
-        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(RefreshLayout refreshLayout) {
-                Message message = new Message();
-                message.what = 1;
-                message.obj = "刷新";
-                mHandler.sendMessageDelayed(message, 2000);
-            }
+        refreshLayout.setOnRefreshListener(refreshLayout -> {
+            Message message = new Message();
+            message.what = 1;
+            message.obj = "刷新";
+            mHandler.sendMessageDelayed(message, 2000);
         });
-        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore(RefreshLayout refreshLayout) {
-                Message message = new Message();
-                message.what = 2;
-                message.obj = "加载更多";
-                mHandler.sendMessageDelayed(message, 2000);
-            }
+        refreshLayout.setOnLoadMoreListener(refreshLayout -> {
+            Message message = new Message();
+            message.what = 2;
+            message.obj = "加载更多";
+            mHandler.sendMessageDelayed(message, 2000);
         });
 
         recyclerViewFollow.setLayoutManager(new GridLayoutManager(getContext(),2));
@@ -115,14 +116,13 @@ public class HomeFragmentFollow extends BaseFragment {
 
 
                 //直播类型
-                if (!StringUtils.isEmpty(o.getCoverPath())){
+                if (!StringUtils.isEmpty(o.getFname())){
                     holder.getView(R.id.tvTag).setVisibility(View.VISIBLE);
                     holder.setText(R.id.tvTitle,o.getLiveTitle());
                     holder.setImageResource(R.id.ivTable,R.mipmap.see);
                     holder.setText(R.id.zb_likeCounts,o.getLookNum());
                     SimpleDraweeView sdv = holder.getView(R.id.miv_view);
                     sdv.setImageURI(o.getCoverUrl());
-
 
                     //短视频类型
                 }else {
@@ -153,7 +153,7 @@ public class HomeFragmentFollow extends BaseFragment {
                 myImageView.setLayoutParams(params);
 
                 //直播类型
-                if (!StringUtils.isEmpty(o.getCoverPath())){
+                if (!StringUtils.isEmpty(o.getFname())){
 
                     holder.getView(R.id.tvTag).setVisibility(View.GONE);
                     holder.setText(R.id.tvTitle,o.getTitle());
@@ -205,7 +205,7 @@ public class HomeFragmentFollow extends BaseFragment {
             map.put("lookNum",mDataFollow.get(position).getLookNum());
             map.put("headUrl",mDataFollow.get(position).getHeadUrl());
             map.put("userId",mDataFollow.get(position).getUserId());
-            map.put("isFollow",mDataFollow.get(position).isFollow());
+            map.put("isFollow",true);
             goTActivity(PlayActivity.class,map);
         });
     }
@@ -237,7 +237,13 @@ public class HomeFragmentFollow extends BaseFragment {
                             }
                         }
                     }
-
+                    if (mDataFollow== null || mDataFollow.size()==0){
+                        ivTips.setVisibility(View.VISIBLE);
+                        tvTips.setVisibility(View.VISIBLE);
+                    }else {
+                        ivTips.setVisibility(View.VISIBLE);
+                        tvTips.setVisibility(View.VISIBLE);
+                    }
                     adapterFollow.updateDataa(mDataFollow);
                     adapterTui.updateDataa(mDataTui);
                 }else {
@@ -248,6 +254,7 @@ public class HomeFragmentFollow extends BaseFragment {
 
             @Override
             public void onFailed(String msg) {
+                ToastUtil.showShort(getContext(),msg);
                 setLoaddingView(false);
             }
         });

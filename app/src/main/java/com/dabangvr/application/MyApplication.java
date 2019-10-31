@@ -11,6 +11,7 @@ import com.dbvr.baselibrary.utils.NetWorkStateReceiver;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMOptions;
+import com.mob.MobSDK;
 import com.qiniu.pili.droid.streaming.StreamingEnv;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreator;
@@ -72,6 +73,9 @@ public class MyApplication extends Application {
 
         //圆形图像初始化
         Fresco.initialize(this);
+
+        //分享
+        MobSDK.init(this);
 
         //微信
         api = WXAPIFactory.createWXAPI(this, WECHART_APP_ID, true);

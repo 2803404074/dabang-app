@@ -29,10 +29,12 @@
                 android:layout_centerVertical="true"
                 android:src="@mipmap/search"/>
             <EditText
+                android:id="@+id/etInput"
                 android:layout_toRightOf="@+id/ivSearch"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="东兴1299酒庄直播间"
+                android:imeOptions="actionSearch"
                 android:background="@null"
                 />
         </RelativeLayout>
@@ -52,6 +54,11 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_13"
         android:background="@color/dividerGrey"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycle_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
     <TextView
         android:layout_width="wrap_content"

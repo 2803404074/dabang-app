@@ -1,6 +1,8 @@
 package com.dabangvr.activity;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -10,8 +12,10 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.dabangvr.R;
 import com.dabangvr.application.MyApplication;
@@ -75,8 +79,10 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         navView.setLabelVisibilityMode(1);
         fragmentManager = getSupportFragmentManager();
         navView.setOnNavigationItemSelectedListener(this);
+
         changeFragment(0);
     }
+
 
     @Override
     public void initData() {
@@ -261,7 +267,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
             view.findViewById(R.id.tvOpenDynamic).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    goTActivity(CreateDynamicActivity.class,null);
+                    goTActivityForResult(CreateDynamicActivity.class,null,100);
                     BottomDialogUtil2.getInstance(MainActivity.this).dess();
                 }
             });
@@ -304,5 +310,21 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     protected void onDestroy() {
         super.onDestroy();
         BottomDialogUtil2.getInstance(this).dess();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==100){
+            if (resultCode == 100){
+                navView.setSelectedItemId(R.id.navigation_live);
+                changeFragment(2);
+                //发送广播，动态更新刚发表的数据
+                Intent intent = new Intent("android.intent.action.DYNAMIC");
+                intent.putExtra("content",data.getStringExtra("content"));
+                intent.putExtra("img",data.getParcelableArrayListExtra("img"));
+                LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
+            }
+        }
     }
 }

@@ -26,3 +26,12 @@
 
 -keep class com.hyphenate.** {*;}
 -dontwarn  com.hyphenate.**
+
+
+-keep class cn.sharesdk.**{*;}
+-keep class com.sina.**{*;}
+-keep class com.mob.**{*;}
+-keep class com.bytedance.**{*;}
+-dontwarn cn.sharesdk.**
+-dontwarn com.sina.**
+-dontwarn com.mob.**

@@ -101,4 +101,12 @@ public class BaseRecyclerHolder extends RecyclerView.ViewHolder {
         }
         return this;
     }
+
+
+    public BaseRecyclerHolder setImageByPath(int viewId, String path) {
+        Glide.with(context)
+                .load(path)
+                .into((ImageView)getView(viewId));
+        return this;
+    }
 }

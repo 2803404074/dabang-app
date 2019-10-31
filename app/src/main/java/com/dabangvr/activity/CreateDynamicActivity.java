@@ -15,16 +15,21 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dabangvr.R;
+import com.dabangvr.fragment.SameCityFragment;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
+import com.dbvr.baselibrary.utils.StringUtils;
 import com.dbvr.baselibrary.view.AppManager;
 import com.dbvr.baselibrary.view.BaseActivity;
 import com.dbvr.imglibrary2.model.Image;
+import com.dbvr.imglibrary2.ui.PreviewImageActivity;
 import com.dbvr.imglibrary2.ui.SelectImageActivity;
 import com.dbvr.imglibrary2.ui.adapter.SelectedImageAdapter;
 import com.dbvr.imglibrary2.utils.TDevice;
@@ -48,6 +53,8 @@ public class CreateDynamicActivity extends BaseActivity {
     RecyclerView recyclerView;
     @BindView(R.id.tvLocationName)
     TextView tvLocationName;
+    @BindView(R.id.etInput)
+    EditText etInput;
     private static final int PERMISSION_REQUEST_CODE = 0;
     private static final int SELECT_IMAGE_REQUEST = 0x0011;
     private ArrayList<Image> mSelectImages = new ArrayList<>();
@@ -70,8 +77,10 @@ public class CreateDynamicActivity extends BaseActivity {
     @Override
     public void initView() {
         recyclerView.setNestedScrollingEnabled(false);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 3, LinearLayoutManager.VERTICAL, false));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         recyclerView.addItemDecoration(new SpaceGridItemDecoration((int) TDevice.dipToPx(getResources(), 1)));
+
+
     }
 
     @Override
@@ -79,7 +88,7 @@ public class CreateDynamicActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.ivAdd,R.id.ivClose,R.id.llLocation})
+    @OnClick({R.id.ivAdd,R.id.ivClose,R.id.llLocation,R.id.tvSend})
     public void onclick(View view){
         switch (view.getId()){
             case R.id.ivAdd:
@@ -90,6 +99,13 @@ public class CreateDynamicActivity extends BaseActivity {
                 break;
             case R.id.llLocation:
                 goTActivityForResult(LocationActivity.class,null,101);//101请求码，用于返回设置定位值
+                break;
+            case R.id.tvSend:
+                if (StringUtils.isEmpty(etInput.getText().toString())){
+
+                }else {
+                    send();
+                }
                 break;
                 default:break;
         }
@@ -121,6 +137,9 @@ public class CreateDynamicActivity extends BaseActivity {
             }
         }
     }
+
+    private double mJd;
+    private double mWd;
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -138,13 +157,29 @@ public class CreateDynamicActivity extends BaseActivity {
                 mAdapter = new SelectedImageAdapter(this, mSelectImages, R.layout.selected_image_item);
                 recyclerView.setAdapter(mAdapter);
                 mItemTouchHelper.attachToRecyclerView(recyclerView);
+
+                mAdapter.setItemClickListener((position)->{
+                    ArrayList<Image> list = new ArrayList<>();
+                    list.add(mSelectImages.get(position));
+                    for (int i = 0; i < mSelectImages.size(); i++) {
+                        if (position!=i){
+                            list.add(mSelectImages.get(i));
+                        }
+                    }
+                    Intent previewIntent = new Intent(this, PreviewImageActivity.class);
+                    previewIntent.putParcelableArrayListExtra("preview_images", list);
+                    startActivity(previewIntent);
+                });
             }
         }
 
         //此处可以根据两个Code进行判断，本页面和结果页面跳过来的值
         if (requestCode == 101 && resultCode == 103) {
-            String result = data.getStringExtra("result");
-            tvLocationName.setText(result);
+            mJd = data.getDoubleExtra("mJd", 0);
+            mWd = data.getDoubleExtra("mWd", 0);
+            String mCity = data.getStringExtra("mCity");
+            String mProvince = data.getStringExtra("mProvince");
+            tvLocationName.setText(StringUtils.isEmpty(mCity) ? mProvince : mCity);
         }
 
     }
@@ -204,6 +239,19 @@ public class CreateDynamicActivity extends BaseActivity {
         Intent intent = new Intent(this, SelectImageActivity.class);
         intent.putParcelableArrayListExtra("selected_images", mSelectImages);
         startActivityForResult(intent, SELECT_IMAGE_REQUEST);
+    }
+
+
+    private void send(){
+        Intent i = new Intent();
+        i.putParcelableArrayListExtra("img", mSelectImages);
+        i.putExtra("content", etInput.getText().toString());
+        i.putExtra("mJd", mJd);
+        i.putExtra("mWd", mWd);
+//        i.putExtra("mJd", mJd);
+//        i.putExtra("mWd", mWd);
+        setResult(100, i);
+        finish();
     }
 
 }

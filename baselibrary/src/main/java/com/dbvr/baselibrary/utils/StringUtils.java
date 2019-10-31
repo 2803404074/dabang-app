@@ -11,6 +11,13 @@ public class StringUtils {
         return false;
     }
 
+    public static String isEmptyTxt(String str){
+        if (null == str || str.equals("") || str.equals("null")){
+            return "";
+        }
+        return str;
+    }
+
     public static String removeStr(String str){
         return str.replace("txt:","");
     }

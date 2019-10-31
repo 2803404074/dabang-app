@@ -1,98 +1,128 @@
 package com.dabangvr.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.dabangvr.R;
-import com.dabangvr.application.MyApplication;
-import com.dabangvr.wxapi.WXEntryActivity;
-import com.dabangvr.wxapi.WchatLogin;
 import com.dbvr.baselibrary.model.UserMess;
+import com.dbvr.baselibrary.other.ThirdParty;
 import com.dbvr.baselibrary.utils.BottomDialogUtil;
 import com.dbvr.baselibrary.utils.SPUtils;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
 import com.dbvr.baselibrary.utils.ToastUtil;
 import com.dbvr.baselibrary.view.AppManager;
 import com.dbvr.baselibrary.view.BaseActivity;
-import com.dbvr.httplibrart.constans.DyUrl;
 import com.dbvr.httplibrart.constans.UserUrl;
 import com.dbvr.httplibrart.utils.ObjectCallback;
 import com.dbvr.httplibrart.utils.OkHttp3Utils;
 import com.google.gson.Gson;
-import com.tencent.connect.UserInfo;
-import com.tencent.connect.auth.QQToken;
-import com.tencent.connect.common.Constants;
-import com.tencent.mm.opensdk.modelmsg.SendAuth;
-import com.tencent.mm.opensdk.openapi.WXAPIFactory;
-import com.tencent.tauth.IUiListener;
-import com.tencent.tauth.Tencent;
-import com.tencent.tauth.UiError;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
-import butterknife.BindView;
 import butterknife.OnClick;
-import okhttp3.Call;
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.framework.PlatformDb;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.tencent.qq.QQ;
+import cn.sharesdk.wechat.friends.Wechat;
 
-import static com.dbvr.baselibrary.other.ThirdParty.QQ_APP_ID;
-import static com.dbvr.baselibrary.other.ThirdParty.WECHART_APP_ID;
-
-public class LoginActivity extends BaseActivity implements IUiListener {
-    private Tencent mTencent;
-    private UserInfo mUserInfo;
-
+public class LoginActivity extends BaseActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         StatusBarUtil.setRootViewFitsSystemWindows(this, false);
     }
-
     @Override
     public int setLayout() {
         return R.layout.activity_login;
     }
 
     @Override
-    public void initView() {
-        mTencent = Tencent.createInstance(QQ_APP_ID, LoginActivity.this.getApplicationContext());
-    }
-
+    public void initView() { }
     @Override
-    public void initData() {
-    }
+    public void initData() { }
 
     @OnClick({R.id.wechat_login, R.id.qq_login, R.id.phone_login})
     public void onclick(View view) {
         switch (view.getId()) {
             case R.id.wechat_login:
                 setLoaddingView(true);
-
-                wechatLogin();
+                login(Wechat.NAME);
                 break;
             case R.id.qq_login:
-                mTencent.login(LoginActivity.this, "all", this);
+                login(QQ.NAME);
                 setLoaddingView(true);
                 break;
             case R.id.phone_login:
-
                 showBottomView();
                 break;
             default:
                 break;
         }
+    }
+
+    private void login(String loginName){
+        Platform platform = ShareSDK.getPlatform(loginName);  //平台名称和上述5中的devInfo里的一样，后面接NAME，只有配置里有才会有对应的类
+        if (platform.isAuthValid()){  //如果需要每次使用第三方登录时清除授权状态，则加入这段代码，否则一旦登录过后，就会在后续使用时直接授权登录
+            platform.removeAccount(true);
+        }
+        platform.SSOSetting(false);  //设置为false时，有客户端的话会直接使用客户端，否则使用Web登录授权，第一次需要用户输入账号密码
+        platform.setPlatformActionListener(new PlatformActionListener() {  //不设置监听的话会使用普通的Toast提示登录授权结果，自己设置监听的话可以做其他操作，或者使用自己app风格的Toast来提示结果
+            @Override
+            public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+                //hashMap中储存很多相关的信息，不过建议使用PlatformDb，里面的信息更全，包含Token
+                PlatformDb platformDb = platform.getDb();
+                senMyServer(
+                        platformDb.getToken(),
+                        platformDb.getUserName(),
+                        platformDb.getUserIcon(),
+                        loginName);
+            }
+
+            @Override
+            public void onError(Platform platform, int i, Throwable throwable) {
+
+            }
+
+            @Override
+            public void onCancel(Platform platform, int i) {
+
+            }
+        });
+        platform.showUser(null);   //触发方法
+    }
+
+    private void senMyServer(final String openID, final String uName, final String icon, final String type) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("openId", openID);
+        map.put("nickName", uName);
+        map.put("icon", icon);
+        map.put("loginType", type);
+        OkHttp3Utils.getInstance(this).doPostJson(UserUrl.login, map, new ObjectCallback<String>(this) {
+            @Override
+            public void onUi(String result) {
+                SPUtils.instance(getContext()).putUser(result);
+                //判断是否首次登陆
+                boolean isFirst = (boolean) SPUtils.instance(getContext()).getkey("isFirst", true);
+                if (isFirst) {
+                    goTActivity(WellComePageActivity.class, null);
+                } else {
+                    goTActivity(MainActivity.class, null);
+                }
+                finish();
+            }
+
+            @Override
+            public void onFailed(String msg) {
+                Toast.makeText(LoginActivity.this, "登陆失败", Toast.LENGTH_LONG).show();
+                setLoaddingView(false);
+            }
+        });
     }
 
     /**
@@ -105,48 +135,35 @@ public class LoginActivity extends BaseActivity implements IUiListener {
         dialogUtil = new BottomDialogUtil(this, R.layout.dialog_login, 1.02) {
             @Override
             public void convert(View holder) {
-
                 //返回
-                holder.findViewById(R.id.ivCancel).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialogUtil.dess();
-                    }
-                });
-
+                holder.findViewById(R.id.ivCancel).setOnClickListener(view -> dialogUtil.dess());
                 //验证码
                 EditText etCode = holder.findViewById(R.id.etCode);
 
                 //获取验证码
                 tvGetCode = holder.findViewById(R.id.tvGetCode);
                 EditText etPhone = holder.findViewById(R.id.etPhone);
-                tvGetCode.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        setLoaddingView(true);
-                        if (TextUtils.isEmpty(etPhone.getText().toString().trim())){
-                            setLoaddingView(false);
-                            return;
-                        }
-                        getMessage(etPhone.getText().toString());
+                tvGetCode.setOnClickListener(view -> {
+                    setLoaddingView(true);
+                    if (TextUtils.isEmpty(etPhone.getText().toString().trim())){
+                        setLoaddingView(false);
+                        return;
                     }
+                    getMessage(etPhone.getText().toString());
                 });
 
                 //登陆
-                holder.findViewById(R.id.tvLogin).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (TextUtils.isEmpty(etPhone.getText().toString())) {
-                            ToastUtil.showShort(getContext(), "请输入手机号");
-                            return;
-                        }
-                        if (TextUtils.isEmpty(etCode.getText().toString())) {
-                            ToastUtil.showShort(getContext(), "请输入验证码");
-                            return;
-                        }
-                        setLoaddingView(true);
-                        phoneLogin(etPhone.getText().toString(), etCode.getText().toString());
+                holder.findViewById(R.id.tvLogin).setOnClickListener(view -> {
+                    if (TextUtils.isEmpty(etPhone.getText().toString())) {
+                        ToastUtil.showShort(getContext(), "请输入手机号");
+                        return;
                     }
+                    if (TextUtils.isEmpty(etCode.getText().toString())) {
+                        ToastUtil.showShort(getContext(), "请输入验证码");
+                        return;
+                    }
+                    setLoaddingView(true);
+                    phoneLogin(etPhone.getText().toString(), etCode.getText().toString());
                 });
             }
         };
@@ -224,118 +241,6 @@ public class LoginActivity extends BaseActivity implements IUiListener {
                 tvGetCode.setText("重新获取");
             }
         }.start();
-    }
-
-
-    /**
-     * 微信登陆
-     */
-    private void wechatLogin() {
-        if (MyApplication.api == null) {
-            MyApplication.api = WXAPIFactory.createWXAPI(this, WECHART_APP_ID, true);
-        }
-        if (!MyApplication.api.isWXAppInstalled()) {
-            setLoaddingView(false);
-            ToastUtil.showShort(this, "您手机尚未安装微信，请安装后再登录");
-            return;
-        }
-        MyApplication.api.registerApp(WECHART_APP_ID);
-        SendAuth.Req req = new SendAuth.Req();
-        req.scope = "snsapi_userinfo";
-        req.state = "wechat_sdk_xb_live_state";//官方说明：用于保持请求和回调的状态，授权请求后原样带回给第三方。该参数可用于防止csrf攻击（跨站请求伪造攻击），建议第三方带上该参数，可设置为简单的随机数加session进行校验
-        MyApplication.api.sendReq(req);
-    }
-
-
-    @Override
-    public void onComplete(Object response) {
-        Toast.makeText(LoginActivity.this, "授权成功", Toast.LENGTH_SHORT).show();
-        JSONObject obj = (JSONObject) response;
-        try {
-            final String openID = obj.getString("openid");
-            String accessToken = obj.getString("access_token");
-            String expires = obj.getString("expires_in");
-            mTencent.setOpenId(openID);
-            mTencent.setAccessToken(accessToken, expires);
-            QQToken qqToken = mTencent.getQQToken();//这个应该是qq登陆成功后构造一个返回信息方便序列化
-            mUserInfo = new UserInfo(getApplicationContext(), qqToken);
-            mUserInfo.getUserInfo(new IUiListener() {
-                @Override
-                public void onComplete(Object response) {
-                    JSONObject objectResult = null;
-                    try {
-                        objectResult = new JSONObject(response.toString());
-                        String uName = objectResult.optString("nickname");//获取第三方返回的昵称
-                        String icon = objectResult.optString("figureurl_2");//第三方头像
-                        String type = "qq";//登陆类型
-                        senMyServer(openID, uName, icon, type);
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                @Override
-                public void onError(UiError uiError) {
-                    Toast.makeText(LoginActivity.this, "登录失败", Toast.LENGTH_SHORT).show();
-                    setLoaddingView(false);
-                }
-
-                @Override
-                public void onCancel() {
-                    Toast.makeText(LoginActivity.this, "登录取消", Toast.LENGTH_SHORT).show();
-                    setLoaddingView(false);
-                }
-            });
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void onError(UiError uiError) {
-        Toast.makeText(LoginActivity.this, "授权失败", Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onCancel() {
-        Toast.makeText(LoginActivity.this, "授权取消", Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == Constants.REQUEST_LOGIN) {
-            Tencent.onActivityResultData(requestCode, resultCode, data, this);
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    private void senMyServer(final String openID, final String uName, final String icon, final String type) {
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("openId", openID);
-        map.put("nickName", uName);
-        map.put("icon", icon);
-        map.put("loginType", type);
-        OkHttp3Utils.getInstance(this).doPostJson(UserUrl.login, map, new ObjectCallback<String>(this) {
-            @Override
-            public void onUi(String result) {
-                SPUtils.instance(getContext()).putUser(result);
-                //判断是否首次登陆
-                boolean isFirst = (boolean) SPUtils.instance(getContext()).getkey("isFirst", true);
-                if (isFirst) {
-                    goTActivity(WellComePageActivity.class, null);
-                } else {
-                    goTActivity(MainActivity.class, null);
-                }
-                AppManager.getAppManager().finishActivity(LoginActivity.class);
-            }
-
-            @Override
-            public void onFailed(String msg) {
-                Toast.makeText(LoginActivity.this, "登陆失败", Toast.LENGTH_LONG).show();
-                setLoaddingView(false);
-            }
-        });
     }
 
     private long exitTime = 0;

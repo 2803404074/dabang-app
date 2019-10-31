@@ -105,7 +105,7 @@
         <activity android:name=".live.activity.CreateLiveActivity" />
         <activity android:name=".activity.MessageActivity" />
 
-        <activity android:name=".im.ChatActivity" />
+        <activity android:name=".im.ChatActivity"/>
         <activity android:name="com.dbvr.imglibrary2.ui.SelectImageActivity" />
         <activity android:name="com.dbvr.imglibrary2.ui.PreviewImageActivity" />
         <activity android:name=".fragment.other.Order.MyOrtherActivity" />

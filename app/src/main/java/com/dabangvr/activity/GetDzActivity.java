@@ -78,6 +78,8 @@ public class GetDzActivity extends BaseActivity {
 
                 SimpleDraweeView sdvHead =  holder.getView(R.id.sdvHead);
                 sdvHead.setImageURI("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3278119589,2651626912&fm=26&gp=0.jpg");
+
+                sdvHead.setOnClickListener(view -> goTActivity(UserHomeActivity.class,null));
             }
         };
         recyclerView.setAdapter(adapter);

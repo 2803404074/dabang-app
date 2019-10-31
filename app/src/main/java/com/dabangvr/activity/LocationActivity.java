@@ -9,6 +9,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,21 +28,32 @@ import com.amap.api.location.AMapLocationListener;
 import com.dabangvr.R;
 import com.dabangvr.adapter.BaseRecyclerHolder;
 import com.dabangvr.adapter.RecyclerAdapterPosition;
+import com.dabangvr.fragment.SameCityFragment;
 import com.dbvr.baselibrary.ui.ShowButtonLayout;
 import com.dbvr.baselibrary.ui.ShowButtonLayoutData;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
 import com.dbvr.baselibrary.view.AppManager;
 import com.dbvr.baselibrary.view.BaseActivity;
+import com.dbvr.httplibrart.constans.DyUrl;
+import com.dbvr.httplibrart.utils.ObjectCallback;
+import com.dbvr.httplibrart.utils.OkHttp3Utils;
+import com.dbvr.httplibrart.utils.OtherCallback;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
 public class LocationActivity extends BaseActivity{
+    private String TAG = "LocationActivity";
 
     private final int MY_PERMISSIONS_REQUEST_CALL_LOCATION = 200;
     @BindView(R.id.recycle_hots)
@@ -55,7 +69,13 @@ public class LocationActivity extends BaseActivity{
 
     @BindView(R.id.tvLocation)
     TextView tvLocation;
+    @BindView(R.id.llLocation)
+    LinearLayout llLocation;
+    @BindView(R.id.ivLocation)
+    ImageView ivLocation;
 
+    private String cityName = "";
+    private String provinceName = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,7 +105,15 @@ public class LocationActivity extends BaseActivity{
         adapterHots = new RecyclerAdapterPosition<String>(getContext(),listHots,R.layout.item_txt) {
             @Override
             public void convert(Context mContext, BaseRecyclerHolder holder, int position, String o) {
-                holder.setText(R.id.cb_txt,o);
+                CheckBox checkBox = holder.getView(R.id.cb_txt);
+                checkBox.setText(o);
+                if (mPosition == position){
+                    checkBox.setBackgroundResource(R.drawable.shape_db);
+                    checkBox.setTextColor(getResources().getColor(R.color.colorWhite));
+                }else {
+                    checkBox.setBackgroundResource(R.drawable.shape_gray_w);
+                    checkBox.setTextColor(getResources().getColor(R.color.transitionSelectorBG));
+                }
             }
         };
         recyclerViewHots.setAdapter(adapterHots);
@@ -95,15 +123,126 @@ public class LocationActivity extends BaseActivity{
         adapterAll = new RecyclerAdapterPosition<String>(getContext(),listAll,R.layout.item_txt) {
             @Override
             public void convert(Context mContext, BaseRecyclerHolder holder, int position, String o) {
-                holder.setText(R.id.cb_txt,o);
+                CheckBox checkBox = holder.getView(R.id.cb_txt);
+                checkBox.setText(o);
+                if (mPositionAll == position){
+                    checkBox.setBackgroundResource(R.drawable.shape_db);
+                    checkBox.setTextColor(getResources().getColor(R.color.colorWhite));
+                }else {
+                    checkBox.setBackgroundResource(R.drawable.shape_gray_w);
+                    checkBox.setTextColor(getResources().getColor(R.color.transitionSelectorBG));
+                }
             }
         };
         recyclerViewAll.setAdapter(adapterAll);
 
+
+        adapterHots.setOnItemClickListener((view, position) -> {
+            mPosition = position;
+            mPositionAll = -1;
+            adapterHots.updateDataa(listHots);
+            adapterAll.updateDataa(listAll);
+
+            llLocation.setBackgroundResource(R.drawable.shape_gray_w);
+            tvLocation.setTextColor(getResources().getColor(R.color.textTitle));
+            ivLocation.setImageResource(R.mipmap.location);
+
+            mJd=0;
+            mWd=0;
+            finishRes(listHots.get(position),"");
+        });
+
+        adapterAll.setOnItemClickListener((view, position) -> {
+            mPositionAll = position;
+            mPosition = -1;
+            adapterHots.updateDataa(listHots);
+            adapterAll.updateDataa(listAll);
+            llLocation.setBackgroundResource(R.drawable.shape_gray_w);
+            tvLocation.setTextColor(getResources().getColor(R.color.textTitle));
+            ivLocation.setImageResource(R.mipmap.location);
+
+            mJd=0;
+            mWd=0;
+            finishRes(listAll.get(position),"");
+        });
     }
 
-    private void startLocaion() {
+    private double mJd=0;
+    private double mWd=0;
+    private void finishRes(String provinceName,String cityName){
+        Intent i = new Intent();
+        i.putExtra("mProvince", provinceName);
+        i.putExtra("mCity", cityName);
+        i.putExtra("mJd", mJd);
+        i.putExtra("mWd", mWd);
+        setResult(SameCityFragment.cityFragmentCode, i);
+        finish();
+    }
 
+    private int mPosition;
+    private int mPositionAll=-1;
+
+    private AMapLocationClient mLocationClient = null;
+    private AMapLocationClientOption mLocationOption = null;
+
+    private void startLocaion() {
+        mLocationClient = new AMapLocationClient(getApplicationContext());
+        mLocationClient.setLocationListener(mLocationListener);
+
+        mLocationOption = new AMapLocationClientOption();
+        //设置定位模式为AMapLocationMode.Hight_Accuracy，高精度模式。
+        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+        //设置是否返回地址信息（默认返回地址信息）
+        mLocationOption.setNeedAddress(true);
+        //获取一次定位结果：
+        //该方法默认为false。
+        mLocationOption.setOnceLocation(true);
+        //设置是否允许模拟位置,默认为false，不允许模拟位置
+        mLocationOption.setMockEnable(false);
+
+        //给定位客户端对象设置定位参数
+        mLocationClient.setLocationOption(mLocationOption);
+        //启动定位
+        mLocationClient.startLocation();
+    }
+
+    //声明定位回调监听器
+    public AMapLocationListener mLocationListener = amapLocation -> {
+        if (amapLocation !=null ) {
+            if (amapLocation.getErrorCode() == 0) {
+                getLocation(amapLocation.getLongitude()+","+amapLocation.getLatitude());
+                mJd = amapLocation.getLongitude();
+                mWd = amapLocation.getLatitude();
+            } else {
+                setLoaddingView(false);
+                //显示错误信息ErrCode是错误码，errInfo是错误信息，详见错误码表。
+                Log.e("AmapError", "location Error, ErrCode:"
+                        + amapLocation.getErrorCode() + ", errInfo:"
+                        + amapLocation.getErrorInfo());
+            }
+        }
+    };
+
+    private void getLocation(String location){
+        Map<String,Object>map = new HashMap<>();
+        map.put("location",location);
+        OkHttp3Utils.getInstance(this).doPostJson(DyUrl.getLocation,map, new ObjectCallback<String>(getContext()) {
+            @Override
+            public void onUi(String result) throws JSONException {
+                JSONObject object = new JSONObject(result);
+                provinceName = object.optString("province");
+                cityName = object.optString("city");
+                tvLocation.setText(provinceName+"·"+cityName);
+                setLoaddingView(false);
+            }
+            @Override
+            public void onFailed(String msg) {
+                setLoaddingView(false);
+                runOnUiThread(()->{
+                    tvLocation.setText("定位失败，请确认GPS或数据流量打开");
+                });
+            }
+        });
     }
 
     @Override
@@ -123,11 +262,23 @@ public class LocationActivity extends BaseActivity{
         adapterAll.updateDataa(listAll);
     }
 
-    @OnClick({R.id.ivBack})
+    @OnClick({R.id.ivBack,R.id.tvFlush,R.id.llLocation})
     public void onclick(View view) {
         switch (view.getId()) {
             case R.id.ivBack:
                 AppManager.getAppManager().finishActivity(this);
+                break;
+            case R.id.llLocation:
+                mPosition = -1;
+                ivLocation.setImageResource(R.mipmap.location_w);
+                tvLocation.setTextColor(getResources().getColor(R.color.colorWhite));
+                llLocation.setBackgroundResource(R.drawable.shape_db);
+                adapterHots.updateDataa(listHots);
+                finishRes(provinceName,cityName);
+                break;
+            case R.id.tvFlush:
+                setLoaddingView(true);
+                startLocaion();
                 break;
             default:
                 break;

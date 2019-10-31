@@ -1,126 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <RelativeLayout
-        android:id="@+id/title"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_70"
-        android:background="@color/colorDb3">
-
-        <ImageView
-            android:layout_width="@dimen/dp_28"
-            android:layout_height="@dimen/dp_28"
-            android:layout_alignParentBottom="true"
-            android:padding="@dimen/dp_5"
-            android:layout_margin="@dimen/dp_3"
-            android:src="@mipmap/back_w"/>
-        <TextView
-            android:id="@+id/tv_toUsername"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            android:textColor="#fff"
-            android:layout_marginBottom="@dimen/dp_8"
-            android:textSize="@dimen/sp_19" />
-    </RelativeLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recy_chat"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/re_bottom"
-        android:layout_below="@id/title"
-        android:background="@color/gra0" />
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
 
-    <LinearLayout
-        android:id="@+id/re_bottom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@android:color/white"
-        android:orientation="vertical">
 
-        <!--功能栏-->
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/title"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_40"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:orientation="horizontal"
-            android:paddingHorizontal="@dimen/dp_5">
+            android:layout_height="@dimen/dp_70"
+            android:background="@color/colorDb3">
 
             <ImageView
-                android:id="@+id/iv_jianp"
-                android:layout_width="@dimen/dp_30"
-                android:layout_height="match_parent"
+                android:id="@+id/ivBack"
+                android:layout_width="@dimen/dp_28"
+                android:layout_height="@dimen/dp_28"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="@dimen/dp_3"
                 android:padding="@dimen/dp_5"
-                android:src="@mipmap/jianp" />
-
-            <EditText
-                android:id="@+id/et_content_chart"
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:layout_marginHorizontal="@dimen/dp_5"
-                android:layout_marginVertical="@dimen/dp_5"
-                android:layout_weight="1"
-                android:background="@drawable/gray_ruang_left_right"
-                android:paddingLeft="@dimen/dp_5"
-                android:textSize="14sp" />
-
-
-            <ImageView
-                android:id="@+id/iv_add"
-                android:layout_width="@dimen/dp_30"
-                android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:layout_marginHorizontal="@dimen/dp_5"
-                android:src="@mipmap/add_mess" />
+                android:src="@mipmap/back_w" />
 
             <TextView
-                android:id="@+id/btn_send"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/dp_25"
-                android:layout_gravity="center"
-                android:background="@drawable/shape_style_db_green"
-                android:gravity="center"
-                android:onClick="tvSand"
-                android:paddingHorizontal="@dimen/dp_8"
-                android:paddingVertical="@dimen/dp_3"
-                android:text="发送"
+                android:id="@+id/tv_toUsername"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="@dimen/dp_8"
                 android:textColor="#fff"
-                android:textSize="@dimen/sp_16"
-                android:visibility="invisible" />
+                android:textSize="@dimen/sp_21" />
+        </RelativeLayout>
 
-        </LinearLayout>
-
-        <!--选择相册相机-->
-        <LinearLayout
-            android:id="@+id/ll_add"
-            android:visibility="invisible"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recy_chat"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@color/lsq_seekbar_view_color"
-            android:orientation="horizontal">
+            android:layout_weight="1"
+            android:background="@color/gra0" />
 
-            <ImageView
-                android:id="@+id/iv_selectPhoto"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:padding="@dimen/dp_10"
-                android:src="@mipmap/choos_photo" />
+        <LinearLayout
+            android:id="@+id/re_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@android:color/white"
+            android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/iv_selectCame"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:padding="@dimen/dp_15"
-                android:src="@mipmap/choos_cam" />
+            <!--功能栏-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/dp_5">
+
+                <ImageView
+                    android:id="@+id/iv_jianp"
+                    android:layout_width="@dimen/dp_30"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/dp_5"
+                    android:src="@mipmap/jianp" />
+
+                <EditText
+                    android:id="@+id/et_content_chart"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="@dimen/dp_5"
+                    android:layout_marginVertical="@dimen/dp_5"
+                    android:layout_weight="1"
+                    android:background="@drawable/gray_ruang_left_right"
+                    android:paddingLeft="@dimen/dp_5"
+                    android:textSize="14sp" />
+
+
+                <ImageView
+                    android:id="@+id/iv_add"
+                    android:layout_width="@dimen/dp_30"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginHorizontal="@dimen/dp_5"
+                    android:src="@mipmap/add_mess" />
+
+                <TextView
+                    android:id="@+id/btn_send"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_25"
+                    android:layout_gravity="center"
+                    android:background="@drawable/shape_style_db_green"
+                    android:gravity="center"
+                    android:onClick="tvSand"
+                    android:paddingHorizontal="@dimen/dp_8"
+                    android:paddingVertical="@dimen/dp_3"
+                    android:text="发送"
+                    android:textColor="#fff"
+                    android:textSize="@dimen/sp_16"
+                    android:visibility="invisible" />
+
+            </LinearLayout>
+
+            <!--选择相册相机-->
+            <LinearLayout
+                android:id="@+id/ll_add"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@color/lsq_seekbar_view_color"
+                android:orientation="horizontal"
+                android:visibility="invisible">
+
+                <ImageView
+                    android:id="@+id/iv_selectPhoto"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:padding="@dimen/dp_10"
+                    android:src="@mipmap/choos_photo" />
+
+                <ImageView
+                    android:id="@+id/iv_selectCame"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:padding="@dimen/dp_15"
+                    android:src="@mipmap/choos_cam" />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
-</RelativeLayout>
+
+</LinearLayout>

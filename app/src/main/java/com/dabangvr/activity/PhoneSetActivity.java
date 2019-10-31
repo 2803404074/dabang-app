@@ -1,9 +1,6 @@
 package com.dabangvr.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
 
 import com.dabangvr.R;
@@ -27,24 +24,14 @@ public class PhoneSetActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        findViewById(R.id.ivBack).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AppManager.getAppManager().finishActivity(PhoneSetActivity.class);
-            }
-        });
-        findViewById(R.id.tvCancelBind).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DialogUtil.getInstance(getContext()).show(R.layout.dialog_tip, holder -> {
-                    TextView tvTitle = holder.findViewById(R.id.tv_title);
-                    tvTitle.setText("是否继续解除绑定?");
-                    holder.findViewById(R.id.tvCancel).setOnClickListener(view1 -> DialogUtil.getInstance(getContext()).des());
-                    holder.findViewById(R.id.tvConfirm).setOnClickListener(view12 -> goTActivity(PhoneBindActivity.class,null));DialogUtil.getInstance(getContext()).des();
+        findViewById(R.id.ivBack).setOnClickListener(view -> AppManager.getAppManager().finishActivity(PhoneSetActivity.class));
 
-                });
-            }
-        });
+        findViewById(R.id.tvCancelBind).setOnClickListener(view -> DialogUtil.getInstance(getContext()).show(R.layout.dialog_tip, holder -> {
+            TextView tvTitle = holder.findViewById(R.id.tv_title);
+            tvTitle.setText("是否继续解除绑定?");
+            holder.findViewById(R.id.tvCancel).setOnClickListener(view1 -> DialogUtil.getInstance(getContext()).des());
+            holder.findViewById(R.id.tvConfirm).setOnClickListener(view12 -> goTActivity(PhoneBindActivity.class,null));DialogUtil.getInstance(PhoneSetActivity.this).des();
+        }));
     }
 
     @Override

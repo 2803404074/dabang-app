@@ -214,7 +214,6 @@ public class QiniuUploadManager {
         }
         return true;
     }
-
     /**
      * 排队的方式上传文件，上传完前一个才继续上传下一个
      * 注意，这个方法没有 onStartUpload 回调
