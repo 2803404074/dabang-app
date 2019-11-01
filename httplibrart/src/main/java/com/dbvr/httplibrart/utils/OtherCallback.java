@@ -50,7 +50,7 @@ public abstract class OtherCallback<T> implements Callback {
             @Override
             public void run() {
                 try {
-                    onUi((T) (String)json);
+                    onUi((T)json);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

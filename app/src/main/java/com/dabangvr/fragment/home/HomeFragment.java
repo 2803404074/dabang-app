@@ -74,9 +74,7 @@ public class HomeFragment extends BaseFragment {
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) { }
 
             @Override
             public void onPageSelected(int position) {
@@ -92,12 +90,9 @@ public class HomeFragment extends BaseFragment {
 
             }
         });
-        tabLayout.setOnTabClickListener(new SmartTabLayout.OnTabClickListener() {
-            @Override
-            public void onTabClicked(int position) {
-                Log.d("luhuas", "onTabClicked: "+position);
-                EventBus.getDefault().post(new ReadEvent("1001", 1001, String.valueOf(position)));
-            }
+        tabLayout.setOnTabClickListener(position -> {
+            Log.d("luhuas", "onTabClicked: "+position);
+            EventBus.getDefault().post(new ReadEvent("1001", 1001, String.valueOf(position)));
         });
         setLoaddingView(false);
     }

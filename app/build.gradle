@@ -64,7 +64,7 @@ MobSDK {
     appKey "2a302515c8c90"
     appSecret "a05e50a92c469b64516f7cd27ab2a545"
     ShareSDK {
-        devInfo{
+        devInfo {
             Wechat {
                 appId "wx2351c48134140a3c"
                 appSecret "93e6fe9703ba9e1b571a039bab64ef69"

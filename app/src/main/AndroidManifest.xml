@@ -6,8 +6,7 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission
         android:name="android.permission.READ_LOGS"
-        tools:ignore="ProtectedPermissions" />
-    <!-- 自己 Required -->
+        tools:ignore="ProtectedPermissions" /> <!-- 自己 Required -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" /> <!-- 环信 Required -->
@@ -22,33 +21,20 @@
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-
-    <!--用于进行网络定位-->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <!--用于访问GPS定位-->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <!--用于获取运营商信息，用于支持提供运营商信息相关的接口-->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <!--用于访问wifi网络信息，wifi信息会用于进行网络定位-->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <!--用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <!--用于访问网络，网络定位需要上网-->
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <!--用于读取手机当前的状态-->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <!--用于写入缓存数据到扩展存储卡-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <!--用于申请调用A-GPS模块-->
-    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
-    <!--用于申请获取蓝牙信息进行室内定位-->
-    <uses-permission android:name="android.permission.BLUETOOTH"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
-
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" /> <!-- 用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 用于访问GPS定位 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- 用于获取运营商信息，用于支持提供运营商信息相关的接口 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> <!-- 用于访问网络，网络定位需要上网 -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 用于读取手机当前的状态 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 用于写入缓存数据到扩展存储卡 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 用于申请调用A-GPS模块 -->
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" /> <!-- 用于申请获取蓝牙信息进行室内定位 -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" /> <!-- 获取日志读取权限，帮助我们提高地图 sdk 稳定性 -->
     <uses-permission android:name="android.hardware.sensor.accelerometer" /> <!-- 重力感应 -->
-
     <uses-feature
         android:glEsVersion="0x00020000"
         android:required="true" />
@@ -68,7 +54,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.PhoneBindActivity"></activity>
+        <activity android:name=".activity.DynamicDetailsActivity"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".activity.PhoneBindActivity" />
         <activity android:name=".activity.PhoneSetActivity" />
         <activity android:name=".activity.IntroduceActivity" />
         <activity android:name=".activity.UserEditMessActivity" />
@@ -78,7 +66,6 @@
         <activity android:name=".activity.CreateDynamicActivity" />
         <activity android:name=".activity.GetDzActivity" />
         <activity android:name=".activity.SearchActivity" />
-
 
         <uses-library
             android:name="org.apache.http.legacy"
@@ -104,8 +91,7 @@
             android:screenOrientation="portrait" />
         <activity android:name=".live.activity.CreateLiveActivity" />
         <activity android:name=".activity.MessageActivity" />
-
-        <activity android:name=".im.ChatActivity"/>
+        <activity android:name=".im.ChatActivity" />
         <activity android:name="com.dbvr.imglibrary2.ui.SelectImageActivity" />
         <activity android:name="com.dbvr.imglibrary2.ui.PreviewImageActivity" />
         <activity android:name=".fragment.other.Order.MyOrtherActivity" />
@@ -113,17 +99,18 @@
         <activity android:name=".fragment.other.Order.MyYhjActivity" />
         <activity android:name=".fragment.other.Order.MyShoppingCartActivity" />
         <activity android:name=".fragment.other.Order.ProblemActivity" />
-        <activity android:name=".fragment.other.Order.UserSettingActivity"/>
-        <activity android:name=".fragment.other.Order.UserMessActivity"/>
-        <activity android:name=".fragment.other.Order.UserSJRZOneActivity"/>
-        <activity android:name=".fragment.other.Order.UserSJRZTwoActivity"/>
-        <activity android:name=".fragment.other.Order.UserAgreeActivity"/>
-        <activity android:name=".fragment.other.Order.UserSJRZThreeActivity"/>
-        <activity android:name=".fragment.other.Order.UserZBSQOneActivity"/>
-        <activity android:name=".fragment.other.Order.UserZBSQTwoActivity"/>
-        <activity android:name=".fragment.other.Order.UserApplySuccessActivity"/>
-        <activity android:name=".fragment.other.Order.UserAboutActivity"/>
-        <activity android:name=".activity.AddressActivity"/>
+        <activity android:name=".fragment.other.Order.UserSettingActivity" />
+        <activity android:name=".fragment.other.Order.UserMessActivity" />
+        <activity android:name=".fragment.other.Order.UserSJRZOneActivity" />
+        <activity android:name=".fragment.other.Order.UserSJRZTwoActivity" />
+        <activity android:name=".fragment.other.Order.UserAgreeActivity" />
+        <activity android:name=".fragment.other.Order.UserSJRZThreeActivity" />
+        <activity android:name=".fragment.other.Order.UserZBSQOneActivity" />
+        <activity android:name=".fragment.other.Order.UserZBSQTwoActivity" />
+        <activity android:name=".fragment.other.Order.UserApplySuccessActivity" />
+        <activity android:name=".fragment.other.Order.UserAboutActivity" />
+        <activity android:name=".activity.AddressActivity" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.dabangvr.fileProvider"
@@ -146,7 +133,6 @@
                 <data android:scheme="tencent1109644507" /> <!-- 开放平台获取的APPID -->
             </intent-filter>
         </activity>
-
         <activity
             android:name="com.tencent.connect.common.AssistActivity"
             android:screenOrientation="portrait"
@@ -188,11 +174,12 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
-        </receiver>
+        </receiver> <!-- 高德地图 -->
+        <service android:name="com.amap.api.location.APSService" />
 
-        <!--高德地图-->
-        <service android:name="com.amap.api.location.APSService"/>
-        <meta-data android:name="com.amap.api.v2.apikey" android:value="940b08a5acb6cd1ae54459c244300852"/>
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="940b08a5acb6cd1ae54459c244300852" />
     </application>
 
 </manifest>

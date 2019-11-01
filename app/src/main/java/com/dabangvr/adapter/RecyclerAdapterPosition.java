@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class RecyclerAdapterPosition<T> extends RecyclerView.Adapter<BaseRecyclerHolder> {
@@ -28,6 +29,9 @@ public abstract class RecyclerAdapterPosition<T> extends RecyclerView.Adapter<Ba
 
     public RecyclerAdapterPosition(Context mContext, List<T> mDatas, int mLayoutId) {
         this.mContext = mContext;
+        if (mDatas==null){
+            mDatas = new ArrayList<>();
+        }
         this.mDatas = mDatas;
         this.mLayoutId = mLayoutId;
     }

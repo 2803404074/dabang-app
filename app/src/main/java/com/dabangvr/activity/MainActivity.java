@@ -104,21 +104,19 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     }
 
     private void registerHX(final String name, final String pass) {
-        new Thread(new Runnable() {
-            public void run() {
-                try {
-                    // 调用sdk注册方法
-                    EMClient.getInstance().createAccount(name, pass);
+        new Thread(() -> {
+            try {
+                // 调用sdk注册方法
+                EMClient.getInstance().createAccount(name, pass);
+                loginToHx(name, pass);
+                UserMess userMess =  SPUtils.instance(getContext()).getUser();
+                userMess .setNewsUser(false);
+                SPUtils.instance(getContext()).putUser(userMess);
+            } catch (final HyphenateException e) {
+                e.printStackTrace();
+                int errorCode=e.getErrorCode();
+                if(errorCode == EMError.USER_ALREADY_EXIST){
                     loginToHx(name, pass);
-                    UserMess userMess =  SPUtils.instance(getContext()).getUser();
-                    userMess .setNewsUser(false);
-                    SPUtils.instance(getContext()).putUser(userMess);
-                } catch (final HyphenateException e) {
-                    e.printStackTrace();
-                    int errorCode=e.getErrorCode();
-                    if(errorCode == EMError.USER_ALREADY_EXIST){
-                        loginToHx(name, pass);
-                    }
                 }
             }
         }).start();

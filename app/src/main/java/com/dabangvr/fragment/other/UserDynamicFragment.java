@@ -7,14 +7,17 @@ import android.content.IntentFilter;
 import android.util.Log;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dabangvr.R;
+import com.dabangvr.activity.DynamicDetailsActivity;
 import com.dabangvr.adapter.BaseRecyclerHolder;
 import com.dabangvr.adapter.RecyclerAdapter;
+import com.dabangvr.adapter.RecyclerAdapterPosition;
 import com.dabangvr.util.ShareUtils;
 import com.dbvr.baselibrary.model.DynamicMo;
 import com.dbvr.baselibrary.model.QiniuUploadFile;
@@ -60,7 +63,7 @@ public class UserDynamicFragment extends BaseFragment {
     RecyclerView recyclerView;
 
     private List<DynamicMo> mData = new ArrayList<>();
-    private RecyclerAdapter adapter;
+    private RecyclerAdapterPosition adapter;
 
     @Override
     public int layoutId() {
@@ -92,9 +95,9 @@ public class UserDynamicFragment extends BaseFragment {
         }
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.addItemDecoration(new SpaceGridItemDecoration((int) TDevice.dipToPx(getResources(), 3)));
-        adapter = new RecyclerAdapter<DynamicMo>(getContext(), mData, R.layout.item_user_dynamic) {
+        adapter = new RecyclerAdapterPosition<DynamicMo>(getContext(), mData, R.layout.item_user_dynamic) {
             @Override
-            public void convert(Context mContext, BaseRecyclerHolder holder, DynamicMo dynamicMo) {
+            public void convert(Context mContext, BaseRecyclerHolder holder,int position, DynamicMo dynamicMo) {
                 //内容
                 holder.setText(R.id.tvContent,dynamicMo.getContent());
                 //头像
@@ -110,17 +113,6 @@ public class UserDynamicFragment extends BaseFragment {
                 //评论数量
                 holder.setText(R.id.tvCommentNum,dynamicMo.getCommentNumber());
 
-                //点击评论
-                holder.getView(R.id.ivComment).setOnClickListener((view)->{
-                    BottomDialogUtil2.getInstance(getActivity()).showLive(R.layout.dialog_input, view1 -> {
-                        EditText editText = view1.findViewById(R.id.et_content_chart);
-                        view1.findViewById(R.id.btn_send).setOnClickListener(view2 -> {
-                            if (!StringUtils.isEmpty(editText.getText().toString())){
-                                BottomDialogUtil2.getInstance(getActivity()).dess();
-                            }
-                        });
-                    });
-                });
                 //点击分享
                 holder.getView(R.id.ivShare).setOnClickListener((view)->{
                     ShareUtils.getInstance(getContext()).startShare(
@@ -129,13 +121,12 @@ public class UserDynamicFragment extends BaseFragment {
                             dynamicMo.getPicUrl().get(0),
                             "www.baidu.com");
                 });
+                //图片内容
                 if (dynamicMo.getPicUrl()!=null){
                     RecyclerView recyclerViewx = holder.getView(R.id.recycle_img);
                     recyclerViewx.setNestedScrollingEnabled(false);
                     recyclerViewx.setLayoutManager(new GridLayoutManager(getContext(), 3));
                     recyclerViewx.addItemDecoration(new SpaceGridItemDecoration((int) TDevice.dipToPx(getResources(), 1)));
-
-
                     RecyclerAdapter adapterx = new RecyclerAdapter<String>(getContext(), dynamicMo.getPicUrl(), R.layout.selected_image_item) {
                         @Override
                         public void convert(Context mContext, BaseRecyclerHolder holder, String o) {
@@ -148,6 +139,27 @@ public class UserDynamicFragment extends BaseFragment {
                     };
                     recyclerViewx.setAdapter(adapterx);
                 }
+
+                //评论内容
+                RecyclerView recyComment = holder.getView(R.id.recycle_comment);
+                recyComment.setLayoutManager(new LinearLayoutManager(getContext()));
+                RecyclerAdapterPosition adapterPosition = new RecyclerAdapterPosition<DynamicMo.commentMo>(getContext(),
+                        dynamicMo.getCommentVoList(),R.layout.item_comment_dy) {
+                    @Override
+                    public void convert(Context mContext, BaseRecyclerHolder holder, int position, DynamicMo.commentMo o) {
+                        holder.setText(R.id.tvUser,o.getNickName());
+                        holder.setText(R.id.tvMess,o.getContent());
+                    }
+                };
+                recyComment.setAdapter(adapterPosition);
+
+                //点击评论
+                holder.getView(R.id.ivComment).setOnClickListener((view)->{
+                    Map<String,Object>map = new HashMap<>();
+                    map.put("data",new Gson().toJson(mData.get(position)));
+                    goTActivity(DynamicDetailsActivity.class,map);
+                });
+
             }
         };
         recyclerView.setAdapter(adapter);

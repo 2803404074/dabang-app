@@ -450,7 +450,6 @@ public class SelectImageActivity extends BaseActivity implements ImageFolderView
             Intent previewIntent = new Intent(this, PreviewImageActivity.class);
             previewIntent.putParcelableArrayListExtra("preview_images", (ArrayList<? extends Parcelable>) mSelectedImages);
             startActivity(previewIntent);
-
         }
     }
 }

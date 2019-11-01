@@ -146,28 +146,16 @@ public class WellcomActivity extends BaseActivity {
         //获取标签
         OkHttp3Utils.getInstance(MyApplication.getInstance()).doPostJson(DyUrl.getAmapDistrict, map, new ObjectCallback<String>(MyApplication.getInstance()) {
             @Override
-            public void onUi(String result) throws JSONException {
+            public void onUi(String result){
                 String rep = "\"citycode\":[]";
                 String repe = "\"citycode\":\"0\"";
                 String replace = result.replace(rep, repe);
                 List<AdressBean_two> list = new Gson().fromJson(replace, new TypeToken<List<AdressBean_two>>() {
                 }.getType());
 
-                for (int i = 0; i < list.size(); i++) {
-                  if (TextUtils.equals(list.get(i).getName(),"新疆维吾尔自治区")){
-                      for (int j = 0; j < list.get(i).getDistricts().size(); j++) {
-                          Log.d("luhuas", "11onUi: "+list.get(i).getName());
-                          if (TextUtils.equals(list.get(i).getDistricts().get(j).getName(),"北屯市")){
-                              for (int k = 0; k < list.get(i).getDistricts().get(j).getDistricts().size(); k++) {
-                                  Log.d("luhuas", "22onUi: "+list.get(i).getDistricts().get(j).getDistricts().get(k).getName());
-
-                              }
-                          }
-                      }
-                  }
-                }
-
-                inidSql(list);
+                new Thread(()->{
+                    inidSql(list);
+                }).start();
             }
 
             @Override
@@ -180,7 +168,6 @@ public class WellcomActivity extends BaseActivity {
     private void inidSql(List<AdressBean_two> list) {
         if (list != null && list.size() > 0) {
            new AddressDictManager(this,true,list);
-
         }
 
     }
