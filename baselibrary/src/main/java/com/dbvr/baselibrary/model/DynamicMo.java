@@ -3,19 +3,45 @@ package com.dbvr.baselibrary.model;
 import java.util.List;
 
 public class DynamicMo {
+    private int id;
     private String content;
     private String sendTime;
     private String commentNumber;
     private String nickName;
+    private int praisedNumber;//点赞数量
     private String headUrl;
     private List<commentMo> commentVoList;
 
     private List<String>picUrl;
 
-
+    private boolean isLove;
     private boolean isNews;
 
     public DynamicMo() {
+    }
+
+    public int getPraisedNumber() {
+        return praisedNumber;
+    }
+
+    public void setPraisedNumber(int praisedNumber) {
+        this.praisedNumber = praisedNumber;
+    }
+
+    public boolean isLove() {
+        return isLove;
+    }
+
+    public void setLove(boolean love) {
+        isLove = love;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getSendTime() {

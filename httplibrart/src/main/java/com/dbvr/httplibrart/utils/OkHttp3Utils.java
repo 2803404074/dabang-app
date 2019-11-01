@@ -203,7 +203,7 @@ public class OkHttp3Utils {
     public void doPostJson(String url, Map<String, Object> map, Callback callback) {
         Gson gson = new Gson();
         String jsonParams = gson.toJson(map);
-        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonParams);
+        RequestBody requestBody = RequestBody.create(MediaType.parse("applicationz/json; charset=utf-8"), jsonParams);
         Request request = new Request.Builder().url(DyUrl.BASE + url).post(requestBody).build();
         Call call = getOkHttpClient().newCall(request);
         call.enqueue(callback);

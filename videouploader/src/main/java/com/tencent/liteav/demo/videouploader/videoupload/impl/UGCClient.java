@@ -82,7 +82,7 @@ public class UGCClient {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), body);
+        RequestBody requestBody = RequestBody.create(MediaType.parse("applicationz/json"), body);
         Request request = new Request.Builder()
                 .url(reqUrl)
                 .post(requestBody)
@@ -143,7 +143,7 @@ public class UGCClient {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), body);
+        RequestBody requestBody = RequestBody.create(MediaType.parse("applicationz/json"), body);
         Request request = new Request.Builder()
                 .url(reqUrl)
                 .post(requestBody)
@@ -192,7 +192,7 @@ public class UGCClient {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), body);
+        RequestBody requestBody = RequestBody.create(MediaType.parse("applicationz/json"), body);
         Request request = new Request.Builder()
                 .url(reqUrl)
                 .post(requestBody)
@@ -259,10 +259,10 @@ public class UGCClient {
             e.printStackTrace();
         }
 
-        builder.addFormDataPart("para", null, RequestBody.create(MediaType.parse("application/json"), body));
-        builder.addFormDataPart("video_content",videoFile.getName(), RequestBody.create(MediaType.parse("application/octet-stream"),videoFile));
+        builder.addFormDataPart("para", null, RequestBody.create(MediaType.parse("applicationz/json"), body));
+        builder.addFormDataPart("video_content",videoFile.getName(), RequestBody.create(MediaType.parse("applicationz/octet-stream"),videoFile));
         if (info.isNeedCover()) {
-            builder.addFormDataPart("cover_content", info.getCoverName(), RequestBody.create(MediaType.parse("application/octet-stream"),new File(info.getCoverPath())));
+            builder.addFormDataPart("cover_content", info.getCoverName(), RequestBody.create(MediaType.parse("applicationz/octet-stream"),new File(info.getCoverPath())));
         }
 
         MultipartBody multipartBody = builder.build();

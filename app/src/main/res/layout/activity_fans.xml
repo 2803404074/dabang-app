@@ -4,36 +4,92 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorWhiteLick"
     android:orientation="vertical"
     tools:context=".activity.FansAndFollowActivity">
 
-    <RelativeLayout
-        android:background="@drawable/shape_style_db_green"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:paddingBottom="@dimen/dp_5"
-        android:layout_height="@dimen/dp_65">
+        android:paddingTop="@dimen/dp_30"
+        android:gravity="bottom"
+        android:layout_height="wrap_content">
         <ImageView
             android:id="@+id/ivBack"
             android:layout_width="@dimen/dp_28"
             android:layout_height="@dimen/dp_28"
             android:padding="@dimen/dp_5"
-            android:layout_alignParentBottom="true"
-            android:src="@mipmap/back_w"/>
+            android:layout_gravity="center"
+            android:src="@mipmap/back_w_black"/>
         <TextView
             android:id="@+id/tv_title"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/sp_21"
             android:padding="@dimen/dp_5"
-            android:textStyle="bold"
-            android:textColor="@android:color/white"
+            android:textColor="@color/textTitle"
             android:text="粉 丝"/>
-    </RelativeLayout>
+    </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycle_dz"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="1px"
+        android:background="@color/divider"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:padding="@dimen/dp_10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/sp_18"
+                        android:textColor="@color/textTitle"
+                        android:text="VIP尊享涨粉特权"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/sp_15"
+                        android:layout_marginTop="@dimen/dp_5"
+                        android:text="粉丝增上，增加收入。查看攻略 >>"/>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="开通VIP"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:textSize="@dimen/sp_18"
+                    android:paddingHorizontal="@dimen/dp_10"
+                    android:paddingVertical="@dimen/dp_2"
+                    android:textColor="@android:color/white"
+                    android:background="@drawable/shape_red"/>
+
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_10"
+                android:background="@color/devi"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycle_dz"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
 </LinearLayout>

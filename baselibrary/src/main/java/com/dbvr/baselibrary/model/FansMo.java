@@ -1,59 +1,43 @@
 package com.dbvr.baselibrary.model;
 
 public class FansMo {
-    private String name;
-    private String head;
-    private String id;
-    private String date;
-    private boolean isFollow;
+    private String nickName;
+    private String headUrl;
+    private String userId;
+    private boolean mutual;
 
     public FansMo() {
     }
 
-    public FansMo(String name, String head, String date, boolean isFollow) {
-        this.name = name;
-        this.head = head;
-        this.date = date;
-        this.isFollow = isFollow;
+    public String getNickName() {
+        return nickName;
     }
 
-    public String getName() {
-        return name;
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getHeadUrl() {
+        return headUrl;
     }
 
-    public String getHead() {
-        return head;
+    public void setHeadUrl(String headUrl) {
+        this.headUrl = headUrl;
     }
 
-    public void setHead(String head) {
-        this.head = head;
+    public String getUserId() {
+        return userId;
     }
 
-    public String getId() {
-        return id;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public boolean isMutual() {
+        return mutual;
     }
 
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public boolean isFollow() {
-        return isFollow;
-    }
-
-    public void setFollow(boolean follow) {
-        isFollow = follow;
+    public void setMutual(boolean mutual) {
+        this.mutual = mutual;
     }
 }

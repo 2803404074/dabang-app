@@ -1,8 +1,14 @@
 package com.dabangvr.activity;
 
 import android.content.Context;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.WindowManager;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -14,14 +20,30 @@ import com.dabangvr.adapter.BaseRecyclerHolder;
 import com.dabangvr.adapter.RecyclerAdapterPosition;
 import com.dabangvr.util.ShareUtils;
 import com.dbvr.baselibrary.model.DynamicMo;
+import com.dbvr.baselibrary.model.QiniuUploadFile;
+import com.dbvr.baselibrary.utils.OSUtils;
+import com.dbvr.baselibrary.utils.OnUploadListener;
+import com.dbvr.baselibrary.utils.QiniuUploadManager;
+import com.dbvr.baselibrary.utils.SPUtils;
+import com.dbvr.baselibrary.utils.ScreenUtils;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
 import com.dbvr.baselibrary.utils.StringUtils;
 import com.dbvr.baselibrary.view.AppManager;
 import com.dbvr.baselibrary.view.BaseActivity;
+import com.dbvr.httplibrart.constans.DyUrl;
+import com.dbvr.httplibrart.utils.ObjectCallback;
+import com.dbvr.httplibrart.utils.OkHttp3Utils;
 import com.dbvr.imglibrary2.utils.TDevice;
 import com.dbvr.imglibrary2.widget.recyclerview.SpaceGridItemDecoration;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
+
+import org.json.JSONException;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -46,11 +68,18 @@ public class DynamicDetailsActivity extends BaseActivity {
     TextView tvContent;
     @BindView(R.id.tvCommentNum)
     TextView tvCommentNum;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        StatusBarUtil.setRootViewFitsSystemWindows(this, false);
-    }
+    @BindView(R.id.et_content_chart)
+    EditText editText;
+
+    @BindView(R.id.ivLove)
+    ImageView ivLove;
+    @BindView(R.id.tvDzNum)
+    TextView tvDzNum;
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        StatusBarUtil.setRootViewFitsSystemWindows(this, false);
+//    }
 
     @Override
     public int setLayout() {
@@ -67,6 +96,13 @@ public class DynamicDetailsActivity extends BaseActivity {
         tvDate.setText(dynamicMo.getSendTime());
         tvContent.setText(dynamicMo.getContent());
         tvCommentNum.setText(dynamicMo.getCommentNumber());
+        tvDzNum.setText(String.valueOf(dynamicMo.getPraisedNumber()));
+        if (dynamicMo.isLove()){
+            ivLove.setImageResource(R.mipmap.love_db);
+        }else {
+            ivLove.setImageResource(R.mipmap.love_black);
+        }
+
 
         recyclerImg.setLayoutManager(new GridLayoutManager(getContext(),3));
         recyclerImg.addItemDecoration(new SpaceGridItemDecoration((int) TDevice.dipToPx(getResources(), 1)));
@@ -82,7 +118,6 @@ public class DynamicDetailsActivity extends BaseActivity {
         };
         recyclerImg.setAdapter(adapterImg);
 
-
         //评论内容
         recyclerComment.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerComment.setNestedScrollingEnabled(false);
@@ -95,7 +130,6 @@ public class DynamicDetailsActivity extends BaseActivity {
             }
         };
         recyclerComment.setAdapter(adapterComment);
-
     }
 
     @Override
@@ -103,7 +137,7 @@ public class DynamicDetailsActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.ivShare,R.id.ivBack})
+    @OnClick({R.id.ivShare,R.id.ivBack,R.id.btn_send,R.id.ivLove})
     public void onclick(View view){
         switch (view.getId()){
             case R.id.ivShare:
@@ -116,7 +150,72 @@ public class DynamicDetailsActivity extends BaseActivity {
             case R.id.ivBack:
                 AppManager.getAppManager().finishActivity(this);
                 break;
+            case R.id.btn_send:
+                sendComment();
+                break;
+            case R.id.ivLove:
+                int dzNum = dynamicMo.getPraisedNumber();
+                if (dynamicMo.isLove()){
+                    ivLove.setImageResource(R.mipmap.love_black);
+                    dzNum--;
+                    tvDzNum.setText(String.valueOf(dzNum));
+                    dynamicMo.setLove(false);
+                }else {
+                    dzNum++;
+                    tvDzNum.setText(String.valueOf(dzNum));
+                    ivLove.setImageResource(R.mipmap.love_db);
+                    dynamicMo.setLove(true);
+                }
+                dynamicMo.setPraisedNumber(dzNum);
+                updataLoveFunction(dynamicMo.getId());
+                break;
                 default:break;
         }
     }
+
+    private void updataLoveFunction(int id) {
+        Map<String,Object>map = new HashMap<>();
+        map.put("sayId",id);
+        OkHttp3Utils.getInstance(getContext()).doPostJson(DyUrl.praisedSay, map, new ObjectCallback<String>(getContext()) {
+            @Override
+            public void onUi(String result){
+            }
+            @Override
+            public void onFailed(String msg) {
+                //ToastUtil.showShort(getContext(),msg);
+            }
+        });
+    }
+
+    private void sendComment(){
+        if (StringUtils.isEmpty(editText.getText().toString())){
+            return;
+        }
+        editText.setText("");
+        Map<String,Object>map = new HashMap<>();
+        map.put("content",editText.getText().toString());
+        map.put("sayId",dynamicMo.getId());
+        OkHttp3Utils.getInstance(getContext()).doPostJson(DyUrl.commentSay, map,
+                new ObjectCallback<String>(getContext()) {
+            @Override
+            public void onUi(String result){
+                List<DynamicMo.commentMo>list = dynamicMo.getCommentVoList();
+                if (list==null){
+                    list = new ArrayList<>();
+                }
+                DynamicMo.commentMo commentMo = new DynamicMo.commentMo();
+                commentMo.setContent(editText.getText().toString());
+                commentMo.setNickName(SPUtils.instance(getContext()).getUser().getNickName());
+                list.add(commentMo);
+                dynamicMo.setCommentVoList(list);
+                adapterComment.updateDataa(dynamicMo.getCommentVoList());
+            }
+
+            @Override
+            public void onFailed(String msg) {
+
+            }
+        });
+    }
+
 }

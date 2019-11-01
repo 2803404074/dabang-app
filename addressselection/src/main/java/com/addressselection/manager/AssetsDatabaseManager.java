@@ -16,8 +16,8 @@ import java.util.Map;
 
 /**
  * This is a Assets Database Manager
- * Use it, you can use a assets database file in you application
- * It will copy the database file to "/data/data/[your application package name]/database" when you first time you use it
+ * Use it, you can use a assets database file in you applicationz
+ * It will copy the database file to "/data/data/[your applicationz package name]/database" when you first time you use it
  * Then you can get a SQLiteDatabase object by the assets database file
  *
  * @author RobinTang
@@ -42,7 +42,7 @@ public class AssetsDatabaseManager {
     private static String databasepath = "/data/data/%s/databases"; // %s is packageName
     // A mapping from assets database file to SQLiteDatabase object
     private Map<String, SQLiteDatabase> databases = new HashMap<String, SQLiteDatabase>();
-    // Context of application
+    // Context of applicationz
     private Context context = null;
     // Singleton Pattern
     private static AssetsDatabaseManager mInstance = null;
@@ -50,7 +50,7 @@ public class AssetsDatabaseManager {
     /**
      * Initialize AssetsDatabaseManager
      *
-     * @param context, context of application
+     * @param context, context of applicationz
      */
     public static void initManager(Context context) {
         if (mInstance == null) {

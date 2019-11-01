@@ -13,8 +13,8 @@
        android:orientation="horizontal">
       <com.facebook.drawee.view.SimpleDraweeView
           android:id="@+id/sdvHead"
-          android:layout_width="@dimen/dp_40"
-          android:layout_height="@dimen/dp_40"
+          android:layout_width="@dimen/dp_35"
+          android:layout_height="@dimen/dp_35"
           android:layout_centerVertical="true"
           fresco:roundAsCircle="true" />
 
@@ -38,9 +38,9 @@
           android:gravity="center"
           android:textSize="@dimen/sp_14"
           android:textStyle="bold"
-          android:paddingVertical="@dimen/dp_3"
+          android:paddingVertical="@dimen/dp_5"
           android:textColor="@android:color/white"
-          android:paddingHorizontal="@dimen/dp_8"
+          android:paddingHorizontal="@dimen/dp_10"
           android:background="@drawable/shape_red"
           />
    </LinearLayout>
@@ -52,5 +52,5 @@
        android:layout_marginBottom="@dimen/dp_3"
        android:layout_marginTop="@dimen/dp_5"
        android:layout_marginLeft="@dimen/dp_45"
-       android:background="@color/lsq_color_gray"/>
+       android:background="@color/devi"/>
 </RelativeLayout>

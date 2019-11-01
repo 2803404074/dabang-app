@@ -123,9 +123,7 @@ public class MessageActivity extends BaseActivity {
                 goTActivity(GetDzActivity.class,map2);
                 break;
             case R.id.ivFans:
-                Map<String,Object>map3 = new HashMap<>();
-                map3.put("tag","fans");
-                goTActivity(FansAndFollowActivity.class,map3);
+                goTActivity(FansAndFollowActivity.class,null);
                 break;
                 default:break;
         }

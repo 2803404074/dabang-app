@@ -924,6 +924,7 @@ color color_transparent00
 color color_transparent2e
 color color_white
 color default_bg
+color devi
 color dim_foreground_disabled_material_dark
 color dim_foreground_disabled_material_light
 color dim_foreground_material_dark

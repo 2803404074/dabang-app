@@ -2,6 +2,7 @@ package com.dabangvr.activity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -12,13 +13,24 @@ import com.dabangvr.R;
 import com.dabangvr.adapter.BaseRecyclerHolder;
 import com.dabangvr.adapter.RecyclerAdapter;
 import com.dbvr.baselibrary.model.FansMo;
+import com.dbvr.baselibrary.model.TagMo;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
+import com.dbvr.baselibrary.utils.ToastUtil;
 import com.dbvr.baselibrary.view.AppManager;
 import com.dbvr.baselibrary.view.BaseActivity;
+import com.dbvr.httplibrart.constans.DyUrl;
+import com.dbvr.httplibrart.utils.ObjectCallback;
+import com.dbvr.httplibrart.utils.OkHttp3Utils;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -28,10 +40,6 @@ import butterknife.OnClick;
  */
 public class FansAndFollowActivity extends BaseActivity {
 
-    private String tag;
-
-    @BindView(R.id.tv_title)
-    TextView tvTitle;
     @BindView(R.id.recycle_dz)
     RecyclerView recyclerView;
     private RecyclerAdapter adapter;
@@ -49,49 +57,76 @@ public class FansAndFollowActivity extends BaseActivity {
 
     @Override
     public void initView() {
-
-        tag = getIntent().getStringExtra("tag");
-        if (tag.equals("fans")){
-            tvTitle.setText("粉丝");
-        }else {
-            tvTitle.setText("关注");
-        }
-
-        String str = "https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3278119589,2651626912&fm=26&gp=0.jpg";
-        mData.add(new FansMo("用户1",str,"08:47",false));
-        mData.add(new FansMo("用户2",str,"08:47",true));
-        mData.add(new FansMo("用户2",str,"08:47",false));
-        mData.add(new FansMo("用户3",str,"08:47",true));
-        mData.add(new FansMo("用户4",str,"08:47",true));
-        mData.add(new FansMo("用户5",str,"08:47",false));
-        mData.add(new FansMo("用户6",str,"08:47",true));
-        mData.add(new FansMo("用户7",str,"08:47",false));
-
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new RecyclerAdapter<FansMo>(this,mData,R.layout.item_fans) {
             @Override
             public void convert(Context mContext, BaseRecyclerHolder holder, FansMo o) {
 
                 SimpleDraweeView sdvHead =  holder.getView(R.id.sdvHead);
-                sdvHead.setImageURI(o.getHead());
+                sdvHead.setImageURI(o.getHeadUrl());
                 sdvHead.setOnClickListener(view -> goTActivity(UserHomeActivity.class,null));
-
-                if (o.isFollow()){
+                holder.setText(R.id.tvName,o.getNickName());
+                if (o.isMutual()){
                     holder.getView(R.id.tvGz).setBackgroundResource(R.drawable.shape_gray);
-                    holder.setText(R.id.tvGz,"已关注");
+                    holder.setText(R.id.tvGz,"已互粉");
                 }else {
                     holder.getView(R.id.tvGz).setBackgroundResource(R.drawable.shape_red);
+                    holder.setText(R.id.tvGz,"关注");
                 }
-                holder.setText(R.id.tvName,o.getName());
+
+                holder.getView(R.id.tvGz).setOnClickListener(view -> {
+                    if (!o.isMutual()){
+                        holder.getView(R.id.tvGz).setBackgroundResource(R.drawable.shape_gray);
+                        holder.setText(R.id.tvGz,"已互粉");
+                        setLoaddingView(true);
+                        followFunction(o.getUserId());
+                    }else {
+                        holder.getView(R.id.tvGz).setBackgroundResource(R.drawable.shape_red);
+                        holder.setText(R.id.tvGz,"关注");
+                        setLoaddingView(true);
+                        followFunction(o.getUserId());
+                    }
+                });
+
             }
         };
         recyclerView.setAdapter(adapter);
+
+        adapter.setOnItemClickListener((view, position) -> {
+            Map<String,Object>map = new HashMap<>();
+            map.put("userId",mData.get(position).getUserId());
+            goTActivity(UserHomeActivity.class,map);
+        });
     }
 
+    private int page = 1;
     @Override
     public void initData() {
+        Map<String,Object>map = new HashMap<>();
+        map.put("page",page);
+        map.put("limit",10);
+        OkHttp3Utils.getInstance(getContext()).doPostJson(DyUrl.getFansList, map,
+                new ObjectCallback<String>(getContext()) {
+            @Override
+            public void onUi(String result){
+                List<FansMo> list = new Gson().fromJson(result, new TypeToken<List<FansMo>>() {}.getType());
+                if (list!=null && list.size()>0){
+                    mData = list;
+                    if (page==1){
+                        adapter.updateDataa(mData);
+                    }else {
+                        adapter.addAll(mData);
+                    }
+                }
+            }
 
+            @Override
+            public void onFailed(String msg) {
+                Log.e("result","返回："+msg);
+            }
+        });
     }
+
     @OnClick({R.id.ivBack})
     public void onclick(View view){
         switch (view.getId()){
@@ -100,4 +135,27 @@ public class FansAndFollowActivity extends BaseActivity {
                 break;
         }
     }
+
+
+    /**
+     * 关注粉丝
+     */
+    private void followFunction(String userId) {
+        setLoaddingView(true);
+        Map<String,Object>map = new HashMap<>();
+        map.put("fansUserId",userId);
+        OkHttp3Utils.getInstance(this).doPostJson(DyUrl.updateFans, map, new ObjectCallback<String>(this) {
+            @Override
+            public void onUi(String result){
+                setLoaddingView(false);
+            }
+
+            @Override
+            public void onFailed(String msg) {
+                ToastUtil.showShort(getContext(),msg);
+                setLoaddingView(false);
+            }
+        });
+    }
+
 }

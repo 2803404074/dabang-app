@@ -53,7 +53,7 @@ public class TVCNetworkCredentialProvider extends BasicLifecycleCredentialProvid
             urlConnection.setDoInput(true);
             urlConnection.setDoOutput(true);
             urlConnection.setRequestMethod("POST");
-            urlConnection.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+            urlConnection.setRequestProperty("Content-Type", "applicationz/json;charset=UTF-8");
             urlConnection.connect();
             JSONObject json = new JSONObject();
             json.put("Action", "GetCOSSignV2");

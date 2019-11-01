@@ -5,7 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -118,9 +121,10 @@ public class UserDynamicFragment extends BaseFragment {
                     ShareUtils.getInstance(getContext()).startShare(
                             StringUtils.isEmptyTxt(dynamicMo.getNickName())+"发表了新动态",
                             dynamicMo.getContent(),
-                            dynamicMo.getPicUrl().get(0),
+                            dynamicMo.getPicUrl()==null?"":dynamicMo.getPicUrl().get(0),
                             "www.baidu.com");
                 });
+
                 //图片内容
                 if (dynamicMo.getPicUrl()!=null){
                     RecyclerView recyclerViewx = holder.getView(R.id.recycle_img);
@@ -153,18 +157,26 @@ public class UserDynamicFragment extends BaseFragment {
                 };
                 recyComment.setAdapter(adapterPosition);
 
-                //点击评论
-                holder.getView(R.id.ivComment).setOnClickListener((view)->{
-                    Map<String,Object>map = new HashMap<>();
-                    map.put("data",new Gson().toJson(mData.get(position)));
-                    goTActivity(DynamicDetailsActivity.class,map);
-                });
+                //点赞数量
+                holder.setText(R.id.tvDzNum,String.valueOf(dynamicMo.getPraisedNumber()));
 
+                //是否点赞过
+                if (dynamicMo.isLove()){
+                    holder.setImageResource(R.id.ivLove,R.mipmap.love_db);
+
+                }else {
+                    holder.setImageResource(R.id.ivLove,R.mipmap.love_black);
+                }
             }
         };
         recyclerView.setAdapter(adapter);
-    }
 
+        adapter.setOnItemClickListener((view, position) -> {
+            Map<String,Object>map = new HashMap<>();
+            map.put("data",new Gson().toJson(mData.get(position)));
+            goTActivity(DynamicDetailsActivity.class,map);
+        });
+    }
 
     private void initBra() {
         IntentFilter filter = new IntentFilter("android.intent.action.DYNAMIC");
@@ -222,7 +234,6 @@ public class UserDynamicFragment extends BaseFragment {
                         adapter.updateDataa(mData);
                     }
                 }
-
                 setLoaddingView(false);
             }
 

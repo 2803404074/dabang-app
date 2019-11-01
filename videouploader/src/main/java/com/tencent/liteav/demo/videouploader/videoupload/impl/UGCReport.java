@@ -231,7 +231,7 @@ public class UGCReport {
             body = jsonObject.toString();
             String reqUrl = "https://vodreport.qcloud.com/ugcupload_new";
             Log.i(TAG, "reportUGCEvent->request url:" + reqUrl + " body:" + body);
-            RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), body);
+            RequestBody requestBody = RequestBody.create(MediaType.parse("applicationz/json"), body);
             Request request = new Request.Builder()
                     .url(reqUrl)
                     .post(requestBody)

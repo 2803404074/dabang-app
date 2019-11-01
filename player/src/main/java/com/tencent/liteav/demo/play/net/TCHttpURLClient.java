@@ -104,7 +104,7 @@ public class TCHttpURLClient {
                     connection.setConnectTimeout(15000);
                     connection.setReadTimeout(15000);
                     connection.setRequestMethod("POST");
-                    connection.addRequestProperty("Content-Type", "application/json; charset=utf-8");
+                    connection.addRequestProperty("Content-Type", "applicationz/json; charset=utf-8");
                     connection.setDoInput(true);
                     connection.setDoOutput(true);
                     connection.connect();

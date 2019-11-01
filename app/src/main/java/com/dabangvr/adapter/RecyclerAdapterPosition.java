@@ -110,14 +110,11 @@ public abstract class RecyclerAdapterPosition<T> extends RecyclerView.Adapter<Ba
                 });
             } else {
                 convert(mContext, holder, position,mDatas.get(position));
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (mItemClickListener != null) {
-                            mItemClickListener.onItemClick(v, position);
-                        }
-
+                holder.itemView.setOnClickListener(v -> {
+                    if (mItemClickListener != null) {
+                        mItemClickListener.onItemClick(v, position);
                     }
+
                 });
             }
 
