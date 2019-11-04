@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.dabangvr.R;
@@ -23,10 +24,14 @@ import com.dabangvr.fragment.other.Order.MyShoppingCartActivity;
 import com.dabangvr.fragment.other.Order.MyYhjActivity;
 import com.dabangvr.fragment.other.Order.UserZBSQOneActivity;
 import com.dbvr.baselibrary.base.ParameterContens;
+import com.dbvr.baselibrary.model.DepVo;
 import com.dbvr.baselibrary.model.MenuBean;
+import com.dbvr.baselibrary.utils.DialogUtil;
 import com.dbvr.baselibrary.utils.SPUtils;
+import com.dbvr.baselibrary.utils.ToastUtil;
 import com.dbvr.baselibrary.view.BaseFragment;
 import com.dbvr.httplibrart.constans.DyUrl;
+import com.dbvr.httplibrart.constans.UserUrl;
 import com.dbvr.httplibrart.utils.ObjectCallback;
 import com.dbvr.httplibrart.utils.OkHttp3Utils;
 import com.google.gson.Gson;
@@ -39,6 +44,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
+import java.util.concurrent.atomic.AtomicReference;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -83,7 +90,6 @@ public class UserPersonalFragment extends BaseFragment {
         adapter.setOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Log.d("luhuas", "onItemClick: " + position);
                 switch (menuBeanList.get(position).getJumpUrl()) {
                     case ParameterContens.CLIENT_WDDD:  //我的订单
                         goTActivity(MyOrtherActivity.class, null);
@@ -100,7 +106,8 @@ public class UserPersonalFragment extends BaseFragment {
                         goTActivity(UserMessActivity.class, null);
                         break;
                     case ParameterContens.CLIENT_SJRZ://商家入驻
-                        goTActivity(UserSJRZOneActivity.class, null);
+                        queryAddDeptState();
+
                         break;
                     case ParameterContens.CLIENT_ZBSQ://主播申请
                         goTActivity(UserZBSQOneActivity.class, null);
@@ -120,6 +127,55 @@ public class UserPersonalFragment extends BaseFragment {
                         break;
 
                 }
+            }
+        });
+    }
+
+    /**
+     * 查询商家入驻状态
+     */
+    private void queryAddDeptState() {
+        Map<String, Object> map = new HashMap<>();
+//        map.put("phone", phone);
+        OkHttp3Utils.getInstance(getContext()).doPostJson(UserUrl.addDeptState, map, new ObjectCallback<String>(getContext()) {
+            @Override
+            public void onUi(String result) {
+                try {
+                    DepVo depVo = new Gson().fromJson(result, DepVo.class);
+                    if (depVo != null) {
+                        if (depVo.getAgreedAgreement() == 0) {
+                            Intent intent = new Intent(getContext(), UserSJRZOneActivity.class);
+                            intent.putExtra(ParameterContens.depVo, depVo);
+                            startActivity(intent);
+                        } else {
+                            DialogUtil.getInstance(getContext()).show(R.layout.dialog_tip, holder -> {
+                                TextView tvTitle = holder.findViewById(R.id.tv_title);
+                                String title = "";
+                                if (depVo.getAgreedAgreement() == -1) {
+                                    title = "未审核";
+                                } else if (depVo.getAgreedAgreement() == 1) {
+                                    title = "您已经入驻成功";
+                                }
+                                tvTitle.setText(title);
+                                holder.findViewById(R.id.tvCancel).setOnClickListener(view1 -> DialogUtil.getInstance(getContext()).des());
+                                holder.findViewById(R.id.tvConfirm).setOnClickListener(view12 -> DialogUtil.getInstance(getContext()).des());
+                            });
+                        }
+                    } else {
+                        Intent intent = new Intent(getContext(), UserSJRZOneActivity.class);
+                        intent.putExtra(ParameterContens.depVo, depVo);
+                        startActivity(intent);
+                    }
+                } catch (JsonSyntaxException e) {
+                    e.printStackTrace();
+                    goTActivity(UserSJRZOneActivity.class, null);
+                }
+
+            }
+
+            @Override
+            public void onFailed(String msg) {
+                ToastUtil.showShort(getContext(), msg);
             }
         });
     }

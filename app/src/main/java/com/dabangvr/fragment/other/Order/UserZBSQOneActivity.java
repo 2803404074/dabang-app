@@ -1,5 +1,6 @@
 package com.dabangvr.fragment.other.Order;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.SystemClock;
@@ -11,8 +12,10 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.addressselection.utils.Dev;
 import com.dabangvr.R;
 import com.dbvr.baselibrary.base.ParameterContens;
+import com.dbvr.baselibrary.model.DepVo;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
 import com.dbvr.baselibrary.utils.StringUtils;
 import com.dbvr.baselibrary.utils.ToastUtil;
@@ -22,8 +25,10 @@ import com.dbvr.httplibrart.constans.UserUrl;
 import com.dbvr.httplibrart.utils.ObjectCallback;
 import com.dbvr.httplibrart.utils.OkHttp3Utils;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.PropertyPermission;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -54,6 +59,7 @@ public class UserZBSQOneActivity extends BaseActivity {
 
     private boolean isChecked;
     private long lastonclickTime=0;
+    private DepVo depVo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +75,12 @@ public class UserZBSQOneActivity extends BaseActivity {
 
     @Override
     public void initView() {
-
+        depVo = (DepVo) getIntent().getSerializableExtra(ParameterContens.depVo);
+        if (depVo !=null){
+            etPhone.setText(depVo.getPhone());
+        }else {
+           depVo =new DepVo();
+        }
     }
 
     @Override
@@ -100,9 +111,11 @@ public class UserZBSQOneActivity extends BaseActivity {
             case R.id.tvGetCode: //获取验证码
                 if (TextUtils.isEmpty(etPhone.getText().toString())) return;
                 getMessage(etPhone.getText().toString());
+
                 break;
             case R.id.tv_look_up:
                 goTActivity(UserAgreeActivity.class, null);
+
                 break;
             case R.id.tv_next:
                 String phone = etPhone.getText().toString().trim();
@@ -116,7 +129,11 @@ public class UserZBSQOneActivity extends BaseActivity {
                     ToastUtil.showShort(this,"请确认我已了解");
                     return;
                 }
-                goTActivity(UserZBSQTwoActivity.class,null);
+                depVo.setPhone(phone);
+                depVo.setZipCode(other);
+                Intent intent =new Intent(this,UserZBSQTwoActivity.class);
+                intent.putExtra(ParameterContens.depVo,depVo);
+                startActivity(intent);
                 break;
         }
 

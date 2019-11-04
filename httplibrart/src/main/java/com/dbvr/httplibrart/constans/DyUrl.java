@@ -6,8 +6,8 @@ public class DyUrl {
 
     public static final String TOKEN_NAME = "DABANG-TOKEN";
     //public static final String BASE = "http://www.vrzbgw.com/dabang/";
-    public static final String BASE = "http://192.168.0.112:8085/dabang/";
-    //public static final String BASE = "http://api.vrzbgw.com:8085/dabang/";//远程
+//    public static final String BASE = "http://192.168.0.112:8087/dabang/";
+    public static final String BASE = "http://api.vrzbgw.com:8085/dabang/";//远程
 
     //获取用户信息
     public static final String getUserInfo = "api/getUserInfo";
@@ -86,14 +86,6 @@ public class DyUrl {
 
    //发动态
     public static final String sendSay = "api/my/sendSay";
-    //评论动态
-    public static final String commentSay = "api/my/commentSay";
-    //点赞动态
-    public static final String praisedSay = "api/my/praisedSay";
-
-    //点赞我的列表
-    public static final String getPraisedList = "api/my/getPraisedList";
-
     //获取动态列表
     public static final String getSayList = "api/my/getSayList";
 

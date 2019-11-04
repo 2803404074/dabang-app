@@ -7,7 +7,7 @@ public interface OnUploadListener {
 
     void onUploadFailed(String key, String err);//上传失败
 
-    void onUploadBlockComplete(String key);//上传成功
+    void onUploadBlockComplete(String path);//上传成功
 
     void onUploadCompleted();//上传成功
 

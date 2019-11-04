@@ -3,6 +3,7 @@ package com.dabangvr.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -81,20 +82,20 @@ public class AddressActivity extends BaseActivity implements OnAddressSelectedLi
                 break;
             case R.id.tv_selector_area:
 
-                if (dialog != null) {
-                    dialog.show();
-                } else {
-                    dialog = new BottomDialog(this);
-                    dialog.setOnAddressSelectedListener(this);
-                    dialog.setDialogDismisListener(this);
-                    dialog.setTextSize(14);//设置字体的大小
-                    dialog.setIndicatorBackgroundColor(android.R.color.holo_orange_light);//设置指示器的颜色
-                    dialog.setTextSelectedColor(android.R.color.holo_orange_light);//设置字体获得焦点的颜色
-                    dialog.setTextUnSelectedColor(android.R.color.holo_blue_light);//设置字体没有获得焦点的颜色
-//            dialog.setDisplaySelectorArea("31",1,"2704",1,"2711",0,"15582",1);//设置已选中的地区
-                    dialog.setSelectorAreaPositionListener(this);
-                    dialog.show();
-                }
+//                if (dialog != null) {
+//                    dialog.show();
+//                } else {
+//                    dialog = new BottomDialog(this);
+//                    dialog.setOnAddressSelectedListener(this);
+//                    dialog.setDialogDismisListener(this);
+//                    dialog.setTextSize(14);//设置字体的大小
+//                    dialog.setIndicatorBackgroundColor(android.R.color.holo_orange_light);//设置指示器的颜色
+//                    dialog.setTextSelectedColor(android.R.color.holo_orange_light);//设置字体获得焦点的颜色
+//                    dialog.setTextUnSelectedColor(android.R.color.holo_blue_light);//设置字体没有获得焦点的颜色
+////            dialog.setDisplaySelectorArea("31",1,"2704",1,"2711",0,"15582",1);//设置已选中的地区
+//                    dialog.setSelectorAreaPositionListener(this);
+//                    dialog.show();
+//                }
 
                 break;
 
@@ -123,9 +124,8 @@ public class AddressActivity extends BaseActivity implements OnAddressSelectedLi
         String s = (province == null ? "" : province.name) + (city == null ? "" : city.name) + (county == null ? "" : county.name) +
                 (street == null ? "" : street.name);
         tv_selector_area.setText(s);
-        if (dialog != null) {
-            dialog.dismiss();
-        }
+
+
     }
 
     @Override
@@ -137,6 +137,7 @@ public class AddressActivity extends BaseActivity implements OnAddressSelectedLi
 
     @Override
     public void selectorAreaPosition(int provincePosition, int cityPosition, int countyPosition, int streetPosition) {
+
 
     }
 }

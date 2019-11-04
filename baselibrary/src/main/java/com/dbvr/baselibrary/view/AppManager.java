@@ -3,6 +3,8 @@ package com.dbvr.baselibrary.view;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
+import android.graphics.Movie;
+import android.view.MotionEvent;
 
 import java.util.Stack;
 

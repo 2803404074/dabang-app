@@ -1,5 +1,6 @@
 package com.dabangvr.fragment.other.Order;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.SystemClock;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.dabangvr.R;
 import com.dbvr.baselibrary.base.ParameterContens;
+import com.dbvr.baselibrary.model.DepVo;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
 import com.dbvr.baselibrary.utils.StringUtils;
 import com.dbvr.baselibrary.utils.ToastUtil;
@@ -22,6 +24,7 @@ import com.dbvr.httplibrart.constans.UserUrl;
 import com.dbvr.httplibrart.utils.ObjectCallback;
 import com.dbvr.httplibrart.utils.OkHttp3Utils;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -56,6 +59,7 @@ public class UserSJRZOneActivity extends BaseActivity {
 
     private boolean isChecked;
     private CountDownTimer count;
+    private DepVo depVo;
 
 
     @Override
@@ -72,7 +76,12 @@ public class UserSJRZOneActivity extends BaseActivity {
 
     @Override
     public void initView() {
-
+        depVo = (DepVo) getIntent().getSerializableExtra(ParameterContens.depVo);
+        if (depVo != null) {
+            etPhone.setText(depVo.getPhone());
+        } else {
+            depVo = new DepVo();
+        }
     }
 
     @Override
@@ -113,15 +122,24 @@ public class UserSJRZOneActivity extends BaseActivity {
             case R.id.tv_next:
                 String phone = etPhone.getText().toString().trim();
                 String code = etCode.getText().toString().trim();
-                if (!StringUtils.isMobileNO(phone) || TextUtils.isEmpty(code)) {
+                if (!StringUtils.isMobileNO(phone)) {
                     ToastUtil.showShort(this, "请输入正确的手机号码和验证码");
                     return;
                 }
-                if (!isChecked) {
-                    ToastUtil.showShort(this, "请确认我已了解");
-                    return;
-                }
-                next(phone, code, "1");
+//                if (TextUtils.isEmpty(code)) {
+//                    ToastUtil.showShort(this, "请输入验证码");
+//                    return;
+//                }
+//                if (!isChecked) {
+//                    ToastUtil.showShort(this, "请确认我已了解");
+//                    return;
+//                }
+//                next(phone, code, "1");
+                Intent intent = new Intent(getContext(), UserSJRZTwoActivity.class);
+                depVo.setPhone(phone);
+                intent.putExtra(ParameterContens.depVo, depVo);
+                startActivity(intent);
+
 
                 break;
         }
@@ -164,8 +182,12 @@ public class UserSJRZOneActivity extends BaseActivity {
             @Override
             public void onUi(String result) {
                 Log.d("luhuas", "onUi: " + result);
-                goTActivity(UserSJRZTwoActivity.class, null);
+                Intent intent = new Intent(getContext(), UserSJRZOneActivity.class);
+                depVo.setPhone(phone);
+                intent.putExtra(ParameterContens.depVo, depVo);
+                startActivity(intent);
             }
+
             @Override
             public void onFailed(String msg) {
                 ToastUtil.showShort(getContext(), msg);

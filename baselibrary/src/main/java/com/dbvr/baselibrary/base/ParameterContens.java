@@ -26,4 +26,9 @@ public interface ParameterContens {
     String zbsq="zbsq";//主播申请
     String kf="kf";//客服
     long clickTime=2000l;
+
+    String depVo = "depVo";//商家入驻传递数据标识
+    String idcartFacial = "idcartFacial";//身份证正面
+    String idcartBehind = "idcartBehind";//身份证反面
+    String threeCertificates = "threeCertificates";//身份证反面
 }

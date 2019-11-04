@@ -56,7 +56,7 @@ public class UserEditMessActivity extends BaseActivity {
 
     @Override
     public int setLayout() {
-        return R.layout.activity_user_mess;
+        return R.layout.activity_user_mess_modify;
     }
 
     @Override
