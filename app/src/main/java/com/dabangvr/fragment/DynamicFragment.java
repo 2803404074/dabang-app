@@ -90,8 +90,9 @@ public class DynamicFragment extends BaseFragment implements UserDynamicFragment
     private class MessageBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            viewPager.setCurrentItem(0);
+            if(viewPager!=null){
+                viewPager.setCurrentItem(0);
+            }
         }
     }
-
 }

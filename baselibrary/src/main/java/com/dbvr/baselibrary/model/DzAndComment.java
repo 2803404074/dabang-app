@@ -4,12 +4,21 @@ public class DzAndComment {
     private int sayId;
     private int userId;
     private int tag;//0动态   1短视频
+    private String content;
     private String coverUrl;
     private String nickName;
     private String headUrl;
     private String addTime;
 
     public DzAndComment() {
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public int getSayId() {

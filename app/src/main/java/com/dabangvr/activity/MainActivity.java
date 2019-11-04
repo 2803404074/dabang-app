@@ -36,7 +36,11 @@ import com.hyphenate.EMCallBack;
 import com.hyphenate.EMError;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.exceptions.HyphenateException;
+import com.tencent.liteav.demo.videorecord.TCVideoRecordActivity;
 import com.tencent.liteav.demo.videorecord.TCVideoSettingActivity;
+import com.tencent.liteav.demo.videorecord.utils.TCConstants;
+import com.tencent.rtmp.TXLiveConstants;
+import com.tencent.ugc.TXRecordCommon;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -258,7 +262,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
             view.findViewById(R.id.tvOpenVideo).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    goTActivity(TCVideoSettingActivity.class,null);
+                    startVideoRecordActivity();
                     BottomDialogUtil2.getInstance(MainActivity.this).dess();
                 }
             });
@@ -302,6 +306,18 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         } else {
             navView.setVisibility(View.VISIBLE);
         }
+    }
+
+    private void startVideoRecordActivity() {
+        Intent intent = new Intent(this, TCVideoRecordActivity.class);
+        intent.putExtra(TCConstants.RECORD_CONFIG_MIN_DURATION, 5 * 1000);
+        intent.putExtra(TCConstants.RECORD_CONFIG_MAX_DURATION, 60 * 1000);
+        intent.putExtra(TCConstants.RECORD_CONFIG_ASPECT_RATIO, TXRecordCommon.VIDEO_ASPECT_RATIO_9_16);//视频比例
+        intent.putExtra(TCConstants.RECORD_CONFIG_RECOMMEND_QUALITY, TXRecordCommon.VIDEO_QUALITY_HIGH);//超清
+        intent.putExtra(TCConstants.RECORD_CONFIG_HOME_ORIENTATION, TXLiveConstants.VIDEO_ANGLE_HOME_DOWN); // 竖屏录制
+        intent.putExtra(TCConstants.RECORD_CONFIG_TOUCH_FOCUS, true);//手动对焦
+        intent.putExtra(TCConstants.RECORD_CONFIG_NEED_EDITER, true);//录制完去编辑
+        startActivity(intent);
     }
 
     @Override

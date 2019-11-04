@@ -31,10 +31,10 @@
 
       <TextView
           android:id="@+id/tvGz"
-          android:layout_width="@dimen/dp_60"
+          android:layout_width="@dimen/dp_70"
           android:layout_height="wrap_content"
          android:layout_gravity="center"
-          android:text="关注"
+          android:text="关 注"
           android:gravity="center"
           android:textSize="@dimen/sp_14"
           android:textStyle="bold"

@@ -191,10 +191,10 @@ public class DynamicDetailsActivity extends BaseActivity {
         if (StringUtils.isEmpty(editText.getText().toString())){
             return;
         }
-        editText.setText("");
         Map<String,Object>map = new HashMap<>();
         map.put("content",editText.getText().toString());
         map.put("sayId",dynamicMo.getId());
+
         OkHttp3Utils.getInstance(getContext()).doPostJson(DyUrl.commentSay, map,
                 new ObjectCallback<String>(getContext()) {
             @Override
@@ -209,6 +209,7 @@ public class DynamicDetailsActivity extends BaseActivity {
                 list.add(commentMo);
                 dynamicMo.setCommentVoList(list);
                 adapterComment.updateDataa(dynamicMo.getCommentVoList());
+                editText.setText("");
             }
 
             @Override
@@ -217,5 +218,4 @@ public class DynamicDetailsActivity extends BaseActivity {
             }
         });
     }
-
 }

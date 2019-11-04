@@ -17,6 +17,7 @@
             android:src="@mipmap/vipbg"/>
 
         <ImageView
+            android:id="@+id/ivClose"
             android:layout_width="@dimen/dp_30"
             android:layout_height="@dimen/dp_30"
             android:src="@drawable/ic_float_close"
@@ -70,7 +71,11 @@
             android:background="@drawable/shape_red"
             android:text="¥225"/>
     </LinearLayout>
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginVertical="@dimen/dp_5"
+        android:background="@color/divider"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -97,7 +102,11 @@
             android:background="@drawable/shape_red"
             android:text="¥59"/>
     </LinearLayout>
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginVertical="@dimen/dp_5"
+        android:background="@color/divider"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -123,7 +132,11 @@
             android:background="@drawable/shape_red"
             android:text="¥20"/>
     </LinearLayout>
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginVertical="@dimen/dp_5"
+        android:background="@color/divider"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

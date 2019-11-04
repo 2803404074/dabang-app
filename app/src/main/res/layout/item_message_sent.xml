@@ -14,6 +14,7 @@
         android:layout_marginRight="@dimen/dp_5"
         android:layout_gravity="center"
         android:layout_width="@dimen/dp_200"
+        android:scaleType="centerCrop"
         android:layout_height="wrap_content"
         android:src="@mipmap/test2"/>
 

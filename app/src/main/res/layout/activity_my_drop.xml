@@ -116,10 +116,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+            <ImageView
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40"
+                android:src="@mipmap/tiaob"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/sp_18"
+                android:layout_gravity="center"
                 android:textColor="@android:color/black"
                 android:textStyle="bold"
                 android:text="10"/>
@@ -131,9 +136,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="¥10"
+                android:textSize="@dimen/sp_15"
                 android:background="@drawable/shape_red"
                 android:textColor="@android:color/white"
                 android:paddingHorizontal="@dimen/dp_10"
+                android:layout_gravity="center"
                 android:paddingVertical="@dimen/dp_2"/>
         </LinearLayout>
         <View
@@ -145,10 +152,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+            <ImageView
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40"
+                android:src="@mipmap/tiaob"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/sp_18"
+                android:layout_gravity="center"
                 android:textColor="@android:color/black"
                 android:textStyle="bold"
                 android:text="20"/>
@@ -163,6 +175,7 @@
                 android:background="@drawable/shape_red"
                 android:textColor="@android:color/white"
                 android:paddingHorizontal="@dimen/dp_10"
+                android:textSize="@dimen/sp_15"
                 android:paddingVertical="@dimen/dp_2"/>
         </LinearLayout>
         <View
@@ -174,10 +187,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+            <ImageView
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40"
+                android:src="@mipmap/tiaob"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/sp_18"
+                android:layout_gravity="center"
                 android:textColor="@android:color/black"
                 android:textStyle="bold"
                 android:text="50"/>
@@ -189,6 +207,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="¥50"
+                android:textSize="@dimen/sp_15"
                 android:background="@drawable/shape_red"
                 android:textColor="@android:color/white"
                 android:paddingHorizontal="@dimen/dp_10"
@@ -203,10 +222,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+            <ImageView
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40"
+                android:src="@mipmap/tiaob"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/sp_18"
+                android:layout_gravity="center"
                 android:textColor="@android:color/black"
                 android:textStyle="bold"
                 android:text="100"/>
@@ -218,6 +242,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="¥100"
+                android:textSize="@dimen/sp_15"
                 android:background="@drawable/shape_red"
                 android:textColor="@android:color/white"
                 android:paddingHorizontal="@dimen/dp_10"
@@ -232,10 +257,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+            <ImageView
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40"
+                android:src="@mipmap/tiaob"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/sp_18"
+                android:layout_gravity="center"
                 android:textColor="@android:color/black"
                 android:textStyle="bold"
                 android:text="200"/>
@@ -247,6 +277,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="¥200"
+                android:textSize="@dimen/sp_15"
                 android:background="@drawable/shape_red"
                 android:textColor="@android:color/white"
                 android:paddingHorizontal="@dimen/dp_10"

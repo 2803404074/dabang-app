@@ -394,21 +394,13 @@ public class TCVideoSettingActivity extends Activity implements View.OnClickList
         Intent intent = new Intent(this, TCVideoRecordActivity.class);
         intent.putExtra(TCConstants.RECORD_CONFIG_MIN_DURATION, 5 * 1000);
         intent.putExtra(TCConstants.RECORD_CONFIG_MAX_DURATION, 60 * 1000);
-        intent.putExtra(TCConstants.RECORD_CONFIG_ASPECT_RATIO, mAspectRatio);
+        intent.putExtra(TCConstants.RECORD_CONFIG_ASPECT_RATIO, TXRecordCommon.VIDEO_ASPECT_RATIO_9_16);//视频比例
 
-        if (mRecommendQuality != -1) {
-            // 提供的三挡设置
-            intent.putExtra(TCConstants.RECORD_CONFIG_RECOMMEND_QUALITY, mRecommendQuality);
-        } else {
-            // 自定义设置
-            intent.putExtra(TCConstants.RECORD_CONFIG_RESOLUTION, mRecordResolution);
-            intent.putExtra(TCConstants.RECORD_CONFIG_BITE_RATE, mBiteRate);
-            intent.putExtra(TCConstants.RECORD_CONFIG_FPS, mFps);
-            intent.putExtra(TCConstants.RECORD_CONFIG_GOP, mGop);
-        }
+        intent.putExtra(TCConstants.RECORD_CONFIG_RECOMMEND_QUALITY, TXRecordCommon.VIDEO_QUALITY_HIGH);//超清
+
         intent.putExtra(TCConstants.RECORD_CONFIG_HOME_ORIENTATION, TXLiveConstants.VIDEO_ANGLE_HOME_DOWN); // 竖屏录制
-        intent.putExtra(TCConstants.RECORD_CONFIG_TOUCH_FOCUS, cbTouchFocus.isChecked());
-        intent.putExtra(TCConstants.RECORD_CONFIG_NEED_EDITER, cbEdit.isChecked());
+        intent.putExtra(TCConstants.RECORD_CONFIG_TOUCH_FOCUS, true);//手动对焦
+        intent.putExtra(TCConstants.RECORD_CONFIG_NEED_EDITER, true);//录制完去编辑
         startActivity(intent);
     }
 

@@ -81,14 +81,6 @@ public class ChatActivity extends BaseActivity {
     private ChatAdapter chatAdapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        //用来设置整体下移，状态栏沉浸
-        StatusBarUtil.setRootViewFitsSystemWindows(this, false);
-    }
-
-
-    @Override
     public int setLayout() {
         return R.layout.activity_chat;
     }

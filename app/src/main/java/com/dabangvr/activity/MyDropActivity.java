@@ -2,6 +2,7 @@ package com.dabangvr.activity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -21,6 +22,9 @@ public class MyDropActivity extends BaseActivity {
     TextView tvVip;
     @BindView(R.id.tvDrop)
     TextView tvDrop;
+
+    @BindView(R.id.ivClose)
+    ImageView ivClose;
 
     //跳币视图
     @BindView(R.id.llDrop)
@@ -44,6 +48,7 @@ public class MyDropActivity extends BaseActivity {
     @Override
     public void initView() {
         showUI(true);
+        ivClose.setVisibility(View.GONE);
     }
 
     @Override

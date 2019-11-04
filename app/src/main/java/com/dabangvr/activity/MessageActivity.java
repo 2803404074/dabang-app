@@ -120,7 +120,7 @@ public class MessageActivity extends BaseActivity {
             case R.id.ivComment:
                 Map<String,Object>map2 = new HashMap<>();
                 map2.put("tag","comment");
-                goTActivity(GetDzActivity.class,map2);
+                goTActivity(CommentListActivity.class,map2);
                 break;
             case R.id.ivFans:
                 goTActivity(FansAndFollowActivity.class,null);

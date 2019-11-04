@@ -146,7 +146,6 @@ public class HomeFragmentFind extends BaseFragment {
                                     map.put("headUrl",headUrl);
                                     map.put("userId",userId);
                                     map.put("isFollow",isFollow);
-                                    ToastUtil.showShort(getContext(),"是否已经关注="+isFollow);
                                     goTActivity(PlayActivity.class,map);
                                 }
                             });

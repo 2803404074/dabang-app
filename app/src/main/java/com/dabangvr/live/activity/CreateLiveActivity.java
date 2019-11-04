@@ -131,9 +131,8 @@ public class CreateLiveActivity extends BaseActivity {
                 showBottomDialog();
                 break;
             case R.id.tvCreate:
-                createLive("http://01.imgmini.eastday.com/mobile/20180102/20180102151744_85ddb15157c913becb8f437db95991e8_4.jpeg");
                 setLoaddingView(true);
-                //judge();
+                judge();
                 break;
                 default:break;
         }
@@ -166,7 +165,7 @@ public class CreateLiveActivity extends BaseActivity {
         }
         OkHttp3Utils.getInstance(this).doPostJson(DyUrl.getUploadConfigToken, null, new ObjectCallback<String>(this) {
             @Override
-            public void onUi(String result) throws JSONException {
+            public void onUi(String result){
                 QiniuUploadFile qiniuUploadFile = new Gson().fromJson(result,QiniuUploadFile.class);
                 upCover(qiniuUploadFile);//这里是七牛的token
             }

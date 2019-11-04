@@ -241,8 +241,8 @@ public class HomeFragmentFollow extends BaseFragment {
                         ivTips.setVisibility(View.VISIBLE);
                         tvTips.setVisibility(View.VISIBLE);
                     }else {
-                        ivTips.setVisibility(View.VISIBLE);
-                        tvTips.setVisibility(View.VISIBLE);
+                        ivTips.setVisibility(View.GONE);
+                        tvTips.setVisibility(View.GONE);
                     }
                     adapterFollow.updateDataa(mDataFollow);
                     adapterTui.updateDataa(mDataTui);

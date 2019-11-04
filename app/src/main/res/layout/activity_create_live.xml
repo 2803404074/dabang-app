@@ -83,28 +83,6 @@
                 android:src="@mipmap/add_main"/>
         </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="@dimen/dp_156">
-            <com.dbvr.baselibrary.ui.MyImageView
-                android:id="@+id/iv_content2"
-                android:onClick="onClickImage"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="fitXY"
-                android:layout_margin="@dimen/dp_10"
-                roundiv:radius="@dimen/dp_10"
-                android:src="@mipmap/test"
-                tools:ignore="OnClick" />
-            <ImageView
-                android:id="@+id/ivAdd2"
-                android:layout_width="@dimen/dp_50"
-                android:layout_height="@dimen/dp_50"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true"
-                android:src="@mipmap/add_main"/>
-        </RelativeLayout>
     </LinearLayout>
 
 

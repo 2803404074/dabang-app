@@ -1,21 +1,18 @@
 package com.dabangvr.activity;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.dabangvr.R;
 import com.dabangvr.adapter.BaseRecyclerHolder;
-import com.dabangvr.adapter.RecyclerAdapter;
 import com.dabangvr.adapter.RecyclerAdapterPosition;
 import com.dbvr.baselibrary.model.DzAndComment;
-import com.dbvr.baselibrary.model.TagMo;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
 import com.dbvr.baselibrary.view.AppManager;
 import com.dbvr.baselibrary.view.BaseActivity;
@@ -26,8 +23,6 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONException;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,25 +31,21 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-/**
- * 获得的赞
- */
-public class GetDzActivity extends BaseActivity {
+public class CommentListActivity extends BaseActivity {
     @BindView(R.id.recycle_dz)
     RecyclerView recyclerView;
     private RecyclerAdapterPosition adapter;
     private List<DzAndComment> mData = new ArrayList<>();
-
+    private int page = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //用来设置整体下移，状态栏沉浸
         StatusBarUtil.setRootViewFitsSystemWindows(this, false);
     }
 
     @Override
     public int setLayout() {
-        return R.layout.activity_get_dz;
+        return R.layout.activity_comment_list;
     }
 
     @Override
@@ -62,19 +53,22 @@ public class GetDzActivity extends BaseActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new RecyclerAdapterPosition<DzAndComment>(this, mData, R.layout.item_dz) {
             @Override
-            public void convert(Context mContext, BaseRecyclerHolder holder,int position, DzAndComment o) {
+            public void convert(Context mContext, BaseRecyclerHolder holder, int position, DzAndComment o) {
                 if (o.getTag() == 0) {//动态
-                    holder.setText(R.id.tvTips, "赞了你的动态\t" + o.getAddTime());
+                    holder.setText(R.id.tvTips, "评论了你的动态\t" + o.getAddTime());
                 } else {
-                    holder.setText(R.id.tvTips, "赞了你的视频\t" + o.getAddTime());
+                    holder.setText(R.id.tvTips, "评论了你的视频\t" + o.getAddTime());
                 }
+
+                holder.setText(R.id.tvComment,o.getContent());
+
                 holder.setText(R.id.tvNickName, o.getNickName());
                 SimpleDraweeView sdvHead = holder.getView(R.id.sdvHead);
                 sdvHead.setImageURI(o.getHeadUrl());
                 holder.setImageByUrl(R.id.mivImg, o.getCoverUrl());
 
                 sdvHead.setOnClickListener(view -> {
-                    Map<String,Object>map = new HashMap<>();
+                    Map<String,Object> map = new HashMap<>();
                     map.put("userId",o.getUserId());
                     goTActivity(UserHomeActivity.class, map);
                 });
@@ -84,18 +78,15 @@ public class GetDzActivity extends BaseActivity {
         recyclerView.setAdapter(adapter);
     }
 
-    private int page = 1;
-
     @Override
     public void initData() {
         Map<String, Object> map = new HashMap<>();
         map.put("page", page);
         map.put("limit", 10);
-        OkHttp3Utils.getInstance(getContext()).doPostJson(DyUrl.praisedList, map,
+        OkHttp3Utils.getInstance(getContext()).doPostJson(DyUrl.getCommentList, map,
                 new ObjectCallback<String>(getContext()) {
                     @Override
                     public void onUi(String result) {
-                        Log.e("aaaaaa",result);
                         List<DzAndComment> list = new Gson().fromJson(result, new TypeToken<List<DzAndComment>>() {
                         }.getType());
                         if (list != null && list.size() > 0) {
@@ -122,4 +113,5 @@ public class GetDzActivity extends BaseActivity {
             AppManager.getAppManager().finishActivity(this);
         }
     }
+
 }

@@ -222,6 +222,7 @@ public class UserDynamicFragment extends BaseFragment {
         Map<String,Object>map = new HashMap<>();
         map.put("page",page);
         map.put("limit",10);
+        map.put("userId",SPUtils.instance(getContext()).getUser().getId());
         OkHttp3Utils.getInstance(getContext()).doPostJson(DyUrl.getSayList, map, new ObjectCallback<String>(getContext()) {
             @Override
             public void onUi(String result) {
@@ -284,7 +285,7 @@ public class UserDynamicFragment extends BaseFragment {
             @Override
             public void onUploadBlockComplete(String key) {
                 //上传成功一个文件
-                resultPath.add(key);
+                resultPath.add("http://image.vrzbgw.com/"+key);
             }
             @Override
             public void onUploadCompleted() {
