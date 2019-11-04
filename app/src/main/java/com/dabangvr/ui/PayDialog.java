@@ -73,7 +73,10 @@ public class PayDialog {
             @Override
             public void onClick(View v) {
                 if (checkPayId == 0) {//微信支付
-                    requestPay.show();
+                    if (requestPay!=null){
+                        requestPay.show();
+                    }
+
                     if (null == orderSn|| StringUtils.isEmpty(orderSn)){
                         prepayOrderAgain();//重新支付
                     }else {

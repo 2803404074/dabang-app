@@ -7,6 +7,8 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.dabangvr.R;
+import com.dabangvr.activity.FansAndFollowActivity;
+import com.dabangvr.activity.MyDropActivity;
 import com.dabangvr.activity.UserEditMessActivity;
 import com.dabangvr.application.MyApplication;
 import com.dabangvr.fragment.other.UserPersonalFragment;
@@ -92,11 +94,20 @@ public class MyFragment extends BaseFragment {
 
     }
 
-    @OnClick({R.id.sdvHead,R.id.tv_edit})
+    @OnClick({R.id.sdvHead,R.id.tv_edit,R.id.llFans,R.id.llFollow,R.id.llDrop})
     public void onTouchClick(View view) {
         switch (view.getId()){
             case R.id.tv_edit:
                 goTActivity(UserEditMessActivity.class,null);
+                break;
+            case R.id.llFans:
+                goTActivity(FansAndFollowActivity.class,null);
+                break;
+            case R.id.llFollow:
+                goTActivity(FansAndFollowActivity.class,null);
+                break;
+            case R.id.llDrop:
+                goTActivity(MyDropActivity.class,null);
                 break;
         }
 

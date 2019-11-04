@@ -12,8 +12,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.dabangvr.R;
 import com.dabangvr.adapter.BaseRecyclerHolder;
 import com.dabangvr.adapter.RecyclerAdapter;
+import com.dabangvr.ui.PayDialog;
 import com.dbvr.baselibrary.model.FansMo;
 import com.dbvr.baselibrary.model.TagMo;
+import com.dbvr.baselibrary.utils.BottomDialogUtil2;
+import com.dbvr.baselibrary.utils.Conver;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
 import com.dbvr.baselibrary.utils.ToastUtil;
 import com.dbvr.baselibrary.view.AppManager;
@@ -127,15 +130,50 @@ public class FansAndFollowActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.ivBack})
+    @OnClick({R.id.ivBack,R.id.tvCreateVIP})
     public void onclick(View view){
         switch (view.getId()){
             case R.id.ivBack:
                 AppManager.getAppManager().finishActivity(this);
                 break;
+            case R.id.tvCreateVIP:
+                BottomDialogUtil2.getInstance(this).showLive(R.layout.dialog_vip, view1 -> {
+                    TextView tvYear = view1.findViewById(R.id.tvYear);
+                    TextView tvThreeMon = view1.findViewById(R.id.tvThreeMon);
+                    TextView tvOneMon = view1.findViewById(R.id.tvOneMon);
+                    view1.findViewById(R.id.tvYear).setOnClickListener(view2 -> {
+                        BottomDialogUtil2.getInstance(this).dess();
+                        PayDialog dialog = new PayDialog(getContext(),"","orderSnTotal",null);
+                        dialog.showDialog(tvYear.getText().toString());
+                    });
+                    view1.findViewById(R.id.tvThreeMon).setOnClickListener(view2 -> {
+                        BottomDialogUtil2.getInstance(this).dess();
+                        PayDialog dialog = new PayDialog(getContext(),"","orderSnTotal",null);
+                        dialog.showDialog(tvThreeMon.getText().toString());
+                    });
+                    view1.findViewById(R.id.tvOneMon).setOnClickListener(view2 -> {
+                        BottomDialogUtil2.getInstance(this).dess();
+                        PayDialog dialog = new PayDialog(getContext(),"","orderSnTotal",null);
+                        dialog.showDialog(tvOneMon.getText().toString());
+                    });
+
+                    view1.findViewById(R.id.tvSeeServer).setOnClickListener(view2 -> {
+
+                    });
+                    view1.findViewById(R.id.tvSeeDrop).setOnClickListener(view2 -> {
+                        goTActivity(MyDropActivity.class,null);
+                    });
+                });
+                break;
         }
     }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        BottomDialogUtil2.getInstance(this).dess();
+    }
 
     /**
      * 关注粉丝
