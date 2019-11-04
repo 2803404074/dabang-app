@@ -115,7 +115,7 @@ public class UserSJRZTwoActivity extends BaseActivity {
                     return;
                 }
                 depVo.setUsername(etnameStr);
-                depVo.setUserId(etname_codeStr);
+                depVo.setIdcard(etname_codeStr);
 
                 Intent intent = new Intent(getContext(), UserSJRZThreeActivity.class);
                 intent.putExtra(ParameterContens.depVo, depVo);

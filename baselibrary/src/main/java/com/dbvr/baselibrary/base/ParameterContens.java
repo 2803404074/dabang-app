@@ -16,19 +16,11 @@ public interface ParameterContens {
     String CLIENT_GYWM = "client_gywm";//关于我们
 
 
-    //我的界面
-
-    String yhq="yhq";//优惠卷
-    String spsc="spsc";//商品收藏
-    String wdpt="wdpt";//我的平团
-    String wdqb="wdqb";//我的钱包
-    String sjrz="sjrz";//商家入驻
-    String zbsq="zbsq";//主播申请
-    String kf="kf";//客服
-    long clickTime=2000l;
+    long clickTime=2000l; //点击事件防止过度点击
 
     String depVo = "depVo";//商家入驻传递数据标识
+    String AnchorVo = "AnchorVo";//主播入驻传递数据标识
     String idcartFacial = "idcartFacial";//身份证正面
     String idcartBehind = "idcartBehind";//身份证反面
-    String threeCertificates = "threeCertificates";//身份证反面
+    String threeCertificates = "threeCertificates";//三证合一
 }

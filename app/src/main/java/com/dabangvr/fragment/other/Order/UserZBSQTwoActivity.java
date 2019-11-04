@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.dabangvr.R;
 import com.dabangvr.application.MyApplication;
 import com.dbvr.baselibrary.base.ParameterContens;
+import com.dbvr.baselibrary.model.AnchorVo;
 import com.dbvr.baselibrary.model.DepVo;
 import com.dbvr.baselibrary.model.QiniuUploadFile;
 import com.dbvr.baselibrary.utils.OnUploadListener;
@@ -25,14 +26,16 @@ import com.dbvr.baselibrary.utils.ToastUtil;
 import com.dbvr.baselibrary.view.AppManager;
 import com.dbvr.baselibrary.view.BaseActivity;
 import com.dbvr.httplibrart.constans.DyUrl;
+import com.dbvr.httplibrart.constans.UserUrl;
 import com.dbvr.httplibrart.utils.ObjectCallback;
 import com.dbvr.httplibrart.utils.OkHttp3Utils;
 import com.dbvr.imglibrary2.model.Image;
 import com.dbvr.imglibrary2.ui.SelectImageActivity;
 import com.google.gson.Gson;
 
-import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import androidx.core.app.ActivityCompat;
@@ -60,7 +63,7 @@ public class UserZBSQTwoActivity extends BaseActivity {
     private static final int SELECT_IMAGE_REQUEST_two = 0x0013;
     private ArrayList<Image> mSelectImages = new ArrayList<>();
     private long lastonclickTime = 0;
-    private DepVo depVo;
+    private AnchorVo anchorVo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,12 +79,12 @@ public class UserZBSQTwoActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        depVo = (DepVo) getIntent().getSerializableExtra(ParameterContens.depVo);
-        if (depVo != null) {
-            etname.setText(depVo.getUsername());
-            etname_code.setText(depVo.getIdcard());
-            Glide.with(this).load(depVo.getIdcartFacial() == null ? R.mipmap.icon_id : depVo.getIdcartFacial()).into(ig_id_front);
-            Glide.with(this).load(depVo.getIdcartBehind() == null ? R.mipmap.icon_id : depVo.getIdcartBehind()).into(ig_id_back);
+        anchorVo = (AnchorVo) getIntent().getSerializableExtra(ParameterContens.AnchorVo);
+        if (anchorVo != null) {
+            etname.setText(anchorVo.getName());
+            etname_code.setText(anchorVo.getIdcard());
+            Glide.with(this).load(anchorVo.getIdcardFace() == null ? R.mipmap.icon_id : anchorVo.getIdcardFace()).into(ig_id_front);
+            Glide.with(this).load(anchorVo.getIdcardBack() == null ? R.mipmap.icon_id : anchorVo.getIdcardBack()).into(ig_id_back);
         }
     }
 
@@ -110,11 +113,10 @@ public class UserZBSQTwoActivity extends BaseActivity {
                     ToastUtil.showShort(this, "请输入姓名和身份证号");
                     return;
                 }
-                depVo.setUsername(etnameStr);
-                depVo.setIdcard(etname_codeStr);
+                anchorVo.setName(etnameStr);
+                anchorVo.setIdcard(etname_codeStr);
+
                 UserApplyUpload();
-
-
                 break;
             case R.id.ll_id_front: //正面
                 selectImage(SELECT_IMAGE_REQUEST_one);
@@ -126,10 +128,31 @@ public class UserZBSQTwoActivity extends BaseActivity {
     }
 
     private void UserApplyUpload() {
-        Intent intent = new Intent(this, UserApplySuccessActivity.class);
-        intent.putExtra("name", "主播申请");
-        startActivity(intent);
+        Map<String, Object> map = new HashMap<>();
+        map.put("name",anchorVo.getName());
+        map.put("phone",anchorVo.getPhone());
+        map.put("idcard",anchorVo.getIdcard());
+        map.put("idcardFace",anchorVo.getIdcardFace());
+        map.put("idcardBack",anchorVo.getIdcardBack());
+        map.put("agreedAgreement","1");
+        map.put("remarks",anchorVo.getRemarks());
+        map.put("id",anchorVo.getId());
+        OkHttp3Utils.getInstance(getContext()).doPostJson(UserUrl.addAnchor, map, new ObjectCallback<String>(getContext()) {
+            @Override
+            public void onUi(String result) {
+                Log.d("luhuas", "onUi: " + result);
+                Intent intent = new Intent(UserZBSQTwoActivity.this, UserApplySuccessActivity.class);
+                intent.putExtra("name", "主播申请");
+                startActivity(intent);
+            }
+            @Override
+            public void onFailed(String msg) {
+                ToastUtil.showShort(getContext(), msg);
+            }
+        });
+
     }
+
 
     private void selectImage(int code) {
         int isPermission1 = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
@@ -226,9 +249,9 @@ public class UserZBSQTwoActivity extends BaseActivity {
                 Log.d("luhuas", "onUploadBlockComplete: " + path);
                 if (!TextUtils.isEmpty(path)) {
                     if (path.startsWith(ParameterContens.idcartFacial)) {
-                        depVo.setIdcartFacial(DyUrl.QINIUDOMAN + path);
+                        anchorVo.setIdcardFace(DyUrl.QINIUDOMAN + path);
                     } else if (path.startsWith(ParameterContens.idcartBehind)) {
-                        depVo.setIdcartBehind(DyUrl.QINIUDOMAN + path);
+                        anchorVo.setIdcardBack(DyUrl.QINIUDOMAN + path);
                     }
                 }
             }

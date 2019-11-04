@@ -203,7 +203,7 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:paddingLeft="@dimen/dp_20"
-                        android:text="1995-55-55"
+                        android:text="1995-5-15"
                         android:textColor="@color/textTitle"
                         android:textSize="@dimen/sp_16" />
 

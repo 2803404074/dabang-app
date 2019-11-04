@@ -1,14 +1,17 @@
 package com.dabangvr.fragment.other.Order;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dabangvr.R;
 import com.dabangvr.activity.MainActivity;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
 import com.dbvr.baselibrary.view.AppManager;
 import com.dbvr.baselibrary.view.BaseActivity;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -59,7 +62,14 @@ public class UserApplySuccessActivity extends BaseActivity {
                 AppManager.getAppManager().finishAllActivityTo(MainActivity.class);
                 break;
         }
-
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            AppManager.getAppManager().finishAllActivityTo(MainActivity.class);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }

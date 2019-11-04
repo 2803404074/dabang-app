@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -53,11 +54,13 @@ public class ProblemActivity extends BaseActivity {
     @BindView(R.id.etPhone)
     EditText etPhone;
 
+
     @BindView(R.id.ll_addView)
     LinearLayout ll_addView;
     @BindView(R.id.ll_select)
     LinearLayout ll_select;
     private static final int PERMISSION_REQUEST_CODE = 0;
+    private static final int PIC_SUM = 4;
     private static final int SELECT_IMAGE_REQUEST = 0x0011;
     private ArrayList<Image> mSelectImages = new ArrayList<>();
     private SelectedImageAdapter mAdapter;
@@ -95,7 +98,7 @@ public class ProblemActivity extends BaseActivity {
                 mSelectImages.addAll(selectImages);
                 if (mSelectImages.size() > 1) {
                     ivAdd.setVisibility(View.VISIBLE);
-                    if (mSelectImages.size() == 9) {
+                    if (mSelectImages.size() == PIC_SUM) {
                         ivAdd.setVisibility(View.GONE);
                     }
                 }
@@ -163,7 +166,6 @@ public class ProblemActivity extends BaseActivity {
             int position = viewHolder.getAdapterPosition();
             mSelectImages.remove(position);
             mAdapter.notifyItemRemoved(position);
-
             ivAdd.setVisibility(View.VISIBLE);
         }
     });
@@ -183,7 +185,7 @@ public class ProblemActivity extends BaseActivity {
 
     private void startActivity() {
         Intent intent = new Intent(this, SelectImageActivity.class);
-        intent.putExtra("size", 4);
+        intent.putExtra("size", PIC_SUM);
         intent.putParcelableArrayListExtra("selected_images", mSelectImages);
         startActivityForResult(intent, SELECT_IMAGE_REQUEST);
     }
@@ -221,8 +223,16 @@ public class ProblemActivity extends BaseActivity {
         String content_fk = et_content_fk.getText().toString().trim();
         String phone = etPhone.getText().toString().trim();
         if (itemList == null || itemList.size() == 0) {
+
             ToastUtil.showShort(this, "请选择您要反馈的问题");
         } else {
+            StringBuilder stringBuilder=new StringBuilder();
+            for (int i = 0; i < itemList.size(); i++) {
+                if (itemList.get(i).isChecked()){
+                    stringBuilder.append(itemList.get(i).getKeyWord()+",");
+                }
+            }
+            Log.d("luhuas", "subMess: "+stringBuilder.toString().substring(0,stringBuilder.length()-1));
             ToastUtil.showShort(this, "问题已反馈给技术人员");
         }
     }

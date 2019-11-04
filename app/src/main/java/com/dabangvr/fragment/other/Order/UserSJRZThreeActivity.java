@@ -22,6 +22,7 @@ import com.addressselection.widge.BottomDialog;
 import com.addressselection.widge.OnAddressSelectedListener;
 import com.bumptech.glide.Glide;
 import com.dabangvr.R;
+import com.dabangvr.activity.MainActivity;
 import com.dabangvr.application.MyApplication;
 import com.dbvr.baselibrary.base.ParameterContens;
 import com.dbvr.baselibrary.model.DepVo;
@@ -158,10 +159,9 @@ public class UserSJRZThreeActivity extends BaseActivity implements OnAddressSele
                     return;
                 }
                 depVo.setName(etnameStr);
-                depVo.setName(et_projectStr);
-                depVo.setName(et_addressStr);
-                depVo.setName(tv_addressStr);
-                depVo.setName(et_introduceStr);
+                depVo.setMainCategory(et_projectStr);
+                depVo.setProductionAddress(et_addressStr);
+                depVo.setSynopsis(et_introduceStr);
                 UserApplyUpload();
 
                 break;
@@ -202,10 +202,11 @@ public class UserSJRZThreeActivity extends BaseActivity implements OnAddressSele
         map.put("idcartFacial", depVo.getIdcartFacial());
         map.put("idcartBehind", depVo.getIdcartBehind());
         map.put("threeCertificates", depVo.getThreeCertificates());
-        map.put("zipCode", depVo.getZipCode());
+        map.put("synopsis", depVo.getSynopsis());
         map.put("agreedAgreement", 1);
+        map.put("deptId", depVo.getDeptId());
 
-        OkHttp3Utils.getInstance(getContext()).doPostJson(UserUrl.addDeptState, map, new ObjectCallback<String>(getContext()) {
+        OkHttp3Utils.getInstance(getContext()).doPostJson(UserUrl.addDept, map, new ObjectCallback<String>(getContext()) {
             @Override
             public void onUi(String result) {
                 Log.d("luhuas", "onUi: " + result);
@@ -252,7 +253,7 @@ public class UserSJRZThreeActivity extends BaseActivity implements OnAddressSele
                     Glide.with(this).load(selectImages.get(0).getPath()).into(ig_id_front);
                     new Thread(() -> {
 
-                        getQiniuToken(selectImages.get(0).getPath(), ParameterContens.idcartFacial);
+                        getQiniuToken(selectImages.get(0).getPath(), ParameterContens.threeCertificates);
                     }).start();
                 }
 

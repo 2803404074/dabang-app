@@ -24,6 +24,7 @@ import com.dabangvr.fragment.other.Order.MyShoppingCartActivity;
 import com.dabangvr.fragment.other.Order.MyYhjActivity;
 import com.dabangvr.fragment.other.Order.UserZBSQOneActivity;
 import com.dbvr.baselibrary.base.ParameterContens;
+import com.dbvr.baselibrary.model.AnchorVo;
 import com.dbvr.baselibrary.model.DepVo;
 import com.dbvr.baselibrary.model.MenuBean;
 import com.dbvr.baselibrary.utils.DialogUtil;
@@ -44,8 +45,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.StringTokenizer;
-import java.util.concurrent.atomic.AtomicReference;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -107,10 +106,9 @@ public class UserPersonalFragment extends BaseFragment {
                         break;
                     case ParameterContens.CLIENT_SJRZ://商家入驻
                         queryAddDeptState();
-
                         break;
                     case ParameterContens.CLIENT_ZBSQ://主播申请
-                        goTActivity(UserZBSQOneActivity.class, null);
+                        queryAnchorState();
                         break;
                     case ParameterContens.CLIENT_SZ:  //设置
                         goTActivity(UserSettingActivity.class, null);
@@ -131,6 +129,68 @@ public class UserPersonalFragment extends BaseFragment {
         });
     }
 
+    private void queryAnchorState() {
+        Map<String, Object> map = new HashMap<>();
+//        map.put("phone", phone);
+        OkHttp3Utils.getInstance(getContext()).doPostJson(UserUrl.addAnchorState, map, new ObjectCallback<String>(getContext()) {
+            @Override
+            public void onUi(String result) {
+                Log.d("luhuas", "onUi: " + result);
+                try {
+                    AnchorVo anchorVo = new Gson().fromJson(result, AnchorVo.class);
+                    if (anchorVo != null) {
+                        if (anchorVo.getAuditStatus() == 0) {
+                            DialogUtil.getInstance(getContext()).show(R.layout.dialog_tip, holder -> {
+                                TextView tvTitle = holder.findViewById(R.id.tv_title);
+                                TextView tv_massage = holder.findViewById(R.id.tv_massage);
+                                String title = "审核不通过";
+                                tv_massage.setVisibility(View.VISIBLE);
+                                tv_massage.setText(anchorVo.getAuditDescribe());
+                                tvTitle.setText(title);
+                                holder.findViewById(R.id.tvCancel).setOnClickListener(view1 -> DialogUtil.getInstance(getContext()).des());
+                                holder.findViewById(R.id.tvConfirm).setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent intent = new Intent(getContext(), UserZBSQOneActivity.class);
+                                        intent.putExtra(ParameterContens.AnchorVo, anchorVo);
+                                        startActivity(intent);
+                                        DialogUtil.getInstance(getContext()).des();
+                                    }
+                                });
+                            });
+                        } else {
+                            DialogUtil.getInstance(getContext()).show(R.layout.dialog_tip, holder -> {
+                                TextView tvTitle = holder.findViewById(R.id.tv_title);
+                                String title = "";
+                                if (anchorVo.getAuditStatus() == -1) {
+                                    title = "正在审核中";
+                                } else if (anchorVo.getAuditStatus() == 1) {
+                                    title = "您已经入驻成功";
+                                }
+                                tvTitle.setText(title);
+                                holder.findViewById(R.id.tvCancel).setOnClickListener(view1 -> DialogUtil.getInstance(getContext()).des());
+                                holder.findViewById(R.id.tvConfirm).setOnClickListener(view12 -> DialogUtil.getInstance(getContext()).des());
+                            });
+                        }
+                    } else {
+                        Intent intent = new Intent(getContext(), UserZBSQOneActivity.class);
+                        intent.putExtra(ParameterContens.AnchorVo, anchorVo);
+                        startActivity(intent);
+                    }
+                } catch (JsonSyntaxException e) {
+                    e.printStackTrace();
+                    goTActivity(UserZBSQOneActivity.class, null);
+                }
+
+            }
+
+            @Override
+            public void onFailed(String msg) {
+                ToastUtil.showShort(getContext(), msg);
+            }
+        });
+    }
+
     /**
      * 查询商家入驻状态
      */
@@ -140,20 +200,36 @@ public class UserPersonalFragment extends BaseFragment {
         OkHttp3Utils.getInstance(getContext()).doPostJson(UserUrl.addDeptState, map, new ObjectCallback<String>(getContext()) {
             @Override
             public void onUi(String result) {
+                Log.d("luhuas", "onUi: " + result);
                 try {
                     DepVo depVo = new Gson().fromJson(result, DepVo.class);
                     if (depVo != null) {
-                        if (depVo.getAgreedAgreement() == 0) {
-                            Intent intent = new Intent(getContext(), UserSJRZOneActivity.class);
-                            intent.putExtra(ParameterContens.depVo, depVo);
-                            startActivity(intent);
+                        if (depVo.getAuditStatus() == 0) {
+                            DialogUtil.getInstance(getContext()).show(R.layout.dialog_tip, holder -> {
+                                TextView tvTitle = holder.findViewById(R.id.tv_title);
+                                TextView tv_massage = holder.findViewById(R.id.tv_massage);
+                                String title = "审核不通过";
+                                tv_massage.setVisibility(View.VISIBLE);
+                                tv_massage.setText(depVo.getAuditDescribe());
+                                tvTitle.setText(title);
+                                holder.findViewById(R.id.tvCancel).setOnClickListener(view1 -> DialogUtil.getInstance(getContext()).des());
+                                holder.findViewById(R.id.tvConfirm).setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent intent = new Intent(getContext(), UserSJRZOneActivity.class);
+                                        intent.putExtra(ParameterContens.depVo, depVo);
+                                        startActivity(intent);
+                                        DialogUtil.getInstance(getContext()).des();
+                                    }
+                                });
+                            });
                         } else {
                             DialogUtil.getInstance(getContext()).show(R.layout.dialog_tip, holder -> {
                                 TextView tvTitle = holder.findViewById(R.id.tv_title);
                                 String title = "";
-                                if (depVo.getAgreedAgreement() == -1) {
-                                    title = "未审核";
-                                } else if (depVo.getAgreedAgreement() == 1) {
+                                if (depVo.getAuditStatus() == -1) {
+                                    title = "正在审核中";
+                                } else if (depVo.getAuditStatus() == 1) {
                                     title = "您已经入驻成功";
                                 }
                                 tvTitle.setText(title);
@@ -187,7 +263,6 @@ public class UserPersonalFragment extends BaseFragment {
     }
 
     private void getData() {
-
         String menuBeanStr = (String) SPUtils.instance(getContext()).getkey("getChannelMenuList", "");
         if (!TextUtils.isEmpty(menuBeanStr)) {
             try {

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.addressselection.utils.Dev;
 import com.dabangvr.R;
 import com.dbvr.baselibrary.base.ParameterContens;
+import com.dbvr.baselibrary.model.AnchorVo;
 import com.dbvr.baselibrary.model.DepVo;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
 import com.dbvr.baselibrary.utils.StringUtils;
@@ -59,7 +60,7 @@ public class UserZBSQOneActivity extends BaseActivity {
 
     private boolean isChecked;
     private long lastonclickTime=0;
-    private DepVo depVo;
+    private AnchorVo anchorVo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,11 +76,12 @@ public class UserZBSQOneActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        depVo = (DepVo) getIntent().getSerializableExtra(ParameterContens.depVo);
-        if (depVo !=null){
-            etPhone.setText(depVo.getPhone());
+        anchorVo = (AnchorVo) getIntent().getSerializableExtra(ParameterContens.AnchorVo);
+        if (anchorVo !=null){
+            etPhone.setText(anchorVo.getPhone());
+            et_other.setText(anchorVo.getRemarks());
         }else {
-           depVo =new DepVo();
+            anchorVo =new AnchorVo();
         }
     }
 
@@ -129,10 +131,10 @@ public class UserZBSQOneActivity extends BaseActivity {
                     ToastUtil.showShort(this,"请确认我已了解");
                     return;
                 }
-                depVo.setPhone(phone);
-                depVo.setZipCode(other);
+                anchorVo.setPhone(phone);
+                anchorVo.setRemarks(other);
                 Intent intent =new Intent(this,UserZBSQTwoActivity.class);
-                intent.putExtra(ParameterContens.depVo,depVo);
+                intent.putExtra(ParameterContens.AnchorVo,anchorVo);
                 startActivity(intent);
                 break;
         }

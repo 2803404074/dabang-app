@@ -202,7 +202,7 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/dp_20"
                     android:textSize="@dimen/sp_16"
-                    android:text="1995-55-55"/>
+                    android:text="1995-5-15"/>
                 <ImageView
                     android:layout_gravity="center"
                     android:layout_width="@dimen/dp_25"
