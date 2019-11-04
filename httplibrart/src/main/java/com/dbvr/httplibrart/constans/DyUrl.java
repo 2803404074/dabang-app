@@ -91,4 +91,8 @@ public class DyUrl {
 
     //获取高德省市县三级联动json
     public static final String getAmapDistrict = "api/config/getAmapDistrict";
+    public static String praisedSay="api/my/praisedSay";
+    public static String getPraisedList="api/my/getPraisedList";
+
+    public static String commentSay="api/my/commentSay";
 }
