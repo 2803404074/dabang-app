@@ -11,6 +11,7 @@ import com.dbvr.baselibrary.utils.CacheUtil;
 import com.dbvr.baselibrary.utils.DialogUtil;
 import com.dbvr.baselibrary.utils.SPUtils;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
+import com.dbvr.baselibrary.utils.VersionUtil;
 import com.dbvr.baselibrary.view.AppManager;
 import com.dbvr.baselibrary.view.BaseActivity;
 
@@ -25,6 +26,7 @@ public class UserSettingActivity extends BaseActivity {
     @BindView(R.id.tv_memory_size)
     TextView tv_memory_size;
     private AlertDialog alertDialog;
+    private String versionName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +42,7 @@ public class UserSettingActivity extends BaseActivity {
 
     @Override
     public void initView() {
-
+        versionName = VersionUtil.getAppVersionName(this);
     }
 
     @Override
@@ -72,6 +74,8 @@ public class UserSettingActivity extends BaseActivity {
                 break;
         }
     }
+
+
 
     private void logOut() {
         SPUtils.instance(this).removeUser();

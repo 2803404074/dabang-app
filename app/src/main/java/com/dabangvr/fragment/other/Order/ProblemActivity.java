@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,22 +16,35 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dabangvr.R;
+import com.dbvr.baselibrary.base.ParameterContens;
+import com.dbvr.baselibrary.model.QiniuUploadFile;
 import com.dbvr.baselibrary.model.Search;
+import com.dbvr.baselibrary.utils.OnUploadListener;
+import com.dbvr.baselibrary.utils.QiniuUploadManager;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
 import com.dbvr.baselibrary.utils.ToastUtil;
 import com.dbvr.baselibrary.view.AppManager;
 import com.dbvr.baselibrary.view.BaseActivity;
 import com.dbvr.baselibrary.view.MultiSelectPopupWindows;
+import com.dbvr.httplibrart.constans.DyUrl;
+import com.dbvr.httplibrart.constans.UserUrl;
+import com.dbvr.httplibrart.utils.ObjectCallback;
+import com.dbvr.httplibrart.utils.OkHttp3Utils;
 import com.dbvr.imglibrary2.model.Image;
+import com.dbvr.imglibrary2.ui.PreviewImageActivity;
 import com.dbvr.imglibrary2.ui.SelectImageActivity;
 import com.dbvr.imglibrary2.ui.adapter.SelectedImageAdapter;
 import com.dbvr.imglibrary2.utils.TDevice;
 import com.dbvr.imglibrary2.widget.recyclerview.SpaceGridItemDecoration;
+import com.google.gson.Gson;
 import com.hyphenate.util.DensityUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -67,6 +81,8 @@ public class ProblemActivity extends BaseActivity {
     private MultiSelectPopupWindows productsMultiSelectPopupWindows;
     private ArrayList<Search> products;
     private List<Search> itemList;
+    private ArrayList<String> resultPath;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,8 +108,11 @@ public class ProblemActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
+//            setLoaddingView(true);
             if (requestCode == SELECT_IMAGE_REQUEST && data != null) {
                 ArrayList<Image> selectImages = data.getParcelableArrayListExtra(SelectImageActivity.EXTRA_RESULT);
+
+
                 mSelectImages.clear();
                 mSelectImages.addAll(selectImages);
                 if (mSelectImages.size() > 1) {
@@ -105,6 +124,7 @@ public class ProblemActivity extends BaseActivity {
                 mAdapter = new SelectedImageAdapter(this, mSelectImages, R.layout.selected_image_item);
                 recyclerView.setAdapter(mAdapter);
                 mItemTouchHelper.attachToRecyclerView(recyclerView);
+
             }
         }
 
@@ -113,11 +133,6 @@ public class ProblemActivity extends BaseActivity {
             String result = data.getStringExtra("result");
 //            tvLocationName.setText(result);
         }
-    }
-
-    @Override
-    public void initData() {
-        getData();
     }
 
     private ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
@@ -171,6 +186,73 @@ public class ProblemActivity extends BaseActivity {
     });
 
 
+    /**
+     * 获取七牛token
+     */
+    private void getQiniuToken(List<String> img) {
+        OkHttp3Utils.getInstance(getContext()).doPostJson(DyUrl.getUploadConfigToken, null, new ObjectCallback<String>(getContext()) {
+            @Override
+            public void onUi(String result) {
+                QiniuUploadFile qiniuUploadFile = new Gson().fromJson(result, QiniuUploadFile.class);
+                upLoadImg(qiniuUploadFile, img);//上传图片
+            }
+
+            @Override
+            public void onFailed(String msg) {
+                setLoaddingView(false);
+            }
+        });
+    }
+
+    /**
+     * 上传动态图片
+     *
+     * @param img
+     */
+    public void upLoadImg(QiniuUploadFile qiniuUploadFile, List<String> img) {
+        resultPath = new ArrayList<>();
+        List<QiniuUploadFile> qiniu = new ArrayList<>();
+        for (int i = 0; i < img.size(); i++) {
+            qiniu.add(new QiniuUploadFile(img.get(i), ParameterContens.problem + UUID.randomUUID(), qiniuUploadFile.getMimeType(), qiniuUploadFile.getUpLoadToken()));
+        }
+        QiniuUploadManager.getInstance(getContext()).upload(qiniu, new OnUploadListener() {
+            @Override
+            public void onStartUpload() {
+            }
+
+            @Override
+            public void onUploadProgress(String key, double percent) {
+            }
+
+            @Override
+            public void onUploadFailed(String key, String err) {
+                setLoaddingView(false);
+            }
+
+            @Override
+            public void onUploadBlockComplete(String key) {
+                //上传成功一个文件
+                resultPath.add(DyUrl.QINIUDOMAN + key);
+            }
+
+            @Override
+            public void onUploadCompleted() {
+                subProblem();
+            }
+
+            @Override
+            public void onUploadCancel() {//取消上传
+                setLoaddingView(false);
+            }
+        });
+    }
+
+    @Override
+    public void initData() {
+        getData();
+    }
+
+
     private void selectImage() {
         int isPermission1 = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
         int isPermission2 = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
@@ -220,21 +302,73 @@ public class ProblemActivity extends BaseActivity {
     }
 
     private void subMess() {
+
+        setLoaddingView(true);
+        List<String> list = new ArrayList<>();
+        for (int i = 0; i < mSelectImages.size(); i++) {
+            list.add(mSelectImages.get(i).getPath());
+        }
+        new Thread(() -> {
+            getQiniuToken(list);
+
+        }).start();
+
+
+    }
+
+    private void subProblem() {
+
         String content_fk = et_content_fk.getText().toString().trim();
         String phone = etPhone.getText().toString().trim();
+        StringBuilder stringBuilder = new StringBuilder();
         if (itemList == null || itemList.size() == 0) {
-
+            setLoaddingView(false);
             ToastUtil.showShort(this, "请选择您要反馈的问题");
         } else {
-            StringBuilder stringBuilder=new StringBuilder();
+
             for (int i = 0; i < itemList.size(); i++) {
-                if (itemList.get(i).isChecked()){
-                    stringBuilder.append(itemList.get(i).getKeyWord()+",");
+                if (itemList.get(i).isChecked()) {
+                    stringBuilder.append(itemList.get(i).getKeyWord() + ",");
                 }
             }
-            Log.d("luhuas", "subMess: "+stringBuilder.toString().substring(0,stringBuilder.length()-1));
-            ToastUtil.showShort(this, "问题已反馈给技术人员");
+
         }
+        if (TextUtils.isEmpty(content_fk)) {
+            setLoaddingView(false);
+            ToastUtil.showShort(this, "请详细描述您反馈的问题");
+            return;
+        }
+        if (TextUtils.isEmpty(phone)) {
+            setLoaddingView(false);
+            ToastUtil.showShort(this, "请输入您的联系方式");
+            return;
+        }
+
+        for (int i = 0; i < resultPath.size(); i++) {
+            Log.d("luhuas", "subProblem: " + resultPath.get(i));
+        }
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("type", stringBuilder.toString().substring(0, stringBuilder.length() - 1));
+        map.put("detailed", content_fk);
+        map.put("imgs", new Gson().toJson(resultPath));
+        map.put("phone", phone);
+
+        OkHttp3Utils.getInstance(getContext()).doPostJson(UserUrl.submitFeedback, map, new ObjectCallback<String>(getContext()) {
+            @Override
+            public void onUi(String result) {
+                Log.d("luhuas", "onUi: " + result);
+                setLoaddingView(false);
+                ToastUtil.showShort(ProblemActivity.this, "问题已反馈给技术人员");
+                AppManager.getAppManager().finishActivity(ProblemActivity.this);
+            }
+
+            @Override
+            public void onFailed(String msg) {
+                setLoaddingView(false);
+                ToastUtil.showShort(getContext(), msg);
+            }
+        });
     }
 
     private void selectProblem() {

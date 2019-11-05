@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<paths xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="MissingDefaultResource">
-    <external-path
-        name="my_images"
-        path="." />
-</paths>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <paths>
+        <external-path path="" name="download"/>
+    </paths>
+</resources>

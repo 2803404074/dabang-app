@@ -14,4 +14,5 @@ public class UserUrl {
     public static final String addAnchorState ="api/anchor/addAnchorState"; //查询入驻状态
     public static final String addAnchor ="api/anchor/addAnchor"; //查询入驻状态
     public static final String submitFeedback ="api/config/submitFeedback"; //问题反馈
+    public static final String updateApp ="api/config/updateApp"; //问题反馈
 }

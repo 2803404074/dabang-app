@@ -20,7 +20,11 @@ public interface ParameterContens {
 
     String depVo = "depVo";//商家入驻传递数据标识
     String AnchorVo = "AnchorVo";//主播入驻传递数据标识
+    /**
+     * 上传七牛云图片标识
+     */
     String idcartFacial = "idcartFacial";//身份证正面
     String idcartBehind = "idcartBehind";//身份证反面
     String threeCertificates = "threeCertificates";//三证合一
+    String problem = "problem";//问题反馈
 }

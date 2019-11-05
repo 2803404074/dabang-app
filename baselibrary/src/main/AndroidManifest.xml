@@ -2,4 +2,19 @@
     package="com.dbvr.baselibrary" >
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:label="@string/app_name"
+        android:supportsRtl="true">
+    <provider
+        android:name="com.dbvr.baselibrary.update.MNUpdateApkFileProvider"
+        android:authorities="${applicationId}.updateFileProvider"
+        android:exported="false"
+        android:grantUriPermissions="true">
+        <meta-data
+            android:name="android.support.FILE_PROVIDER_PATHS"
+            android:resource="@xml/mn_update_file_provider" />
+    </provider>
+    </application>
 </manifest>
