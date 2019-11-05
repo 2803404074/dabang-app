@@ -1,6 +1,7 @@
 package com.dabangvr.fragment;
 
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -48,6 +49,18 @@ public class MyFragment extends BaseFragment {
     @BindView(R.id.rlTop)
     RelativeLayout rlTop;
 
+    @BindView(R.id.tvFollow)
+    TextView tvFollow;
+    @BindView(R.id.tvFans)
+    TextView tvFans;
+    @BindView(R.id.tvDropNom)
+    TextView tvDropNom;
+    @BindView(R.id.ivGrade)
+    ImageView ivGrade;
+
+    @BindView(R.id.tvGrade)
+    TextView tvGrade;
+
     @BindView(R.id.view_pager)
     ViewPager viewPager;
     private ArrayList<Fragment> mFragments;
@@ -85,6 +98,27 @@ public class MyFragment extends BaseFragment {
         if (userMess != null) {
             sdvHead.setImageURI(userMess.getHeadUrl());
             tvNickName.setText(userMess.getNickName());
+            tvFollow.setText(userMess.getFollowNumber());
+            tvFans.setText(userMess.getFansNumber());
+            tvDropNom.setText(String.valueOf(userMess.getDiamond()));
+
+            if (userMess.getGrade() == 1){
+                ivGrade.setImageResource(R.mipmap.u_one);
+            }
+            if (userMess.getGrade() == 2){
+                ivGrade.setImageResource(R.mipmap.u_tow);
+            }
+            if (userMess.getGrade() == 3){
+                ivGrade.setImageResource(R.mipmap.u_three);
+            }
+            if (userMess.getGrade() == 4){
+                ivGrade.setImageResource(R.mipmap.u_four);
+            }
+            if (userMess.getGrade() == 5){
+                ivGrade.setImageResource(R.mipmap.u_five);
+            }
+
+
         } else {
             ToastUtil.showShort(getContext(), "获取用户信息失败，请重新登陆");
             //startActivity(new Intent(getContext(), LoginActivity.class));

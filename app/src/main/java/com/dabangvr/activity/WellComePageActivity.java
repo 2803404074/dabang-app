@@ -33,7 +33,7 @@ import static androidx.core.content.PermissionChecker.PERMISSION_GRANTED;
 public class WellComePageActivity extends BaseActivity implements ViewPager.OnPageChangeListener, View.OnClickListener {
     private TextView text_time;
     private ViewPager mViewPager;
-    private int[] ds = {R.mipmap.test8, R.mipmap.test9, R.mipmap.test10,R.mipmap.test11};
+    private int[] ds = {R.mipmap.well_one, R.mipmap.well_tow, R.mipmap.well_three};
     private GuideButtomLineView mGuideButtomLineView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +59,7 @@ public class WellComePageActivity extends BaseActivity implements ViewPager.OnPa
             ActivityCompat.requestPermissions(
                     this,
                     new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                            Manifest.permission.READ_EXTERNAL_STORAGE},
+                            Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.RECORD_AUDIO},
                     1);
         }
         mViewPager.setAdapter(new PagerAdapter() {

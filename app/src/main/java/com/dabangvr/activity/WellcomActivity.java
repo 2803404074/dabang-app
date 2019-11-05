@@ -42,13 +42,14 @@ import java.util.Map;
 
 public class WellcomActivity extends BaseActivity {
     private TextView text_version;
-    private AddressBEAN addressBeans;
+    //private AddressBEAN addressBeans;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //用来设置整体下移，状态栏沉浸
         StatusBarUtil.setRootViewFitsSystemWindows(this, false);
+        setTheme(R.style.AppTheme);
     }
 
     @Override
@@ -59,7 +60,7 @@ public class WellcomActivity extends BaseActivity {
     @Override
     public void initView() {
         text_version = this.findViewById(R.id.text_version);
-        text_version.setText("V" + getVersion());
+        text_version.setText(getVersion());
     }
 
     @Override

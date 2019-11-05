@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.CheckBox;
 
 import com.dbvr.baselibrary.R;
+import com.dbvr.baselibrary.model.HomeFindMo;
 
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class ShowButtonLayoutData<T> {
 
     //自定义接口，用于回调按钮点击事件到Activity
     public interface MyClickListener{
-        public void clickListener(View v,String txt, double lot, double lat, boolean isCheck);
+        void clickListener(View v,String txt,int position, double lot, double lat, boolean isCheck);
     }
 
 
@@ -50,53 +51,51 @@ public class ShowButtonLayoutData<T> {
 
             views[i] = view;
             final int finalI = i;
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //String tag = (String) v.getTag();
-
-                    if(data.get(finalI) instanceof String){
-                        mListener.clickListener(v,view.getText().toString(),0,0,view.isChecked());
-                    }
-                    if(view.isChecked()){
-                        view.setTextColor(context.getResources().getColor(R.color.colorWhite));
-                    }else {
-                        view.setTextColor(context.getResources().getColor(R.color.black));
-                    }
-                    //getHttp(tag);
+            view.setOnClickListener(v -> {
+                //String tag = (String) v.getTag();
+                if(data.get(finalI) instanceof String){
+                    mListener.clickListener(v,view.getText().toString(),finalI,0,0,view.isChecked());
                 }
+                if(view.isChecked()){
+                    view.setTextColor(context.getResources().getColor(R.color.colorWhite));
+                }else {
+                    view.setTextColor(context.getResources().getColor(R.color.black));
+                }
+                //getHttp(tag);
             });
             layout.addView(view);
         }
     }
 
 
-    public void setData2() {
+    public void setDataType() {
+        if (drawableBg == 0){
+            drawableBg = R.drawable.shape_db_search;
+        }
         CheckBox views[] = new CheckBox[data.size()];
         //热门数据源
         for (int i = 0; i < data.size(); i++) {
             final CheckBox view = (CheckBox) LayoutInflater.from(context).inflate(R.layout.item_search, layout, false);
-            if (data.get(i) instanceof String){
-                view.setText((String)data.get(i));
-                view.setTag(i);
+            view.setBackgroundResource(drawableBg);
+            if (data.get(i) instanceof HomeFindMo.FourMo){
+                HomeFindMo.FourMo fourMo = (HomeFindMo.FourMo) data.get(i);
+                view.setText(fourMo.getName());
+                view.setTag(fourMo.getId());
             }
+
             views[i] = view;
             final int finalI = i;
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //String tag = (String) v.getTag();
-
-                    if(data.get(finalI) instanceof String){
-                        mListener.clickListener(v,view.getText().toString(),0,0,view.isChecked());
-                    }
-                    if(view.isChecked()){
-                        view.setTextColor(context.getResources().getColor(R.color.colorWhite));
-                    }else {
-                        view.setTextColor(context.getResources().getColor(R.color.black));
-                    }
-                    //getHttp(tag);
+            view.setOnClickListener(v -> {
+                //String tag = (String) v.getTag();
+                if(data.get(finalI) instanceof String){
+                    mListener.clickListener(v,view.getText().toString(),finalI,0,0,view.isChecked());
                 }
+                if(view.isChecked()){
+                    view.setTextColor(context.getResources().getColor(R.color.colorWhite));
+                }else {
+                    view.setTextColor(context.getResources().getColor(R.color.black));
+                }
+                //getHttp(tag);
             });
             layout.addView(view);
         }

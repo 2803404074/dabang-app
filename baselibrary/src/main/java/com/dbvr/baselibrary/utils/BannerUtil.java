@@ -1,13 +1,16 @@
 package com.dbvr.baselibrary.utils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.dbvr.baselibrary.model.HomeFindMo;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
+import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.loader.ImageLoader;
 
 import java.util.List;
@@ -18,6 +21,14 @@ public class BannerUtil {
     private Banner banner;
     private List<String> mData;
     private List<String> mTitle;
+
+    private BannerCallBack bannerCallBack;
+    public interface BannerCallBack{
+        void click(int position);
+    }
+    public void setBannerCallBack(BannerCallBack bannerCallBack) {
+        this.bannerCallBack = bannerCallBack;
+    }
 
     public BannerUtil(Context mContext, Banner banner, List<String> mData, List<String> mTitle) {
         this.mContext = mContext;
@@ -42,6 +53,11 @@ public class BannerUtil {
         //设置图片集合
         banner.setImages(mData);
 
+        banner.setOnBannerListener(position -> {
+           if (bannerCallBack!=null){
+               bannerCallBack.click(position);
+           }
+        });
         banner.start();
     }
 
@@ -57,6 +73,7 @@ public class BannerUtil {
         public ImageView createImageView(Context context) {
             //使用fresco，需要创建它提供的ImageView，当然你也可以用自己自定义的具有图片加载功能的ImageView
             SimpleDraweeView simpleDraweeView = new SimpleDraweeView(context);
+
             return simpleDraweeView;
         }
     }

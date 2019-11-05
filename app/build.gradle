@@ -49,6 +49,10 @@ android {
         }
     }
 
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+
     //去除清单文件的警告
     lintOptions {
         disable 'GoogleAppIndexingWarning'

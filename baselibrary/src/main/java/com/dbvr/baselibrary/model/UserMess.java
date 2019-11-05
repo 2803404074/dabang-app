@@ -24,6 +24,8 @@ public class UserMess implements Serializable {
 
     private String sex;
 
+    private int grade;//等级
+
     private String fansNumber;//粉丝量
 
     private String praisedNumber;//获赞量
@@ -57,16 +59,25 @@ public class UserMess implements Serializable {
                 ", autograph='" + autograph + '\'' +
                 ", permanentResidence='" + permanentResidence + '\'' +
                 ", sex='" + sex + '\'' +
+                ", grade=" + grade +
                 ", fansNumber='" + fansNumber + '\'' +
                 ", praisedNumber='" + praisedNumber + '\'' +
                 ", followNumber='" + followNumber + '\'' +
-                ", diamond='" + diamond + '\'' +
+                ", diamond=" + diamond +
                 ", integral='" + integral + '\'' +
                 ", token='" + token + '\'' +
                 ", anchorId='" + anchorId + '\'' +
                 ", isAnchor=" + isAnchor +
                 ", isNew='" + isNew + '\'' +
                 '}';
+    }
+
+    public int getGrade() {
+        return grade;
+    }
+
+    public void setGrade(int grade) {
+        this.grade = grade;
     }
 
     public boolean isNewsUser() {

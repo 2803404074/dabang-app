@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_height="wrap_content"
     android:padding="@dimen/dp_5"
+    android:gravity="center"
     android:orientation="vertical">
 
    <TextView
@@ -11,6 +12,7 @@
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
        android:text="搞笑"
+       android:textSize="@dimen/sp_16"
        android:background="@drawable/shape_yellow"
        android:paddingVertical="@dimen/dp_2"
        android:paddingHorizontal="@dimen/dp_10"

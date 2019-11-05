@@ -60,6 +60,7 @@ public class CommentListActivity extends BaseActivity {
                     holder.setText(R.id.tvTips, "评论了你的视频\t" + o.getAddTime());
                 }
 
+                holder.getView(R.id.tvComment).setVisibility(View.VISIBLE);
                 holder.setText(R.id.tvComment,o.getContent());
 
                 holder.setText(R.id.tvNickName, o.getNickName());

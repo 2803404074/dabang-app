@@ -14,7 +14,7 @@
         android:paddingVertical="@dimen/dp_10"
         android:orientation="horizontal">
         <RelativeLayout
-            android:background="@drawable/shape_gray"
+            android:background="@drawable/shape_gray_w"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_gravity="center"
@@ -33,10 +33,9 @@
                 android:layout_toRightOf="@+id/ivSearch"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="东兴1299酒庄直播间"
+                android:hint="主播昵称"
                 android:imeOptions="actionSearch"
-                android:background="@null"
-                />
+                android:background="@null" />
         </RelativeLayout>
 
         <TextView
@@ -47,10 +46,11 @@
             android:layout_marginRight="@dimen/dp_10"
             android:layout_gravity="center"
             android:textSize="@dimen/sp_18"
-            android:textColor="@color/lsq_color_gray"/>
+            android:textColor="@color/colorDb5"/>
     </LinearLayout>
 
     <View
+        android:id="@+id/v_line01"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_13"
         android:background="@color/dividerGrey"/>
@@ -61,6 +61,7 @@
         android:layout_height="wrap_content"/>
 
     <TextView
+        android:id="@+id/tvHots"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dp_10"
@@ -74,12 +75,14 @@
 
 
     <View
+        android:id="@+id/v_line02"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_13"
         android:layout_marginTop="@dimen/dp_10"
         android:background="@color/dividerGrey"/>
 
     <TextView
+        android:id="@+id/tvHis"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="搜索历史"

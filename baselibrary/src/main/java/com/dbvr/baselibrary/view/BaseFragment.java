@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import com.dbvr.baselibrary.ui.LoadingUtils;
 import com.dbvr.baselibrary.utils.SPUtils;
 
+import java.util.List;
 import java.util.Map;
 
 import androidx.fragment.app.Fragment;
@@ -91,6 +92,9 @@ public abstract class BaseFragment extends Fragment {
                 }
                 if (map.get(key) instanceof Integer){
                     intent.putExtra(key,(Integer)map.get(key));
+                }
+                if (map.get(key) instanceof List){
+
                 }
             }
         }

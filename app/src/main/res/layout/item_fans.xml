@@ -20,14 +20,34 @@
 
       <TextView
           android:id="@+id/tvName"
-          android:layout_width="0dp"
-          android:layout_weight="1"
+          android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:text="天使的眼没毛病"
+          android:maxLength="10"
+          android:ellipsize="end"
           android:layout_marginHorizontal="@dimen/sp_10"
           android:layout_gravity="center"
           android:textSize="@dimen/sp_17"
           android:textColor="@color/textTitle"/>
+      <ImageView
+          android:id="@+id/ivSex"
+          android:layout_width="@dimen/dp_20"
+          android:layout_height="@dimen/dp_20"
+          android:layout_gravity="center"
+          android:src="@mipmap/sex_nv"/>
+
+      <ImageView
+          android:id="@+id/ivGrade"
+          android:layout_width="@dimen/dp_30"
+          android:layout_height="@dimen/dp_30"
+          android:layout_gravity="center"
+          android:layout_marginLeft="@dimen/dp_5"
+          android:src="@mipmap/u_tow"/>
+
+      <View
+          android:layout_width="0dp"
+          android:layout_height="1px"
+          android:layout_weight="1"/>
 
       <TextView
           android:id="@+id/tvGz"

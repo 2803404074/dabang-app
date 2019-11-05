@@ -179,7 +179,7 @@ public class HomeFragmentFollow extends BaseFragment {
         adapterTui.setOnItemClickListener((view, position) -> {
             Map<String,Object>map = new HashMap<>();
             //跳转到直播页面
-            if (!StringUtils.isEmpty(mDataTui.get(position).getCoverUrl())){
+            if (!StringUtils.isEmpty(mDataTui.get(position).getFname())){
                 map.put("url",mDataTui.get(position).getFname());
                 map.put("roomId",mDataTui.get(position).getRoomId());
                 map.put("nickName",mDataTui.get(position).getNickName());
@@ -197,16 +197,21 @@ public class HomeFragmentFollow extends BaseFragment {
 
 
         adapterFollow.setOnItemClickListener((view, position) -> {
-            Map<String,Object>map = new HashMap<>();
-            map.put("url",mDataFollow.get(position).getFname());
-            map.put("roomId",mDataFollow.get(position).getRoomId());
-            map.put("nickName",mDataFollow.get(position).getNickName());
-            map.put("liveTag",mDataFollow.get(position).getLiveTag());
-            map.put("lookNum",mDataFollow.get(position).getLookNum());
-            map.put("headUrl",mDataFollow.get(position).getHeadUrl());
-            map.put("userId",mDataFollow.get(position).getUserId());
-            map.put("isFollow",true);
-            goTActivity(PlayActivity.class,map);
+            HomeFindMo.TowMo towMo = (HomeFindMo.TowMo) adapterFollow.getData().get(position);
+            if (towMo!=null){
+                if (!StringUtils.isEmpty(towMo.getFname())){
+                    Map<String,Object>map = new HashMap<>();
+                    map.put("url",mDataFollow.get(position).getFname());
+                    map.put("roomId",mDataFollow.get(position).getRoomId());
+                    map.put("nickName",mDataFollow.get(position).getNickName());
+                    map.put("liveTag",mDataFollow.get(position).getLiveTag());
+                    map.put("lookNum",mDataFollow.get(position).getLookNum());
+                    map.put("headUrl",mDataFollow.get(position).getHeadUrl());
+                    map.put("userId",mDataFollow.get(position).getUserId());
+                    map.put("isFollow",true);
+                    goTActivity(PlayActivity.class,map);
+                }
+            }
         });
     }
 

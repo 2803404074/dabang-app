@@ -1,6 +1,7 @@
 package com.dabangvr.fragment.home;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
@@ -17,6 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.dabangvr.R;
+import com.dabangvr.activity.HtmlActivity;
+import com.dabangvr.activity.ZhibTypeActivity;
 import com.dabangvr.play.activity.PlayActivity;
 import com.dabangvr.adapter.AddHeaderAdapter;
 import com.dabangvr.adapter.BaseRecyclerHolder;
@@ -202,7 +205,6 @@ public class HomeFragmentFind extends BaseFragment {
                         map.put("headUrl",list.get(position).getHeadUrl());
                         map.put("userId",list.get(position).getUserId());
                         map.put("isFollow",list.get(position).isFollow());
-                        ToastUtil.showShort(getContext(),"是否已经关注="+list.get(position).isFollow());
                         goTActivity(PlayActivity.class,map);
                     });
                 //轮播图
@@ -216,6 +218,13 @@ public class HomeFragmentFind extends BaseFragment {
                         mTitle.add(list.get(i).getTitle());
                     }
                     BannerUtil bannerUtil = new BannerUtil(getContext(), banner, mImage, mTitle);
+                    bannerUtil.setBannerCallBack(position -> {
+                        if (list.get(position).getTag()==0){
+                            Map<String,Object>map = new HashMap<>();
+                            map.put("url",list.get(position).getJumpUrl());
+                            goTActivity(HtmlActivity.class,map);
+                        }
+                    });
                     bannerUtil.startBanner();
 
                 //分类
@@ -223,14 +232,34 @@ public class HomeFragmentFind extends BaseFragment {
                     List<HomeFindMo.FourMo> list = mData.get(mType).getFourMos();
                     RecyclerView recyclerView = holder.getView(R.id.recycler_head);
                     recyclerView.setLayoutManager(new GridLayoutManager(getContext(),5));
-                    RecyclerAdapter adapter = new RecyclerAdapter<HomeFindMo.FourMo>(getContext(),list,R.layout.item_type) {
+                    RecyclerAdapterPosition adapter = new RecyclerAdapterPosition<HomeFindMo.FourMo>(getContext(),list,R.layout.item_type) {
                         @Override
-                        public void convert(Context mContext, BaseRecyclerHolder holder, HomeFindMo.FourMo o) {
+                        public void convert(Context mContext, BaseRecyclerHolder holder,int position, HomeFindMo.FourMo o) {
                             TextView textView = holder.getView(R.id.tvType);
-                            textView.setBackgroundResource(R.drawable.shape_yellow);//shape_db_search,shape_orag,shape_gray
+                            if (position==0
+                            ||position==3
+                            ||position==5){
+                                textView.setBackgroundResource(R.drawable.shape_yellow);
+                            }else if (position==2
+                                    ||position==6
+                                    ||position==8){
+                                textView.setBackgroundResource(R.drawable.shape_db_search);
+                            }else if (position == list.size()-1){
+                                textView.setBackgroundResource(R.drawable.shape_gray);
+                            }else {
+                                textView.setBackgroundResource(R.drawable.shape_orag);
+                            }
+                            textView.setText(o.getName());
+
                         }
                     };
                     recyclerView.setAdapter(adapter);
+                    adapter.setOnItemClickListener((view, position) -> {
+                            Map<String,Object>map = new HashMap<>();
+                            map.put("list",new Gson().toJson(list));
+                            map.put("position",position);
+                            goTActivity(ZhibTypeActivity.class,map);
+                    });
 
                 //底部列表
                 } else if (adapter.getViewTypeForMyTask(mType) == adapter.mTypeFour) {
@@ -273,6 +302,20 @@ public class HomeFragmentFind extends BaseFragment {
                         }
                     };
                     recyclerTow.setAdapter(adapter);
+
+                    adapter.setOnItemClickListener((view, position) -> {
+                        Map<String,Object>map = new HashMap<>();
+                        map.put("url",list.get(position).getFname());
+                        map.put("roomId",list.get(position).getRoomId());
+                        map.put("nickName",list.get(position).getNickName());
+                        map.put("liveTag",list.get(position).getLiveTag());
+                        map.put("lookNum",list.get(position).getLookNum());
+                        map.put("headUrl",list.get(position).getHeadUrl());
+                        map.put("userId",list.get(position).getUserId());
+                        map.put("isFollow",list.get(position).isFollow());
+                        goTActivity(PlayActivity.class,map);
+                    });
+
                 }
             }
         };

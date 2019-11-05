@@ -4,9 +4,28 @@ public class FansMo {
     private String nickName;
     private String headUrl;
     private String userId;
+    private String sex;
+    private int grade;//等级
+
     private boolean mutual;
 
     public FansMo() {
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public int getGrade() {
+        return grade;
+    }
+
+    public void setGrade(int grade) {
+        this.grade = grade;
     }
 
     public String getNickName() {

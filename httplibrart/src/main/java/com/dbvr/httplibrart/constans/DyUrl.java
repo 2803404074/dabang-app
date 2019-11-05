@@ -92,6 +92,8 @@ public class DyUrl {
     public static final String praisedList = "api/my/praisedList";
     //获取评论列表
     public static final String getCommentList = "api/comment/getCommentList";
+    //搜索用户
+    public static final String queryUser = "api/queryUser";
 
     //获取高德省市县三级联动json
     public static final String getAmapDistrict = "api/config/getAmapDistrict";

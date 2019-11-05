@@ -2,15 +2,25 @@
 
     <!-- Base applicationz theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
+      <!--  &lt;!&ndash; Customize your theme here. &ndash;&gt;
         <item name="colorPrimary">@color/colorDb3</item>
         <item name="colorPrimaryDark">@color/colorWhite</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsTranslucent">false</item>
 
-        <!--无标题-->
-        <item name="android:windowActionBar">false</item>
+        &lt;!&ndash;无标题&ndash;&gt;
+        <item name="android:windowActionBar">false</item>-->
+
+
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
     </style>
+
+    <style name="AppTheme.Launcher">
+        <item name="android:windowBackground">@drawable/launch_screen</item>
+    </style>
+
     <!--圆角的dialog样式-->
     <style name="RoundCornerDialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item>

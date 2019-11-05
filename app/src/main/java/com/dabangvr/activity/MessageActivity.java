@@ -90,17 +90,14 @@ public class MessageActivity extends BaseActivity {
         };
         recyclerView.setAdapter(adapter);
 
-        adapter.setOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                EMConversation conversation = (EMConversation) adapter.getData().get(position);
-                EMMessage emMessage = conversation.getLastMessage();
-                String username = emMessage.getUserName();
-                // 进入聊天页面
-                Intent intent = new Intent(getContext(), ChatActivity.class);
-                intent.putExtra("username", username);
-                startActivity(intent);
-            }
+        adapter.setOnItemClickListener((view, position) -> {
+            EMConversation conversation = (EMConversation) adapter.getData().get(position);
+            EMMessage emMessage = conversation.getLastMessage();
+            String username = emMessage.getUserName();
+            // 进入聊天页面
+            Intent intent = new Intent(getContext(), ChatActivity.class);
+            intent.putExtra("username", username);
+            startActivity(intent);
         });
     }
 

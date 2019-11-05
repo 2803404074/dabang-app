@@ -23,8 +23,6 @@ INJECTED from E:\android-project\dabang-app\player\src\main\AndroidManifest.xml:
 		ADDED from E:\android-project\dabang-app\player\src\main\AndroidManifest.xml:1:11-69
 application
 ADDED from E:\android-project\dabang-app\player\src\main\AndroidManifest.xml:4:5-28:19
-	android:theme
-		ADDED from E:\android-project\dabang-app\player\src\main\AndroidManifest.xml:4:18-49
 activity#com.tencent.liteav.demo.play.superplayer.SuperPlayerActivity
 ADDED from E:\android-project\dabang-app\player\src\main\AndroidManifest.xml:5:9-18:20
 	android:screenOrientation

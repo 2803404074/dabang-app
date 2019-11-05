@@ -225,11 +225,20 @@ public class HomeFindMo implements Serializable {
 
     public static class ThreeMo{
         private int id;
+        private int tag;//0网页 1商品详情 2vip
         private String chartUrl;
         private String title;
         private String jumpUrl;
 
         public ThreeMo() {
+        }
+
+        public int getTag() {
+            return tag;
+        }
+
+        public void setTag(int tag) {
+            this.tag = tag;
         }
 
         public int getId() {
