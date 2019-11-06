@@ -59,11 +59,20 @@
             android:text="手机认证"
             android:textColor="#18dadc" />
 
-        <ImageView
+        <LinearLayout
             android:layout_width="1dp"
             android:layout_height="match_parent"
             android:layout_weight="0.5"
-            android:src="@mipmap/back_b_black" />
+            android:gravity="center">
+
+
+            <ImageView
+                android:layout_width="@dimen/dp_10"
+                android:layout_height="@dimen/dp_12"
+                android:layout_gravity="center"
+                android:src="@mipmap/back_b_black" />
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/tv_card"
@@ -74,11 +83,20 @@
             android:text="身份信息上传"
             android:textColor="#18dadc" />
 
-        <ImageView
+        <LinearLayout
             android:layout_width="1dp"
             android:layout_height="match_parent"
             android:layout_weight="0.5"
-            android:src="@mipmap/back_b_black" />
+            android:gravity="center">
+
+
+            <ImageView
+                android:layout_width="@dimen/dp_10"
+                android:layout_height="@dimen/dp_12"
+                android:layout_gravity="center"
+                android:src="@mipmap/back_b_black" />
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/tv_shop"
@@ -126,7 +144,7 @@
 
             <EditText
                 android:id="@+id/etname"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/ll_phone"
                 android:background="@null"
@@ -170,7 +188,7 @@
 
             <EditText
                 android:id="@+id/etname_code"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/ll_code"
                 android:background="@null"

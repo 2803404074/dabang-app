@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TextView;
+
 import com.dabangvr.R;
-import com.dabangvr.fragment.other.Order.UserMessActivity;
 import com.dbvr.baselibrary.model.UserMess;
 import com.dbvr.baselibrary.utils.BottomDialogUtil2;
 import com.dbvr.baselibrary.utils.Conver;
@@ -47,6 +47,7 @@ public class UserEditMessActivity extends BaseActivity {
     TextView tvPhone;
 
     private UserMess userMess;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,28 +70,28 @@ public class UserEditMessActivity extends BaseActivity {
         tvId.setText(String.valueOf(userMess.getId()));
 
         //性别
-        if (StringUtils.isEmpty(userMess.getSex())){
+        if (StringUtils.isEmpty(userMess.getSex())) {
             tvSex.setHint("未设置性别");
-        }else {
+        } else {
             tvSex.setText(userMess.getSex());
         }
 
         //常住地
-        if (StringUtils.isEmpty(userMess.getPermanentResidence())){
+        if (StringUtils.isEmpty(userMess.getPermanentResidence())) {
             tvLocation.setHint("设置你的常驻地址，有利于吸引周边人气哦~");
-        }else {
+        } else {
             tvLocation.setText(userMess.getPermanentResidence());
         }
 
         //手机号
-        if (StringUtils.isEmpty(userMess.getMobile())){
+        if (StringUtils.isEmpty(userMess.getMobile())) {
             tvPhone.setHint("未绑定手机号");
-        }else {
+        } else {
             tvPhone.setText(userMess.getMobile());
         }
 
         //个人说明
-        tvIntroduce.setHint(StringUtils.isEmpty(userMess.getAutograph())?"添加个人说明，如你的座右铭等":userMess.getAutograph());
+        tvIntroduce.setHint(StringUtils.isEmpty(userMess.getAutograph()) ? "添加个人说明，如你的座右铭等" : userMess.getAutograph());
     }
 
     @Override
@@ -98,7 +99,7 @@ public class UserEditMessActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.ivBack, R.id.llHead, R.id.llNick, R.id.llSex, R.id.llDate, R.id.llLocation, R.id.llIntroduce, R.id.llPhone, R.id.tvLogOut})
+    @OnClick({R.id.ivBack, R.id.llHead, R.id.llNick, R.id.llSex, R.id.llDate, R.id.llLocation, R.id.llIntroduce, R.id.llPhone, R.id.tv_sub})
     public void onclick(View view) {
         switch (view.getId()) {
             case R.id.ivBack:
@@ -115,19 +116,16 @@ public class UserEditMessActivity extends BaseActivity {
                 showDateDialog();
                 break;
             case R.id.llLocation:
-                goTActivity(LocationActivity.class,null);
+                goTActivity(LocationActivity.class, null);
                 break;
             case R.id.llIntroduce:
-                goTActivity(IntroduceActivity.class,null);
+                goTActivity(IntroduceActivity.class, null);
                 break;
             case R.id.llPhone:
-                goTActivity(PhoneSetActivity.class,null);
+                goTActivity(PhoneSetActivity.class, null);
                 break;
-            case R.id.tvLogOut:
-                DialogUtil.getInstance(this).show(R.layout.dialog_tip, holder -> {
-                    holder.findViewById(R.id.tvCancel).setOnClickListener(view1 -> DialogUtil.getInstance(getContext()).des());
-                    holder.findViewById(R.id.tvConfirm).setOnClickListener(view12 -> logOut());
-                });
+            case R.id.tv_sub: //提交修改资料
+
                 break;
         }
     }
@@ -143,15 +141,15 @@ public class UserEditMessActivity extends BaseActivity {
 
     private void showDateDialog() {
         Calendar ca = Calendar.getInstance();
-        int  mYear = ca.get(Calendar.YEAR);
-        int  mMonth = ca.get(Calendar.MONTH);
-        int  mDay = ca.get(Calendar.DAY_OF_MONTH);
+        int mYear = ca.get(Calendar.YEAR);
+        int mMonth = ca.get(Calendar.MONTH);
+        int mDay = ca.get(Calendar.DAY_OF_MONTH);
         DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        final String data =  (month+1) + "月-" + dayOfMonth + "日 ";
-                        ToastUtil.showShort(getContext(),data);
+                        final String data = (month + 1) + "月-" + dayOfMonth + "日 ";
+                        ToastUtil.showShort(getContext(), data);
                     }
                 },
                 mYear, mMonth, mDay);
@@ -161,6 +159,6 @@ public class UserEditMessActivity extends BaseActivity {
     private void logOut() {
         AppManager.getAppManager().finishAllActivity();
         SPUtils.instance(this).removeUser();
-        goTActivity(LoginActivity.class,null);
+        goTActivity(LoginActivity.class, null);
     }
 }

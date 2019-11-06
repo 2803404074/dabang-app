@@ -1,7 +1,6 @@
 package com.dabangvr.fragment.other.Order;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -11,7 +10,6 @@ import com.dbvr.baselibrary.utils.CacheUtil;
 import com.dbvr.baselibrary.utils.DialogUtil;
 import com.dbvr.baselibrary.utils.SPUtils;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
-import com.dbvr.baselibrary.utils.VersionUtil;
 import com.dbvr.baselibrary.view.AppManager;
 import com.dbvr.baselibrary.view.BaseActivity;
 
@@ -26,7 +24,7 @@ public class UserSettingActivity extends BaseActivity {
     @BindView(R.id.tv_memory_size)
     TextView tv_memory_size;
     private AlertDialog alertDialog;
-    private String versionName;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +40,6 @@ public class UserSettingActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        versionName = VersionUtil.getAppVersionName(this);
     }
 
     @Override
@@ -55,7 +52,7 @@ public class UserSettingActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.ivBack, R.id.tvLogOut, R.id.ll_memory_size, R.id.ll_version_update})
+    @OnClick({R.id.ivBack, R.id.tv_logout, R.id.ll_memory_size, R.id.ll_version_update})
     public void onclick(View view) {
         switch (view.getId()) {
             case R.id.ivBack:
@@ -66,10 +63,14 @@ public class UserSettingActivity extends BaseActivity {
                 break;
             case R.id.ll_version_update:
                 break;
-            case R.id.tvLogOut:
+            case R.id.tv_logout:
                 DialogUtil.getInstance(this).show(R.layout.dialog_tip, holder -> {
                     holder.findViewById(R.id.tvCancel).setOnClickListener(view1 -> DialogUtil.getInstance(getContext()).des());
                     holder.findViewById(R.id.tvConfirm).setOnClickListener(view12 -> logOut());
+                    holder.findViewById(R.id.tvConfirm).setOnClickListener(v -> {
+                        logOut();
+                        logOut();
+                    });
                 });
                 break;
         }
@@ -85,24 +86,18 @@ public class UserSettingActivity extends BaseActivity {
     private void show(String mess) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(mess);
-        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {//添加"Yes"按钮
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+        //添加"Yes"按钮
+        builder.setPositiveButton("确定", (dialogInterface, i) -> {
 
-                CacheUtil.clearAllCache(UserSettingActivity.this);
-                try {
-                    tv_memory_size.setText("缓存已清除");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+            CacheUtil.clearAllCache(UserSettingActivity.this);
+            try {
+                tv_memory_size.setText("缓存已清除");
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
-        builder.setNeutralButton("取消", new DialogInterface.OnClickListener() {//添加普通按钮
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                alertDialog.dismiss();
-            }
-        });
+        //添加普通按钮
+        builder.setNeutralButton("取消", (dialogInterface, i) -> alertDialog.dismiss());
         alertDialog = builder.create();
         alertDialog.show();
     }

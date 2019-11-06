@@ -12,11 +12,9 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.addressselection.utils.Dev;
 import com.dabangvr.R;
 import com.dbvr.baselibrary.base.ParameterContens;
 import com.dbvr.baselibrary.model.AnchorVo;
-import com.dbvr.baselibrary.model.DepVo;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
 import com.dbvr.baselibrary.utils.StringUtils;
 import com.dbvr.baselibrary.utils.ToastUtil;
@@ -26,11 +24,8 @@ import com.dbvr.httplibrart.constans.UserUrl;
 import com.dbvr.httplibrart.utils.ObjectCallback;
 import com.dbvr.httplibrart.utils.OkHttp3Utils;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.PropertyPermission;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 

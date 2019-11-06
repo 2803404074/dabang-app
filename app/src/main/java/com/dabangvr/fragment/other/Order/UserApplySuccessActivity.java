@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dabangvr.R;
 import com.dabangvr.activity.MainActivity;

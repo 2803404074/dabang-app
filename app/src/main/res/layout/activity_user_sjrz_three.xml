@@ -61,11 +61,20 @@
                 android:text="手机认证"
                 android:textColor="#18dadc" />
 
-            <ImageView
+            <LinearLayout
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
-                android:src="@mipmap/back_b_black" />
+                android:gravity="center">
+
+
+                <ImageView
+                    android:layout_width="@dimen/dp_10"
+                    android:layout_height="@dimen/dp_12"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/back_b_black" />
+            </LinearLayout>
+
 
             <TextView
                 android:id="@+id/tv_card"
@@ -76,11 +85,20 @@
                 android:text="身份信息上传"
                 android:textColor="#18dadc" />
 
-            <ImageView
+            <LinearLayout
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
-                android:src="@mipmap/back_b_black" />
+                android:gravity="center">
+
+
+                <ImageView
+                    android:layout_width="@dimen/dp_10"
+                    android:layout_height="@dimen/dp_12"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/back_b_black" />
+            </LinearLayout>
+
 
             <TextView
                 android:id="@+id/tv_shop"
@@ -128,7 +146,7 @@
 
                 <EditText
                     android:id="@+id/etname"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/ll_phone"
                     android:background="@null"
@@ -172,7 +190,7 @@
 
                 <EditText
                     android:id="@+id/et_project"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/ll_code"
                     android:background="@null"
@@ -217,7 +235,7 @@
 
                 <TextView
                     android:id="@+id/tv_address"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/ll_top_three"
                     android:background="@null"
@@ -259,20 +277,17 @@
                 </LinearLayout>
 
 
-                <LinearLayout
+                <EditText
+                    android:id="@+id/et_address"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_50">
+                    android:layout_height="@dimen/dp_50"
+                    android:layout_toRightOf="@id/ll_top_four"
+                    android:background="@null"
+                    android:gravity="top|left"
+                    android:hint="输入详细地址"
+                    android:paddingVertical="@dimen/dp_5"
+                    android:textSize="@dimen/sp_15" />
 
-                    <EditText
-                        android:id="@+id/et_address"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_toRightOf="@id/ll_top_four"
-                        android:background="@null"
-                        android:hint="输入详细地址"
-                        android:paddingVertical="@dimen/dp_5"
-                        android:textSize="@dimen/sp_15" />
-                </LinearLayout>
             </LinearLayout>
 
             <View
@@ -313,20 +328,18 @@
                             android:textSize="@dimen/sp_18" />
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_100">
 
-                        <EditText
-                            android:id="@+id/et_introduce"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_toRightOf="@id/ll_top_four"
-                            android:background="@null"
-                            android:hint="简单介绍商户信息"
-                            android:paddingVertical="@dimen/dp_5"
-                            android:textSize="@dimen/sp_15" />
-                    </LinearLayout>
+                    <EditText
+                        android:id="@+id/et_introduce"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_100"
+                        android:layout_toRightOf="@id/ll_top_four"
+                        android:background="@null"
+                        android:gravity="top|left"
+                        android:hint="简单介绍商户信息"
+                        android:paddingVertical="@dimen/dp_5"
+                        android:textSize="@dimen/sp_15" />
+
                 </LinearLayout>
 
             </RelativeLayout>

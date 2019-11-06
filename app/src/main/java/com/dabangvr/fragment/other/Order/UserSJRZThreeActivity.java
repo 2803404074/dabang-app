@@ -6,11 +6,9 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.addressselection.bean.City;
@@ -22,12 +20,10 @@ import com.addressselection.widge.BottomDialog;
 import com.addressselection.widge.OnAddressSelectedListener;
 import com.bumptech.glide.Glide;
 import com.dabangvr.R;
-import com.dabangvr.activity.MainActivity;
 import com.dabangvr.application.MyApplication;
 import com.dbvr.baselibrary.base.ParameterContens;
 import com.dbvr.baselibrary.model.DepVo;
 import com.dbvr.baselibrary.model.QiniuUploadFile;
-import com.dbvr.baselibrary.utils.DialogUtil;
 import com.dbvr.baselibrary.utils.OnUploadListener;
 import com.dbvr.baselibrary.utils.QiniuUploadManager;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
@@ -42,7 +38,6 @@ import com.dbvr.httplibrart.utils.OkHttp3Utils;
 import com.dbvr.imglibrary2.model.Image;
 import com.dbvr.imglibrary2.ui.SelectImageActivity;
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -104,7 +99,6 @@ public class UserSJRZThreeActivity extends BaseActivity implements OnAddressSele
     public void initData() {
         depVo = (DepVo) getIntent().getSerializableExtra(ParameterContens.depVo);
         if (depVo != null) {
-            Log.d("luhuas", "initData: " + depVo);
             etname.setText(depVo.getName());
             et_project.setText(depVo.getMainCategory());
             tv_address.setText(depVo.getProductionProvince() + depVo.getProductionCity() + depVo.getProductionCounty());
@@ -209,7 +203,6 @@ public class UserSJRZThreeActivity extends BaseActivity implements OnAddressSele
         OkHttp3Utils.getInstance(getContext()).doPostJson(UserUrl.addDept, map, new ObjectCallback<String>(getContext()) {
             @Override
             public void onUi(String result) {
-                Log.d("luhuas", "onUi: " + result);
                 Intent intent = new Intent(UserSJRZThreeActivity.this, UserApplySuccessActivity.class);
                 intent.putExtra("name", "商家入驻");
                 startActivity(intent);
@@ -252,7 +245,6 @@ public class UserSJRZThreeActivity extends BaseActivity implements OnAddressSele
                     ArrayList<Image> selectImages = data.getParcelableArrayListExtra(SelectImageActivity.EXTRA_RESULT);
                     Glide.with(this).load(selectImages.get(0).getPath()).into(ig_id_front);
                     new Thread(() -> {
-
                         getQiniuToken(selectImages.get(0).getPath(), ParameterContens.threeCertificates);
                     }).start();
                 }
@@ -312,7 +304,6 @@ public class UserSJRZThreeActivity extends BaseActivity implements OnAddressSele
 
             @Override
             public void onUploadBlockComplete(String path) {
-                Log.d("luhuas", "onUploadBlockComplete: " + path);
                 if (!TextUtils.isEmpty(path)) {
                     if (path.startsWith(ParameterContens.idcartFacial)) {
                         depVo.setIdcartFacial(DyUrl.QINIUDOMAN + path);
@@ -326,7 +317,6 @@ public class UserSJRZThreeActivity extends BaseActivity implements OnAddressSele
 
             @Override
             public void onUploadCompleted() {
-                Log.d("luhuas", "onUploadCompleted:sha'上传完成 ");
                 setLoaddingView(false);
             }
 

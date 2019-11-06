@@ -8,7 +8,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -24,11 +23,9 @@ import com.dbvr.httplibrart.constans.UserUrl;
 import com.dbvr.httplibrart.utils.ObjectCallback;
 import com.dbvr.httplibrart.utils.OkHttp3Utils;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import androidx.annotation.NonNull;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -86,13 +83,10 @@ public class UserSJRZOneActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        cb_select.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Log.d("luhuas", "onCheckedChanged: " + isChecked);
-                UserSJRZOneActivity.this.isChecked = isChecked;
+        cb_select.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            Log.d("luhuas", "onCheckedChanged: " + isChecked);
+            UserSJRZOneActivity.this.isChecked = isChecked;
 
-            }
         });
     }
 
@@ -126,15 +120,15 @@ public class UserSJRZOneActivity extends BaseActivity {
                     ToastUtil.showShort(this, "请输入正确的手机号码和验证码");
                     return;
                 }
-//                if (TextUtils.isEmpty(code)) {
-//                    ToastUtil.showShort(this, "请输入验证码");
-//                    return;
-//                }
-//                if (!isChecked) {
-//                    ToastUtil.showShort(this, "请确认我已了解");
-//                    return;
-//                }
-//                next(phone, code, "1");
+                if (TextUtils.isEmpty(code)) {
+                    ToastUtil.showShort(this, "请输入验证码");
+                    return;
+                }
+                if (!isChecked) {
+                    ToastUtil.showShort(this, "请确认我已了解");
+                    return;
+                }
+                next(phone, code, "1");
                 Intent intent = new Intent(getContext(), UserSJRZTwoActivity.class);
                 depVo.setPhone(phone);
                 intent.putExtra(ParameterContens.depVo, depVo);

@@ -1,10 +1,7 @@
 package com.dabangvr.fragment.other.Order;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,8 +12,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dabangvr.R;
-import com.dabangvr.activity.MainActivity;
-import com.dbvr.baselibrary.base.ParameterContens;
 import com.dbvr.baselibrary.model.Update;
 import com.dbvr.baselibrary.update.InstallUtils;
 import com.dbvr.baselibrary.update.utils.PermissionUtils;
@@ -49,7 +44,6 @@ import butterknife.OnClick;
 public class UserAboutActivity extends BaseActivity {
 
 
-    private static String versionName;
     @BindView(R.id.tv_title)
     TextView tv_title;
 
@@ -64,6 +58,7 @@ public class UserAboutActivity extends BaseActivity {
     private InstallUtils.DownloadCallBack downloadCallBack;
     private String apkDownloadPath;
     private TextView tv_massage;
+    private String versionName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +75,7 @@ public class UserAboutActivity extends BaseActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void initView() {
-        String versionName = VersionUtil.getAppVersionName(this);
+        versionName = VersionUtil.getAppVersionName(this);
         tv_version.setText("V" + versionName);
         tv_version_t.setText("V" + versionName);
         initCallBack();
@@ -106,6 +101,7 @@ public class UserAboutActivity extends BaseActivity {
         }
 
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -115,21 +111,16 @@ public class UserAboutActivity extends BaseActivity {
         }
     }
 
-
-
-
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void initCallBack() {
         downloadCallBack = new InstallUtils.DownloadCallBack() {
             @Override
             public void onStart() {
                 tv_massage.setText("0%");
-
             }
 
             @Override
             public void onComplete(String path) {
-
                 apkDownloadPath = path;
                 tv_massage.setText("100%");
 
@@ -162,7 +153,7 @@ public class UserAboutActivity extends BaseActivity {
                                             @Override
                                             public void onDenied() {
                                                 //还是不允许咋搞？
-                                                ToastUtil.showShort(getContext(),"不允许安装咋搞？强制更新就退出应用程序吧！");
+                                                ToastUtil.showShort(getContext(), "不允许安装咋搞？强制更新就退出应用程序吧！");
                                             }
                                         });
                                     }
@@ -182,7 +173,7 @@ public class UserAboutActivity extends BaseActivity {
 
             @Override
             public void onFail(Exception e) {
-                ToastUtil.showShort(getContext(),"下载失败");
+                ToastUtil.showShort(getContext(), "下载失败");
             }
 
             @Override
@@ -191,6 +182,7 @@ public class UserAboutActivity extends BaseActivity {
             }
         };
     }
+
     private void installApk(String path) {
         InstallUtils.installAPK(this, path, new InstallUtils.InstallCallBack() {
             @Override
@@ -202,7 +194,7 @@ public class UserAboutActivity extends BaseActivity {
 
             @Override
             public void onFail(Exception e) {
-                ToastUtil.showShort(getContext(),"安装失败");
+                ToastUtil.showShort(getContext(), "安装失败");
             }
         });
     }
@@ -228,18 +220,16 @@ public class UserAboutActivity extends BaseActivity {
                                     tv_massage.setText("发现新版本，是否安装?");
                                     tvTitle.setText(title);
                                     holder.findViewById(R.id.tvCancel).setOnClickListener(view1 -> DialogUtil.getInstance(getContext()).des());
-                                    holder.findViewById(R.id.tvConfirm).setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            download(update.getUrl());
-                                        }
-                                    });
+                                    holder.findViewById(R.id.tvConfirm).setOnClickListener(v -> download(update.getUrl()));
                                 });
+                            } else {
+                                ToastUtil.showShort(getContext(), "当前是最新版本");
                             }
                         }
                     }
                 } catch (JsonSyntaxException e) {
                     e.printStackTrace();
+                    setLoaddingView(false);
                 }
 
             }

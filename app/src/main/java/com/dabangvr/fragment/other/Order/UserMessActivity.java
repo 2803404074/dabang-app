@@ -5,8 +5,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.dabangvr.R;
+import com.dabangvr.activity.UserEditMessActivity;
 import com.dbvr.baselibrary.model.UserMess;
-import com.dbvr.baselibrary.utils.DialogUtil;
 import com.dbvr.baselibrary.utils.SPUtils;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
 import com.dbvr.baselibrary.utils.StringUtils;
@@ -93,23 +93,16 @@ public class UserMessActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.ivBack})
+    @OnClick({R.id.ivBack, R.id.editing_materal})
     public void onclick(View view) {
         switch (view.getId()) {
             case R.id.ivBack:
                 AppManager.getAppManager().finishActivity(this);
                 break;
-            case R.id.tvLogOut:
-                DialogUtil.getInstance(this).show(R.layout.dialog_tip, holder -> {
-                    holder.findViewById(R.id.tvCancel).setOnClickListener(view1 -> DialogUtil.getInstance(getContext()).des());
-                    holder.findViewById(R.id.tvConfirm).setOnClickListener(view12 -> logOut());
-                });
+            case R.id.editing_materal:
+                goTActivity(UserEditMessActivity.class, null);
                 break;
         }
     }
 
-    private void logOut() {
-        SPUtils.instance(this).removeUser();
-        AppManager.getAppManager().finishAllActivityTo(UserMessActivity.class);
-    }
 }

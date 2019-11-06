@@ -6,7 +6,6 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -16,7 +15,6 @@ import com.dabangvr.R;
 import com.dabangvr.application.MyApplication;
 import com.dbvr.baselibrary.base.ParameterContens;
 import com.dbvr.baselibrary.model.AnchorVo;
-import com.dbvr.baselibrary.model.DepVo;
 import com.dbvr.baselibrary.model.QiniuUploadFile;
 import com.dbvr.baselibrary.utils.OnUploadListener;
 import com.dbvr.baselibrary.utils.QiniuUploadManager;
@@ -129,22 +127,22 @@ public class UserZBSQTwoActivity extends BaseActivity {
 
     private void UserApplyUpload() {
         Map<String, Object> map = new HashMap<>();
-        map.put("name",anchorVo.getName());
-        map.put("phone",anchorVo.getPhone());
-        map.put("idcard",anchorVo.getIdcard());
-        map.put("idcardFace",anchorVo.getIdcardFace());
-        map.put("idcardBack",anchorVo.getIdcardBack());
-        map.put("agreedAgreement","1");
-        map.put("remarks",anchorVo.getRemarks());
-        map.put("id",anchorVo.getId());
+        map.put("name", anchorVo.getName());
+        map.put("phone", anchorVo.getPhone());
+        map.put("idcard", anchorVo.getIdcard());
+        map.put("idcardFace", anchorVo.getIdcardFace());
+        map.put("idcardBack", anchorVo.getIdcardBack());
+        map.put("agreedAgreement", "1");
+        map.put("remarks", anchorVo.getRemarks());
+        map.put("id", anchorVo.getId());
         OkHttp3Utils.getInstance(getContext()).doPostJson(UserUrl.addAnchor, map, new ObjectCallback<String>(getContext()) {
             @Override
             public void onUi(String result) {
-                Log.d("luhuas", "onUi: " + result);
                 Intent intent = new Intent(UserZBSQTwoActivity.this, UserApplySuccessActivity.class);
                 intent.putExtra("name", "主播申请");
                 startActivity(intent);
             }
+
             @Override
             public void onFailed(String msg) {
                 ToastUtil.showShort(getContext(), msg);
@@ -152,7 +150,6 @@ public class UserZBSQTwoActivity extends BaseActivity {
         });
 
     }
-
 
     private void selectImage(int code) {
         int isPermission1 = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
@@ -246,7 +243,6 @@ public class UserZBSQTwoActivity extends BaseActivity {
 
             @Override
             public void onUploadBlockComplete(String path) {
-                Log.d("luhuas", "onUploadBlockComplete: " + path);
                 if (!TextUtils.isEmpty(path)) {
                     if (path.startsWith(ParameterContens.idcartFacial)) {
                         anchorVo.setIdcardFace(DyUrl.QINIUDOMAN + path);
@@ -258,7 +254,6 @@ public class UserZBSQTwoActivity extends BaseActivity {
 
             @Override
             public void onUploadCompleted() {
-                Log.d("luhuas", "onUploadCompleted:sha'上传完成 ");
                 setLoaddingView(false);
             }
 

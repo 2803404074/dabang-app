@@ -106,7 +106,6 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:paddingLeft="@dimen/dp_20"
-                        android:text="昵称"
                         android:textColor="@color/textTitle"
                         android:textSize="@dimen/sp_16" />
 
@@ -138,7 +137,6 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:paddingLeft="@dimen/dp_20"
-                        android:text="sdasdas02312"
                         android:textColor="@color/textTitle"
                         android:textSize="@dimen/sp_16" />
                 </LinearLayout>
@@ -170,7 +168,6 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:paddingLeft="@dimen/dp_20"
-                        android:text="男"
                         android:textColor="@color/textTitle"
                         android:textSize="@dimen/sp_16" />
 
@@ -203,7 +200,6 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:paddingLeft="@dimen/dp_20"
-                        android:text="1995-55-55"
                         android:textColor="@color/textTitle"
                         android:textSize="@dimen/sp_16" />
 
@@ -237,7 +233,6 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:paddingLeft="@dimen/dp_20"
-                        android:text="广西 防城港"
                         android:textColor="@color/textTitle"
                         android:textSize="@dimen/sp_16" />
 
@@ -267,7 +262,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/dp_20"
-                        android:text="中国第一女主播,thrthrthsah号如何和合润你让他二哥任何任何人"
                         android:textColor="@color/textTitle"
                         android:textSize="@dimen/sp_16" />
 
@@ -300,20 +294,15 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:paddingLeft="@dimen/dp_20"
-                        android:text="18894720208"
                         android:textColor="@color/textTitle"
                         android:textSize="@dimen/sp_16" />
-
                 </LinearLayout>
-
-
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
-
     </LinearLayout>
 
     <TextView
-        android:id="@+id/tvLogOut"
+        android:id="@+id/tv_sub"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -323,7 +312,7 @@
         android:background="@drawable/shape_style_green_blue"
         android:gravity="center"
         android:paddingVertical="@dimen/dp_10"
-        android:text="退出登录"
+        android:text="提交"
         android:textColor="@android:color/white"
         android:textSize="@dimen/sp_16" />
 </RelativeLayout>

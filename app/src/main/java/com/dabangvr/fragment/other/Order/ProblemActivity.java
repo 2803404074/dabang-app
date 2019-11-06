@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dabangvr.R;
 import com.dbvr.baselibrary.base.ParameterContens;
@@ -31,7 +30,6 @@ import com.dbvr.httplibrart.constans.UserUrl;
 import com.dbvr.httplibrart.utils.ObjectCallback;
 import com.dbvr.httplibrart.utils.OkHttp3Utils;
 import com.dbvr.imglibrary2.model.Image;
-import com.dbvr.imglibrary2.ui.PreviewImageActivity;
 import com.dbvr.imglibrary2.ui.SelectImageActivity;
 import com.dbvr.imglibrary2.ui.adapter.SelectedImageAdapter;
 import com.dbvr.imglibrary2.utils.TDevice;
@@ -67,14 +65,12 @@ public class ProblemActivity extends BaseActivity {
     EditText et_content_fk;
     @BindView(R.id.etPhone)
     EditText etPhone;
-
-
     @BindView(R.id.ll_addView)
     LinearLayout ll_addView;
     @BindView(R.id.ll_select)
     LinearLayout ll_select;
     private static final int PERMISSION_REQUEST_CODE = 0;
-    private static final int PIC_SUM = 4;
+    private static final int PIC_SUM = 4; //选择图片数量
     private static final int SELECT_IMAGE_REQUEST = 0x0011;
     private ArrayList<Image> mSelectImages = new ArrayList<>();
     private SelectedImageAdapter mAdapter;

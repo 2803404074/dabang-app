@@ -16,7 +16,7 @@ import java.util.List;
 import butterknife.BindView;
 
 /**
- * 纯列表的fragment
+ * 纯列表的fragment 回放
  */
 public class UserLiveFragment extends BaseFragment {
 

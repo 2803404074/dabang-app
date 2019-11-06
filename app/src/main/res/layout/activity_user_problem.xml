@@ -107,9 +107,10 @@
                 android:layout_height="100dp">
 
                 <EditText
+                    android:gravity="top|left"
                     android:id="@+id/et_content_fk"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/dp_100"
                     android:background="@null"
                     android:hint="填写你要描述的问题"
                     android:textSize="@dimen/sp_14" />
@@ -177,9 +178,10 @@
                 android:textStyle="bold" />
 
             <EditText
+                android:gravity="top|left"
                 android:id="@+id/etPhone"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="@dimen/dp_50"
                 android:background="@null"
                 android:hint="请填写您的手机号或邮箱，便于我们与您联系"
                 android:textSize="@dimen/sp_14" />
