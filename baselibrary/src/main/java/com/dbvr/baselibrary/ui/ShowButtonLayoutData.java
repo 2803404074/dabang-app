@@ -68,6 +68,7 @@ public class ShowButtonLayoutData<T> {
     }
 
 
+    private int position = 0;
     public void setDataType() {
         if (drawableBg == 0){
             drawableBg = R.drawable.shape_db_search;
@@ -86,9 +87,10 @@ public class ShowButtonLayoutData<T> {
             views[i] = view;
             final int finalI = i;
             view.setOnClickListener(v -> {
+                this.position = finalI;
                 //String tag = (String) v.getTag();
-                if(data.get(finalI) instanceof String){
-                    mListener.clickListener(v,view.getText().toString(),finalI,0,0,view.isChecked());
+                if(data.get(finalI) instanceof HomeFindMo.FourMo){
+                    mListener.clickListener(v,view.getText().toString(),position,0,0,view.isChecked());
                 }
                 if(view.isChecked()){
                     view.setTextColor(context.getResources().getColor(R.color.colorWhite));

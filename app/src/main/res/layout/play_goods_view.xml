@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="@dimen/dp_280"
+    android:layout_height="@dimen/dp_90"
+    android:orientation="horizontal"
+    android:layout_gravity="right"
+    android:gravity="center"
+    android:id="@+id/llGoodsView"
+    xmlns:roundiv="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/shape_left_radio_touming"
+    android:paddingRight="@dimen/dp_5">
+
+
+    <com.dbvr.baselibrary.ui.MyImageView
+        android:id="@+id/ivContent"
+        android:layout_width="@dimen/dp_85"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:scaleType="centerCrop"
+        roundiv:radius="@dimen/dp_8"
+        android:src="@mipmap/test7"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/dp_5"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tvContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_14"
+            android:text="超级无敌大闸蟹超级无敌大闸蟹超级无敌大闸蟹"
+            android:maxLines="2"
+            android:textColor="@color/colorDb5"
+            android:ellipsize="end"/>
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_10"
+            android:layout_marginTop="@dimen/dp_5"
+            android:text="防城港专卖店-本店买一送一，买海鲜送牙签o !!!"/>
+
+        <TextView
+            android:id="@+id/tvPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_15"
+            android:textColor="@color/colorAccentButton"
+            android:text="¥199"/>
+    </LinearLayout>
+</LinearLayout>

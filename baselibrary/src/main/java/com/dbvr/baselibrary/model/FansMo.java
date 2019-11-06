@@ -3,7 +3,7 @@ package com.dbvr.baselibrary.model;
 public class FansMo {
     private String nickName;
     private String headUrl;
-    private String userId;
+    private String id;//用户Id
     private String sex;
     private int grade;//等级
 
@@ -44,12 +44,12 @@ public class FansMo {
         this.headUrl = headUrl;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getId() {
+        return id;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public boolean isMutual() {

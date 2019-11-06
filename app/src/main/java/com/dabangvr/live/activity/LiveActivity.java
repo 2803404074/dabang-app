@@ -296,6 +296,16 @@ public class LiveActivity extends Activity implements
                 break;
             case Contents.HY_ORDER://下单消息
                 break;
+            case Contents.HY_COLLECTION://关注消息
+                Bundle bundle9 = new Bundle();
+                ArrayList arr9 = new ArrayList();
+                arr9.add(liveComment);
+                bundle9.putStringArrayList("data", arr9);
+                Message message9 = new Message();
+                message9.what = handleMessRequestCode;
+                message9.setData(bundle9);
+                handler.sendMessage(message9);
+                break;
             case Contents.HY_DZ://点赞消息,收到一条累计
                 upDateDz(liveComment.getDzNum());
                 Bundle bundle5 = new Bundle();
@@ -476,6 +486,9 @@ public class LiveActivity extends Activity implements
                     tvMess.setText(o.getMsgComment());
                 }else if (o.getMsgTag() == Contents.HY_LEAVE){
                     tvMess.setTextColor(getResources().getColor(R.color.color_e2e2e2));
+                    tvMess.setText(o.getMsgComment());
+                }else if (o.getMsgTag() == Contents.HY_COLLECTION){
+                    tvMess.setTextColor(getResources().getColor(R.color.text4));
                     tvMess.setText(o.getMsgComment());
                 }
             }

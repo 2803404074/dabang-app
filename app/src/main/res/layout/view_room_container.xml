@@ -139,4 +139,13 @@
         android:id="@+id/bottom_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
+
+    <include layout="@layout/play_goods_view"
+        android:layout_marginBottom="@dimen/dp_50"
+        android:visibility="invisible"
+        android:layout_alignParentBottom="true"
+        android:layout_width="0dp"
+        android:layout_alignParentRight="true"
+        android:layout_height="@dimen/dp_90" />
 </RelativeLayout>

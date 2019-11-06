@@ -31,6 +31,22 @@ public class MyAnimatorUtil {
         setTing(View.INVISIBLE);
     }
 
+
+    public void startAnimatorx(int w){
+        if (view.getVisibility() == View.VISIBLE)return;
+        view.measure(0, 0);
+        valueAnimator = ValueAnimator.ofInt(0, DensityUtil.dip2px(mContext,w)).setDuration(1000);
+
+        setTing(View.VISIBLE);
+    }
+
+    public void stopAnimatorx(int w){
+        if (view.getVisibility() == View.INVISIBLE)return;
+        view.measure(0, 0);
+        valueAnimator = ValueAnimator.ofInt(DensityUtil.dip2px(mContext,w),0).setDuration(1000);
+        setTing(View.INVISIBLE);
+    }
+
     /**
      * 控件显示，从0高度到指定高度
      */

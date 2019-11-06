@@ -9,7 +9,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_25"
+        android:layout_height="@dimen/dp_30"
         android:background="@color/dividerGrey"/>
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,9 +18,11 @@
         android:paddingBottom="@dimen/dp_3"
         android:orientation="horizontal">
         <ImageView
-            android:layout_width="@dimen/dp_30"
-            android:layout_height="@dimen/dp_30"
+            android:id="@+id/ivBack"
+            android:layout_width="@dimen/dp_28"
+            android:layout_height="@dimen/dp_28"
             android:padding="@dimen/dp_5"
+            android:layout_margin="@dimen/dp_2"
             android:layout_gravity="center"
             android:src="@mipmap/back_w_black"/>
 
@@ -28,6 +30,7 @@
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_35"
+            android:layout_marginLeft="@dimen/dp_5"
             app:stl_indicatorWithoutPadding="true"
             app:stl_indicatorInterpolation="smart"
             app:stl_indicatorColor="@color/colorDb"
@@ -36,7 +39,7 @@
             app:stl_distributeEvenly="true"
             app:stl_customTabTextLayoutId="@layout/view_tab_text_black"
             app:stl_defaultTabTextHorizontalPadding="@dimen/dp_5"
-            app:stl_defaultTabTextMinWidth="@dimen/dp_14"
+            app:stl_defaultTabTextMinWidth="@dimen/dp_16"
             app:stl_indicatorCornerRadius="2dp"
             app:stl_overlineThickness="0dp"
             app:stl_underlineThickness="0dp"

@@ -211,12 +211,12 @@ public class SearchActivity extends BaseActivity {
                         holder.getView(R.id.tvGz).setBackgroundResource(R.drawable.shape_gray);
                         holder.setText(R.id.tvGz,"已关注");
                         setLoaddingView(true);
-                        followFunction(o.getUserId());
+                        followFunction(o.getId());
                     }else {
                         holder.getView(R.id.tvGz).setBackgroundResource(R.drawable.shape_red);
                         holder.setText(R.id.tvGz,"关注");
                         setLoaddingView(true);
-                        followFunction(o.getUserId());
+                        followFunction(o.getId());
                     }
                 });
             }
@@ -262,7 +262,7 @@ public class SearchActivity extends BaseActivity {
                     listHots = list;
                     //热门标签
                     ShowButtonLayoutData data1 = new ShowButtonLayoutData<>(getContext(), hotLayout,
-                            listHots, (v, txt, arg1, posi, arg2, isCheck) -> {
+                            listHots, (v, txt, posi,arg1, arg2, isCheck) -> {
                         Map<String, Object> map = new HashMap<>();
                         map.put("list", new Gson().toJson(listHots));
                         map.put("position", posi);
@@ -274,7 +274,7 @@ public class SearchActivity extends BaseActivity {
 
             @Override
             public void onFailed(String msg) {
-
+                ToastUtil.showShort(getContext(),msg);
             }
         });
     }

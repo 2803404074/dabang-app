@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.TextView;
 
+import butterknife.BindView;
 import okhttp3.Call;
 
 import com.addressselection.bean.AddressBEAN;
@@ -18,10 +19,12 @@ import com.addressselection.manager.AddressDictManager;
 import com.addressselection.manager.DBUtils;
 import com.dabangvr.R;
 import com.dabangvr.application.MyApplication;
+import com.dabangvr.im.MyAnimatorUtil;
 import com.dbvr.baselibrary.model.MenuBean;
 import com.dbvr.baselibrary.model.UserMess;
 import com.dbvr.baselibrary.utils.SPUtils;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
+import com.dbvr.baselibrary.utils.StringUtils;
 import com.dbvr.baselibrary.utils.ToastUtil;
 import com.dbvr.baselibrary.view.BaseActivity;
 import com.dbvr.httplibrart.constans.DyUrl;
@@ -44,12 +47,18 @@ public class WellcomActivity extends BaseActivity {
     private TextView text_version;
     //private AddressBEAN addressBeans;
 
+    @BindView(R.id.tvShow01)
+    TextView tvShow01;
+    @BindView(R.id.tvShow02)
+    TextView tvShow02;
+    private MyAnimatorUtil animatorUtil01;
+    private MyAnimatorUtil animatorUtil02;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //用来设置整体下移，状态栏沉浸
         StatusBarUtil.setRootViewFitsSystemWindows(this, false);
-        setTheme(R.style.AppTheme);
     }
 
     @Override
@@ -61,16 +70,29 @@ public class WellcomActivity extends BaseActivity {
     public void initView() {
         text_version = this.findViewById(R.id.text_version);
         text_version.setText(getVersion());
+
+        animatorUtil01 = new MyAnimatorUtil(getContext(), tvShow01);
+        animatorUtil02 = new MyAnimatorUtil(getContext(), tvShow02);
+        new Thread(() -> {
+            runOnUiThread(()->{
+                try {
+                    Thread.sleep(1000);
+                    animatorUtil01.startAnimatorx(300);
+                    animatorUtil02.startAnimatorx(300);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            });
+        }).start();
     }
 
     @Override
     public void initData() {
-        UserMess userMess = SPUtils.instance(this).getUser();
-        if (null == userMess) {
-            goTActivity(LoginActivity.class);
+
+        if (StringUtils.isEmpty( SPUtils.instance(this).getToken())){
+            goTActivity(LoginActivity.class);//未登陆
         } else {
-            goTActivity(MainActivity.class);
-            getUserInfo();
+            getUserInfo();//已经登录，获取用户最新信息
         }
         getInitializationData();
     }
@@ -79,14 +101,31 @@ public class WellcomActivity extends BaseActivity {
         OkHttp3Utils.getInstance(this).doPostJson(DyUrl.getUserInfo, null, new ObjectCallback<String>(this) {
             @Override
             public void onUi(String result) {
-                UserMess userMess = new Gson().fromJson(result, UserMess.class);
-                SPUtils.instance(getContext()).put("token", userMess.getToken());
-                SPUtils.instance(getContext()).putUser(userMess);
+                if (StringUtils.isEmpty(result)){
+                    ToastUtil.showShort(getContext(),"信息已过期，请重新登录");
+                    goTActivity(LoginActivity.class);
+                    return;
+                }
+                try {
+                    UserMess userMess = new Gson().fromJson(result, UserMess.class);
+                    if (userMess == null){
+                        ToastUtil.showShort(getContext(),"信息已过期，请重新登录");
+                        goTActivity(LoginActivity.class);
+                    }else {
+                        SPUtils.instance(getContext()).put("token", userMess.getToken());
+                        SPUtils.instance(getContext()).putUser(userMess);
+                        goTActivity(MainActivity.class);
+                    }
+                }catch (Exception e){
+                    ToastUtil.showShort(getContext(),"信息已过期，请重新登录");
+                    goTActivity(LoginActivity.class);
+                }
             }
 
             @Override
             public void onFailed(String msg) {
-
+                ToastUtil.showShort(getContext(),msg);
+                goTActivity(LoginActivity.class);
             }
         });
     }
@@ -94,10 +133,13 @@ public class WellcomActivity extends BaseActivity {
 
     private void goTActivity(final Class T) {
         new Handler().postDelayed(() -> {
+            animatorUtil01.stopAnimatorx(300);
+            animatorUtil02.stopAnimatorx(300);
             Intent intent = new Intent(WellcomActivity.this, T);
             startActivity(intent);
+            overridePendingTransition(R.anim.activity_out,R.anim.activity_in);
             finish();
-        }, 1500);
+        }, 2000);
     }
 
     //获取版本号
@@ -115,6 +157,8 @@ public class WellcomActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        animatorUtil01 = null;
+        animatorUtil02 = null;
     }
 
     private void getInitializationData() {
@@ -147,14 +191,14 @@ public class WellcomActivity extends BaseActivity {
         //获取标签
         OkHttp3Utils.getInstance(MyApplication.getInstance()).doPostJson(DyUrl.getAmapDistrict, map, new ObjectCallback<String>(MyApplication.getInstance()) {
             @Override
-            public void onUi(String result){
+            public void onUi(String result) {
                 String rep = "\"citycode\":[]";
                 String repe = "\"citycode\":\"0\"";
                 String replace = result.replace(rep, repe);
                 List<AdressBean_two> list = new Gson().fromJson(replace, new TypeToken<List<AdressBean_two>>() {
                 }.getType());
 
-                new Thread(()->{
+                new Thread(() -> {
                     inidSql(list);
                 }).start();
             }
@@ -168,7 +212,7 @@ public class WellcomActivity extends BaseActivity {
 
     private void inidSql(List<AdressBean_two> list) {
         if (list != null && list.size() > 0) {
-           new AddressDictManager(this,true,list);
+            new AddressDictManager(this, true, list);
         }
 
     }

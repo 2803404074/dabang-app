@@ -143,7 +143,7 @@
         android:textSize="@dimen/sp_18"
         android:paddingHorizontal="@dimen/dp_5"
         android:layout_marginTop="@dimen/dp_10"
-        android:textColor="@color/colorAccentButton"
+        android:textColor="@color/textTitle"
         android:text="*开通年卡立即赠送20跳币"/>
 
     <LinearLayout
@@ -152,16 +152,14 @@
         android:paddingHorizontal="@dimen/dp_5"
         android:layout_marginTop="@dimen/dp_5"
         android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="查看"/>
+
         <TextView
             android:id="@+id/tvSeeServer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/colorAccentButton"
-            android:text="《vip服务协议》"/>
+            android:textSize="@dimen/sp_15"
+            android:text="去充值跳币>>"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -172,8 +170,9 @@
             android:id="@+id/tvSeeDrop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_15"
             android:textColor="@color/colorAccentButton"
-            android:text="《跳币攻略》"/>
+            android:text="《跳币服务攻略》"/>
     </LinearLayout>
 
 </LinearLayout>

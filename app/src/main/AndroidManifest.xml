@@ -55,7 +55,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:icon">
-        <activity android:name=".activity.HtmlActivity"/>
+        <activity android:name=".activity.StrategyActivity"></activity>
+        <activity android:name=".activity.HtmlActivity" />
         <activity android:name=".activity.ZhibTypeActivity" />
         <activity android:name=".activity.CommentListActivity" />
         <activity android:name=".activity.MyDropActivity" />
@@ -77,8 +78,8 @@
 
         <activity
             android:name=".activity.WellcomActivity"
-            android:theme="@style/AppTheme"
-            android:label="@string/title_activity_main">
+            android:label="@string/title_activity_main"
+            android:theme="@style/LaunchThem">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

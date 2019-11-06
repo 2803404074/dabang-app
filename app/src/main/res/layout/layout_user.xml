@@ -26,7 +26,7 @@
     <LinearLayout
         android:id="@+id/llHead"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_70"
+        android:layout_height="@dimen/dp_80"
         android:layout_above="@+id/llMess"
         android:background="@android:color/white"
         android:clipChildren="false"
@@ -34,16 +34,16 @@
 
         <RelativeLayout
             android:id="@+id/fl"
-            android:layout_width="@dimen/dp_105"
-            android:layout_height="@dimen/dp_105"
+            android:layout_width="@dimen/dp_115"
+            android:layout_height="@dimen/dp_115"
             android:layout_gravity="bottom"
             android:layout_marginLeft="@dimen/dp_5"
             android:background="@mipmap/ruone">
 
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/sdvHead"
-                android:layout_width="@dimen/dp_105"
-                android:layout_height="@dimen/dp_105"
+                android:layout_width="@dimen/dp_115"
+                android:layout_height="@dimen/dp_115"
                 android:layout_centerInParent="true"
                 fresco:roundAsCircle="true" />
 
@@ -58,48 +58,14 @@
             android:orientation="vertical"
             android:paddingRight="@dimen/dp_5">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/tvNickName"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="海之子123"
-                    android:layout_gravity="center"
-                    android:textColor="@color/textTitle"
-                    android:textSize="@dimen/sp_15" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1px"
-                    android:layout_weight="1" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/shape_w_stroke"
-                    android:orientation="horizontal"
-                    android:layout_gravity="center"
-                    android:paddingHorizontal="@dimen/dp_10"
-                    android:paddingVertical="@dimen/dp_3">
-
-                    <ImageView
-                        android:layout_width="@dimen/dp_20"
-                        android:layout_height="@dimen/dp_20"
-                        android:src="@mipmap/edit" />
-
-                    <TextView
-                        android:id="@+id/tv_edit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="编辑资料"
-                        android:textColor="@color/textTitle"
-                        android:textSize="@dimen/sp_13" />
-                </LinearLayout>
-
-            </LinearLayout>
+                android:text="海之子123"
+                android:layout_gravity="center|left"
+                android:textColor="@color/textTitle"
+                android:textSize="@dimen/sp_15" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -113,7 +79,7 @@
                     android:text="跳跳号:"
                     android:layout_gravity="center"
                     android:textColor="@color/textTitle"
-                    android:textSize="@dimen/sp_12" />
+                    android:textSize="@dimen/sp_15" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -121,7 +87,7 @@
                     android:text="15655475"
                     android:layout_gravity="center"
                     android:textColor="@color/textTitle"
-                    android:textSize="@dimen/sp_12" />
+                    android:textSize="@dimen/sp_15" />
 
                 <View
                     android:layout_width="0dp"
@@ -133,8 +99,8 @@
                     android:layout_height="wrap_content">
                     <ImageView
                         android:id="@+id/ivGrade"
-                        android:layout_width="@dimen/dp_40"
-                        android:layout_height="@dimen/dp_40"
+                        android:layout_width="@dimen/dp_30"
+                        android:layout_height="@dimen/dp_30"
                         android:src="@mipmap/u_one"/>
                     <TextView
                         android:id="@+id/tvGrade"
@@ -142,11 +108,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="青铜会员"
+                        android:layout_marginRight="@dimen/dp_5"
                         android:textColor="@color/colorGray4"
                         android:layout_centerVertical="true"
                         android:textSize="@dimen/sp_15" />
                 </RelativeLayout>
             </LinearLayout>
+            <TextView
+                android:id="@+id/tvLove"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="爱好爱好爱好"
+                android:layout_gravity="left"
+                android:textSize="@dimen/sp_15" />
         </LinearLayout>
     </LinearLayout>
 
@@ -161,27 +135,13 @@
         android:paddingHorizontal="@dimen/dp_10"
         android:paddingBottom="@dimen/dp_5">
 
-        <TextView
-            android:id="@+id/tvNickName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="昵称昵称昵称"
-            android:textSize="@dimen/sp_14" />
 
-        <TextView
-            android:id="@+id/tvLove"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvNickName"
-            android:text="爱好爱好爱好"
-            android:textSize="@dimen/sp_12" />
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvLove"
-            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginVertical="@dimen/dp_10"
             android:gravity="center"
             android:orientation="horizontal">
 

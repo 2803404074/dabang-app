@@ -82,12 +82,12 @@ public class FansAndFollowActivity extends BaseActivity {
                         holder.getView(R.id.tvGz).setBackgroundResource(R.drawable.shape_gray);
                         holder.setText(R.id.tvGz,"已互粉");
                         setLoaddingView(true);
-                        followFunction(o.getUserId());
+                        followFunction(o.getId());
                     }else {
                         holder.getView(R.id.tvGz).setBackgroundResource(R.drawable.shape_red);
                         holder.setText(R.id.tvGz,"关注");
                         setLoaddingView(true);
-                        followFunction(o.getUserId());
+                        followFunction(o.getId());
                     }
                 });
 
@@ -97,7 +97,7 @@ public class FansAndFollowActivity extends BaseActivity {
 
         adapter.setOnItemClickListener((view, position) -> {
             Map<String,Object>map = new HashMap<>();
-            map.put("userId",mData.get(position).getUserId());
+            map.put("userId",mData.get(position).getId());
             goTActivity(UserHomeActivity.class,map);
         });
     }
@@ -137,37 +137,33 @@ public class FansAndFollowActivity extends BaseActivity {
                 AppManager.getAppManager().finishActivity(this);
                 break;
             case R.id.tvCreateVIP:
-                BottomDialogUtil2.getInstance(this).showLive(R.layout.dialog_vip, view1 -> {
-                    TextView tvYear = view1.findViewById(R.id.tvYear);
-                    TextView tvThreeMon = view1.findViewById(R.id.tvThreeMon);
-                    TextView tvOneMon = view1.findViewById(R.id.tvOneMon);
+                BottomDialogUtil2.getInstance(FansAndFollowActivity.this).show(R.layout.dialog_vip,0, view1 -> {
                     view1.findViewById(R.id.tvYear).setOnClickListener(view2 -> {
                         BottomDialogUtil2.getInstance(this).dess();
-                        PayDialog dialog = new PayDialog(getContext(),"","orderSnTotal",null);
-                        dialog.showDialog(tvYear.getText().toString());
+                        PayDialog dialog = new PayDialog(getContext());
+                        dialog.showDialog(255);
                     });
                     view1.findViewById(R.id.tvThreeMon).setOnClickListener(view2 -> {
                         BottomDialogUtil2.getInstance(this).dess();
-                        PayDialog dialog = new PayDialog(getContext(),"","orderSnTotal",null);
-                        dialog.showDialog(tvThreeMon.getText().toString());
+                        PayDialog dialog = new PayDialog(getContext());
+                        dialog.showDialog(59);
                     });
                     view1.findViewById(R.id.tvOneMon).setOnClickListener(view2 -> {
                         BottomDialogUtil2.getInstance(this).dess();
-                        PayDialog dialog = new PayDialog(getContext(),"","orderSnTotal",null);
-                        dialog.showDialog(tvOneMon.getText().toString());
+                        PayDialog dialog = new PayDialog(getContext());
+                        dialog.showDialog(20);
                     });
 
                     view1.findViewById(R.id.tvSeeServer).setOnClickListener(view2 -> {
-
+                        goTActivity(MyDropActivity.class,null);
                     });
                     view1.findViewById(R.id.tvSeeDrop).setOnClickListener(view2 -> {
-                        goTActivity(MyDropActivity.class,null);
+                        goTActivity(StrategyActivity.class,null);
                     });
                 });
                 break;
         }
     }
-
 
     @Override
     protected void onDestroy() {

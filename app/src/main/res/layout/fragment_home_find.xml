@@ -19,4 +19,6 @@
         android:paddingRight="@dimen/dp_1" />
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
+
+
 </LinearLayout>

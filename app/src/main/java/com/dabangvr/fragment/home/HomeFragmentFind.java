@@ -137,20 +137,17 @@ public class HomeFragmentFind extends BaseFragment {
                             headUrl = list.get(i).getHeadUrl();
                             userId = list.get(i).getUserId();
                             isFollow = list.get(i).isFollow();
-                            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    Map<String,Object>map = new HashMap<>();
-                                    map.put("url",liveId);
-                                    map.put("roomId",roomId);
-                                    map.put("nickName",nickName);
-                                    map.put("liveTag",liveTag);
-                                    map.put("lookNum",lookNum);
-                                    map.put("headUrl",headUrl);
-                                    map.put("userId",userId);
-                                    map.put("isFollow",isFollow);
-                                    goTActivity(PlayActivity.class,map);
-                                }
+                            holder.itemView.setOnClickListener(view -> {
+                                Map<String,Object>map = new HashMap<>();
+                                map.put("url",liveId);
+                                map.put("roomId",roomId);
+                                map.put("nickName",nickName);
+                                map.put("liveTag",liveTag);
+                                map.put("lookNum",lookNum);
+                                map.put("headUrl",headUrl);
+                                map.put("userId",userId);
+                                map.put("isFollow",isFollow);
+                                goTActivity(PlayActivity.class,map);
                             });
                             list.remove(i);
                             break;
@@ -231,7 +228,7 @@ public class HomeFragmentFind extends BaseFragment {
                 } else if (adapter.getViewTypeForMyTask(mType) == adapter.mTypeThree) {
                     List<HomeFindMo.FourMo> list = mData.get(mType).getFourMos();
                     RecyclerView recyclerView = holder.getView(R.id.recycler_head);
-                    recyclerView.setLayoutManager(new GridLayoutManager(getContext(),5));
+                    recyclerView.setLayoutManager(new GridLayoutManager(getContext(),4));
                     RecyclerAdapterPosition adapter = new RecyclerAdapterPosition<HomeFindMo.FourMo>(getContext(),list,R.layout.item_type) {
                         @Override
                         public void convert(Context mContext, BaseRecyclerHolder holder,int position, HomeFindMo.FourMo o) {

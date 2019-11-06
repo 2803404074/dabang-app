@@ -50,22 +50,17 @@ public class BottomDialogUtil2 {
         View view = LayoutInflater.from(mContext).inflate(layoutId, null);
         convers.setView(view);
         int height = (int) (Double.valueOf(ScreenUtils.getScreenHeight(mContext)) / h);
-        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialogInterface) {
+        dialog.setOnShowListener(dialogInterface -> {
 
-                if (onShowCallBack != null) {
-                    onShowCallBack.onShow();
-                }
+            if (onShowCallBack != null) {
+                onShowCallBack.onShow();
             }
         });
 
-        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                if (onDismissCallBack != null) {
-                    onDismissCallBack.onDismiss();
-                }
+        dialog.setOnDismissListener(dialogInterface -> {
+            dess();
+            if (onDismissCallBack != null) {
+                onDismissCallBack.onDismiss();
             }
         });
 
@@ -94,22 +89,16 @@ public class BottomDialogUtil2 {
         dialog = new BottomSheetDialog(mContext, R.style.dialog2);
         View view = LayoutInflater.from(mContext).inflate(layoutId, null);
         convers.setView(view);
-        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialogInterface) {
+        dialog.setOnShowListener(dialogInterface -> {
 
-                if (onShowCallBack != null) {
-                    onShowCallBack.onShow();
-                }
+            if (onShowCallBack != null) {
+                onShowCallBack.onShow();
             }
         });
 
-        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                if (onDismissCallBack != null) {
-                    onDismissCallBack.onDismiss();
-                }
+        dialog.setOnDismissListener(dialogInterface -> {
+            if (onDismissCallBack != null) {
+                onDismissCallBack.onDismiss();
             }
         });
 

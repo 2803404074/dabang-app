@@ -52,6 +52,7 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     public void initView() {
+
         setLoaddingView(true);
         List<String> mTitles = new ArrayList<>();
         mTitles.add("关注");

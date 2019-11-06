@@ -1,6 +1,7 @@
 package com.dabangvr.activity;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
@@ -15,6 +16,7 @@ import com.dbvr.baselibrary.adapter.ContentPagerAdapter;
 import com.dbvr.baselibrary.model.HomeFindMo;
 import com.dbvr.baselibrary.model.TagMo;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
+import com.dbvr.baselibrary.view.AppManager;
 import com.dbvr.baselibrary.view.BaseActivity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -24,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * 直播分类页面
@@ -85,5 +88,12 @@ public class ZhibTypeActivity extends BaseActivity {
     @Override
     public void initData() {
 
+    }
+
+    @OnClick(R.id.ivBack)
+    public void onclick(View view){
+        if (view.getId() == R.id.ivBack){
+            AppManager.getAppManager().finishActivity(this);
+        }
     }
 }

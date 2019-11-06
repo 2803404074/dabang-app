@@ -228,21 +228,18 @@ public class MyOrtherPageFragment extends BaseFragment {
                     }
                 });
 
-                tvPayment.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        switch (orderListMo.getOrderState()) {
-                            //付款
-                            case 0:
-                                paymentDialog(orderListMo.getId(), orderListMo.getOrderTotalPrice());
-                                break;
+                tvPayment.setOnClickListener(v -> {
+                    switch (orderListMo.getOrderState()) {
+                        //付款
+                        case 0:
+                            paymentDialog(orderListMo.getId(), orderListMo.getOrderTotalPrice());
+                            break;
 
-                            //确认收货
-                            case 300:
-                                callBack.show();
-                                ConfirmationOfReceipt(orderListMo.getId());
-                                break;
-                        }
+                        //确认收货
+                        case 300:
+                            callBack.show();
+                            ConfirmationOfReceipt(orderListMo.getId());
+                            break;
                     }
                 });
             }
@@ -311,19 +308,7 @@ public class MyOrtherPageFragment extends BaseFragment {
      * 支付弹窗
      */
     private void paymentDialog(final String orderId, final String price) {
-        PayDialog payDialog = new PayDialog(getContext(), "", "orderSn", orderId);
-        payDialog.showDialog(price);
-        payDialog.setRequestPay(new PayDialog.RequestPay() {
-            @Override
-            public void show() {
-                callBack.show();
-            }
 
-            @Override
-            public void hied() {
-                callBack.hide();
-            }
-        });
     }
 
 

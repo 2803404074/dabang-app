@@ -32,6 +32,9 @@
                 app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
                 <include layout="@layout/layout_user"/>
             </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_10"/>
             <com.ogaclejapan.smarttablayout.SmartTabLayout
                 app:stl_indicatorGravity="center"
                 app:stl_indicatorThickness="@dimen/dp_30"

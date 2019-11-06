@@ -252,33 +252,19 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 
     private void showFunction() {
         BottomDialogUtil2.getInstance(this).show(R.layout.dialog_main_function, 0, view -> {
-            view.findViewById(R.id.tvOpenLive).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    goTActivity(CreateLiveActivity.class,null);
-                    BottomDialogUtil2.getInstance(MainActivity.this).dess();
-                }
+            view.findViewById(R.id.tvOpenLive).setOnClickListener(view13 -> {
+                goTActivity(CreateLiveActivity.class,null);
+                BottomDialogUtil2.getInstance(MainActivity.this).dess();
             });
-            view.findViewById(R.id.tvOpenVideo).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    startVideoRecordActivity();
-                    BottomDialogUtil2.getInstance(MainActivity.this).dess();
-                }
+            view.findViewById(R.id.tvOpenVideo).setOnClickListener(view12 -> {
+                startVideoRecordActivity();
+                BottomDialogUtil2.getInstance(MainActivity.this).dess();
             });
-            view.findViewById(R.id.tvOpenDynamic).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    goTActivityForResult(CreateDynamicActivity.class,null,100);
-                    BottomDialogUtil2.getInstance(MainActivity.this).dess();
-                }
+            view.findViewById(R.id.tvOpenDynamic).setOnClickListener(view14 -> {
+                goTActivityForResult(CreateDynamicActivity.class,null,100);
+                BottomDialogUtil2.getInstance(MainActivity.this).dess();
             });
-            view.findViewById(R.id.ivClose).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    BottomDialogUtil2.getInstance(MainActivity.this).dess();
-                }
-            });
+            view.findViewById(R.id.ivClose).setOnClickListener(view1 -> BottomDialogUtil2.getInstance(MainActivity.this).dess());
         });
     }
 

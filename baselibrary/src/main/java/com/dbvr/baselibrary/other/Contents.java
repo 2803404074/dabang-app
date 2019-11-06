@@ -13,4 +13,5 @@ public class Contents {
     public final static int HY_DS_MAX = 22;//打赏(贵重礼物)
     public final static int HY_ORDER = 3;//下单
     public final static int HY_DZ = 4;//点赞
+    public final static int HY_COLLECTION = 5;//关注
 }

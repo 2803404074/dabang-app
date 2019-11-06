@@ -103,6 +103,7 @@ dependencies {
     implementation project(path: ':httplibrart')
     implementation project(path: ':imglibrary2')
     implementation project(path: ':svgalibrary')
+    implementation project(path: ':goodslibrary')
     implementation project(path: ':player')
     implementation project(path: ':videorecorder')
     implementation project(path: ':addressselection')

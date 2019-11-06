@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -62,6 +63,8 @@ public class UserDynamicFragment extends BaseFragment {
 
     protected int position;
 
+    @BindView(R.id.loading)
+    ProgressBar loading;
     @BindView(R.id.recycler_head)
     RecyclerView recyclerView;
 
@@ -92,7 +95,7 @@ public class UserDynamicFragment extends BaseFragment {
 
     @Override
     public void initView() {
-        setLoaddingView(true);
+        loading.setVisibility(View.VISIBLE);
         if (position == 0){
             initBra();
         }
@@ -235,12 +238,12 @@ public class UserDynamicFragment extends BaseFragment {
                         adapter.updateDataa(mData);
                     }
                 }
-                setLoaddingView(false);
+                loading.setVisibility(View.GONE);
             }
 
             @Override
             public void onFailed(String msg) {
-                setLoaddingView(false);
+                loading.setVisibility(View.GONE);
             }
         });
     }
@@ -256,7 +259,7 @@ public class UserDynamicFragment extends BaseFragment {
             }
             @Override
             public void onFailed(String msg) {
-                setLoaddingView(false);
+                loading.setVisibility(View.GONE);;
             }
         });
     }
@@ -316,6 +319,5 @@ public class UserDynamicFragment extends BaseFragment {
                 ToastUtil.showShort(getContext(),msg);
             }
         });
-
     }
 }

@@ -128,12 +128,9 @@ public class MyFragment extends BaseFragment {
 
     }
 
-    @OnClick({R.id.sdvHead,R.id.tv_edit,R.id.llFans,R.id.llFollow,R.id.llDrop})
+    @OnClick({R.id.sdvHead,R.id.llFans,R.id.llFollow,R.id.llDrop})
     public void onTouchClick(View view) {
         switch (view.getId()){
-            case R.id.tv_edit:
-                goTActivity(UserEditMessActivity.class,null);
-                break;
             case R.id.llFans:
                 goTActivity(FansAndFollowActivity.class,null);
                 break;

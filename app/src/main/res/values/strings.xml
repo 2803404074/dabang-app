@@ -8,4 +8,11 @@
     <string name="my_work">我的作品</string>
     <string name="my_order">我的订单</string>
     <string name="browsing_history">我的足迹</string>
+
+    <string name="dropStr">跳币为《海跳跳》平台内使用的代金券，其比例为1:10,即1元等于10跳币。
+        跳币集赞够一千的整数即可提现</string>
+    <string name="dropStrjf">等级分为青铜、白银、黄金、铂金、砖石五个等级，
+        他与个人消费或收入直接挂钩。每送出一个礼物或得到一个礼物都会增加积分。而积分的增长会提升等级，具体增长规则如下：</string>
+
+    <string name="dropStrdj">用处一:等级越高，粉丝越多。人气可直接影响直播的收益; 用处二:等级越高，直播间所卖出的商品提成越高。最终达到名利双丰收。</string>
 </resources>

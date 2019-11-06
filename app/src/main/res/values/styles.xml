@@ -11,13 +11,12 @@
         &lt;!&ndash;无标题&ndash;&gt;
         <item name="android:windowActionBar">false</item>-->
 
-
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="AppTheme.Launcher">
+    <style name="LaunchThem" parent="AppTheme">
         <item name="android:windowBackground">@drawable/launch_screen</item>
     </style>
 

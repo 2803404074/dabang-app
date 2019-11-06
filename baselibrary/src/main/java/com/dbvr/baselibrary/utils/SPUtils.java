@@ -68,7 +68,7 @@ public class SPUtils {
         } else {
             editor.putString(key, object.toString());
         }
-        editor.commit();
+        editor.apply();//后台提交
     }
 
     /**
@@ -95,7 +95,7 @@ public class SPUtils {
      */
     public void remove(String key) {
         editor.remove(key);
-        editor.commit();
+        editor.apply();
     }
 
     /**
@@ -103,7 +103,7 @@ public class SPUtils {
      */
     public void clear() {
         editor.clear();
-        editor.commit();
+        editor.apply();
     }
 
     /**
@@ -161,6 +161,10 @@ public class SPUtils {
         }
         Gson gson = new Gson();
         return gson.fromJson(str,UserMess.class);
+    }
+
+    public String getToken(){
+       return (String) getkey("token","");
     }
 
     public void putUser(String str){

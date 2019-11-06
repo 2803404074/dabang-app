@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,6 +56,9 @@ import butterknife.OnClick;
  */
 public class SameCityFragment extends BaseFragment {
 
+    @BindView(R.id.loading)
+    ProgressBar loading;
+
     public static final int cityFragmentCode = 103;
     @BindView(R.id.recycler_tc)
     RecyclerView recyclerView;
@@ -85,7 +89,7 @@ public class SameCityFragment extends BaseFragment {
                         MY_PERMISSIONS_REQUEST_CALL_LOCATION);
             } else {
                 //"权限已申请";
-                setLoaddingView(true);
+                loading.setVisibility(View.VISIBLE);
                 startLocaion();
             }
         }
@@ -188,7 +192,7 @@ public class SameCityFragment extends BaseFragment {
                 mWd = amapLocation.getLatitude();
                 getLocation(amapLocation.getLongitude() + "," + amapLocation.getLatitude());
             } else {
-                setLoaddingView(false);
+                loading.setVisibility(View.GONE);
                 //显示错误信息ErrCode是错误码，errInfo是错误信息，详见错误码表。
                 Log.e("AmapError", "location Error, ErrCode:"
                         + amapLocation.getErrorCode() + ", errInfo:"
@@ -219,7 +223,7 @@ public class SameCityFragment extends BaseFragment {
 
             @Override
             public void onFailed(String msg) {
-                setLoaddingView(false);
+                loading.setVisibility(View.GONE);
                 Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
                     tvLocationName.setText("定位失败，请确认GPS或数据流量打开");
                 });
@@ -251,11 +255,11 @@ public class SameCityFragment extends BaseFragment {
                         adapter.updateDataa(mData);
                     }
                 }
-                setLoaddingView(false);
+                loading.setVisibility(View.GONE);
             }
             @Override
             public void onFailed(String msg) {
-                setLoaddingView(false);
+                loading.setVisibility(View.GONE);
             }
         });
     }

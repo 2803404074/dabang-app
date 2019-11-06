@@ -206,6 +206,7 @@ public class CreateLiveActivity extends BaseActivity {
             public void onUploadFailed(String key, String err) {
                 pd.dismiss();
                 ToastUtil.showShort(getContext(),err);
+                setLoaddingView(false);
             }
 
             @Override
@@ -280,22 +281,19 @@ public class CreateLiveActivity extends BaseActivity {
                     }
                 }
             };
-            adapter.setOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(View view, int position) {
-                    boolean isCheck = mData.get(position).isCheck();
-                    if (isCheck){
-                        mData.get(position).setCheck(false);
-                        checkItemData.remove(mData.get(position));
-                        checkNum--;
-                    }else {
-                        if (checkNum>5)return;
-                        mData.get(position).setCheck(true);
-                        checkItemData.add(mData.get(position));
-                        checkNum++;
-                    }
-                    adapter.updateDataa(mData);
+            adapter.setOnItemClickListener((view1, position) -> {
+                boolean isCheck = mData.get(position).isCheck();
+                if (isCheck){
+                    mData.get(position).setCheck(false);
+                    checkItemData.remove(mData.get(position));
+                    checkNum--;
+                }else {
+                    if (checkNum>5)return;
+                    mData.get(position).setCheck(true);
+                    checkItemData.add(mData.get(position));
+                    checkNum++;
                 }
+                adapter.updateDataa(mData);
             });
             recyclerView.setAdapter(adapter);
         });

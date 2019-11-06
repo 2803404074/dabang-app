@@ -17,6 +17,8 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,9 +26,12 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.dabangvr.R;
 import com.dabangvr.adapter.BaseRecyclerHolder;
 import com.dabangvr.adapter.RecyclerAdapter;
+import com.dabangvr.application.MyApplication;
+import com.dabangvr.im.MyAnimatorUtil;
 import com.dabangvr.live.gift.GiftView;
 import com.dabangvr.live.gift.danmu.DanmuAdapter;
 import com.dabangvr.live.gift.danmu.DanmuEntity;
@@ -34,6 +39,7 @@ import com.dabangvr.play.widget.HeartLayout;
 import com.dabangvr.play.widget.MediaController;
 import com.dbvr.baselibrary.model.GiftMo;
 import com.dbvr.baselibrary.model.LiveComment;
+import com.dbvr.baselibrary.model.OrderGoodsList;
 import com.dbvr.baselibrary.model.UserMess;
 import com.dbvr.baselibrary.other.Contents;
 import com.dbvr.baselibrary.utils.BottomDialogUtil2;
@@ -63,6 +69,7 @@ import com.opensource.svgaplayer.SVGAVideoEntity;
 import com.orzangleli.xdanmuku.DanmuContainerView;
 import com.pili.pldroid.player.AVOptions;
 import com.pili.pldroid.player.PLOnErrorListener;
+import com.pili.pldroid.player.PLOnInfoListener;
 import com.pili.pldroid.player.widget.PLVideoTextureView;
 
 import org.jetbrains.annotations.NotNull;
@@ -77,7 +84,7 @@ import java.util.Random;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class PlayActivity extends BaseActivity implements PLOnErrorListener{
+public class PlayActivity extends BaseActivity implements PLOnErrorListener, PLOnInfoListener {
     public static final String TAG = "PlayActivity";
 
     private UserMess userMess;
@@ -121,12 +128,18 @@ public class PlayActivity extends BaseActivity implements PLOnErrorListener{
     //消息数量，始终将最新消息显示在recycelview的底部
     private int dataSize;
 
+    //开始直播标志
+    private volatile boolean isLiveStart = false;
+
     //礼物相关控件
     @BindView(R.id.danmuContainerView)
     DanmuContainerView danmuContainerView;
     @BindView(R.id.giftView)
     GiftView giftView;
 
+    @BindView(R.id.llGoodsView)
+    LinearLayout llGoodsView;
+    private MyAnimatorUtil animatorUtil;
 
     protected Handler mHandler = new Handler(Looper.getMainLooper()) {
         @Override
@@ -228,6 +241,16 @@ public class PlayActivity extends BaseActivity implements PLOnErrorListener{
                 break;
             case Contents.HY_ORDER://下单消息
                 break;
+            case Contents.HY_COLLECTION://关注消息
+                Bundle bundle9 = new Bundle();
+                ArrayList arr9 = new ArrayList();
+                arr9.add(liveComment);
+                bundle9.putStringArrayList("data", arr9);
+                Message message9 = new Message();
+                message9.what = handleMessRequestCode;
+                message9.setData(bundle9);
+                mHandler.sendMessage(message9);
+                break;
             case Contents.HY_DZ://点赞消息,收到一条累计
                 Bundle bundle5 = new Bundle();
                 ArrayList arr5 = new ArrayList();
@@ -280,6 +303,97 @@ public class PlayActivity extends BaseActivity implements PLOnErrorListener{
         //炫酷礼物初始化
         initGiftMall();
 
+        //如果是购物直播，初始化直播的商品，并且初始化商品弹出的视图
+        initGoodsView();
+
+    }
+
+    /**
+     * 弹出商品的业务
+     * 30,60,600,1200,1800
+     */
+    @BindView(R.id.ivContent)
+    ImageView ivContent;
+    @BindView(R.id.tvContent)
+    TextView tvContent;
+    @BindView(R.id.tvTitle)
+    TextView tvTitle;
+    @BindView(R.id.tvPrice)
+    TextView tvPrice;
+    private int second;
+    private int goodsPosition;
+    private boolean isLoad = true;
+    private List<OrderGoodsList>goodsLists ;
+    private void initGoodsView() {
+        goodsLists = new ArrayList<>();
+        OrderGoodsList goodsList1 = new OrderGoodsList();
+        goodsList1.setChartUrl("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1573042072724&di=1f749c977b80643beb33ced4115ab456&imgtype=0&src=http%3A%2F%2Fimg.yzt-tools.com%2F20190903%2Fe9e365a267fd77e2946713a7fb8e5645.jpg");
+        goodsList1.setGoodsName("超级无敌鱿鱼买一送一");
+        goodsList1.setRetailPrice("100");
+
+        OrderGoodsList goodsList2 = new OrderGoodsList();
+        goodsList2.setChartUrl("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1573042072723&di=a1aa9886f094fca2aa114be2afaeeaeb&imgtype=0&src=http%3A%2F%2Fimg3.99114.com%2Fgroup1%2FM00%2F0B%2FBA%2FwKgGS1jCVxCAYpkGAAEKQI-Nho4684_600_600.jpg");
+        goodsList2.setGoodsName("超级无敌龙虾买一送一");
+        goodsList2.setRetailPrice("200");
+
+        OrderGoodsList goodsList3 = new OrderGoodsList();
+        goodsList3.setChartUrl("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1573042072723&di=d2188544fe068e972b5324ede2fd9d42&imgtype=0&src=http%3A%2F%2Fpic.baike.soso.com%2Fp%2F20140423%2F20140423140918-202940451.jpg");
+        goodsList3.setGoodsName("海鲜粥买一送一");
+        goodsList3.setRetailPrice("300");
+
+        OrderGoodsList goodsList4 = new OrderGoodsList();
+        goodsList4.setChartUrl("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1573042072707&di=98a2f3727340bdd8f5ffe7b8125b1fc7&imgtype=0&src=http%3A%2F%2Fimg011.hc360.cn%2Fhb%2FMTQ3MTg2MzM3OTYyMS0xNzQ5MjE3ODc2.jpg");
+        goodsList4.setGoodsName("海鱼买一送一");
+        goodsList4.setRetailPrice("400");
+
+        OrderGoodsList goodsList5 = new OrderGoodsList();
+        goodsList5.setChartUrl("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1573042072706&di=a30e6987b8099473f6ec4323a08434d5&imgtype=0&src=http%3A%2F%2Fbpic.ooopic.com%2F16%2F03%2F38%2F16033804-ab6adc74e98f89ac37a75898ef1e2702.jpg");
+        goodsList5.setGoodsName("海螺买一送一");
+        goodsList5.setRetailPrice("500");
+
+        goodsLists.add(goodsList1);
+        goodsLists.add(goodsList2);
+        goodsLists.add(goodsList3);
+        goodsLists.add(goodsList4);
+        goodsLists.add(goodsList5);
+
+        isLiveStart = true;
+        animatorUtil = new MyAnimatorUtil(getContext(), llGoodsView);
+        new Thread(()->{
+            try {
+                while (isLoad){//开始直播后，一直循环弹出商品
+                    Thread.sleep(1000);
+                    if (second == 30 ||
+                            second == 60 ||
+                            second == 300||
+                            second == 600||
+                            second == 1200||
+                            second == 1800){
+                        if (goodsPosition>goodsLists.size()){
+                            goodsPosition = 0;
+                        }
+                        runOnUiThread(()->{
+                            Glide.with(MyApplication.getInstance()).load(goodsLists.get(goodsPosition).getChartUrl()).into(ivContent);
+                            });
+                        runOnUiThread(()->{ tvContent.setText(goodsLists.get(goodsPosition).getGoodsName());});
+                        runOnUiThread(()->{ tvTitle.setText(goodsLists.get(goodsPosition).getGoodsName()); });
+                        runOnUiThread(()->{ tvPrice.setText(goodsLists.get(goodsPosition).getRetailPrice()); });
+
+                        runOnUiThread(()->{ animatorUtil.startAnimatorx(280); });
+                        Thread.sleep(10000);
+                        runOnUiThread(()->{ animatorUtil.stopAnimatorx(280); });
+                        goodsPosition++;
+                    }
+                    if (second==1800){
+                        isLoad = false;
+                    }
+                    second++;
+
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 
     private void initGiftMall() {
@@ -412,19 +526,16 @@ public class PlayActivity extends BaseActivity implements PLOnErrorListener{
                 checkAfter(currentTime);
                 break;
             case R.id.llComment:
-                BottomDialogUtil2.getInstance(PlayActivity.this).showLive(R.layout.dialog_input,new Conver() {
-                    @Override
-                    public void setView(View view) {
-                        EditText editText = view.findViewById(R.id.et_content_chart);
-                        view.findViewById(R.id.btn_send).setOnClickListener(view1 -> {
-                            LiveComment liveComment1 = new LiveComment();
-                            liveComment1.setMsgTag(Contents.HY_COMMENT);
-                            liveComment1.setUserName(userMess.getNickName());
-                            liveComment1.setMsgComment(editText.getText().toString());
-                            goComment(liveComment1);
-                            BottomDialogUtil2.getInstance(PlayActivity.this).dess();
-                        });
-                    }
+                BottomDialogUtil2.getInstance(PlayActivity.this).showLive(R.layout.dialog_input, view14 -> {
+                    EditText editText = view14.findViewById(R.id.et_content_chart);
+                    view14.findViewById(R.id.btn_send).setOnClickListener(view1 -> {
+                        LiveComment liveComment1 = new LiveComment();
+                        liveComment1.setMsgTag(Contents.HY_COMMENT);
+                        liveComment1.setUserName(userMess.getNickName());
+                        liveComment1.setMsgComment(editText.getText().toString());
+                        goComment(liveComment1);
+                        BottomDialogUtil2.getInstance(PlayActivity.this).dess();
+                    });
                 });
                 break;
             case R.id.play_follow://关注点击
@@ -523,6 +634,12 @@ public class PlayActivity extends BaseActivity implements PLOnErrorListener{
                     playFollow.setText("已关注");
                     playFollow.setBackgroundResource(R.drawable.shape_gray_w);
                     playFollow.setTextColor(getResources().getColor(R.color.lsq_color_red));
+
+                    LiveComment liveComment = new LiveComment();
+                    liveComment.setMsgTag(Contents.HY_COLLECTION);
+                    liveComment.setUserName(userMess.getNickName());
+                    liveComment.setMsgComment("关注了主播");
+                    goComment(liveComment);
                 }
                 isFollow = !isFollow;
                 setLoaddingView(false);
@@ -580,7 +697,7 @@ public class PlayActivity extends BaseActivity implements PLOnErrorListener{
 
             @Override
             public void onFailed(String msg) {
-                Log.e("hahaha",msg);
+                Log.e("hahaha",""+msg);
                 ToastUtil.showShort(getContext(),msg);
                 setLoaddingView(false);
             }
@@ -631,6 +748,9 @@ public class PlayActivity extends BaseActivity implements PLOnErrorListener{
                 }else if (o.getMsgTag() == Contents.HY_LEAVE){
                     tvMess.setTextColor(getResources().getColor(R.color.color_e2e2e2));
                     tvMess.setText(o.getMsgComment());
+                }else if (o.getMsgTag() == Contents.HY_COLLECTION){
+                    tvMess.setTextColor(getResources().getColor(R.color.text4));
+                    tvMess.setText(o.getMsgComment());
                 }
             }
         };
@@ -658,14 +778,13 @@ public class PlayActivity extends BaseActivity implements PLOnErrorListener{
     public void initData() {
         OkHttp3Utils.getInstance(getContext()).doPostJson(DyUrl.getLiveGiftList, null, new ObjectCallback<String>(getContext()) {
             @Override
-            public void onUi(String result) throws JSONException {
+            public void onUi(String result){
                 Gson gson = new Gson();
                 List<GiftMo> list = gson.fromJson(result, new TypeToken<List<GiftMo>>() {}.getType());
                 giftList = list;
             }
             @Override
             public void onFailed(String msg) {
-
             }
         });
     }
@@ -894,4 +1013,10 @@ public class PlayActivity extends BaseActivity implements PLOnErrorListener{
         }
     };
 
+    @Override
+    public void onInfo(int i, int i1) {
+        if (i==MEDIA_INFO_CONNECTED){//连接成功
+            isLiveStart = true;
+        }
+    }
 }
