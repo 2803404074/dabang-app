@@ -110,11 +110,11 @@ public class LoginActivity extends BaseActivity{
                 //判断是否首次登陆
                 boolean isFirst = (boolean) SPUtils.instance(getContext()).getkey("isFirst", true);
                 if (isFirst) {
-                    goTActivity(WellComePageActivity.class, null);
+                    goTActivityTou(WellComePageActivity.class, null);
                 } else {
-                    goTActivity(MainActivity.class, null);
+                    goTActivityTou(MainActivity.class, null);
                 }
-                finish();
+                AppManager.getAppManager().finishActivity(LoginActivity.class);
             }
 
             @Override
@@ -188,6 +188,7 @@ public class LoginActivity extends BaseActivity{
                     SPUtils.instance(getContext()).putUser(result);
                     SPUtils.instance(getContext()).putObj("token", userMess.getToken());
                     goTActivity(MainActivity.class, null);
+                    overridePendingTransition(R.anim.activity_out,R.anim.activity_in);
                     AppManager.getAppManager().finishActivity(LoginActivity.class);
                 } else {
                     ToastUtil.showShort(getContext(), "登陆异常");

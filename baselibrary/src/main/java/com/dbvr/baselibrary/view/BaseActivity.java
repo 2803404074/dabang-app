@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.dbvr.baselibrary.R;
 import com.dbvr.baselibrary.ui.LoadingUtils;
 import com.dbvr.baselibrary.utils.SPUtils;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
@@ -58,27 +60,44 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public void goTActivity(final Class T, Map<String,Object>map){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(BaseActivity.this,T);
-                if (map!=null){
-                    for (String key : map.keySet()) {
-                        if (map.get(key) instanceof Boolean){
-                            intent.putExtra(key,(boolean)map.get(key));
-                        }
-                        if (map.get(key) instanceof String){
-                            intent.putExtra(key,(String)map.get(key));
-                        }
-                        if (map.get(key) instanceof Integer){
-                            intent.putExtra(key,(Integer)map.get(key));
-                        }
+        new Thread(() -> {
+            Intent intent = new Intent(BaseActivity.this,T);
+            if (map!=null){
+                for (String key : map.keySet()) {
+                    if (map.get(key) instanceof Boolean){
+                        intent.putExtra(key,(boolean)map.get(key));
+                    }
+                    if (map.get(key) instanceof String){
+                        intent.putExtra(key,(String)map.get(key));
+                    }
+                    if (map.get(key) instanceof Integer){
+                        intent.putExtra(key,(Integer)map.get(key));
                     }
                 }
-                startActivity(intent);
             }
+            startActivity(intent);
         }).start();
+    }
 
+    public void goTActivityTou(final Class T, Map<String,Object>map){
+        new Thread(() -> {
+            Intent intent = new Intent(BaseActivity.this,T);
+            if (map!=null){
+                for (String key : map.keySet()) {
+                    if (map.get(key) instanceof Boolean){
+                        intent.putExtra(key,(boolean)map.get(key));
+                    }
+                    if (map.get(key) instanceof String){
+                        intent.putExtra(key,(String)map.get(key));
+                    }
+                    if (map.get(key) instanceof Integer){
+                        intent.putExtra(key,(Integer)map.get(key));
+                    }
+                }
+            }
+            startActivity(intent);
+            overridePendingTransition(R.anim.activity_out,R.anim.activity_in);
+        }).start();
     }
 
     public void goTActivityForResult(final Class T, Map<String,Object> map,int requestCode){

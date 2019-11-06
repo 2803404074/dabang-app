@@ -21,24 +21,24 @@
 
     <TextView
         android:id="@+id/tvShow01"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/dp_100"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_30"
         android:textSize="@dimen/sp_21"
-        android:gravity="bottom"
-        android:layout_centerVertical="true"
-        android:textStyle="italic"
+        android:gravity="center"
         android:visibility="invisible"
+        android:textStyle="italic"
+        android:layout_marginTop="@dimen/dp_200"
         android:textColor="@color/colorDb5"
         android:text=" 海跳人跳心在跳 "/>
 
     <TextView
         android:id="@+id/tvShow02"
-        android:layout_width="0dp"
-        android:visibility="invisible"
-        android:layout_height="@dimen/dp_50"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_30"
         android:textSize="@dimen/sp_21"
+        android:gravity="center"
+        android:visibility="invisible"
         android:layout_alignParentRight="true"
-        android:gravity="bottom|right"
         android:layout_below="@+id/tvShow01"
         android:textStyle="italic"
         android:textColor="@color/colorDb5"

@@ -225,7 +225,7 @@ public class SameCityFragment extends BaseFragment {
             public void onFailed(String msg) {
                 loading.setVisibility(View.GONE);
                 Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
-                    tvLocationName.setText("定位失败，请确认GPS或数据流量打开");
+                    tvLocationName.setText("定位失败");
                 });
             }
         });

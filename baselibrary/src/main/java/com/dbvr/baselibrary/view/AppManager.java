@@ -108,7 +108,6 @@ public class AppManager {
                 activityStack.get(i).finish();
             }
         }
-       // activityStack.clear();
     }
 
     /**

@@ -23,6 +23,7 @@ import com.dabangvr.im.MyAnimatorUtil;
 import com.dbvr.baselibrary.model.MenuBean;
 import com.dbvr.baselibrary.model.UserMess;
 import com.dbvr.baselibrary.utils.SPUtils;
+import com.dbvr.baselibrary.utils.ScreenUtils;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
 import com.dbvr.baselibrary.utils.StringUtils;
 import com.dbvr.baselibrary.utils.ToastUtil;
@@ -77,8 +78,8 @@ public class WellcomActivity extends BaseActivity {
             runOnUiThread(()->{
                 try {
                     Thread.sleep(1000);
-                    animatorUtil01.startAnimatorx(300);
-                    animatorUtil02.startAnimatorx(300);
+                    animatorUtil01.startAnimatorx(ScreenUtils.getScreenWidth(this));
+                    animatorUtil02.startAnimatorx(ScreenUtils.getScreenWidth(this));
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.dabangvr.R;
+import com.dabangvr.activity.LoginActivity;
 import com.dbvr.baselibrary.utils.CacheUtil;
 import com.dbvr.baselibrary.utils.DialogUtil;
 import com.dbvr.baselibrary.utils.SPUtils;
@@ -67,20 +68,15 @@ public class UserSettingActivity extends BaseActivity {
                 DialogUtil.getInstance(this).show(R.layout.dialog_tip, holder -> {
                     holder.findViewById(R.id.tvCancel).setOnClickListener(view1 -> DialogUtil.getInstance(getContext()).des());
                     holder.findViewById(R.id.tvConfirm).setOnClickListener(view12 -> logOut());
-                    holder.findViewById(R.id.tvConfirm).setOnClickListener(v -> {
-                        logOut();
-                        logOut();
-                    });
                 });
                 break;
         }
     }
 
-
-
     private void logOut() {
         SPUtils.instance(this).removeUser();
-        AppManager.getAppManager().finishAllActivityTo(UserSettingActivity.class);
+        goTActivity(LoginActivity.class,null);
+        AppManager.getAppManager().finishAllActivityTo(LoginActivity.class);
     }
 
     private void show(String mess) {
