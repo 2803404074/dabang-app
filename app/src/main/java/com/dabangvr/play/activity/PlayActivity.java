@@ -1,6 +1,7 @@
 package com.dabangvr.play.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
@@ -22,12 +23,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.dabangvr.R;
+import com.dabangvr.activity.MyDropActivity;
 import com.dabangvr.adapter.BaseRecyclerHolder;
 import com.dabangvr.adapter.RecyclerAdapter;
 import com.dabangvr.application.MyApplication;
@@ -268,7 +271,7 @@ public class PlayActivity extends BaseActivity implements PLOnErrorListener, PLO
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusBarUtil.setRootViewFitsSystemWindows(this, false);
+//        StatusBarUtil.setRootViewFitsSystemWindows(this, false);
         roomId = getIntent().getStringExtra("roomId");
     }
 
@@ -476,6 +479,18 @@ public class PlayActivity extends BaseActivity implements PLOnErrorListener, PLO
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 100){
+            if (resultCode == 99){
+                //充值后返回
+                int diamond = data.getIntExtra("diamond",0);
+                userMess.setDiamond(diamond);
+            }
+        }
+    }
+
     private void initPlay() {
         mVideoView.setDisplayAspectRatio(PLVideoTextureView.ASPECT_RATIO_PAVED_PARENT);
         mVideoView.setAVOptions(initAVOptions());
@@ -497,23 +512,17 @@ public class PlayActivity extends BaseActivity implements PLOnErrorListener, PLO
     public void onclick(View view){
         switch (view.getId()){
             case R.id.btn_barrage:
-                BottomDialogUtil2.getInstance(PlayActivity.this).showLive(R.layout.dialog_input,new Conver() {
-                    @Override
-                    public void setView(View view) {
-                        EditText editText = view.findViewById(R.id.et_content_chart);
-                        view.findViewById(R.id.btn_send).setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                LiveComment liveComment = new LiveComment();
-                                liveComment.setMsgTag(Contents.HY_DM);
-                                liveComment.setUserName(userMess.getNickName());
-                                liveComment.setHeadUrl(userMess.getHeadUrl());
-                                liveComment.setMsgComment(editText.getText().toString());
-                                goComment(liveComment);
-                                BottomDialogUtil2.getInstance(PlayActivity.this).dess();
-                            }
-                        });
-                    }
+                BottomDialogUtil2.getInstance(PlayActivity.this).showLive(R.layout.dialog_input, view16 -> {
+                    EditText editText = view16.findViewById(R.id.et_content_chart);
+                    view16.findViewById(R.id.btn_send).setOnClickListener(view161 -> {
+                        LiveComment liveComment = new LiveComment();
+                        liveComment.setMsgTag(Contents.HY_DM);
+                        liveComment.setUserName(userMess.getNickName());
+                        liveComment.setHeadUrl(userMess.getHeadUrl());
+                        liveComment.setMsgComment(editText.getText().toString());
+                        goComment(liveComment);
+                        BottomDialogUtil2.getInstance(PlayActivity.this).dess();
+                    });
                 });
                 break;
             case R.id.ivLove:
@@ -542,77 +551,75 @@ public class PlayActivity extends BaseActivity implements PLOnErrorListener, PLO
                 followFunction();
                 break;
             case R.id.ivGift://弹出礼物视图
-                BottomDialogUtil2.getInstance(PlayActivity.this).showLive(R.layout.dialog_gift,new Conver() {
-                    @Override
-                    public void setView(View view) {
-                        TextView tvTiaoB = view.findViewById(R.id.tvTiaoB);
-                        tvTiaoB.setText(String.valueOf(userMess.getDiamond()));
-                        EditText editText = view.findViewById(R.id.etNumber);
-                        view.findViewById(R.id.tvSend).setOnClickListener(view12 -> {
-                            if (Integer.parseInt(editText.getText().toString())>99){
-                                ToastUtil.showShort(getContext(),"赠送数量不能超过99个~");
-                                return;
-                            }
-                            if (Integer.parseInt(editText.getText().toString())<1){
-                                ToastUtil.showShort(getContext(),"赠送数量不能少于1个~");
-                                return;
-                            }
-                            if (StringUtils.isEmpty(giftUrl)){
-                                ToastUtil.showShort(getContext(),"选择你要送的礼物");
-                                return;
-                            }
-                            int price = Integer.parseInt(editText.getText().toString())*giftPrice;
-                            if (price>userMess.getDiamond()){
-                                ToastUtil.showShort(getContext(),"跳币不足");
-                                return;
-                            }
+                BottomDialogUtil2.getInstance(PlayActivity.this).showLive(R.layout.dialog_gift, view15 -> {
+                    TextView tvTiaoB = view15.findViewById(R.id.tvTiaoB);
+                    tvTiaoB.setText(String.valueOf(userMess.getDiamond()));
+                    EditText editText = view15.findViewById(R.id.etNumber);
+                    view15.findViewById(R.id.tvGoCz).setOnClickListener((view1)->{goTActivityForResult(MyDropActivity.class,null,100);});
+                    view15.findViewById(R.id.tvSend).setOnClickListener(view12 -> {
+                        if (Integer.parseInt(editText.getText().toString())>99){
+                            ToastUtil.showShort(getContext(),"赠送数量不能超过99个~");
+                            return;
+                        }
+                        if (Integer.parseInt(editText.getText().toString())<1){
+                            ToastUtil.showShort(getContext(),"赠送数量不能少于1个~");
+                            return;
+                        }
+                        if (StringUtils.isEmpty(giftUrl)){
+                            ToastUtil.showShort(getContext(),"选择你要送的礼物");
+                            return;
+                        }
+                        int price = Integer.parseInt(editText.getText().toString())*giftPrice;
+                        if (price>userMess.getDiamond()){
+                            ToastUtil.showShort(getContext(),"跳币不足");
+                            return;
+                        }
 
-                            //送礼
-                            setLoaddingView(true);
-                            rewardGiftFunction(editText.getText().toString());
+                        //送礼
+                        setLoaddingView(true);
+                        rewardGiftFunction(editText.getText().toString());
 
 
-                            BottomDialogUtil2.getInstance(PlayActivity.this).dess();
-                        });
-                        RecyclerView recyclerView = view.findViewById(R.id.recycler_head);
-                        recyclerView.setNestedScrollingEnabled(false);
-                        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),4));
-                        giftAdapter = new RecyclerAdapter<GiftMo>(getContext(),giftList,R.layout.item_gift) {
-                            @Override
-                            public void convert(Context mContext, BaseRecyclerHolder holder, GiftMo o) {
-                                    holder.setImageByUrl(R.id.mivIcon,o.getGiftUrl());
-                                    holder.setText(R.id.tvName,o.getGiftName());
-                                    holder.setText(R.id.tvPrice,o.getGiftCoins()+"跳币");
+                        BottomDialogUtil2.getInstance(PlayActivity.this).dess();
+                    });
+                    RecyclerView recyclerView = view15.findViewById(R.id.recycler_head);
+                    recyclerView.setNestedScrollingEnabled(false);
+                    recyclerView.setLayoutManager(new GridLayoutManager(getContext(),4));
+                    giftAdapter = new RecyclerAdapter<GiftMo>(getContext(),giftList,R.layout.item_gift) {
+                        @Override
+                        public void convert(Context mContext, BaseRecyclerHolder holder, GiftMo o) {
+                                holder.setImageByUrl(R.id.mivIcon,o.getGiftUrl());
+                                holder.setText(R.id.tvName,o.getGiftName());
+                                holder.setText(R.id.tvPrice,o.getGiftCoins()+"跳币");
 
-                                    if (o.isClick()){
-                                        holder.itemView.setBackgroundResource(R.drawable.shape_w_stroke);
-                                    }else {
-                                        holder.itemView.setBackgroundResource(R.drawable.shape_white);
-                                    }
-                            }
-                        };
-                        recyclerView.setAdapter(giftAdapter);
-                        giftAdapter.setOnItemClickListener((view13, position) -> {
-                            giftId = giftList.get(position).getId();
-                            giftName = giftList.get(position).getGiftName();
-                            if (giftList.get(position).getGiftCoins()>=300){
-                                giftUrl = giftList.get(position).getTag();
-                                Log.e("giftaaa",giftUrl);
-                            }else {
-                                giftUrl = giftList.get(position).getGiftUrl();
-                            }
-
-                            giftPrice = giftList.get(position).getGiftCoins();
-                            for (int i = 0; i < giftList.size(); i++) {
-                                if (i==position){
-                                    giftList.get(position).setClick(true);
-                                    continue;
+                                if (o.isClick()){
+                                    holder.itemView.setBackgroundResource(R.drawable.shape_w_stroke);
+                                }else {
+                                    holder.itemView.setBackgroundResource(R.drawable.shape_white);
                                 }
-                                giftList.get(i).setClick(false);
+                        }
+                    };
+                    recyclerView.setAdapter(giftAdapter);
+                    giftAdapter.setOnItemClickListener((view13, position) -> {
+                        giftId = giftList.get(position).getId();
+                        giftName = giftList.get(position).getGiftName();
+                        if (giftList.get(position).getGiftCoins()>=300){
+                            giftUrl = giftList.get(position).getTag();
+                            Log.e("giftaaa",giftUrl);
+                        }else {
+                            giftUrl = giftList.get(position).getGiftUrl();
+                        }
+
+                        giftPrice = giftList.get(position).getGiftCoins();
+                        for (int i = 0; i < giftList.size(); i++) {
+                            if (i==position){
+                                giftList.get(position).setClick(true);
+                                continue;
                             }
-                            giftAdapter.updateDataa(giftList);
-                        });
-                    }
+                            giftList.get(i).setClick(false);
+                        }
+                        giftAdapter.updateDataa(giftList);
+                    });
                 });
                 break;
                 default:break;
@@ -912,7 +919,7 @@ public class PlayActivity extends BaseActivity implements PLOnErrorListener, PLO
                 ToastUtil.showShort(PlayActivity.this,"播放器打开失败...");
                 break;
             case ERROR_CODE_IO_ERROR:
-                ToastUtil.showShort(PlayActivity.this,"网络异常...");
+                ToastUtil.showShort(PlayActivity.this,"加载直播中...");
                 break;
             case ERROR_CODE_CACHE_FAILED:
                 ToastUtil.showShort(PlayActivity.this,"预加载失败...");

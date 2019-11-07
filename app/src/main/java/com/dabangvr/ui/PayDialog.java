@@ -10,7 +10,9 @@ import android.widget.TextView;
 import com.dabangvr.R;
 
 import com.dabangvr.application.MyApplication;
+import com.dabangvr.wxapi.WXPayEntryActivity;
 import com.dabangvr.wxapi.WXPayUtils;
+import com.dabangvr.wxapi.WXPlayCallBack;
 import com.dbvr.baselibrary.utils.SPUtils;
 import com.dbvr.baselibrary.utils.StringUtils;
 import com.dbvr.baselibrary.utils.ToastUtil;
@@ -32,6 +34,17 @@ public class PayDialog {
     private Context mContext;
     private BottomSheetDialog dialog;
 
+    private WXPlayCallBack wxPlayCallBack;
+    private int price;
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setWxPlayCallBack(WXPlayCallBack wxPlayCallBack) {
+        this.wxPlayCallBack = wxPlayCallBack;
+    }
+
     /**
      * @param mContext
      */
@@ -40,13 +53,13 @@ public class PayDialog {
     }
 
     private ProgressBar progressBar;
-    public void showDialog(double price) {
+    public void showDialog(int price) {
         dialog = new BottomSheetDialog(mContext);
         View view = LayoutInflater.from(mContext).inflate(R.layout.orther_dialog, null);
         //支付价钱
         TextView tvPrice = view.findViewById(R.id.dialog_price);
         tvPrice.setText("¥" + price);
-
+        this.price = price;
         progressBar = view.findViewById(R.id.loading);
 
         RadioGroup radioGroup = view.findViewById(R.id.orther_radio_group);
@@ -82,7 +95,7 @@ public class PayDialog {
      *          5：购物车=》去付款=》取消=》重新付款    使用orderSnTotal
      *          6：购物车=》去付款=》取消=》查看订单=》订单详情=》去付款    使用orderSn
      */
-    private void getWXMESS(double price) {
+    private void getWXMESS(int price) {
         Map<String, Object> map = new HashMap<>();
         map.put("price", price);
         OkHttp3Utils.getInstance(MyApplication.getInstance()).doPostJson(DyUrl.payDiamond, map, new ObjectCallback<String>(MyApplication.getInstance()) {
@@ -111,6 +124,27 @@ public class PayDialog {
                 .build().toWXPayNotSign(mContext);
         ToastUtil.showShort(mContext, "正在打开微信...");
         progressBar.setVisibility(View.GONE);
+
+        WXPayEntryActivity.getInstance().setWxPlayCallBack(new WXPlayCallBack() {
+            @Override
+            public void success() {
+                dialog.dismiss();
+                wxPlayCallBack.success();
+            }
+
+            @Override
+            public void error(String errorMessage) {
+                dialog.dismiss();
+                wxPlayCallBack.error(errorMessage);
+            }
+
+            @Override
+            public void cancel() {
+                dialog.dismiss();
+                wxPlayCallBack.cancel();
+            }
+
+        });
     }
 
     public void desDialogView() {

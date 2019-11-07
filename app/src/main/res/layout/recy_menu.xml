@@ -3,8 +3,7 @@
     android:id="@+id/mainView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#22505151"
- >
+    android:background="@color/gra0">
 
     <androidx.recyclerview.widget.RecyclerView
 

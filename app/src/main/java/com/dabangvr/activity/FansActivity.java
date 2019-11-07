@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,11 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.dabangvr.R;
 import com.dabangvr.adapter.BaseRecyclerHolder;
 import com.dabangvr.adapter.RecyclerAdapter;
-import com.dabangvr.ui.PayDialog;
 import com.dbvr.baselibrary.model.FansMo;
-import com.dbvr.baselibrary.model.TagMo;
 import com.dbvr.baselibrary.utils.BottomDialogUtil2;
-import com.dbvr.baselibrary.utils.Conver;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
 import com.dbvr.baselibrary.utils.ToastUtil;
 import com.dbvr.baselibrary.view.AppManager;
@@ -27,8 +23,6 @@ import com.dbvr.httplibrart.utils.OkHttp3Utils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
-import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,7 +35,7 @@ import butterknife.OnClick;
 /**
  * 粉丝或关注页面
  */
-public class FansAndFollowActivity extends BaseActivity {
+public class FansActivity extends BaseActivity {
 
     @BindView(R.id.recycle_dz)
     RecyclerView recyclerView;
@@ -130,38 +124,13 @@ public class FansAndFollowActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.ivBack,R.id.tvCreateVIP})
+    @OnClick({R.id.ivBack})
     public void onclick(View view){
         switch (view.getId()){
             case R.id.ivBack:
                 AppManager.getAppManager().finishActivity(this);
                 break;
-            case R.id.tvCreateVIP:
-                BottomDialogUtil2.getInstance(FansAndFollowActivity.this).show(R.layout.dialog_vip,0, view1 -> {
-                    view1.findViewById(R.id.tvYear).setOnClickListener(view2 -> {
-                        BottomDialogUtil2.getInstance(this).dess();
-                        PayDialog dialog = new PayDialog(getContext());
-                        dialog.showDialog(255);
-                    });
-                    view1.findViewById(R.id.tvThreeMon).setOnClickListener(view2 -> {
-                        BottomDialogUtil2.getInstance(this).dess();
-                        PayDialog dialog = new PayDialog(getContext());
-                        dialog.showDialog(59);
-                    });
-                    view1.findViewById(R.id.tvOneMon).setOnClickListener(view2 -> {
-                        BottomDialogUtil2.getInstance(this).dess();
-                        PayDialog dialog = new PayDialog(getContext());
-                        dialog.showDialog(20);
-                    });
-
-                    view1.findViewById(R.id.tvSeeServer).setOnClickListener(view2 -> {
-                        goTActivity(MyDropActivity.class,null);
-                    });
-                    view1.findViewById(R.id.tvSeeDrop).setOnClickListener(view2 -> {
-                        goTActivity(StrategyActivity.class,null);
-                    });
-                });
-                break;
+            default:break;
         }
     }
 

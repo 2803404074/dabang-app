@@ -9,8 +9,8 @@
         <RelativeLayout
             android:id="@+id/title"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_70"
-            android:background="@color/colorDb3">
+            android:layout_height="@dimen/dp_30"
+            android:background="@color/colorWhite">
 
             <ImageView
                 android:id="@+id/ivBack"
@@ -19,7 +19,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_margin="@dimen/dp_3"
                 android:padding="@dimen/dp_5"
-                android:src="@mipmap/back_w" />
+                android:src="@mipmap/back_w_black" />
 
             <TextView
                 android:id="@+id/tv_toUsername"
@@ -27,7 +27,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="@dimen/dp_8"
                 android:textColor="#fff"
                 android:textSize="@dimen/sp_21" />
         </RelativeLayout>

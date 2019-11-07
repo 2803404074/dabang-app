@@ -52,12 +52,12 @@ public class DialogUtil {
 
 
     public void des(){
-        if (dialogUtil != null){
-            dialogUtil = null;
-        }
         if (dialog != null){
             dialog.dismiss();
             dialog = null;
+        }
+        if (dialogUtil != null){
+            dialogUtil = null;
         }
     }
 }

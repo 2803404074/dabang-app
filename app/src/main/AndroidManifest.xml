@@ -55,7 +55,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:icon">
-        <activity android:name=".activity.StrategyActivity"></activity>
+        <activity android:name=".activity.FollowActivity"></activity>
+        <activity android:name=".activity.RechargeDetailedActivity" />
+        <activity android:name=".activity.StrategyActivity" />
         <activity android:name=".activity.HtmlActivity" />
         <activity android:name=".activity.ZhibTypeActivity" />
         <activity android:name=".activity.CommentListActivity" />
@@ -66,7 +68,7 @@
         <activity android:name=".activity.IntroduceActivity" />
         <activity android:name=".activity.UserEditMessActivity" />
         <activity android:name=".activity.UserHomeActivity" />
-        <activity android:name=".activity.FansAndFollowActivity" />
+        <activity android:name=".activity.FansActivity" />
         <activity android:name=".activity.LocationActivity" />
         <activity android:name=".activity.CreateDynamicActivity" />
         <activity android:name=".activity.GetDzActivity" />

@@ -42,7 +42,8 @@ dependencies {
     annotationProcessor "com.jakewharton:butterknife-compiler:10.0.0"
 
     //微信
-    api 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
+   /* api 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'*/
+    api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
 
     //网络请求
     api 'com.squareup.okhttp3:okhttp:3.12.0'

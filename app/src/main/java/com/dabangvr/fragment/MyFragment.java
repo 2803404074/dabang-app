@@ -8,9 +8,8 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.dabangvr.R;
-import com.dabangvr.activity.FansAndFollowActivity;
+import com.dabangvr.activity.FansActivity;
 import com.dabangvr.activity.MyDropActivity;
-import com.dabangvr.activity.UserEditMessActivity;
 import com.dabangvr.application.MyApplication;
 import com.dabangvr.fragment.other.UserPersonalFragment;
 import com.dabangvr.fragment.other.UserDynamicFragment;
@@ -90,11 +89,14 @@ public class MyFragment extends BaseFragment {
 
     }
 
+    private UserMess userMess;
     @Override
-    public void initData() {
-
-        //初始化用户信息
-        UserMess userMess = SPUtils.instance(getContext()).getUser();
+    public void onResume() {
+        super.onResume();
+        setUserMess();
+    }
+    private void setUserMess(){
+        userMess = SPUtils.instance(getContext()).getUser();
         if (userMess != null) {
             sdvHead.setImageURI(userMess.getHeadUrl());
             tvNickName.setText(userMess.getNickName());
@@ -135,17 +137,20 @@ public class MyFragment extends BaseFragment {
             //AppManager.getAppManager().finishActivity(MainActivity.class);
             return;
         }
+    }
 
+    @Override
+    public void initData() {
     }
 
     @OnClick({R.id.sdvHead,R.id.llFans,R.id.llFollow,R.id.llDrop})
     public void onTouchClick(View view) {
         switch (view.getId()){
             case R.id.llFans:
-                goTActivity(FansAndFollowActivity.class,null);
+                goTActivity(FansActivity.class,null);
                 break;
             case R.id.llFollow:
-                goTActivity(FansAndFollowActivity.class,null);
+                goTActivity(FansActivity.class,null);
                 break;
             case R.id.llDrop:
                 goTActivity(MyDropActivity.class,null);

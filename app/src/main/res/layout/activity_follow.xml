@@ -6,12 +6,11 @@
     android:layout_height="match_parent"
     android:background="@color/colorWhiteLick"
     android:orientation="vertical"
-    tools:context=".activity.FansActivity">
+    tools:context=".activity.FollowActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:paddingTop="@dimen/dp_30"
-        android:gravity="bottom"
         android:layout_height="wrap_content">
         <ImageView
             android:id="@+id/ivBack"
@@ -27,13 +26,32 @@
             android:textSize="@dimen/sp_21"
             android:padding="@dimen/dp_5"
             android:textColor="@color/textTitle"
-            android:text="粉 丝"/>
+            android:text="我的关注"/>
     </LinearLayout>
 
-    <View
+    <LinearLayout
+        android:id="@+id/llSearch"
         android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/divider"/>
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/dp_10"
+        android:layout_marginHorizontal="@dimen/dp_20"
+        android:paddingHorizontal="@dimen/dp_10"
+        android:paddingVertical="@dimen/dp_4"
+        android:background="@drawable/shape_gray_w_g"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
+            android:layout_gravity="center"
+            android:src="@mipmap/search"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColorHint="@color/colorHs2"
+            android:layout_gravity="center"
+            android:textSize="@dimen/sp_15"
+            android:hint="搜索好友/粉丝/昵称"/>
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycle_dz"

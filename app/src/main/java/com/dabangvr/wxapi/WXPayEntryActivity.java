@@ -19,6 +19,21 @@ import static com.dbvr.baselibrary.other.ThirdParty.WECHART_APP_ID;
 public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler{
 
     protected IWXAPI api;
+    private static WXPayEntryActivity instance;
+    private static WXPlayCallBack wxPlayCallBack;
+
+    public static WXPayEntryActivity getInstance(){
+        if (instance == null){
+            instance = new WXPayEntryActivity();
+        }
+        return instance;
+    }
+
+    public void setWxPlayCallBack(WXPlayCallBack wxPlayCallBack) {
+        this.wxPlayCallBack = wxPlayCallBack;
+    }
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,19 +50,42 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler{
 
     @Override
     public void onReq(BaseReq req) {
+
     }
 
     @SuppressLint("StringFormatInvalid")
     @Override
     public void onResp(BaseResp resp) {
-        //如果存在订单页面，结束掉
         if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
-            if (resp.errCode == 0){//跳转支付成功页面
-                ToastUtil.showShort(WXPayEntryActivity.this,"支付成功");
+            if (resp.errCode == 0){//支付成功
+                if (wxPlayCallBack!=null){
+                    wxPlayCallBack.success();
+                    finish();
+                }
+            }else if (resp.errCode == -1){
+                if (wxPlayCallBack!=null){//支付异常
+                    wxPlayCallBack.error(resp.errStr);
+                    finish();
+                }
+            } else if (resp.errCode == -2){
+                if (wxPlayCallBack!=null){//支付取消
+                    wxPlayCallBack.cancel();
+                    finish();
+                }
             }else {
-                ToastUtil.showShort(WXPayEntryActivity.this,"支付失败");
+                if (wxPlayCallBack!=null){//支付失败
+                    wxPlayCallBack.error(resp.errStr);
+                    finish();
+                }
             }
         }
-        finish();
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        wxPlayCallBack = null;
+        instance = null;
     }
 }

@@ -120,7 +120,7 @@ public class MessageActivity extends BaseActivity {
                 goTActivity(CommentListActivity.class,map2);
                 break;
             case R.id.ivFans:
-                goTActivity(FansAndFollowActivity.class,null);
+                goTActivity(FansActivity.class,null);
                 break;
                 default:break;
         }

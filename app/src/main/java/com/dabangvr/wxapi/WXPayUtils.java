@@ -2,6 +2,7 @@ package com.dabangvr.wxapi;
 
 import android.content.Context;
 
+import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -28,20 +29,18 @@ public class WXPayUtils {
         iwxapi = WXAPIFactory.createWXAPI(context, builder.getAppId()); //初始化微信api
         iwxapi.registerApp(builder.getAppId()); //注册appid  appid可以在开发平台获取
 
-        Runnable payRunnable = new Runnable() {  //这里注意要放在子线程
-            @Override
-            public void run() {
-                PayReq request = new PayReq(); //调起微信APP的对象
-                //下面是设置必要的参数，也就是前面说的参数,这几个参数从何而来请看上面说明
-                request.appId = builder.getAppId();
-                request.partnerId = builder.getPartnerId();
-                request.prepayId = builder.getPrepayId();
-                request.packageValue = builder.getPackageValue();
-                request.nonceStr = builder.getNonceStr();
-                request.timeStamp =builder.getTimeStamp();
-                request.sign = builder.getSign();
-                iwxapi.sendReq(request);//发送调起微信的请求
-            }
+        //这里注意要放在子线程
+        Runnable payRunnable = () -> {
+            PayReq request = new PayReq(); //调起微信APP的对象
+            //下面是设置必要的参数，也就是前面说的参数,这几个参数从何而来请看上面说明
+            request.appId = builder.getAppId();
+            request.partnerId = builder.getPartnerId();
+            request.prepayId = builder.getPrepayId();
+            request.packageValue = builder.getPackageValue();
+            request.nonceStr = builder.getNonceStr();
+            request.timeStamp =builder.getTimeStamp();
+            request.sign = builder.getSign();
+            iwxapi.sendReq(request);//发送调起微信的请求
         };
         Thread payThread = new Thread(payRunnable);
         payThread.start();
