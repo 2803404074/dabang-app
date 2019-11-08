@@ -4,6 +4,7 @@
     android:layout_height="59dp"
     android:id="@+id/list_itease_layout"
     android:background="#fff"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:gravity="center_vertical" >
 
     <RelativeLayout
@@ -11,15 +12,12 @@
         android:layout_width="59dp"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true" >
-
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/avatar"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:scaleType="fitXY"
-            android:src="@mipmap/test" />
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
+            android:layout_centerInParent="true"
+            fresco:roundAsCircle="true" />
 
         <TextView
             android:id="@+id/unread_msg_number"

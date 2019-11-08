@@ -12,8 +12,8 @@
     <!-- roundingBorderColor 边框颜色-->
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/sdvHead"
-        android:layout_width="@dimen/dp_55"
-        android:layout_height="@dimen/dp_55"
+        android:layout_width="@dimen/dp_65"
+        android:layout_height="@dimen/dp_65"
         android:layout_gravity="center"
         fresco:progressBarAutoRotateInterval="1000"
         fresco:progressBarImage="@mipmap/loading"
@@ -30,6 +30,7 @@
         android:ellipsize="end"
         android:lines="1"
         android:text="小可爱"
-        android:textColor="@color/white"
-        android:textSize="@dimen/sp_10" />
+        android:gravity="center"
+        android:textColor="@color/textTitle"
+        android:textSize="@dimen/sp_14" />
 </LinearLayout>

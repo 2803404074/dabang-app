@@ -1,15 +1,24 @@
 package com.dbvr.baselibrary.model;
 
 public class FansMo {
+    private String id;//搜索用户的时候，userId就是这个id
     private String nickName;
     private String headUrl;
-    private String id;//用户Id
+    private String userId;
     private String sex;
     private int grade;//等级
 
     private boolean mutual;
 
     public FansMo() {
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getSex() {
@@ -44,12 +53,12 @@ public class FansMo {
         this.headUrl = headUrl;
     }
 
-    public String getId() {
-        return id;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public boolean isMutual() {

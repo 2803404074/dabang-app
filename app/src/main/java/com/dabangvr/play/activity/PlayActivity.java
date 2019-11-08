@@ -890,7 +890,7 @@ public class PlayActivity extends BaseActivity implements PLOnErrorListener, PLO
         String str = new Gson().toJson(liveComment);
         EMMessage message = EMMessage.createTxtSendMessage(str, roomId);
         //如果是群聊，设置chattype，默认是单聊
-        message.setChatType(EMMessage.ChatType.GroupChat);
+        message.setChatType(EMMessage.ChatType.ChatRoom);
         //发送消息
         EMClient.getInstance().chatManager().sendMessage(message);
     }

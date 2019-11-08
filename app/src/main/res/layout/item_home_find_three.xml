@@ -2,10 +2,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_marginTop="@dimen/dp_5"
-    android:layout_height="@dimen/dp_120">
+    android:layout_height="@dimen/dp_105">
 
     <com.youth.banner.Banner
         android:id="@+id/bannerContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="@dimen/dp_100"/>
+    <View
+        android:layout_below="@+id/bannerContainer"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_5"
+        android:background="@color/color_f1"/>
 </RelativeLayout>

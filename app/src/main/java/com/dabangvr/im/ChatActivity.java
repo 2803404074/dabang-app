@@ -108,12 +108,13 @@ public class ChatActivity extends BaseActivity {
     public void initView() {
         userMess = SPUtils.instance(getContext()).getUser();
         animatorUtil = new MyAnimatorUtil(getContext(), btn_send);
-        toChatUsername = this.getIntent().getStringExtra("username");
-        tv_toUsername.setText(toChatUsername);
+        toChatUsername = this.getIntent().getStringExtra("hyId");
+
+        tv_toUsername.setText(getIntent().getStringExtra("dName"));
 
         getAllMessage();
         msgList = conversation.getAllMessages();
-        position = msgList.size()-1;
+        position = msgList.size();
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setStackFromEnd(true);  //键盘弹出
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -129,6 +130,9 @@ public class ChatActivity extends BaseActivity {
                             holder.getView(R.id.iv_jt).setVisibility(View.VISIBLE);
                             EMTextMessageBody txtBody = (EMTextMessageBody) message.getBody();
                             holder.setText(R.id.tv_chatcontent, txtBody.getMessage());
+                            //头像
+                            SimpleDraweeView sdvHead = holder.getView(R.id.iv_userhead);
+                            sdvHead.setImageURI(message.getStringAttribute("head"));
                             //隐藏图片内容区域
                             holder.getView(R.id.iv_content).setVisibility(View.GONE);
                         }
@@ -241,22 +245,15 @@ public class ChatActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        recyclerView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {//
-            @Override
-            public void onLayoutChange(View v, int left, int top, int right,
-                                       int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                // TODO Auto-generated method stub
+        //
+        recyclerView.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
+            // TODO Auto-generated method stub
 
-                if (bottom < oldBottom) {
-                    recyclerView.postDelayed(new Runnable() {
-
-                        @Override
-                        public void run() {
-                            // TODO Auto-generated method stub
-                            recyclerView.scrollToPosition(chatAdapter.getItemCount() - 1);
-                        }
-                    }, 100);
-                }
+            if (bottom < oldBottom) {
+                recyclerView.postDelayed(() -> {
+                    // TODO Auto-generated method stub
+                    recyclerView.scrollToPosition(chatAdapter.getItemCount() - 1);
+                }, 100);
             }
         });
     }
@@ -286,6 +283,14 @@ public class ChatActivity extends BaseActivity {
         // 如果是群聊，设置chattype，默认是单聊
         if (chatType == Constant.CHATTYPE_GROUP)
             message.setChatType(ChatType.GroupChat);
+            //自己
+            message.setAttribute("nickName",SPUtils.instance(getContext()).getUser().getNickName());
+            message.setAttribute("head",SPUtils.instance(getContext()).getUser().getHeadUrl());
+
+            //对象
+            message.setAttribute("dName",tv_toUsername.getText().toString());
+            message.setAttribute("dHead",getIntent().getStringExtra("dHead"));
+
         // 发送消息
         EMClient.getInstance().chatManager().sendMessage(message);
         chatAdapter.addPosition(message);

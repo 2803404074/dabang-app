@@ -91,6 +91,7 @@
     <!-- seekbar -->
     <color name="lsq_seekbar_drag_color">#f4a11a</color>
     <color name="lsq_seekbar_view_color">#d9d9d9</color>
+
     <color name="lsq_dubbing_unselected_color">#9B9B9B</color>
     <color name="lsq_dubbing_bg_color">#EFEFEF</color>
     <color name="lsq_dubbing_record_selected_color">#c17111</color>
@@ -110,6 +111,7 @@
     <color name="color_ebebeb">#ebebeb</color>
     <color name="color_f84c89">#f84c89</color>
     <color name="color_dcdcdc">#DCDCDC</color>
+
     <color name="color_f0f0f0">#f0f0f0</color>
     <color name="color_505050">#505050</color>
     <color name="color_5d5d5d">#5d5d5d</color>
@@ -133,7 +135,8 @@
     <color name="color_fafbfb">#fafbfb</color>
     <color name="color_333333">#333333</color>
     <color name="color_fbfafa">#fbfafa</color>
-    <color name="color_e2e2e2">#e2e2e2</color>
+    <color name="color_e2e2e2">#e6e6e6</color>
+    <color name="color_f1">#f3f3f3</color>
     <color name="color_8d8c8c">#8d8c8c</color>
     <color name="color_d8d6d6">#d8d6d6</color>
     <color name="color_00d8d6d6">#00ffffff</color>

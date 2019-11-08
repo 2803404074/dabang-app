@@ -6,8 +6,6 @@
     android:background="@color/gra0">
 
     <androidx.recyclerview.widget.RecyclerView
-
-        android:layout_marginTop="@dimen/dp_5"
         android:id="@+id/recycler_head"
         android:layout_marginHorizontal="@dimen/dp_5"
         android:layout_width="match_parent"

@@ -17,6 +17,11 @@
         <item name="android:textSize">@dimen/sp_18</item>
     </style>
 
+    <style name="TabtextDb">
+        <item name="android:textColor">@color/selector_tab_text_db</item>
+        <item name="android:textSize">@dimen/sp_18</item>
+    </style>
+
     <style name="TabtextBlack">
         <item name="android:textColor">@color/selector_tab_text_black</item>
         <item name="android:textSize">@dimen/sp_21</item>

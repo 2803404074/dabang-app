@@ -9,23 +9,25 @@
         android:id="@+id/row_image"
         android:layout_width="@dimen/dp_25"
         android:layout_height="@dimen/dp_25"
+        android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
         android:layout_centerInParent="true" />
 
     <TextView
         android:id="@+id/row_title"
-        android:layout_width="@dimen/dp_100"
-        android:layout_height="@dimen/dp_50"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp_5"
+        android:layout_centerVertical="true"
         android:layout_toRightOf="@id/row_image"
         android:gravity="left|center"
         android:text="小盧"
         android:textColor="@color/lsq_color_gray"
-        android:textSize="@dimen/sp_14" />
+        android:textSize="@dimen/sp_15" />
 
     <ImageView
-        android:layout_width="@dimen/dp_25"
-        android:layout_height="@dimen/dp_25"
+        android:layout_width="@dimen/dp_20"
+        android:layout_height="@dimen/dp_20"
         android:layout_alignParentRight="true"
         android:layout_centerInParent="true"
         android:src="@drawable/to_right" />

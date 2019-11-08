@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:textColor="#fff"
+                android:textColor="@color/textTitle"
                 android:textSize="@dimen/sp_21" />
         </RelativeLayout>
 

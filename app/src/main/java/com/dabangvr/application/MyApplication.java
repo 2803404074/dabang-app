@@ -108,11 +108,11 @@ public class MyApplication extends Application {
         // 获取到EMChatOptions对象
         EMOptions options = new EMOptions();
         // 默认添加好友时，是不需要验证的，改成需要验证
-        options.setAcceptInvitationAlways(false);
+        //options.setAcceptInvitationAlways(false);
         // 设置是否需要已读回执
-        options.setRequireAck(true);
+        //options.setRequireAck(true);
         // 设置是否需要已送达回执
-        options.setRequireDeliveryAck(false);
+       // options.setRequireDeliveryAck(false);
         return options;
     }
 

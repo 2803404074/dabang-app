@@ -62,7 +62,6 @@ public class FollowActivity extends BaseActivity {
 
                 SimpleDraweeView sdvHead = holder.getView(R.id.sdvHead);
                 sdvHead.setImageURI(o.getHeadUrl());
-                sdvHead.setOnClickListener(view -> goTActivity(UserHomeActivity.class, null));
                 holder.setText(R.id.tvName, o.getNickName());
                 holder.getView(R.id.tvGz).setBackgroundResource(R.drawable.shape_gray);
                 holder.setText(R.id.tvGz, "已关注");
@@ -76,11 +75,11 @@ public class FollowActivity extends BaseActivity {
                         view.findViewById(R.id.tvConfirm).setOnClickListener((view3) -> {
                             mData.remove(position);
                             adapter.updateDataa(mData);
-                            followFunction(o.getId());
+                            followFunction(o.getUserId());
                             DialogUtil.getInstance(getContext()).des();
                         });
                     });
-                    followFunction(o.getId());
+                    followFunction(o.getUserId());
                 });
             }
         };
@@ -88,7 +87,7 @@ public class FollowActivity extends BaseActivity {
 
         adapter.setOnItemClickListener((view, position) -> {
             Map<String, Object> map = new HashMap<>();
-            map.put("userId", mData.get(position).getId());
+            map.put("userId", mData.get(position).getUserId());
             goTActivity(UserHomeActivity.class, map);
         });
     }

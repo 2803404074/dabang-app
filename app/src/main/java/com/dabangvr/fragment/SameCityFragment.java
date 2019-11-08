@@ -26,6 +26,7 @@ import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.dabangvr.R;
 import com.dabangvr.activity.LocationActivity;
+import com.dabangvr.activity.MainActivity;
 import com.dabangvr.adapter.BaseRecyclerHolder;
 import com.dabangvr.adapter.RecyclerAdapterPosition;
 import com.dbvr.baselibrary.model.HomeFindMo;
@@ -70,10 +71,6 @@ public class SameCityFragment extends BaseFragment {
 
     private List<HomeFindMo.TowMo> mData = new ArrayList<>();
 
-
-    private final int MY_PERMISSIONS_REQUEST_CALL_LOCATION = 200;
-
-
     @Override
     public int layoutId() {
         return R.layout.fragment_same_city;
@@ -81,19 +78,13 @@ public class SameCityFragment extends BaseFragment {
 
     @Override
     public void initView() {
-        //检查版本是否大于M
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(getActivity(),
-                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
-                        MY_PERMISSIONS_REQUEST_CALL_LOCATION);
-            } else {
-                //"权限已申请";
-                loading.setVisibility(View.VISIBLE);
-                startLocaion();
-            }
+        if(ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED){//未开启定位权限
+            //开启定位权限,200是标识码
+            SameCityFragment.this.requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},200);
+        }else{
+            startLocaion();//开始定位
         }
-
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         recyclerView.setNestedScrollingEnabled(false);
         adapter = new RecyclerAdapterPosition<HomeFindMo.TowMo>(getContext(), mData, R.layout.item_conver_match) {
@@ -150,12 +141,16 @@ public class SameCityFragment extends BaseFragment {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == MY_PERMISSIONS_REQUEST_CALL_LOCATION) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {//用户同意权限,执行我们的操作
-                startLocaion();//开始定位
-            } else {//用户拒绝之后,当然我们也可以弹出一个窗口,直接跳转到系统设置页面
-                Toast.makeText(getContext(), "未开启定位权限,请手动到设置去开启权限", Toast.LENGTH_LONG).show();
-            }
+        switch (requestCode){
+            case 200://刚才的识别码
+                if(grantResults[0] == PackageManager.PERMISSION_GRANTED){//用户同意权限,执行我们的操作
+                    startLocaion();//开始定位
+                    Log.e("yyyy","开始定位");
+                }else{//用户拒绝之后,当然我们也可以弹出一个窗口,直接跳转到系统设置页面
+                    Log.e("yyyy","不执行");
+                }
+                break;
+            default:break;
         }
     }
 

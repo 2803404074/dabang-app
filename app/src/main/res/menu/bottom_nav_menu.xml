@@ -16,8 +16,8 @@
         android:title="" />
     <item
         android:id="@+id/navigation_live"
-        android:icon="@mipmap/dynamic"
-        android:title="动态" />
+        android:icon="@mipmap/main_mess"
+        android:title="消息" />
 
     <item
         android:id="@+id/navigation_my"

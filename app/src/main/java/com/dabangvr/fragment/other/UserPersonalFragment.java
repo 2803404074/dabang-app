@@ -86,45 +86,42 @@ public class UserPersonalFragment extends BaseFragment {
             }
         };
         recyclerView.setAdapter(adapter);
-        adapter.setOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                switch (menuBeanList.get(position).getJumpUrl()) {
-                    case ParameterContens.CLIENT_WDDD:  //我的订单
-                        goTActivity(MyOrtherActivity.class, null);
-                        break;
-                    case ParameterContens.CLIENT_YHQ://优惠卷
-                        goTActivity(MyYhjActivity.class, null);
-                        break;
-                    case ParameterContens.CLIENT_WDPJ://我的评价
-                        break;
-                    case ParameterContens.CLIENT_GWC://购物车
-                        goTActivity(MyShoppingCartActivity.class, null);
-                        break;
-                    case ParameterContens.CLIENT_GRZL://个人资料
-                        goTActivity(UserMessActivity.class, null);
-                        break;
-                    case ParameterContens.CLIENT_SJRZ://商家入驻
-                        queryAddDeptState();
-                        break;
-                    case ParameterContens.CLIENT_ZBSQ://主播申请
-                        queryAnchorState();
-                        break;
-                    case ParameterContens.CLIENT_SZ:  //设置
-                        goTActivity(UserSettingActivity.class, null);
-                        break;
-                    case ParameterContens.CLIENT_FK://反馈
-                        goTActivity(ProblemActivity.class, null);
-                        break;
-                    case ParameterContens.CLIENT_GFKF://官方客服
-                        Intent intent = new Intent(getContext(), AddressActivity.class);
-                        startActivityForResult(intent, SELECT_IMAGE_REQUEST);
-                        break;
-                    case ParameterContens.CLIENT_GYWM://关于我们
-                        goTActivity(UserAboutActivity.class, null);
-                        break;
+        adapter.setOnItemClickListener((view, position) -> {
+            switch (menuBeanList.get(position).getJumpUrl()) {
+                case ParameterContens.CLIENT_WDDD:  //我的订单
+                    goTActivity(MyOrtherActivity.class, null);
+                    break;
+                case ParameterContens.CLIENT_YHQ://优惠卷
+                    goTActivity(MyYhjActivity.class, null);
+                    break;
+                case ParameterContens.CLIENT_WDPJ://我的评价
+                    break;
+                case ParameterContens.CLIENT_GWC://购物车
+                    goTActivity(MyShoppingCartActivity.class, null);
+                    break;
+                case ParameterContens.CLIENT_GRZL://个人资料
+                    goTActivity(UserMessActivity.class, null);
+                    break;
+                case ParameterContens.CLIENT_SJRZ://商家入驻
+                    queryAddDeptState();
+                    break;
+                case ParameterContens.CLIENT_ZBSQ://主播申请
+                    queryAnchorState();
+                    break;
+                case ParameterContens.CLIENT_SZ:  //设置
+                    goTActivity(UserSettingActivity.class, null);
+                    break;
+                case ParameterContens.CLIENT_FK://反馈
+                    goTActivity(ProblemActivity.class, null);
+                    break;
+                case ParameterContens.CLIENT_GFKF://官方客服
+                    Intent intent = new Intent(getContext(), AddressActivity.class);
+                    startActivityForResult(intent, SELECT_IMAGE_REQUEST);
+                    break;
+                case ParameterContens.CLIENT_GYWM://关于我们
+                    goTActivity(UserAboutActivity.class, null);
+                    break;
 
-                }
             }
         });
     }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,6 +24,8 @@ import com.dbvr.httplibrart.utils.OkHttp3Utils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.exceptions.HyphenateException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -61,27 +64,27 @@ public class FansActivity extends BaseActivity {
 
                 SimpleDraweeView sdvHead =  holder.getView(R.id.sdvHead);
                 sdvHead.setImageURI(o.getHeadUrl());
-                sdvHead.setOnClickListener(view -> goTActivity(UserHomeActivity.class,null));
                 holder.setText(R.id.tvName,o.getNickName());
+                TextView tvGz = holder.getView(R.id.tvGz);
                 if (o.isMutual()){
-                    holder.getView(R.id.tvGz).setBackgroundResource(R.drawable.shape_gray);
-                    holder.setText(R.id.tvGz,"已互粉");
+                    tvGz.setBackgroundResource(R.drawable.shape_gray);
+                    tvGz.setText("已互粉");
                 }else {
-                    holder.getView(R.id.tvGz).setBackgroundResource(R.drawable.shape_red);
-                    holder.setText(R.id.tvGz,"关注");
+                    tvGz.setBackgroundResource(R.drawable.shape_red);
+                    tvGz.setText("关注");
                 }
 
                 holder.getView(R.id.tvGz).setOnClickListener(view -> {
-                    if (!o.isMutual()){
-                        holder.getView(R.id.tvGz).setBackgroundResource(R.drawable.shape_gray);
-                        holder.setText(R.id.tvGz,"已互粉");
+                    if (tvGz.getText().toString().equals("关注")){
+                        tvGz.setBackgroundResource(R.drawable.shape_gray);
+                        tvGz.setText("已互粉");
                         setLoaddingView(true);
-                        followFunction(o.getId());
+                        followFunction(o.getUserId(),true);
                     }else {
-                        holder.getView(R.id.tvGz).setBackgroundResource(R.drawable.shape_red);
-                        holder.setText(R.id.tvGz,"关注");
+                        tvGz.setBackgroundResource(R.drawable.shape_red);
+                        tvGz.setText("关注");
                         setLoaddingView(true);
-                        followFunction(o.getId());
+                        followFunction(o.getUserId(),true);
                     }
                 });
 
@@ -91,7 +94,7 @@ public class FansActivity extends BaseActivity {
 
         adapter.setOnItemClickListener((view, position) -> {
             Map<String,Object>map = new HashMap<>();
-            map.put("userId",mData.get(position).getId());
+            map.put("userId",mData.get(position).getUserId());
             goTActivity(UserHomeActivity.class,map);
         });
     }
@@ -143,7 +146,7 @@ public class FansActivity extends BaseActivity {
     /**
      * 关注粉丝
      */
-    private void followFunction(String userId) {
+    private void followFunction(String userId,boolean isFollow) {
         setLoaddingView(true);
         Map<String,Object>map = new HashMap<>();
         map.put("fansUserId",userId);
@@ -159,6 +162,19 @@ public class FansActivity extends BaseActivity {
                 setLoaddingView(false);
             }
         });
+
+        new Thread(()->{
+            try {
+                if (isFollow){
+                    EMClient.getInstance().contactManager().addContact(userId, "关注了你");
+                }else {
+                    EMClient.getInstance().contactManager().deleteContact(userId);
+                }
+            }catch (HyphenateException e){
+                e.getMessage();
+            }
+        }).start();
+
     }
 
 }

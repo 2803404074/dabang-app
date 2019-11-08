@@ -21,42 +21,38 @@
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:background="@android:color/white"
-            android:layout_height="@dimen/dp_380"
+            android:layout_height="@dimen/dp_340"
             android:fitsSystemWindows="true">
 
 
             <RelativeLayout
                 android:id="@+id/rlTop"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_315"
+                android:layout_height="@dimen/dp_300"
                 app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
                 <include layout="@layout/layout_user"/>
             </RelativeLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_10"/>
+        
             <com.ogaclejapan.smarttablayout.SmartTabLayout
-                app:stl_indicatorGravity="center"
-                app:stl_indicatorThickness="@dimen/dp_30"
-                android:clipToPadding="false"
                 android:id="@+id/tab_layout"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_60"
-                android:layout_gravity="center"
+                android:layout_marginHorizontal="@dimen/dp_10"
+                android:layout_height="@dimen/dp_35"
                 app:stl_indicatorWithoutPadding="true"
                 app:stl_indicatorInterpolation="smart"
-                app:stl_indicatorWidth="@dimen/dp_50"
+                app:stl_indicatorColor="@color/colorDb3"
+                app:stl_indicatorThickness="@dimen/dp_3"
+                app:stl_indicatorWidth="auto"
                 app:stl_distributeEvenly="true"
-                app:stl_indicatorColor ="@color/colorDb"
-                app:stl_customTabTextLayoutId="@layout/view_tab_text_black"
-                app:stl_defaultTabTextHorizontalPadding="@dimen/dp_21"
-                app:stl_defaultTabTextMinWidth="@dimen/dp_21"
-                app:stl_indicatorCornerRadius="@dimen/dp_15"
+                app:stl_customTabTextLayoutId="@layout/view_tab_text_db"
+                app:stl_defaultTabTextHorizontalPadding="@dimen/dp_5"
+                app:stl_defaultTabTextMinWidth="@dimen/dp_18"
+                app:stl_indicatorCornerRadius="2dp"
+                app:stl_overlineThickness="0dp"
                 app:stl_underlineThickness="0dp"
                 app:stl_dividerThickness="0dp"
-                android:layout_marginVertical="@dimen/dp_4"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                />
+                app:stl_drawDecorationAfterTab="true" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -69,10 +65,4 @@
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    <ImageView
-        android:id="@+id/ivBack"
-        android:layout_marginTop="@dimen/dp_33"
-        android:layout_width="@dimen/dp_30"
-        android:layout_height="@dimen/dp_30"
-        android:padding="@dimen/dp_5" />
 </FrameLayout>

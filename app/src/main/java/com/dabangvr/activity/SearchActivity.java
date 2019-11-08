@@ -36,6 +36,9 @@ import com.dbvr.httplibrart.utils.OkHttp3Utils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.hyphenate.EMContactListener;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.exceptions.HyphenateException;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -170,15 +173,7 @@ public class SearchActivity extends BaseActivity {
             public void convert(Context mContext, BaseRecyclerHolder holder, int position, FansMo o) {
                 SimpleDraweeView sdvHead =  holder.getView(R.id.sdvHead);
                 sdvHead.setImageURI(o.getHeadUrl());
-                sdvHead.setOnClickListener(view -> goTActivity(UserHomeActivity.class,null));
                 holder.setText(R.id.tvName,o.getNickName());
-                if (o.isMutual()){
-                    holder.getView(R.id.tvGz).setBackgroundResource(R.drawable.shape_gray);
-                    holder.setText(R.id.tvGz,"已互粉");
-                }else {
-                    holder.getView(R.id.tvGz).setBackgroundResource(R.drawable.shape_red);
-                    holder.setText(R.id.tvGz,"关注");
-                }
 
                 //等级
                 if (o.getGrade() == 1){
@@ -206,28 +201,43 @@ public class SearchActivity extends BaseActivity {
                     holder.setImageResource(R.id.ivSex,R.mipmap.sex_nv);
                 }
 
+                TextView tvGz = holder.getView(R.id.tvGz);
+                if (o.isMutual()){
+                    tvGz.setBackgroundResource(R.drawable.shape_gray);
+                    tvGz.setText("已互粉");
+                }else {
+                    tvGz.setBackgroundResource(R.drawable.shape_red);
+                    tvGz.setText("关注");
+                }
+
                 holder.getView(R.id.tvGz).setOnClickListener(view -> {
-                    if (!o.isMutual()){
+                    if (tvGz.getText().toString().equals("关注")){
                         holder.getView(R.id.tvGz).setBackgroundResource(R.drawable.shape_gray);
                         holder.setText(R.id.tvGz,"已关注");
                         setLoaddingView(true);
-                        followFunction(o.getId());
+                        followFunction(o.getId(),true);
                     }else {
                         holder.getView(R.id.tvGz).setBackgroundResource(R.drawable.shape_red);
                         holder.setText(R.id.tvGz,"关注");
                         setLoaddingView(true);
-                        followFunction(o.getId());
+                        followFunction(o.getId(),false);
                     }
                 });
             }
         };
         recyclerView.setAdapter(adapter);
+
+        adapter.setOnItemClickListener((view, position) -> {
+            Map<String,Object>map = new HashMap<>();
+            map.put("userId",mData.get(position).getId());
+            goTActivity(UserHomeActivity.class,map);
+        });
     }
 
     /**
      * 关注粉丝
      */
-    private void followFunction(String userId) {
+    private void followFunction(String userId,boolean isFollow) {
         setLoaddingView(true);
         Map<String,Object>map = new HashMap<>();
         map.put("fansUserId",userId);
@@ -243,6 +253,17 @@ public class SearchActivity extends BaseActivity {
                 setLoaddingView(false);
             }
         });
+        new Thread(()->{
+            try {
+                if (isFollow){
+                    EMClient.getInstance().contactManager().addContact(userId, "关注了你");
+                }else {
+                    EMClient.getInstance().contactManager().deleteContact(userId);
+                }
+            }catch (HyphenateException e){
+                e.getMessage();
+            }
+        }).start();
     }
 
     @Override
@@ -304,11 +325,14 @@ public class SearchActivity extends BaseActivity {
                     adapter.updateDataa(mData);
                 }
             }
-
             @Override
             public void onFailed(String msg) {
                 Log.e("ttttt",msg);
             }
         });
     }
+
+
+
+
 }

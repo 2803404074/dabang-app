@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 
 import com.dabangvr.R;
 import com.dabangvr.activity.FansActivity;
+import com.dabangvr.activity.FollowActivity;
 import com.dabangvr.activity.MyDropActivity;
 import com.dabangvr.application.MyApplication;
 import com.dabangvr.fragment.other.UserPersonalFragment;
@@ -107,7 +108,7 @@ public class MyFragment extends BaseFragment {
             if (userMess.getGrade() == 1){
                 ivGrade.setImageResource(R.mipmap.u_one);
                 tvGrade.setText("奋斗白银");
-                tvGrade.setTextColor(getResources().getColor(R.color.colorGray4));
+                tvGrade.setTextColor(getResources().getColor(R.color.colorHs2));
             }
             if (userMess.getGrade() == 2){
                 ivGrade.setImageResource(R.mipmap.u_tow);
@@ -143,16 +144,16 @@ public class MyFragment extends BaseFragment {
     public void initData() {
     }
 
-    @OnClick({R.id.sdvHead,R.id.llFans,R.id.llFollow,R.id.llDrop})
+    @OnClick({R.id.sdvHead,R.id.tvFans,R.id.tvFollow,R.id.tvDropNom})
     public void onTouchClick(View view) {
         switch (view.getId()){
-            case R.id.llFans:
+            case R.id.tvFans:
                 goTActivity(FansActivity.class,null);
                 break;
-            case R.id.llFollow:
-                goTActivity(FansActivity.class,null);
+            case R.id.tvFollow:
+                goTActivity(FollowActivity.class,null);
                 break;
-            case R.id.llDrop:
+            case R.id.tvDropNom:
                 goTActivity(MyDropActivity.class,null);
                 break;
         }

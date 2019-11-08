@@ -114,7 +114,6 @@ public class LoginActivity extends BaseActivity{
                 } else {
                     goTActivityTou(MainActivity.class, null);
                 }
-                AppManager.getAppManager().finishActivity(LoginActivity.class);
             }
 
             @Override

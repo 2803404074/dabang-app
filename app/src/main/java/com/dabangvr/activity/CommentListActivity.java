@@ -59,7 +59,6 @@ public class CommentListActivity extends BaseActivity {
                 } else {
                     holder.setText(R.id.tvTips, "评论了你的视频\t" + o.getAddTime());
                 }
-
                 holder.getView(R.id.tvComment).setVisibility(View.VISIBLE);
                 holder.setText(R.id.tvComment,o.getContent());
 
@@ -70,13 +69,14 @@ public class CommentListActivity extends BaseActivity {
 
                 sdvHead.setOnClickListener(view -> {
                     Map<String,Object> map = new HashMap<>();
-                    map.put("userId",o.getUserId());
+                    map.put("userId",String.valueOf(o.getUserId()));
                     goTActivity(UserHomeActivity.class, map);
                 });
 
             }
         };
         recyclerView.setAdapter(adapter);
+
     }
 
     @Override

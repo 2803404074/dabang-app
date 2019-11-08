@@ -1,7 +1,6 @@
 package com.dabangvr.activity;
 
 import android.annotation.SuppressLint;
-import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -18,11 +17,10 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.dabangvr.R;
-import com.dabangvr.application.MyApplication;
-import com.dabangvr.fragment.DynamicFragment;
 import com.dabangvr.fragment.MyFragment;
 import com.dabangvr.fragment.SameCityFragment;
 import com.dabangvr.fragment.home.HomeFragment;
+import com.dabangvr.fragment.MessageFragment;
 import com.dabangvr.live.activity.CreateLiveActivity;
 import com.dbvr.baselibrary.eventBus.ReadEvent;
 import com.dbvr.baselibrary.model.UserMess;
@@ -37,7 +35,6 @@ import com.hyphenate.EMError;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.exceptions.HyphenateException;
 import com.tencent.liteav.demo.videorecord.TCVideoRecordActivity;
-import com.tencent.liteav.demo.videorecord.TCVideoSettingActivity;
 import com.tencent.liteav.demo.videorecord.utils.TCConstants;
 import com.tencent.rtmp.TXLiveConstants;
 import com.tencent.ugc.TXRecordCommon;
@@ -60,7 +57,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 
     private HomeFragment homeFragment;
     private SameCityFragment sameCityFragment;
-    private DynamicFragment dynamicFragment;
+    private MessageFragment messageFragment;
     private MyFragment myFragment;
     private FragmentManager fragmentManager;
 
@@ -80,6 +77,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     @Override
     public void initView() {
         setLoaddingView(true);
+        AppManager.getAppManager().finishActivity(LoginActivity.class);
         navView.setLabelVisibilityMode(1);
         fragmentManager = getSupportFragmentManager();
         navView.setOnNavigationItemSelectedListener(this);
@@ -174,11 +172,11 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
                 }
                 break;
             case 2:
-                if (dynamicFragment == null) {
-                    dynamicFragment = new DynamicFragment();
-                    beginTransaction.add(R.id.fg_content, dynamicFragment);
+                if (messageFragment == null) {
+                    messageFragment = new MessageFragment();
+                    beginTransaction.add(R.id.fg_content, messageFragment);
                 } else {
-                    beginTransaction.show(dynamicFragment);
+                    beginTransaction.show(messageFragment);
                 }
                 break;
             case 3:
@@ -206,8 +204,8 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
             transaction.hide(sameCityFragment);
         }
 
-        if (dynamicFragment != null) {
-            transaction.hide(dynamicFragment);
+        if (messageFragment != null) {
+            transaction.hide(messageFragment);
         }
 
         if (myFragment != null) {
@@ -227,7 +225,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
             case R.id.navigation_tc:
                 changeFragment(1);
                 menuItem.setChecked(true);
-                unist = "1";
+                //unist = "1";
                 break;
 
             case R.id.navigation_fb:
@@ -237,12 +235,12 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
             case R.id.navigation_live:
                 changeFragment(2);
                 menuItem.setChecked(true);
-                unist = "2";
+                //unist = "2";
                 break;
             case R.id.navigation_my:
                 changeFragment(3);
                 menuItem.setChecked(true);
-                unist = "3";
+                //unist = "3";
                 break;
         }
 
@@ -310,21 +308,5 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     protected void onDestroy() {
         super.onDestroy();
         BottomDialogUtil2.getInstance(this).dess();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==100){
-            if (resultCode == 100){
-                navView.setSelectedItemId(R.id.navigation_live);
-                changeFragment(2);
-                //发送广播，动态更新刚发表的数据
-                Intent intent = new Intent("android.intent.action.DYNAMIC");
-                intent.putExtra("content",data.getStringExtra("content"));
-                intent.putExtra("img",data.getParcelableArrayListExtra("img"));
-                LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
-            }
-        }
     }
 }

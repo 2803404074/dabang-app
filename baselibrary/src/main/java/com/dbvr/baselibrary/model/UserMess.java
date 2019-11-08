@@ -8,6 +8,7 @@ import java.io.Serializable;
 public class UserMess implements Serializable {
     private Integer id;
 
+    private boolean mutual;//是否已经关注
     private boolean isNewsUser;
 
     private String mobile;
@@ -51,6 +52,7 @@ public class UserMess implements Serializable {
     public String toString() {
         return "UserMess{" +
                 "id=" + id +
+                ", mutual=" + mutual +
                 ", isNewsUser=" + isNewsUser +
                 ", mobile='" + mobile + '\'' +
                 ", openId='" + openId + '\'' +
@@ -70,6 +72,14 @@ public class UserMess implements Serializable {
                 ", isAnchor=" + isAnchor +
                 ", isNew='" + isNew + '\'' +
                 '}';
+    }
+
+    public boolean isMutual() {
+        return mutual;
+    }
+
+    public void setMutual(boolean mutual) {
+        this.mutual = mutual;
     }
 
     public int getGrade() {
