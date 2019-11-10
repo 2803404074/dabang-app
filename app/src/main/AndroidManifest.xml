@@ -55,6 +55,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:icon">
+        <activity android:name=".shopping.activity.GoodsActivity"></activity>
         <activity android:name=".activity.FollowActivity" />
         <activity android:name=".activity.RechargeDetailedActivity" />
         <activity android:name=".activity.StrategyActivity" />

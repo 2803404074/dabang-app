@@ -6,8 +6,8 @@ public class DyUrl {
 
     public static final String TOKEN_NAME = "DABANG-TOKEN";
     //public static final String BASE = "http://www.vrzbgw.com/dabang/";
-    public static final String BASE = "http://192.168.0.112:8085/dabang/";
-    //public static final String BASE = "http://api.vrzbgw.com:8085/dabang/";//远程
+    //public static final String BASE = "http://192.168.0.112:8085/dabang/";
+    public static final String BASE = "http://api.vrzbgw.com:8085/dabang/";//远程
 
     //获取用户信息
     public static final String getUserInfo = "api/getUserInfo";

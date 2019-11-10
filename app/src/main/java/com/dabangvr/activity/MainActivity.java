@@ -22,6 +22,7 @@ import com.dabangvr.fragment.SameCityFragment;
 import com.dabangvr.fragment.home.HomeFragment;
 import com.dabangvr.fragment.MessageFragment;
 import com.dabangvr.live.activity.CreateLiveActivity;
+import com.dabangvr.shopping.activity.GoodsActivity;
 import com.dbvr.baselibrary.eventBus.ReadEvent;
 import com.dbvr.baselibrary.model.UserMess;
 import com.dbvr.baselibrary.utils.BottomDialogUtil2;
@@ -83,6 +84,10 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         navView.setOnNavigationItemSelectedListener(this);
 
         changeFragment(0);
+
+        findViewById(R.id.tvGoods).setOnClickListener((view -> {
+            goTActivity(GoodsActivity.class,null);
+        }));
     }
 
 
