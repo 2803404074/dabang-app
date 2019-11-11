@@ -6,8 +6,8 @@ public class DyUrl {
 
     public static final String TOKEN_NAME = "DABANG-TOKEN";
     //public static final String BASE = "http://www.vrzbgw.com/dabang/";
-    //public static final String BASE = "http://192.168.0.112:8085/dabang/";
-    public static final String BASE = "http://api.vrzbgw.com:8085/dabang/";//远程
+    public static final String BASE = "http://192.168.0.112:8085/dabang/";
+//    public static final String BASE = "http://api.vrzbgw.com:8085/dabang/";//远程
 
     //获取用户信息
     public static final String getUserInfo = "api/getUserInfo";
@@ -106,4 +106,36 @@ public class DyUrl {
     public static String getPraisedList="api/my/getPraisedList";
 
     public static String commentSay="api/my/commentSay";
+
+    //加入购物车
+    public static String addToCart = "/api/buygoods/addToCart";
+    //----------------------------订单----------------------------------
+    //确认订单
+    public static String confirmGoods = "/api/buygoods/confirmGoods2Buy";
+    //收藏商品
+    public static String getGoodsCollectSave = "/api/my/getGoodsCollectSave";
+
+    //首页-海鲜-商品详情
+    public static String getGoodsDetails = "/api/goods/getGoodsDetails";
+    //首页-海鲜-商品列表
+    public static String getGoodsList = "/api/goods/getGoodsList";
+
+    //查询收货地址列表
+    public static String addressList = "/api/my/addressList";
+
+    //删除地址
+    public static String addressDelete = "/api/my/addressDelete";
+    //修改地址
+    public static String addressUpdate = "/api/my/addressUpdate";
+    //评论列表
+    public static String getCommentListTwo = "/api/goods/getCommentListTwo";
+    //获取确认订单
+    public static String getConfirmGoods = "/api/buygoods/getConfirmGoods";
+
+    //提交订单
+    public static String submitOrder = "/api/buygoods/submitOrder";
+    //添加收货地址
+    public static String AddressAdd = "/api/my/addressAdd";
+    //根据国家获取省份
+    public static String proviceList = "/api/my/proviceList";
 }

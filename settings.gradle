@@ -1,1 +1,1 @@
-include ':app', ':baselibrary', ':httplibrart', ':imglibrary2', ':svgalibrary', ':videouploader', ':player',':videorecorder', ':addressselection', ':goodslibrary'
+include ':app', ':baselibrary', ':httplibrart', ':imglibrary2', ':svgalibrary', ':videouploader', ':player',':videorecorder', ':addressselection'

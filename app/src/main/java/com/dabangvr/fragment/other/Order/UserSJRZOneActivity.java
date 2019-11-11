@@ -129,10 +129,7 @@ public class UserSJRZOneActivity extends BaseActivity {
                     return;
                 }
                 next(phone, code, "1");
-                Intent intent = new Intent(getContext(), UserSJRZTwoActivity.class);
-                depVo.setPhone(phone);
-                intent.putExtra(ParameterContens.depVo, depVo);
-                startActivity(intent);
+
 
 
                 break;
@@ -176,7 +173,7 @@ public class UserSJRZOneActivity extends BaseActivity {
             @Override
             public void onUi(String result) {
                 Log.d("luhuas", "onUi: " + result);
-                Intent intent = new Intent(getContext(), UserSJRZOneActivity.class);
+                Intent intent = new Intent(getContext(), UserSJRZTwoActivity.class);
                 depVo.setPhone(phone);
                 intent.putExtra(ParameterContens.depVo, depVo);
                 startActivity(intent);

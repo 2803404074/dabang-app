@@ -103,7 +103,7 @@ public class UserSJRZThreeActivity extends BaseActivity implements OnAddressSele
             et_project.setText(depVo.getMainCategory());
             tv_address.setText(depVo.getProductionProvince() + depVo.getProductionCity() + depVo.getProductionCounty());
             et_address.setText(depVo.getProductionAddress());
-            et_introduce.setText(depVo.getZipCode());
+            et_introduce.setText(depVo.getSynopsis());
             Glide.with(this).load(depVo.getThreeCertificates() == null ? R.mipmap.icon_id : depVo.getThreeCertificates()).into(ig_id_front);
         } else {
             depVo = new DepVo();
@@ -186,7 +186,7 @@ public class UserSJRZThreeActivity extends BaseActivity implements OnAddressSele
         Map<String, Object> map = new HashMap<>();
         map.put("name", depVo.getName());
         map.put("mainCategory", depVo.getMainCategory());
-        map.put("username", depVo.getUsername());
+        map.put("userName", depVo.getUsername());
         map.put("phone", depVo.getPhone());
         map.put("idcard", depVo.getIdcard());
         map.put("productionProvince", depVo.getProductionProvince());

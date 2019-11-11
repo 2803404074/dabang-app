@@ -2,6 +2,7 @@ package com.dabangvr.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -10,6 +11,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.dabangvr.R;
+import com.dabangvr.application.MyApplication;
+import com.dbvr.baselibrary.base.ParameterContens;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
 import com.dbvr.baselibrary.utils.StringUtils;
 import com.dbvr.baselibrary.view.AppManager;
@@ -54,6 +57,11 @@ public class IntroduceActivity extends BaseActivity {
     }
 
     private void commit() {
+        Intent intent =new Intent();
+        String etInputstr = etInput.getText().toString().trim();
+        intent.putExtra(ParameterContens.statement, etInputstr);
+        setResult(RESULT_OK, intent);
+        AppManager.getAppManager().finishActivity();
     }
 
     @Override

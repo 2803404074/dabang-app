@@ -27,4 +27,5 @@ public interface ParameterContens {
     String idcartBehind = "idcartBehind";//身份证反面
     String threeCertificates = "threeCertificates";//三证合一
     String problem = "problem";//问题反馈
+    String statement = "statement";//个人说明转递数据
 }

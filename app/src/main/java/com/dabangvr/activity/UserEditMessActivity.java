@@ -1,12 +1,18 @@
 package com.dabangvr.activity;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
 import com.dabangvr.R;
+import com.dabangvr.fragment.SameCityFragment;
+import com.dbvr.baselibrary.base.ParameterContens;
+import com.dbvr.baselibrary.eventBus.ReadEvent;
 import com.dbvr.baselibrary.model.UserMess;
 import com.dbvr.baselibrary.utils.BottomDialogUtil2;
 import com.dbvr.baselibrary.utils.Conver;
@@ -19,8 +25,13 @@ import com.dbvr.baselibrary.view.AppManager;
 import com.dbvr.baselibrary.view.BaseActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.Calendar;
 
+import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -29,6 +40,9 @@ import butterknife.OnClick;
  */
 public class UserEditMessActivity extends BaseActivity {
 
+    private static final int SELECT_IMAGE_REQUEST_statement = 1000;
+    private static final int SELECT_IMAGE_REQUEST_address = 1100;
+    private static final int SELECT_IMAGE_REQUEST_Phone = 1200;
     @BindView(R.id.sdvHead)
     SimpleDraweeView sdvHead;
     @BindView(R.id.tvNickName)
@@ -57,6 +71,7 @@ public class UserEditMessActivity extends BaseActivity {
 
     @Override
     public int setLayout() {
+        EventBus.getDefault().register(this); //第1步: 注册
         return R.layout.activity_user_mess_modify;
     }
 
@@ -87,7 +102,7 @@ public class UserEditMessActivity extends BaseActivity {
         if (StringUtils.isEmpty(userMess.getMobile())) {
             tvPhone.setHint("未绑定手机号");
         } else {
-            tvPhone.setText(userMess.getMobile());
+            tvPhone.setText(StringUtils.hidTel(userMess.getMobile()));
         }
 
         //个人说明
@@ -116,16 +131,21 @@ public class UserEditMessActivity extends BaseActivity {
                 showDateDialog();
                 break;
             case R.id.llLocation:
-                goTActivity(LocationActivity.class, null);
+                goTActivityForResult(LocationActivity.class, null, SELECT_IMAGE_REQUEST_address);
                 break;
             case R.id.llIntroduce:
-                goTActivity(IntroduceActivity.class, null);
+                goTActivityForResult(IntroduceActivity.class, null, SELECT_IMAGE_REQUEST_statement);
                 break;
             case R.id.llPhone:
-                goTActivity(PhoneSetActivity.class, null);
+
+                if (TextUtils.isEmpty(userMess.getMobile())) {
+
+                }
+                Intent intent = new Intent(this,PhoneSetActivity.class);
+                intent.putExtra("mobile", userMess.getMobile());
+                startActivity(intent);
                 break;
             case R.id.tv_sub: //提交修改资料
-
                 break;
         }
     }
@@ -156,9 +176,39 @@ public class UserEditMessActivity extends BaseActivity {
         datePickerDialog.show();
     }
 
-    private void logOut() {
-        AppManager.getAppManager().finishAllActivity();
-        SPUtils.instance(this).removeUser();
-        goTActivity(LoginActivity.class, null);
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == SELECT_IMAGE_REQUEST_statement && data != null) {
+                String statement = data.getStringExtra(ParameterContens.statement);
+                tvIntroduce.setText(statement);
+            }
+//            if (requestCode == SELECT_IMAGE_REQUEST_Phone && data != null) {
+//                String mobile = data.getStringExtra("mobile");
+//                tvPhone.setText(StringUtils.hidTel(mobile));
+//            }
+        } else if (resultCode == SameCityFragment.cityFragmentCode) {
+            if (requestCode == SELECT_IMAGE_REQUEST_address && data != null) {
+                String provinceName = data.getStringExtra("mProvince");
+                String cityName = data.getStringExtra("cityName");
+                tvLocation.setText(provinceName + "-" + cityName);
+            }
+        }
+    }
+
+    //EventBus主线程接收消息
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onUserEvent(ReadEvent event) {
+        String state = event.getState();
+        //如果多个消息，可在实体类中添加type区分消息
+        switch (event.getType()) {
+            case 1111:
+                String info = event.getInfo();
+                tvPhone.setText(info);
+                break;
+
+
+        }
     }
 }

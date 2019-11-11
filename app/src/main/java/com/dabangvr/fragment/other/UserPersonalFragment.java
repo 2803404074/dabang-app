@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.dabangvr.R;
 import com.dabangvr.activity.AddressActivity;
+import com.dabangvr.activity.UserEditMessActivity;
 import com.dabangvr.fragment.other.Order.ProblemActivity;
 import com.dabangvr.fragment.other.Order.UserAboutActivity;
 import com.dabangvr.fragment.other.Order.UserMessActivity;
@@ -100,7 +101,7 @@ public class UserPersonalFragment extends BaseFragment {
                     goTActivity(MyShoppingCartActivity.class, null);
                     break;
                 case ParameterContens.CLIENT_GRZL://个人资料
-                    goTActivity(UserMessActivity.class, null);
+                    goTActivity(UserEditMessActivity.class, null);
                     break;
                 case ParameterContens.CLIENT_SJRZ://商家入驻
                     queryAddDeptState();

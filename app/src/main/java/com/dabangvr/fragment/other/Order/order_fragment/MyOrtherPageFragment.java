@@ -86,7 +86,7 @@ public class MyOrtherPageFragment extends BaseFragment {
         adapter = new BaseLoadMoreHeaderAdapter<OrderListMo>(getContext(), recyclerView, orderList, R.layout.my_orther_item_dep) {
 
             @Override
-            public void convert(Context mContext,  com.dbvr.baselibrary.adapter.BaseRecyclerHolder holder, final OrderListMo orderListMo) {
+            public void convert(Context mContext, com.dbvr.baselibrary.adapter.BaseRecyclerHolder holder, final OrderListMo orderListMo) {
 
                 //店铺跳转
                 holder.getView(R.id.ll_dep).setOnClickListener(new View.OnClickListener() {
@@ -118,7 +118,7 @@ public class MyOrtherPageFragment extends BaseFragment {
                 final BaseLoadMoreHeaderAdapter adapterSun = new BaseLoadMoreHeaderAdapter<OrderGoodsList>
                         (getContext(), recy, orderListMo.getOrderGoodslist(), R.layout.my_orther_item_goods) {
                     @Override
-                    public void convert(Context mContext,  com.dbvr.baselibrary.adapter.BaseRecyclerHolder holder, final OrderGoodsList goods) {
+                    public void convert(Context mContext, com.dbvr.baselibrary.adapter.BaseRecyclerHolder holder, final OrderGoodsList goods) {
                         holder.setText(R.id.title, goods.getGoodsName());
                         holder.setText(R.id.guige, goods.getGoodsSpecNames());
                         holder.setText(R.id.number, "x" + goods.getGoodsNumber());
@@ -259,16 +259,19 @@ public class MyOrtherPageFragment extends BaseFragment {
         OkHttp3Utils.getInstance(MyApplication.getInstance()).doPostJson(DyUrl.getOrderList, map, new ObjectCallback<String>(MyApplication.getInstance()) {
             @Override
             public void onUi(String result) throws JSONException {
-
+                Log.d("luhuas", "onUi: "+result);
                 orderList = new Gson().fromJson(result, new TypeToken<List<OrderListMo>>() {
                 }.getType());
-
-                if (page == 1) {
-                    adapter.updateData(orderList);
-                } else {//重新设置数据
-                    adapter.addAll(orderList);
+                if (orderList != null) {
+                    if (page == 1) {
+                        adapter.updateData(orderList);
+                    } else {//重新设置数据
+                        adapter.addAll(orderList);
+                    }
+                    callBack.hide();
                 }
-                callBack.hide();
+
+
             }
 
             @Override

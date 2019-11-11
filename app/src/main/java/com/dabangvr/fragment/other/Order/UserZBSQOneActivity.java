@@ -26,6 +26,7 @@ import com.dbvr.httplibrart.utils.OkHttp3Utils;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -54,7 +55,7 @@ public class UserZBSQOneActivity extends BaseActivity {
     EditText et_other;
 
     private boolean isChecked;
-    private long lastonclickTime=0;
+    private long lastonclickTime = 0;
     private AnchorVo anchorVo;
 
     @Override
@@ -72,24 +73,24 @@ public class UserZBSQOneActivity extends BaseActivity {
     @Override
     public void initView() {
         anchorVo = (AnchorVo) getIntent().getSerializableExtra(ParameterContens.AnchorVo);
-        if (anchorVo !=null){
+        if (anchorVo != null) {
             etPhone.setText(anchorVo.getPhone());
             et_other.setText(anchorVo.getRemarks());
-        }else {
-            anchorVo =new AnchorVo();
+        } else {
+            anchorVo = new AnchorVo();
         }
     }
 
     @Override
     public void initData() {
-    cb_select.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            Log.d("luhuas", "onCheckedChanged: "+ isChecked);
-            UserZBSQOneActivity.this.isChecked = isChecked;
+        cb_select.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Log.d("luhuas", "onCheckedChanged: " + isChecked);
+                UserZBSQOneActivity.this.isChecked = isChecked;
 
-        }
-    });
+            }
+        });
     }
 
 
@@ -98,7 +99,7 @@ public class UserZBSQOneActivity extends BaseActivity {
         long time = SystemClock.uptimeMillis();//防止多次响应
         if (time - lastonclickTime >= ParameterContens.clickTime) {
             lastonclickTime = time;
-        }else {
+        } else {
             return;
         }
         switch (view.getId()) {
@@ -118,19 +119,16 @@ public class UserZBSQOneActivity extends BaseActivity {
                 String phone = etPhone.getText().toString().trim();
                 String code = etCode.getText().toString().trim();
                 String other = et_other.getText().toString().trim();
-                if (!StringUtils.isMobileNO(phone)||TextUtils.isEmpty(code)){
-                    ToastUtil.showShort(this,"请输入正确的手机号码和验证码");
+                if (!StringUtils.isMobileNO(phone) || TextUtils.isEmpty(code)) {
+                    ToastUtil.showShort(this, "请输入正确的手机号码和验证码");
                     return;
                 }
-                if (!isChecked){
-                    ToastUtil.showShort(this,"请确认我已了解");
+                if (!isChecked) {
+                    ToastUtil.showShort(this, "请确认我已了解");
                     return;
                 }
-                anchorVo.setPhone(phone);
                 anchorVo.setRemarks(other);
-                Intent intent =new Intent(this,UserZBSQTwoActivity.class);
-                intent.putExtra(ParameterContens.AnchorVo,anchorVo);
-                startActivity(intent);
+                next(phone, code, "1");
                 break;
         }
 
@@ -138,7 +136,35 @@ public class UserZBSQOneActivity extends BaseActivity {
     }
 
     /**
+     * 验证手机验证码
+     *
+     * @param phone
+     */
+    private void next(String phone, String code, String agreedAgreement) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("phone", phone);
+        map.put("code", code);
+        map.put("agreedAgreement", agreedAgreement);
+        OkHttp3Utils.getInstance(this).doPostJson(UserUrl.toValidateDeptCode, map, new ObjectCallback<String>(this) {
+            @Override
+            public void onUi(String result) {
+                Log.d("luhuas", "onUi: " + result);
+                anchorVo.setPhone(phone);
+                Intent intent = new Intent(getContext(), UserZBSQTwoActivity.class);
+                intent.putExtra(ParameterContens.AnchorVo, anchorVo);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onFailed(String msg) {
+                ToastUtil.showShort(getContext(), msg);
+            }
+        });
+    }
+
+    /**
      * 获取手机验证码
+     *
      * @param phone
      */
     private void getMessage(String phone) {
@@ -156,6 +182,7 @@ public class UserZBSQOneActivity extends BaseActivity {
             }
         });
     }
+
     /**
      * 倒计时开始
      */

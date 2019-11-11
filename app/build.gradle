@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.mob.sdk'
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -103,15 +104,14 @@ dependencies {
     implementation project(path: ':httplibrart')
     implementation project(path: ':imglibrary2')
     implementation project(path: ':svgalibrary')
-    implementation project(path: ':goodslibrary')
     implementation project(path: ':player')
     implementation project(path: ':videorecorder')
     implementation project(path: ':addressselection')
-
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.5.1'
     implementation files('libs/hyphenatechat_3.6.1.jar')
     implementation files('libs/pldroid-media-streaming-2.4.0.jar')
     implementation files('libs/pldroid-player-2.1.7.jar')
     implementation 'com.github.rey5137:material:1.2.2'
     implementation 'org.jetbrains:annotations:15.0'
+
 }

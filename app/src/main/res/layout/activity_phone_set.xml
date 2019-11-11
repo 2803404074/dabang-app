@@ -35,11 +35,11 @@
         android:text="我绑定的手机"/>
 
     <TextView
+        android:id="@+id/tv_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/shape_function"
         android:paddingVertical="@dimen/dp_3"
-        android:text="188********000"
         android:layout_marginTop="@dimen/dp_5"
         android:layout_marginHorizontal="@dimen/dp_10"
         android:paddingHorizontal="@dimen/dp_5"

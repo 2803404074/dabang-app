@@ -36,4 +36,10 @@ public class StringUtils {
         else
             return mobiles.matches(telRegex);
     }
+    public static String hidTel(String mobiles){
+        if (TextUtils.isEmpty(mobiles)){
+            return "";
+        }
+        return mobiles.substring(0, 4) + "****" + mobiles.substring(8, mobiles.length());
+    }
 }
