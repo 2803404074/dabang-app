@@ -10,7 +10,6 @@ import java.io.File;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
@@ -50,7 +49,6 @@ public class OkHttp3Utils {
                     okHttp3Utils = new OkHttp3Utils(mContext);
                 }
             }
-
         }
 
         return okHttp3Utils;

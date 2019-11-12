@@ -99,7 +99,8 @@
                         android:text="昵称"
                         android:textSize="@dimen/sp_16" />
 
-                    <TextView
+                    <EditText
+                        android:background="@null"
                         android:id="@+id/tvNickName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

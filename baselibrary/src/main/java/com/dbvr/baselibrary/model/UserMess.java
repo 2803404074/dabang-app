@@ -11,19 +11,19 @@ public class UserMess implements Serializable {
     private boolean mutual;//是否已经关注
     private boolean isNewsUser;
 
-    private String mobile;
+    private String mobile; //手机号码
 
-    private String openId;
+    private String openId; //唯一id
 
-    private String headUrl;
+    private String headUrl; //头像url
 
-    private String nickName;
+    private String nickName; //名字
 
     private String autograph;//个性签名
 
-    private String permanentResidence;
+    private String permanentResidence; //常住地
 
-    private String sex;
+    private String sex;  //性别
 
     private int grade;//等级
 
@@ -39,7 +39,7 @@ public class UserMess implements Serializable {
 
     private String token;
 
-    private String anchorId;
+    private String anchorId; //主播id
 
     private int isAnchor; //主播标识，1是主播 且主播状态正常
 

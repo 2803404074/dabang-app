@@ -1,10 +1,10 @@
 package com.dbvr.baselibrary.utils;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.dbvr.baselibrary.R;
 import com.rey.material.app.BottomSheetDialog;
@@ -44,14 +44,13 @@ public class BottomDialogUtil2 {
         this.mContext = mContext;
     }
 
-    public void show(int layoutId, double h, Conver convers) {
+    public void  show(int layoutId, double h, Conver convers) {
         dialog = new BottomSheetDialog(mContext, R.style.dialog);
 
         View view = LayoutInflater.from(mContext).inflate(layoutId, null);
         convers.setView(view);
         int height = (int) (Double.valueOf(ScreenUtils.getScreenHeight(mContext)) / h);
         dialog.setOnShowListener(dialogInterface -> {
-
             if (onShowCallBack != null) {
                 onShowCallBack.onShow();
             }
@@ -81,6 +80,7 @@ public class BottomDialogUtil2 {
                     .outDuration(200)
                     .cancelable(true)
                     .show();
+
         }
     }
 

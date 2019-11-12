@@ -7,10 +7,12 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.dabangvr.R;
 import com.dabangvr.fragment.SameCityFragment;
+import com.dabangvr.fragment.other.Order.UserSJRZTwoActivity;
 import com.dbvr.baselibrary.base.ParameterContens;
 import com.dbvr.baselibrary.eventBus.ReadEvent;
 import com.dbvr.baselibrary.model.UserMess;
@@ -23,6 +25,9 @@ import com.dbvr.baselibrary.utils.StringUtils;
 import com.dbvr.baselibrary.utils.ToastUtil;
 import com.dbvr.baselibrary.view.AppManager;
 import com.dbvr.baselibrary.view.BaseActivity;
+import com.dbvr.httplibrart.constans.UserUrl;
+import com.dbvr.httplibrart.utils.ObjectCallback;
+import com.dbvr.httplibrart.utils.OkHttp3Utils;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -30,6 +35,8 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import androidx.annotation.Nullable;
 import butterknife.BindView;
@@ -46,7 +53,7 @@ public class UserEditMessActivity extends BaseActivity {
     @BindView(R.id.sdvHead)
     SimpleDraweeView sdvHead;
     @BindView(R.id.tvNickName)
-    TextView tvNickName;
+    EditText tvNickName;
     @BindView(R.id.tvUserId)
     TextView tvId;
     @BindView(R.id.tvSex)
@@ -141,11 +148,52 @@ public class UserEditMessActivity extends BaseActivity {
                 if (TextUtils.isEmpty(userMess.getMobile())) {
 
                 }
-                Intent intent = new Intent(this,PhoneSetActivity.class);
+                Intent intent = new Intent(this, PhoneSetActivity.class);
                 intent.putExtra("mobile", userMess.getMobile());
                 startActivity(intent);
                 break;
             case R.id.tv_sub: //提交修改资料
+                String nickName = tvNickName.getText().toString().trim();
+                String userId = tvId.getText().toString().trim();
+                String sex = tvSex.getText().toString().trim();
+                String date = tvDate.getText().toString().trim();
+                String location = tvLocation.getText().toString().trim();
+                String introduce = tvIntroduce.getText().toString().trim();
+                String phone = tvPhone.getText().toString().trim();
+
+                Map<String, Object> map = new HashMap<>();
+                map.put("nickName", nickName);
+                map.put("permanentResidence", location);
+                map.put("sex", sex);
+                map.put("anchorId", userId);
+                map.put("autograph", introduce);
+                map.put("mobile", phone);
+                map.put("id", userMess.getId());
+                //修改用户信息
+                userMess.setNickName(nickName);
+                userMess.setPermanentResidence(location);
+                userMess.setSex(sex);
+                userMess.setAutograph(introduce);
+                userMess.setMobile(phone);
+                setLoaddingView(true);
+                for (String key : map.keySet()) {
+                    Log.d("luhuas", "onclick: key=" + key + "==value=" + map.get(key));
+                }
+                OkHttp3Utils.getInstance(this).doPostJson(UserUrl.updateUser, map, new ObjectCallback<String>(this) {
+                    @Override
+                    public void onUi(String result) {
+                        ToastUtil.showShort(getContext(), result);
+                        setLoaddingView(false);
+                        SPUtils.instance(getContext()).putUser(userMess); //提交用户信息
+                    }
+
+                    @Override
+                    public void onFailed(String msg) {
+                        ToastUtil.showShort(getContext(), msg);
+                        setLoaddingView(false);
+
+                    }
+                });
                 break;
         }
     }
@@ -154,7 +202,18 @@ public class UserEditMessActivity extends BaseActivity {
         BottomDialogUtil2.getInstance(this).show(R.layout.dialog_sex, 0, new Conver() {
             @Override
             public void setView(View view) {
-
+                TextView tvName = view.findViewById(R.id.tv_nan);
+                TextView tv_nv = view.findViewById(R.id.tv_nv);
+                TextView tvConfirm = view.findViewById(R.id.tvConfirm);
+                tvConfirm.setVisibility(View.GONE);
+                tvName.setOnClickListener(v -> {
+                    tvSex.setText(tvName.getText().toString());
+                    BottomDialogUtil2.getInstance(UserEditMessActivity.this).dess();
+                });
+                tv_nv.setOnClickListener(v -> {
+                    tvSex.setText(tv_nv.getText().toString());
+                    BottomDialogUtil2.getInstance(UserEditMessActivity.this).dess();
+                });
             }
         });
     }
@@ -192,7 +251,7 @@ public class UserEditMessActivity extends BaseActivity {
             if (requestCode == SELECT_IMAGE_REQUEST_address && data != null) {
                 String provinceName = data.getStringExtra("mProvince");
                 String cityName = data.getStringExtra("cityName");
-                tvLocation.setText(provinceName + "-" + cityName);
+                tvLocation.setText(provinceName + "-" + cityName == null ? "" : cityName);
             }
         }
     }
