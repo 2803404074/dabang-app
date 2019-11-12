@@ -8,7 +8,7 @@ public class GiftMo {
     private String giftName;
     private String giftUrl;
     private String tag;
-    private int giftCoins;
+    private int giftCoins;//跳币数量
     private boolean isClick;
 
     public GiftMo() {

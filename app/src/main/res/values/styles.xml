@@ -2,7 +2,7 @@
 
     <!-- Base applicationz theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-      <!--  &lt;!&ndash; Customize your theme here. &ndash;&gt;
+        <!--  &lt;!&ndash; Customize your theme here. &ndash;&gt;
         <item name="colorPrimary">@color/colorDb3</item>
         <item name="colorPrimaryDark">@color/colorWhite</item>
         <item name="android:windowNoTitle">true</item>
@@ -31,5 +31,14 @@
         <item name="android:backgroundDimEnabled">true</item>
         <item name="android:backgroundDimAmount">0.6</item>
     </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

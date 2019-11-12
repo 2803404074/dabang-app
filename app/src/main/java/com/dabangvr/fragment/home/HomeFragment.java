@@ -52,17 +52,14 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     public void initView() {
-
         setLoaddingView(true);
         List<String> mTitles = new ArrayList<>();
         mTitles.add("关注");
-        mTitles.add("发现");
-        mTitles.add("跳跳");
-        mTitles.add("推荐");
+        mTitles.add("唱歌");
+        mTitles.add("跳舞");
         mFragments = new ArrayList<>();
         mFragments.add(new HomeFragmentFollow());
         mFragments.add(new HomeFragmentFind());
-        mFragments.add(new HomeFragmentTiaoTiao());
         homeFragmentRecommend = new HomeFragmentRecommend();
         mFragments.add(homeFragmentRecommend);
         contentAdapter = new ContentPagerAdapter(getChildFragmentManager(),mTitles,mFragments);
@@ -116,7 +113,5 @@ public class HomeFragment extends BaseFragment {
     public interface ChangeCallBack{
         void change(boolean isCheck,boolean isClickMess);//isClickMess是否点击到消息
     }
-
-
 
 }

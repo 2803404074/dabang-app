@@ -55,7 +55,6 @@
        android:id="@+id/mivImg"
        android:layout_width="@dimen/dp_50"
        android:layout_height="@dimen/dp_50"
-       android:src="@mipmap/test2"
        roundiv:radius="@dimen/dp_5"
        android:layout_alignParentRight="true"
        android:layout_centerVertical="true"

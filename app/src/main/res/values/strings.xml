@@ -15,4 +15,18 @@
         他与个人消费或收入直接挂钩。每送出一个礼物或得到一个礼物都会增加积分。而积分的增长会提升等级，具体增长规则如下：</string>
 
     <string name="dropStrdj">用处一:等级越高，粉丝越多。人气可直接影响直播的收益; 用处二:等级越高，直播间所卖出的商品提成越高。最终达到名利双丰收。</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_tools">Tools</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_send">Send</string>
 </resources>

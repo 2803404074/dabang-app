@@ -132,7 +132,7 @@ public class FollowActivity extends BaseActivity {
         Map<String, Object> map = new HashMap<>();
         map.put("page", page);
         map.put("limit", 10);
-        OkHttp3Utils.getInstance(getContext()).doPostJson(DyUrl.getFansList, map,
+        OkHttp3Utils.getInstance(getContext()).doPostJson(DyUrl.getFocusedsList, map,
                 new ObjectCallback<String>(getContext()) {
                     @Override
                     public void onUi(String result) {

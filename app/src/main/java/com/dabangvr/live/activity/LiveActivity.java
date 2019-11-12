@@ -14,6 +14,7 @@ import android.graphics.Rect;
 import android.graphics.Shader;
 import android.graphics.Xfermode;
 import android.hardware.Camera;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -38,25 +39,21 @@ import com.dabangvr.live.gift.danmu.DanmuAdapter;
 import com.dabangvr.live.gift.danmu.DanmuEntity;
 import com.dabangvr.live.widget.CameraPreviewFrameView;
 import com.dabangvr.live.widget.LiveFunctionView;
-import com.dbvr.baselibrary.model.GiftMo;
 import com.dbvr.baselibrary.model.LiveComment;
+import com.dbvr.baselibrary.model.MusicMo;
 import com.dbvr.baselibrary.model.UserMess;
 import com.dbvr.baselibrary.other.Contents;
 import com.dbvr.baselibrary.utils.BottomDialogUtil;
 import com.dbvr.baselibrary.utils.BottomDialogUtil2;
-import com.dbvr.baselibrary.utils.Conver;
 import com.dbvr.baselibrary.utils.DataUtil;
 import com.dbvr.baselibrary.utils.DialogUtil;
 import com.dbvr.baselibrary.utils.SPUtils;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
 import com.dbvr.baselibrary.utils.StringUtils;
 import com.dbvr.baselibrary.view.AppManager;
-import com.dbvr.httplibrart.constans.DyUrl;
-import com.dbvr.httplibrart.utils.ObjectCallback;
-import com.dbvr.httplibrart.utils.OkHttp3Utils;
+import com.dbvr.baselibrary.view.BaseActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.hyphenate.EMMessageListener;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMMessage;
@@ -84,7 +81,6 @@ import com.qiniu.pili.droid.streaming.StreamingStateChangedListener;
 import com.qiniu.pili.droid.streaming.WatermarkSetting;
 
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONException;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -110,7 +106,6 @@ public class LiveActivity extends Activity implements
     private CameraStreamingSetting camerasetting;
 
     private WatermarkSetting watermarkSetting;
-
     private MediaStreamingManager mMediaStreamingManager;
     private StreamingProfile mProfile;
     private String TAG = "StreamingByCameraActivity";
@@ -151,9 +146,6 @@ public class LiveActivity extends Activity implements
     @BindView(R.id.tvFinishLive)
     TextView tvFinishLive;//结束直播按钮
 
-    @BindView(R.id.ll_goods)
-    LinearLayout llGoods;//商品点击区域
-
     @BindView(R.id.tvGoodsNum)
     TextView tvGoodsNum;//直播商品的数量
 
@@ -182,6 +174,8 @@ public class LiveActivity extends Activity implements
     @BindView(R.id.giftView)
     GiftView giftView;
 
+    protected volatile int shouwyi;//每次收到礼物的收益，进行累加
+    protected volatile int liveAddFansNum;//新增的粉丝数量
     /**
      * 创建环信房间
      * 后端创建
@@ -212,6 +206,13 @@ public class LiveActivity extends Activity implements
             //打赏
             if (msg.what == handleDsRequestCode){
                 LiveComment model = (LiveComment) msg.getData().getSerializable("liveComment");
+                //累计 收益
+                //一个礼物的跳币
+                int dropNum = model.getMsgDsComment().getDropNum();
+                //一共有多少个礼物
+                int giftNum = model.getMsgDsComment().getGiftNum();
+                int lastNum  = dropNum*giftNum;
+                shouwyi+=lastNum;
                 giftView.addGift(model);
             }
 
@@ -303,6 +304,7 @@ public class LiveActivity extends Activity implements
                 bundle9.putStringArrayList("data", arr9);
                 Message message9 = new Message();
                 message9.what = handleMessRequestCode;
+                liveAddFansNum++;
                 message9.setData(bundle9);
                 handler.sendMessage(message9);
                 break;
@@ -340,7 +342,6 @@ public class LiveActivity extends Activity implements
         });
     }
     private int dzNum = 0;//点赞累加
-    private double giftNum = 0;//礼物收益累加
 
     /**
      * 更新点赞量
@@ -408,7 +409,7 @@ public class LiveActivity extends Activity implements
         try {
             mProfile.setVideoQuality(StreamingProfile.VIDEO_QUALITY_MEDIUM1)/*视频质量*/
                     .setAudioQuality(StreamingProfile.AUDIO_QUALITY_HIGH1)/*音频质量*/
-                    .setQuicEnable(false)//RMPT or QUIC
+                    .setQuicEnable(true)//RMPT or QUIC
                     .setEncodingOrientation(StreamingProfile.ENCODING_ORIENTATION.PORT)//横竖屏   ENCODING_ORIENTATION.PORT 之后，播放端会观看竖屏的画面；反之
                     .setEncodingSizeLevel(StreamingProfile.VIDEO_ENCODING_HEIGHT_720)
                     .setBitrateAdjustMode(StreamingProfile.BitrateAdjustMode.Auto)//自适应码率
@@ -449,6 +450,7 @@ public class LiveActivity extends Activity implements
         mMediaStreamingManager.setStreamingSessionListener(this);
         mMediaStreamingManager.setStreamStatusCallback(this);
         mMediaStreamingManager.setAudioSourceCallback(this);
+        mMediaStreamingManager.startPlayback();//耳返
 
         watermarkSetting = new WatermarkSetting(this);
         watermarkSetting.setInJustDecodeBoundsEnabled(false);
@@ -542,12 +544,9 @@ public class LiveActivity extends Activity implements
     private void startFunction() {
 
         //开始推流
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if (mMediaStreamingManager != null) {
-                    mMediaStreamingManager.startStreaming();
-                }
+        new Thread(() -> {
+            if (mMediaStreamingManager != null) {
+                mMediaStreamingManager.startStreaming();
             }
         }).start();
 
@@ -571,6 +570,7 @@ public class LiveActivity extends Activity implements
      * 9）：获取本次礼物收益
      * 10）：获取本次成交的订单数
      */
+
     public void stopFunction() {
 
         new Thread(() -> {
@@ -582,18 +582,18 @@ public class LiveActivity extends Activity implements
         }).start();
 
         Intent intent = new Intent(mContext, LiveFinishActivity.class);
-        intent.putExtra("liveTime", DataUtil.formatMiss(miss));
-        intent.putExtra("liveSeeNum",String.valueOf(onLineNumber));
-        intent.putExtra("liveAddFansNum","0");//没做
-        intent.putExtra("liveDzNum",String.valueOf(dzNum));
-        intent.putExtra("liveGiftNum",String.valueOf(giftNum));
+        intent.putExtra("liveTime", DataUtil.formatMiss(miss));//直播时长
+        intent.putExtra("liveSeeNum",String.valueOf(onLineNumber));//观看人数
+        intent.putExtra("liveAddFansNum",liveAddFansNum);//新增粉丝
+        intent.putExtra("liveDzNum",String.valueOf(dzNum));//点赞数量
+        intent.putExtra("liveDropNum",shouwyi);//跳币收益
         startActivity(intent);
         finish();
     }
 
 
 
-    @OnClick({R.id.tvFinishLive, R.id.ll_goods, R.id.ivFunction, R.id.ivChangeCame})
+    @OnClick({R.id.tvFinishLive, R.id.llMusic, R.id.ivFunction, R.id.ivChangeCame})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tvFinishLive:
@@ -603,70 +603,76 @@ public class LiveActivity extends Activity implements
                     startFunction();
                 }
                 break;
-            case R.id.ll_goods:
-                List<String> test = new ArrayList<>();
-                for (int i = 0; i < 5; i++) {
-                    test.add("数据");
+            case R.id.llMusic:
+                List<MusicMo>musicMoList = new ArrayList<>();
+                for (int i = 0; i < 10; i++) {
+                    MusicMo musicMo = new MusicMo();
+                    musicMo.setCoverUrl("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1573550652923&di=323f63b1ab8ef9adc76c9f7d0af53091&imgtype=0&src=http%3A%2F%2Fimg.duoziwang.com%2F2016%2F11%2F27%2F104711141634.jpg");
+                    musicMo.setHots(100);
+                    musicMo.setPlayUrl("http://wsaudio.bssdlbig.kugou.com/1911121433/a1vAHP5Bxn67wxQnt_r-wg/1573626789/bss/extname/wsaudio/f782274d56be5a2b7c79462e3d1d3d9a.mp3");
+                    musicMo.setTitle("世界第一等");
+                    musicMoList.add(musicMo);
                 }
-                BottomDialogUtil2.getInstance(this).show(R.layout.recy_no_bg, 1.5, new Conver() {
-                    @Override
-                    public void setView(View view) {
-                        RecyclerView recycleGoods = view.findViewById(R.id.recycler_head);
-                        recycleGoods.setLayoutManager(new LinearLayoutManager(mContext));
-                        RecyclerAdapter adapter = new RecyclerAdapter<String>(mContext, test, R.layout.item_live_goods) {
-                            @Override
-                            public void convert(Context mContext, BaseRecyclerHolder holder, String o) {
+                BottomDialogUtil2.getInstance(this).show(R.layout.dialog_music, 1.7, view12 ->{
+                    RecyclerView recycleGoods = view12.findViewById(R.id.recycler_music);
+                    recycleGoods.setLayoutManager(new LinearLayoutManager(mContext));
+                    RecyclerAdapter adapter = new RecyclerAdapter<MusicMo>(mContext, musicMoList, R.layout.item_live_music) {
+                        @Override
+                        public void convert(Context mContext, BaseRecyclerHolder holder, MusicMo o) {
+                                SimpleDraweeView sdvHead = holder.getView(R.id.sdvHead);
+                                sdvHead.setImageURI(o.getCoverUrl());
+                                holder.setText(R.id.tvMuName,o.getTitle());
+                                holder.setText(R.id.tvMuHots,"热量："+o.getHots());
 
-                            }
-                        };
-                        recycleGoods.setAdapter(adapter);
-                    }
+                                sdvHead.setOnClickListener((view1 -> {
+                                    initMediaPlayer(o.getPlayUrl());
+                                }));
+                        }
+                    };
+                    recycleGoods.setAdapter(adapter);
                 });
                 break;
             case R.id.ivFunction:
                 LiveFunctionView.getInstance(this).showWindow(ivFunction);
-                LiveFunctionView.getInstance(this).setOnclickCallBack(new LiveFunctionView.OnclickCallBack() {
-                    @Override
-                    public void click(View view1, int id) {
-                        switch (id) {
-                            //关闭美颜
-                            case R.id.llCancelMy:
-                                CameraStreamingSetting.FaceBeautySetting fbSetting = camerasetting.getFaceBeautySetting();
-                                //磨皮
-                                fbSetting.beautyLevel = 0 / 100.0f;
-                                //美白
-                                fbSetting.whiten = 0 / 100.0f;
-                                //红润
-                                fbSetting.redden = 0 / 100.0f;
-                                mp = 0;
-                                mb = 0;
-                                hr = 0;
-                                mMediaStreamingManager.updateFaceBeautySetting(fbSetting);
-                                break;
-                            //设置美颜
-                            case R.id.llSetMy:
-                                setMy();
-                                break;
-                            //开启闪光
-                            case R.id.llOpenLight:
-                                TextView textView = view1.findViewById(R.id.tvOnOffLine);
-                                if (isLight) {
-                                    mMediaStreamingManager.turnLightOff();
-                                    isLight = false;
-                                    textView.setText("打开闪光灯");
-                                } else {
-                                    mMediaStreamingManager.turnLightOn();
-                                    isLight = true;
-                                    textView.setText("关闭闪光灯");
-                                }
-                                break;
-                            //录屏
-                            case R.id.llScreen:
+                LiveFunctionView.getInstance(this).setOnclickCallBack((view1, id) -> {
+                    switch (id) {
+                        //关闭美颜
+                        case R.id.llCancelMy:
+                            CameraStreamingSetting.FaceBeautySetting fbSetting = camerasetting.getFaceBeautySetting();
+                            //磨皮
+                            fbSetting.beautyLevel = 0 / 100.0f;
+                            //美白
+                            fbSetting.whiten = 0 / 100.0f;
+                            //红润
+                            fbSetting.redden = 0 / 100.0f;
+                            mp = 0;
+                            mb = 0;
+                            hr = 0;
+                            mMediaStreamingManager.updateFaceBeautySetting(fbSetting);
+                            break;
+                        //设置美颜
+                        case R.id.llSetMy:
+                            setMy();
+                            break;
+                        //开启闪光
+                        case R.id.llOpenLight:
+                            TextView textView = view1.findViewById(R.id.tvOnOffLine);
+                            if (isLight) {
+                                mMediaStreamingManager.turnLightOff();
+                                isLight = false;
+                                textView.setText("打开闪光灯");
+                            } else {
+                                mMediaStreamingManager.turnLightOn();
+                                isLight = true;
+                                textView.setText("关闭闪光灯");
+                            }
+                            break;
+                        //录屏
+                        case R.id.llScreen:
 
-                                break;
-                        }
-                        LiveFunctionView.getInstance(LiveActivity.this).destroy();
+                            break;
                     }
+                    LiveFunctionView.getInstance(LiveActivity.this).destroy();
                 });
                 break;
             case R.id.ivChangeCame:
@@ -676,6 +682,21 @@ public class LiveActivity extends Activity implements
                 break;
         }
     }
+
+    private MediaPlayer mediaPlayer;
+    private void initMediaPlayer(String url){
+        if (mediaPlayer == null){
+            mediaPlayer = new MediaPlayer();
+        }
+        try {
+            mediaPlayer.setDataSource(url);
+            mediaPlayer.prepare();
+            mediaPlayer.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private boolean isLight = false;//闪光灯打开标志
 
@@ -764,18 +785,8 @@ public class LiveActivity extends Activity implements
     //弹窗提示直播间信息
     private void showTips() {
         DialogUtil.getInstance(this).show(R.layout.dialog_live_tip, holder -> {
-            holder.findViewById(R.id.tvConfirm).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    stopFunction();
-                }
-            });
-            holder.findViewById(R.id.tvKeepLive).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    DialogUtil.getInstance(LiveActivity.this).des();
-                }
-            });
+            holder.findViewById(R.id.tvConfirm).setOnClickListener(view -> stopFunction());
+            holder.findViewById(R.id.tvKeepLive).setOnClickListener(view -> DialogUtil.getInstance(LiveActivity.this).des());
             TextView tvDate = holder.findViewById(R.id.tv_tips);
             tvDate.setText("你已直播时长："+DataUtil.formatMiss(miss));
             TextView tvSeeNum = holder.findViewById(R.id.tvPersonNum);
@@ -793,6 +804,8 @@ public class LiveActivity extends Activity implements
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mediaPlayer.stop();
+        mediaPlayer.release();
         LiveFunctionView.getInstance(LiveActivity.this).destroy();
         BottomDialogUtil2.getInstance(this).dess();
         DialogUtil.getInstance(this).des();
@@ -808,7 +821,7 @@ public class LiveActivity extends Activity implements
         super.onPause();
         // You must invoke pause here.
         mMediaStreamingManager.pause();
-        //mediaPlayer.pause();
+        mediaPlayer.pause();
     }
 
 
@@ -830,12 +843,7 @@ public class LiveActivity extends Activity implements
                 setNotifyUi(new LiveComment(Contents.HY_SERVER, "跳跳直播", Contents.appLogo, "连接成功..."));
                 if (isStart){
                     chronometer.setBase(chronometer.getBase()+SystemClock.elapsedRealtime()-mRecordTime);
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            chronometer.start();
-                        }
-                    });
+                    runOnUiThread(() -> chronometer.start());
                 }
                 break;
             case STREAMING:
@@ -843,22 +851,13 @@ public class LiveActivity extends Activity implements
                 if (!isStart) {
                     setNotifyUi(new LiveComment(Contents.HY_SERVER, "跳跳直播", Contents.appLogo, "跳跳已万事具备，只欠您的表演,开始吧！"));
                     //开始计时
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            chronometer.setBase(SystemClock.elapsedRealtime());
-                            int hour = (int) ((SystemClock.elapsedRealtime() - chronometer.getBase()) / 1000 / 60);
-                            chronometer.setFormat("0" + String.valueOf(hour) + ":%s");
-                            chronometer.start();
+                    runOnUiThread(() -> {
+                        chronometer.setBase(SystemClock.elapsedRealtime());
+                        int hour = (int) ((SystemClock.elapsedRealtime() - chronometer.getBase()) / 1000 / 60);
+                        chronometer.setFormat("0" + String.valueOf(hour) + ":%s");
+                        chronometer.start();
 
-                            chronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
-
-                                @Override
-                                public void onChronometerTick(Chronometer ch) {
-                                    miss++;
-                                }
-                            });
-                        }
+                        chronometer.setOnChronometerTickListener(ch -> miss++);
                     });
                     isStart = true;
                 }

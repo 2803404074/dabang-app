@@ -1,16 +1,27 @@
 package com.dbvr.baselibrary.model;
 
+import java.io.File;
+
 public class QiniuUploadFile {
     private String filePath;  // 文件的路径
     private String key;       // 文件上传到服务器的路径，如：files/images/test.jpg
     private String mimeType;  // 文件类型
     private String upLoadToken;     // 从后台获取的token值，只在一定时间内有效
+    private File file;
 
     public QiniuUploadFile(String filePath, String key, String mimeType, String upLoadToken) {
         this.filePath = filePath;
         this.key = key;
         this.mimeType = mimeType;
         this.upLoadToken = upLoadToken;
+    }
+
+    public File getFile() {
+        return file;
+    }
+
+    public void setFile(File file) {
+        this.file = file;
     }
 
     public void setKey(String key) {

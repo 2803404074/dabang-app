@@ -147,8 +147,7 @@
                 <ImageView
                     android:id="@+id/ivGoods"
                     android:layout_width="@dimen/dp_30"
-                    android:layout_height="@dimen/dp_30"
-                    android:src="@mipmap/live_goods" />
+                    android:layout_height="@dimen/dp_30" />
 
                 <TextView
                     android:layout_width="wrap_content"

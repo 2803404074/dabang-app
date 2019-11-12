@@ -21,6 +21,7 @@ import com.dabangvr.fragment.MyFragment;
 import com.dabangvr.fragment.SameCityFragment;
 import com.dabangvr.fragment.home.HomeFragment;
 import com.dabangvr.fragment.MessageFragment;
+import com.dabangvr.fragment.inter.OnActivityBackCallBack;
 import com.dabangvr.live.activity.CreateLiveActivity;
 import com.dabangvr.shopping.activity.GoodsActivity;
 import com.dbvr.baselibrary.eventBus.ReadEvent;
@@ -47,6 +48,7 @@ import butterknife.BindView;
 
 public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener, HomeFragment.ChangeCallBack {
 
+    public static MainActivity instance;
     @BindView(R.id.container)
     RelativeLayout relativeLayout;
 
@@ -62,9 +64,16 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     private MyFragment myFragment;
     private FragmentManager fragmentManager;
 
+    public OnActivityBackCallBack callBack;
+
+    public void setCallBack(OnActivityBackCallBack callBack) {
+        this.callBack = callBack;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        instance = this;
         //用来设置整体下移，状态栏沉浸
         StatusBarUtil.setRootViewFitsSystemWindows(this, false);
     }
@@ -277,12 +286,30 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK
                 && event.getAction() == KeyEvent.ACTION_DOWN) {
-            if ((System.currentTimeMillis() - exitTime) > 2000) {
-                Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
-                exitTime = System.currentTimeMillis();
-            } else {
-                AppManager.getAppManager().AppExit(this);
+
+            if (callBack!=null){
+                if(myFragment!=null){
+                    if (myFragment.isOpenEnd()){
+                        callBack.commit();
+                    }else {
+                        if ((System.currentTimeMillis() - exitTime) > 2000) {
+                            Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                            exitTime = System.currentTimeMillis();
+                        } else {
+                            AppManager.getAppManager().AppExit(this);
+                        }
+                    }
+                }
+            }else {
+                if ((System.currentTimeMillis() - exitTime) > 2000) {
+                    Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                    exitTime = System.currentTimeMillis();
+                } else {
+                    AppManager.getAppManager().AppExit(this);
+                }
             }
+
+
             return true;
         }
         return super.onKeyDown(keyCode, event);

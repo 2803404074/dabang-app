@@ -72,16 +72,12 @@ public class MessageFragment extends BaseFragment{
         adapter = new RecyclerAdapterPosition<EMConversation>(getContext(), conversationList, R.layout.my_mess_recyitem) {
             @Override
             public void convert(Context mContext, BaseRecyclerHolder holder,int position, EMConversation conversation) {
-                EMMessage emMessage = conversation.getLastMessage();
+               // EMMessage emMessage = conversation.getLatestMessageFromOthers();
+                EMMessage emMessage2 = conversation.getLatestMessageFromOthers();
                 try {
                     SimpleDraweeView sdvHead = holder.getView(R.id.avatar);
-                    if (!emMessage.getStringAttribute("dName").equals(userMess.getNickName())){
-                        holder.setText(R.id.name, emMessage.getStringAttribute("nickName"));
-                        sdvHead.setImageURI(emMessage.getStringAttribute("head"));
-                    }else {
-                        holder.setText(R.id.name, emMessage.getStringAttribute("dName"));
-                        sdvHead.setImageURI(emMessage.getStringAttribute("dHead"));
-                    }
+                    sdvHead.setImageURI(emMessage2.getStringAttribute("head"));
+                    holder.setText(R.id.name, emMessage2.getStringAttribute("nickName"));
                 } catch (HyphenateException e) {
                     e.printStackTrace();
                 }

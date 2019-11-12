@@ -46,18 +46,18 @@ public class LiveFinishActivity extends BaseActivity {
 
         String liveTime = getIntent().getStringExtra("liveTime");
         String liveSeeNum = getIntent().getStringExtra("liveSeeNum");
-        String liveAddFansNum = getIntent().getStringExtra("liveAddFansNum");
+        int liveAddFansNum = getIntent().getIntExtra("liveAddFansNum",0);
         String liveDzNum = getIntent().getStringExtra("liveDzNum");
-        String liveGiftNum = getIntent().getStringExtra("liveGiftNum");
+        int liveDropNum = getIntent().getIntExtra("liveDropNum",0);
 
         sdvHead.setImageURI(userMess.getHeadUrl());
         tvNickName.setText(userMess.getNickName());
 
         tvLiveTime.setText("直播时长："+liveTime);
-        tvSeeNum.setText(liveSeeNum);
-        tvFansNum.setText(liveAddFansNum);
-        tvDzNum.setText(liveDzNum);
-        tvGiftNum.setText(liveGiftNum);
+        tvSeeNum.setText(liveSeeNum);//观看人数
+        tvFansNum.setText(String.valueOf(liveAddFansNum));//新增粉丝
+        tvDzNum.setText(liveDzNum);//点赞数量
+        tvGiftNum.setText(String.valueOf(liveDropNum));//跳币增加量
 
     }
 

@@ -28,23 +28,19 @@ public abstract class HomeAdapter extends RecyclerView.Adapter<BaseRecyclerHolde
     public final int mTypeThree = 3;
     public final int mTypeFour = 4;
 
-    public HomeAdapter(Context mContext) {
+    public HomeAdapter(Context mContext,List<HomeFindMo> list) {
         this.mContext = mContext;
+        this.mData = list;
     }
 
-    public void setmData(List<HomeFindMo> list) {
-        this.mData = list;
+    public void updateDataa(List<HomeFindMo> data) {
+        mData.clear();
+        mData.addAll(data);
         notifyDataSetChanged();
     }
 
-    public void setmDataN(List<HomeFindMo> list) {
-        this.mData = list;
-    }
-
-
-    public void update(List<HomeFindMo> list) {
-        mData.clear();
-        mData.addAll(list);
+    public void addAll(List<HomeFindMo> data) {
+        mData.addAll(data);
         notifyDataSetChanged();
     }
 

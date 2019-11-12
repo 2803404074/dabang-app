@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import com.dabangvr.R;
 import com.dabangvr.play.widget.MediaController;
 import com.dabangvr.ui.VideoPlayAdapter;
+import com.dbvr.baselibrary.model.AllTypeMo;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.pili.pldroid.player.AVOptions;
 import com.pili.pldroid.player.widget.PLVideoTextureView;
@@ -79,12 +80,9 @@ public abstract class SlideAdapter<T> extends VideoPlayAdapter<BaseRecyclerHolde
         convert(mContext, holder, mDatas.get(position));
 
         //点击事件在这里处理
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (adapterInter != null) {
-                    adapterInter.onItemClick(v, position);
-                }
+        holder.itemView.setOnClickListener(v -> {
+            if (adapterInter != null) {
+                adapterInter.onItemClick(v, position);
             }
         });
 
@@ -108,7 +106,8 @@ public abstract class SlideAdapter<T> extends VideoPlayAdapter<BaseRecyclerHolde
         mVideoView.setMediaController(mMediaController);
         mVideoView.setDisplayAspectRatio(PLVideoView.ASPECT_RATIO_PAVED_PARENT);
         mVideoView.setLooping(true);
-        mVideoView.setVideoPath((String) mDatas.get(itemPosition));
+        AllTypeMo.VideoMo videoMo = (AllTypeMo.VideoMo) mDatas.get(itemPosition);
+        mVideoView.setVideoPath(videoMo.getVideoUrl());
         mVideoView.setAVOptions(options);
         mVideoView.setBufferingIndicator(loadingView);
         mVideoView.start();

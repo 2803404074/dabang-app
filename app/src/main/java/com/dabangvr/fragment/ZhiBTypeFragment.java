@@ -56,7 +56,7 @@ public class ZhiBTypeFragment extends BaseFragmentFromType {
     protected void initView() {
         setLinearLayout(llLoad);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
-        adapter = new RecyclerAdapterPosition<HomeFindMo.TowMo>(getContext(),mData,R.layout.item_conver_match) {
+        adapter = new RecyclerAdapterPosition<HomeFindMo.TowMo>(getContext(),mData,R.layout.item_video_type) {
             @Override
             public void convert(Context mContext, BaseRecyclerHolder holder,int position, HomeFindMo.TowMo o) {
                 SimpleDraweeView myImageView = holder.getView(R.id.miv_view);

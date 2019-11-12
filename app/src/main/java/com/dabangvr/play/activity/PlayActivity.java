@@ -506,6 +506,7 @@ public class PlayActivity extends BaseActivity implements PLOnErrorListener, PLO
     private String giftName;//选中礼物的名字
     private String giftUrl;//选中礼物的图片地址
     private int giftPrice;//礼物价钱
+    private int giftCoins;//跳币数量
     private int giftId;//选中礼物的ID
 
     @OnClick({R.id.btn_barrage,R.id.ivLove,R.id.llComment,R.id.play_follow,R.id.ivGift})
@@ -556,6 +557,7 @@ public class PlayActivity extends BaseActivity implements PLOnErrorListener, PLO
                     tvTiaoB.setText(String.valueOf(userMess.getDiamond()));
                     EditText editText = view15.findViewById(R.id.etNumber);
                     view15.findViewById(R.id.tvGoCz).setOnClickListener((view1)->{goTActivityForResult(MyDropActivity.class,null,100);});
+
                     view15.findViewById(R.id.tvSend).setOnClickListener(view12 -> {
                         if (Integer.parseInt(editText.getText().toString())>99){
                             ToastUtil.showShort(getContext(),"赠送数量不能超过99个~");
@@ -603,11 +605,11 @@ public class PlayActivity extends BaseActivity implements PLOnErrorListener, PLO
                     giftAdapter.setOnItemClickListener((view13, position) -> {
                         giftId = giftList.get(position).getId();
                         giftName = giftList.get(position).getGiftName();
+                        giftCoins = giftList.get(position).getGiftCoins();
                         if (giftList.get(position).getGiftCoins()>=300){
-                            giftUrl = giftList.get(position).getTag();
-                            Log.e("giftaaa",giftUrl);
+                            giftUrl = giftList.get(position).getTag();//svga目录里的名称
                         }else {
-                            giftUrl = giftList.get(position).getGiftUrl();
+                            giftUrl = giftList.get(position).getGiftUrl();//列表的图片
                         }
 
                         giftPrice = giftList.get(position).getGiftCoins();
@@ -683,6 +685,22 @@ public class PlayActivity extends BaseActivity implements PLOnErrorListener, PLO
                     liveComment.setMsgTag(Contents.HY_DS_MAX);
                     LiveComment.GifMo gifMo = new LiveComment.GifMo();
                     gifMo.setGiftId(giftUrl);//posche.svga
+                    gifMo.setGiftNum(Integer.parseInt(number));
+                    if (giftUrl.equals("angle.svga")){
+                        gifMo.setDropNum(300);
+                    }
+                    if (giftUrl.equals("goddess.svga")){
+                        gifMo.setDropNum(400);
+                    }
+                    if (giftUrl.equals("halloween.svga")){
+                        gifMo.setDropNum(1000);
+                    }
+                    if (giftUrl.equals("poche.svga")){
+                        gifMo.setDropNum(500);
+                    }
+                    if (giftUrl.equals("rose.svga")){
+                        gifMo.setDropNum(800);
+                    }
                     gifMo.setGiftName(giftName);
                     liveComment.setMsgDsComment(gifMo);
                     liveComment.setUserName(userMess.getNickName());
@@ -692,10 +710,12 @@ public class PlayActivity extends BaseActivity implements PLOnErrorListener, PLO
                     liveComment.setUserName(userMess.getNickName());
                     liveComment.setMsgTag(Contents.HY_DS);
                     liveComment.setHeadUrl(userMess.getHeadUrl());
-                    liveComment.setMsgDsComment(new LiveComment.GifMo(
-                            giftUrl,/*礼物url*/
-                            "送出"+number+"个"+giftName,/*礼物说明*/
-                            Integer.parseInt(number)));/*礼物数量*/
+                    LiveComment.GifMo gifMo = new LiveComment.GifMo();
+                    gifMo.setGiftNum(Integer.parseInt(number));
+                    gifMo.setGiftUrl(giftUrl);
+                    gifMo.setGiftName("送出"+number+"个"+giftName);
+                    gifMo.setDropNum(giftCoins);
+                    liveComment.setMsgDsComment(gifMo);/*礼物数量*/
                     goComment(liveComment);
                 }
 

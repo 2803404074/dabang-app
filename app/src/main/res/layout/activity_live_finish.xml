@@ -49,6 +49,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:textSize="@dimen/sp_15"
+            android:textColor="@color/textTitle"
             android:layout_height="wrap_content"
             android:text="45821"/>
         <TextView
@@ -58,6 +59,7 @@
             android:gravity="center"
             android:textSize="@dimen/sp_15"
             android:layout_height="wrap_content"
+            android:textColor="@color/textTitle"
             android:text="45821"/>
     </LinearLayout>
 
@@ -93,6 +95,7 @@
             android:gravity="center"
             android:textSize="@dimen/sp_15"
             android:layout_height="wrap_content"
+            android:textColor="@color/textTitle"
             android:text="45821"/>
         <TextView
             android:id="@+id/tvGiftNum"
@@ -100,6 +103,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:textSize="@dimen/sp_15"
+            android:textColor="@color/colorDb3"
             android:layout_height="wrap_content"
             android:text="45821"/>
     </LinearLayout>
@@ -122,9 +126,14 @@
             android:gravity="center"
             android:textSize="@dimen/sp_15"
             android:layout_height="wrap_content"
-            android:text="礼物收益"/>
+            android:textColor="@color/colorDb3"
+            android:text="跳币收益"/>
     </LinearLayout>
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginVertical="@dimen/dp_10"
+        android:background="@color/color_e2e2e2"/>
     <TextView
         android:id="@+id/tvConfirm"
         android:background="@drawable/shape_style_green_blue"
@@ -133,7 +142,7 @@
         android:layout_width="wrap_content"
         android:gravity="center"
         android:layout_gravity="center"
-        android:layout_marginTop="@dimen/dp_50"
+        android:layout_marginVertical="@dimen/dp_20"
         android:paddingHorizontal="@dimen/dp_80"
         android:paddingVertical="@dimen/dp_5"
         android:layout_height="wrap_content"

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_qb"
+            android:icon="@mipmap/my_money"
+            android:title="我的钱包" />
+        <item
+            android:id="@+id/nav_order"
+            android:icon="@mipmap/my_order"
+            android:title="我的订单" />
+        <item
+            android:id="@+id/nav_cart"
+            android:icon="@mipmap/my_cart"
+            android:title="购物车" />
+        <item
+            android:id="@+id/nav_mess"
+            android:icon="@mipmap/my_mess"
+            android:title="个人资料" />
+        <item
+            android:id="@+id/nav_zhub"
+            android:icon="@mipmap/my_zhub"
+            android:title="主播申请" />
+        <item
+            android:id="@+id/nav_ruz"
+            android:icon="@mipmap/my_ruz"
+            android:title="商家入驻" />
+
+    </group>
+
+    <item android:title="服务支持">
+        <menu>
+            <item
+                android:id="@+id/nav_about"
+                android:icon="@mipmap/my_about"
+                android:title="关于我们" />
+
+            <item
+                android:id="@+id/nav_set"
+                android:icon="@mipmap/p_setup"
+                android:title="设置" />
+        </menu>
+    </item>
+
+</menu>

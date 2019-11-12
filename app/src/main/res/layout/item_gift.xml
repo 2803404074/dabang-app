@@ -13,7 +13,6 @@
         android:layout_height="@dimen/dp_60"
         android:layout_gravity="center"
         android:scaleType="centerCrop"
-        android:src="@mipmap/test2"
         roundiv:radius="@dimen/dp_5" />
 
     <TextView

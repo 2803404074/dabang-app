@@ -79,7 +79,12 @@ public class QiniuUploadManager {
         if (param == null) {
             return false;
         }
-        File uploadFile = new File(param.getFilePath());
+        File uploadFile = null;
+        if (param.getFilePath() == null){
+            uploadFile = param.getFile();
+        }else {
+            uploadFile = new File(param.getFilePath());
+        }
         if (!uploadFile.exists() || uploadFile.isDirectory()) {
             return false; // 如果是文件夹，或者文件不存在，那么返回false
         }

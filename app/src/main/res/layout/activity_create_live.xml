@@ -38,68 +38,50 @@
             android:text="创建直播"/>
     </RelativeLayout>
 
-    <EditText
-        android:id="@+id/etTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="直播间标题"
-        android:layout_marginVertical="@dimen/dp_10"
-        android:layout_marginHorizontal="@dimen/dp_10"
-        android:paddingHorizontal="@dimen/dp_5"
-        android:paddingVertical="@dimen/dp_5"
-        android:background="@drawable/shape_gray_w"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/sp_15"
-        android:textColor="@color/colorDb5"
-        android:layout_marginHorizontal="@dimen/dp_10"
-        android:text="请分别选择1:1.5 以及 2:1.6的封面图"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/dividerGrey"
         android:orientation="horizontal">
-        <RelativeLayout
-            android:layout_width="@dimen/dp_130"
-            android:layout_height="@dimen/dp_156">
+        <LinearLayout
+            android:layout_width="@dimen/dp_100"
+            android:layout_height="@dimen/dp_120"
+            android:gravity="center"
+            android:orientation="vertical">
+            <TextView
+                android:layout_above="@+id/iv_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="封面内容"
+                android:textSize="@dimen/sp_14"
+                android:textColor="@color/colorDb3"/>
             <com.dbvr.baselibrary.ui.MyImageView
                 android:id="@+id/iv_content"
+                android:layout_marginTop="@dimen/dp_5"
                 android:onClick="onClickImage"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="@dimen/dp_60"
+                android:layout_height="@dimen/dp_84"
                 android:scaleType="fitXY"
-                android:layout_margin="@dimen/dp_10"
-                roundiv:radius="@dimen/dp_10"
+                roundiv:radius="@dimen/dp_5"
                 android:src="@mipmap/test"
                 tools:ignore="OnClick" />
-            <ImageView
-                android:id="@+id/ivAdd"
-                android:layout_width="@dimen/dp_50"
-                android:layout_height="@dimen/dp_50"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true"
-                android:src="@mipmap/add_main"/>
-        </RelativeLayout>
+        </LinearLayout>
+        <EditText
+            android:id="@+id/etTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="添加标题吸引观众~增加粉丝"
+            android:layout_marginHorizontal="@dimen/dp_5"
+            android:paddingHorizontal="@dimen/dp_5"
+            android:paddingVertical="@dimen/dp_5"
+            android:background="@null"/>
 
     </LinearLayout>
 
 
 
-    <EditText
-        android:id="@+id/etContent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:lines="5"
-        android:ellipsize="end"
-        android:gravity="top"
-        android:hint="介绍你的直播间吧!(100字以内)"
-        android:layout_marginVertical="@dimen/dp_10"
-        android:layout_marginHorizontal="@dimen/dp_10"
-        android:paddingHorizontal="@dimen/dp_5"
-        android:paddingVertical="@dimen/dp_5"
-        android:background="@drawable/shape_gray_w"/>
 
     <TextView
         android:id="@+id/tvAddTag"
@@ -125,7 +107,7 @@
         android:textSize="@dimen/sp_14"
         android:textColor="@android:color/black"
         android:layout_margin="@dimen/dp_10"
-        android:text="直播属性"/>
+        android:text="直播类型"/>
 
     <RadioGroup
         android:layout_width="match_parent"
@@ -137,18 +119,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:text="创建直播"/>
+            android:text="创建娱乐直播"/>
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_10"
-            android:text="创建预告"/>
+            android:textColor="@color/colorDb3"
+            android:text="创建特产直播(推荐)"/>
     </RadioGroup>
 
     <View
         android:layout_width="1px"
         android:layout_height="0dp"
         android:layout_weight="1"/>
+
     <TextView
         android:id="@+id/tvCreate"
         android:layout_width="match_parent"

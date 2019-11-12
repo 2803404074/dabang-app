@@ -1,7 +1,6 @@
 package com.dabangvr.fragment.home;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
@@ -24,7 +23,6 @@ import com.dabangvr.play.activity.PlayActivity;
 import com.dabangvr.adapter.AddHeaderAdapter;
 import com.dabangvr.adapter.BaseRecyclerHolder;
 import com.dabangvr.adapter.HomeAdapter;
-import com.dabangvr.adapter.RecyclerAdapter;
 import com.dabangvr.adapter.RecyclerAdapterPosition;
 import com.dbvr.baselibrary.eventBus.ReadEvent;
 import com.dbvr.baselibrary.model.HomeFindMo;
@@ -32,7 +30,6 @@ import com.dbvr.baselibrary.model.PlayMode;
 import com.dbvr.baselibrary.utils.BannerUtil;
 import com.dbvr.baselibrary.utils.SPUtils;
 import com.dbvr.baselibrary.utils.StringUtils;
-import com.dbvr.baselibrary.utils.ToastUtil;
 import com.dbvr.baselibrary.view.BaseFragment;
 import com.dbvr.httplibrart.constans.DyUrl;
 import com.dbvr.httplibrart.utils.ObjectCallback;
@@ -41,9 +38,6 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.youth.banner.Banner;
 
 import org.greenrobot.eventbus.EventBus;
@@ -86,17 +80,19 @@ public class HomeFragmentFind extends BaseFragment {
             Message message = new Message();
             message.what = 1;
             message.obj = "刷新";
-            mHandler.sendMessageDelayed(message, 2000);
+            refreshLayout.finishRefresh(false);
+            mHandler.sendMessage(message);
         });
         refreshLayout.setOnLoadMoreListener(refreshLayout -> {
             Message message = new Message();
             message.what = 2;
             message.obj = "加载更多";
-            mHandler.sendMessageDelayed(message, 1000);
+            refreshLayout.finishLoadMore(false);
+            mHandler.sendMessage(message);
         });
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new HomeAdapter(getContext()) {
+        adapter = new HomeAdapter(getContext(),mData) {
             @Override
             public void convert(Context mContext, final BaseRecyclerHolder holder, int mType) {
                 //顶部头像
@@ -126,7 +122,9 @@ public class HomeFragmentFind extends BaseFragment {
                     int userId;
                     for (int i = 0; i < list.size(); i++) {
                         if (!StringUtils.isEmpty(list.get(i).getCoverUrl())){
-                            holder.setImageByUrl(R.id.ivTitle,list.get(i).getCoverUrl());
+                            SimpleDraweeView sdvHead = holder.getView(R.id.sdvHead);
+                            sdvHead.setImageURI(list.get(i).getHeadUrl());
+                            holder.setImageByPath(R.id.ivTitle,"http://img.mp.itc.cn/q_70,c_zoom,w_640/upload/20170309/df4e970ee1b143b9b675ca443dca897b.jpg");
                             holder.setText(R.id.tvName,list.get(i).getNickName());
                             holder.setText(R.id.tvTitle,list.get(i).getLiveTitle());
                             liveId = list.get(i).getFname();
@@ -156,13 +154,14 @@ public class HomeFragmentFind extends BaseFragment {
 
                     RecyclerView recyclerTow =  holder.getView(R.id.recycle_tow);
                     recyclerTow.setLayoutManager(new GridLayoutManager(getContext(),2));
-                    RecyclerAdapterPosition adapter = new RecyclerAdapterPosition<HomeFindMo.TowMo>(getContext(),list,R.layout.item_conver_match) {
+                    RecyclerAdapterPosition adapter = new RecyclerAdapterPosition<HomeFindMo.TowMo>(getContext(),list,R.layout.item_find_live) {
                         @Override
                         public void convert(Context mContext, BaseRecyclerHolder holder, int position,HomeFindMo.TowMo o) {
 
                             SimpleDraweeView myImageView = holder.getView(R.id.miv_view);
                             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-
+                            SimpleDraweeView sdvHead = holder.getView(R.id.sdvHead);
+                            sdvHead.setImageURI(o.getHeadUrl());
                             if (position % 2 != 0){
                                 params.setMargins(5,5,0,0);//左边的item
                             } else{
@@ -228,7 +227,8 @@ public class HomeFragmentFind extends BaseFragment {
                 } else if (adapter.getViewTypeForMyTask(mType) == adapter.mTypeThree) {
                     List<HomeFindMo.FourMo> list = mData.get(mType).getFourMos();
                     RecyclerView recyclerView = holder.getView(R.id.recycler_head);
-                    recyclerView.setLayoutManager(new GridLayoutManager(getContext(),4));
+                    recyclerView.setBackgroundResource(R.color.white);
+                    recyclerView.setLayoutManager(new GridLayoutManager(getContext(),5));
                     RecyclerAdapterPosition adapter = new RecyclerAdapterPosition<HomeFindMo.FourMo>(getContext(),list,R.layout.item_type) {
                         @Override
                         public void convert(Context mContext, BaseRecyclerHolder holder,int position, HomeFindMo.FourMo o) {
@@ -263,13 +263,13 @@ public class HomeFragmentFind extends BaseFragment {
                     List<HomeFindMo.TowMo> list = mData.get(mType).getFiveMos();
                     RecyclerView recyclerTow =  holder.getView(R.id.recycler_head);
                     recyclerTow.setLayoutManager(new GridLayoutManager(getContext(),2));
-                    RecyclerAdapterPosition adapter = new RecyclerAdapterPosition<HomeFindMo.TowMo>(getContext(),list,R.layout.item_conver_match) {
+                    RecyclerAdapterPosition adapter = new RecyclerAdapterPosition<HomeFindMo.TowMo>(getContext(),list,R.layout.item_find_live) {
                         @Override
                         public void convert(Context mContext, BaseRecyclerHolder holder,int position, HomeFindMo.TowMo o) {
-
                             SimpleDraweeView myImageView = holder.getView(R.id.miv_view);
                             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-
+                            SimpleDraweeView sdvHead = holder.getView(R.id.sdvHead);
+                            sdvHead.setImageURI(o.getHeadUrl());
                             if (position % 2 != 0){
                                 params.setMargins(5,5,0,0);//左边的item
                             } else{
@@ -316,25 +316,33 @@ public class HomeFragmentFind extends BaseFragment {
                 }
             }
         };
-        adapter.setmData(mData);
         recyclerView.setAdapter(adapter);
     }
 
-    private Map<String,Object> map = new HashMap<>();
     @Override
     public void initData() {
+        Map<String,Object> map = new HashMap<>();
         map.put("page",page);
+        map.put("limit",10);
         map.put("userId", SPUtils.instance(getContext()).getUser().getId());
         OkHttp3Utils.getInstance(getContext()).doPostJson(DyUrl.indexFind, map, new ObjectCallback<String>(getContext()) {
             @Override
             public void onUi(String result){
                 List<HomeFindMo> list = new Gson().fromJson(result, new TypeToken<List<HomeFindMo>>() {}.getType());
-                if (list!=null && list.size()>0){
-                    mData = list;
-                    adapter.update(mData);
-                    Log.e("ssss",new Gson().toJson(mData));
+                if (page==1){
+                    if (list!=null){
+                        mData = list;
+                        adapter.updateDataa(mData);
+                    }
+                    refreshLayout.finishRefresh(true);
                 }else {
-                    page--;
+                    if (list!=null){
+                        mData = list;
+                        adapter.addAll(mData);
+                    }else {
+                        page--;
+                    }
+                    refreshLayout.finishLoadMore(true);
                 }
                 setLoaddingView(false);
             }
@@ -346,29 +354,16 @@ public class HomeFragmentFind extends BaseFragment {
         });
     }
 
-    private Handler mHandler = new Handler(new Handler.Callback() {
-        @Override
-        public boolean handleMessage(Message msg) {
-            String obj = " ";
-            switch (msg.what) {
-                case 1:         //刷新加载
-                    obj = (String) msg.obj;
-                    initData();
-                    refreshLayout.finishRefresh(true);
-                    break;
-                case 2:         //加载更多
-                    // TODO: 2019/10/9 加载更多
-                    //adapter.addData(mData1);
-                    map.put("limit",10);
-                    page++;
-                    initData();
-                    obj = (String) msg.obj;
-                    refreshLayout.finishLoadMore(true);
-                    break;
-            }
-            Log.d("luhuas", "onRefresh: " + obj);
-            return false;
+    private Handler mHandler = new Handler(msg -> {
+        switch (msg.what) {
+            case 1:         //刷新加载
+                initData();
+                break;
+            case 2:         //加载更多
+                initData();
+                break;
         }
+        return false;
     });
 
     private String info = null;

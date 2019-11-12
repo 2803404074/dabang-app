@@ -25,7 +25,6 @@ import com.dabangvr.adapter.BaseRecyclerHolder;
 import com.dbvr.baselibrary.model.UserMess;
 import com.dbvr.baselibrary.utils.SPUtils;
 import com.dbvr.baselibrary.utils.ScreenUtils;
-import com.dbvr.baselibrary.utils.StatusBarUtil;
 import com.dbvr.baselibrary.utils.StringUtils;
 import com.dbvr.baselibrary.view.AppManager;
 import com.dbvr.baselibrary.view.BaseActivity;
@@ -283,13 +282,8 @@ public class ChatActivity extends BaseActivity {
         // 如果是群聊，设置chattype，默认是单聊
         if (chatType == Constant.CHATTYPE_GROUP)
             message.setChatType(ChatType.GroupChat);
-            //自己
-            message.setAttribute("nickName",SPUtils.instance(getContext()).getUser().getNickName());
             message.setAttribute("head",SPUtils.instance(getContext()).getUser().getHeadUrl());
-
-            //对象
-            message.setAttribute("dName",tv_toUsername.getText().toString());
-            message.setAttribute("dHead",getIntent().getStringExtra("dHead"));
+            message.setAttribute("nickName",SPUtils.instance(getContext()).getUser().getNickName());
 
         // 发送消息
         EMClient.getInstance().chatManager().sendMessage(message);

@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +11,9 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,7 +23,6 @@ import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.dabangvr.R;
 import com.dabangvr.activity.LocationActivity;
-import com.dabangvr.activity.MainActivity;
 import com.dabangvr.adapter.BaseRecyclerHolder;
 import com.dabangvr.adapter.RecyclerAdapterPosition;
 import com.dbvr.baselibrary.model.HomeFindMo;
@@ -36,7 +32,6 @@ import com.dbvr.baselibrary.view.BaseFragment;
 import com.dbvr.httplibrart.constans.DyUrl;
 import com.dbvr.httplibrart.utils.ObjectCallback;
 import com.dbvr.httplibrart.utils.OkHttp3Utils;
-import com.dbvr.httplibrart.utils.OtherCallback;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -87,7 +82,7 @@ public class SameCityFragment extends BaseFragment {
         }
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         recyclerView.setNestedScrollingEnabled(false);
-        adapter = new RecyclerAdapterPosition<HomeFindMo.TowMo>(getContext(), mData, R.layout.item_conver_match) {
+        adapter = new RecyclerAdapterPosition<HomeFindMo.TowMo>(getContext(), mData, R.layout.item_video_type) {
             @Override
             public void convert(Context mContext, BaseRecyclerHolder holder, int position, HomeFindMo.TowMo o) {
                 holder.setImageByUrl(R.id.miv_view, o.getCoverUrl());

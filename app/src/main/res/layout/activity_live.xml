@@ -163,7 +163,7 @@
         android:paddingHorizontal="@dimen/dp_10">
 
         <LinearLayout
-            android:id="@+id/ll_goods"
+            android:id="@+id/llMusic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -173,28 +173,17 @@
             <ImageView
                 android:layout_width="@dimen/dp_30"
                 android:layout_height="@dimen/dp_30"
-                android:src="@mipmap/live_goods" />
+                android:layout_gravity="center"
+                android:src="@mipmap/my_zhub" />
 
             <TextView
                 android:id="@+id/tvGoodsNum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="商品数"
+                android:text="选择音乐"
                 android:textColor="@android:color/white" />
         </LinearLayout>
-
-        <TextView
-            android:layout_width="@dimen/dp_20"
-            android:layout_height="@dimen/dp_20"
-            android:layout_marginLeft="@dimen/dp_20"
-            android:background="@drawable/shape_round_red"
-            android:gravity="center"
-            android:text="8"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/sp_15"
-            android:textStyle="bold" />
-
         <TextView
             android:id="@+id/tvFinishLive"
             android:layout_width="wrap_content"

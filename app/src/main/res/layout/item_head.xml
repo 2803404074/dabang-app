@@ -31,6 +31,6 @@
         android:lines="1"
         android:text="小可爱"
         android:gravity="center"
-        android:textColor="@color/textTitle"
+        android:textColor="@color/colorWhite"
         android:textSize="@dimen/sp_14" />
 </LinearLayout>

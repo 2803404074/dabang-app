@@ -68,8 +68,17 @@ public class LiveComment implements Serializable {
         private String giftUrl;//礼物url
         private String giftName;//打赏的礼品的名称
         private int giftNum ;//打赏的礼品的数量
+        private int dropNum;//折合跳币的数量
 
         public GifMo() {
+        }
+
+        public int getDropNum() {
+            return dropNum;
+        }
+
+        public void setDropNum(int dropNum) {
+            this.dropNum = dropNum;
         }
 
         public GifMo(String giftUrl, String giftName, int giftNum) {

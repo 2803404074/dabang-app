@@ -69,6 +69,7 @@ public class HomeFindMo implements Serializable {
     }
 
     public static class TowMo{
+        private int position;//0直播，1短视频，2商品
         private int id;
         private int userId;
         private boolean isFollow;//是否已关注
@@ -92,6 +93,14 @@ public class HomeFindMo implements Serializable {
 
 
         public TowMo() {
+        }
+
+        public int getPosition() {
+            return position;
+        }
+
+        public void setPosition(int position) {
+            this.position = position;
         }
 
         public boolean isFollow() {

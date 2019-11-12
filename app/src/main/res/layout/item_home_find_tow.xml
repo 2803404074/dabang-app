@@ -15,7 +15,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:src="@mipmap/test4"
             roundiv:radius="@dimen/dp_5" />
         <TextView
             android:layout_width="wrap_content"
@@ -27,8 +26,16 @@
             android:background="@drawable/shape_style_green_blue"
             android:text="直播中"/>
 
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sdvHead"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:layout_above="@+id/tvTitle"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            fresco:roundAsCircle="true" />
         <TextView
             android:id="@+id/tvName"
+            android:layout_toRightOf="@+id/sdvHead"
             android:layout_above="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
