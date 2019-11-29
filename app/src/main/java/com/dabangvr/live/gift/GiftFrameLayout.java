@@ -5,7 +5,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.net.Uri;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -20,7 +19,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.dabangvr.R;
-import com.dabangvr.application.MyApplication;
+import com.dabangvr.comment.application.MyApplication;
 import com.dbvr.baselibrary.model.LiveComment;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -78,37 +77,37 @@ public class GiftFrameLayout extends FrameLayout {
         return nick;
     }
 
-    private LiveComment model;
+    private GiftMo model;
 
-    public LiveComment getModel() {
+    public GiftMo getModel() {
         return model;
     }
 
-    public boolean equalsCurrentModel(LiveComment model) {
+    public boolean equalsCurrentModel(GiftMo model) {
         return this.model.equals(model);
     }
 
 
-    public void setModel(LiveComment model) {
+    public void setModel(GiftMo model) {
         this.model = model;
-        if (0 != model.getMsgDsComment().getGiftNum()) {
-            this.repeatCount = model.getMsgDsComment().getGiftNum();
-            setRepeatCount(model.getMsgDsComment().getGiftNum());
+        if (0 != model.getGiftNum()) {
+            this.repeatCount = model.getGiftNum();
+            setRepeatCount(model.getGiftNum());
         }
         if (!TextUtils.isEmpty(model.getUserName())) {
             anim_nickname.setText(model.getUserName());
         }
 
-        if (!TextUtils.isEmpty(model.getMsgDsComment().getGiftName())) {
-            anim_sign.setText(model.getMsgDsComment().getGiftName());
+        if (!TextUtils.isEmpty(model.getGiftName())) {
+            anim_sign.setText(model.getGiftName());
         }
-        Glide.with(MyApplication.getInstance()).load(model.getMsgDsComment().getGiftUrl()).into(anim_gift);
+        Glide.with(MyApplication.getInstance()).load(model.getGiftUrl()).into(anim_gift);
 //        if (0 != ) {
 //            Glide.with(MyApplication.getInstance()).load(model.getMsgDsComment().getGiftId()).into(anim_gift);
 //            anim_gift.setImageResource(model.getMsgDsComment().getGiftTag());
 //        }
-        if (!TextUtils.isEmpty(model.getHeadUrl())) {
-            anim_header.setImageURI(model.getHeadUrl());
+        if (!TextUtils.isEmpty(model.getUserHead())) {
+            anim_header.setImageURI(model.getUserHead());
         }
         this.nick = anim_nickname.getText().toString();
     }

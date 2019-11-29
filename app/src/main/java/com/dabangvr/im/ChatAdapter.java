@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dabangvr.R;
-import com.dabangvr.adapter.BaseRecyclerHolder;
+import com.dabangvr.comment.adapter.BaseRecyclerHolder;
 import com.hyphenate.chat.EMMessage;
 
 import java.util.List;

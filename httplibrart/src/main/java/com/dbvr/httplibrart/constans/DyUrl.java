@@ -9,20 +9,31 @@ public class DyUrl {
     public static final String BASE = "http://192.168.0.112:8085/dabang/";
     //public static final String BASE = "http://api.vrzbgw.com:8085/dabang/";//远程
 
+
+    //（开播）获取已关联的商家
+    public static final String getDeptList = "api/dept/getDeptList";
+    //（开播）根据商家ID，获取该商家下的分类标签
+    public static final String getDeptCategorys = "api/category/getDeptCategorys";
+    //（开播）创建推流
+    public static final String createStream = "api/live/createStream";
+
+    //直播间点赞
+    public static final String praseOnline = "/api/live/praseOnline";
+
+    //直播间商品列表
+    public static final String getRoomGoodsList = "api/live/getRoomGoodsList";
+
+
+
+
     //获取用户信息
     public static final String getUserInfo = "api/getUserInfo";
-
-    //首页主播列表
-    public static final String indexAnchorList = "api/pili/indexAnchorList";
 
     //首页关注的主播正在直播的列表
     public static final String indexFollowList = "api/index/indexFollowList";
 
     //关注主播
     public static final String updateFans = "api/my/updateFans";
-
-    //创建推流
-    public static final String createStream = "api/live/createStream";
 
     //粉丝列表
     public static final String getFansList = "api/my/getFansList";
@@ -75,8 +86,6 @@ public class DyUrl {
     //购物车列表
     public static String getGoods2CartList = "api/goods/getGoods2CartList";
 
-
-
     //--------------------------------------首页---------------------------------------------------
     //发现(大头像以及大头像下面的列表)
     public static final String indexFind = "api/index/indexFind";
@@ -84,20 +93,9 @@ public class DyUrl {
     //根据类型查询直播列表
     public static final String getOnlineList = "api/live/getOnlineList";
 
-    //跳跳列表
-    public static final String indexTT = "api/index/indexTT";
-
    //根据经纬度获取省市县
    public static final String getLocation = "api/config/getAmapReverse";
 
-   //发动态
-    public static final String sendSay = "api/my/sendSay";
-    //获取动态列表
-    public static final String getSayList = "api/my/getSayList";
-    //获取赞列表
-    public static final String praisedList = "api/my/praisedList";
-    //获取评论列表
-    public static final String getCommentList = "api/comment/getCommentList";
     //搜索用户
     public static final String queryUser = "api/queryUser";
     //获取某用户信息
@@ -105,8 +103,4 @@ public class DyUrl {
 
     //获取高德省市县三级联动json
     public static final String getAmapDistrict = "api/config/getAmapDistrict";
-    public static String praisedSay="api/my/praisedSay";
-    public static String getPraisedList="api/my/getPraisedList";
-
-    public static String commentSay="api/my/commentSay";
 }

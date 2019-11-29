@@ -7,6 +7,6 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    android:paddingLeft="@dimen/dp_5"
-    android:paddingRight="@dimen/dp_5">
+    android:paddingLeft="@dimen/dp_10"
+    android:paddingRight="@dimen/dp_10">
 </TextView>

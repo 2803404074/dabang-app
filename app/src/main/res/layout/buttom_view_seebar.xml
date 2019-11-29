@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:roundiv="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -7,41 +8,360 @@
     android:paddingHorizontal="@dimen/dp_5"
     android:background="@drawable/shape_function">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/sp_15"
-        android:textColor="@android:color/white"
-        android:text="磨皮"/>
-   <SeekBar
-       android:id="@+id/sbMp"
-       android:layout_marginTop="@dimen/dp_5"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/sp_15"
-        android:layout_marginTop="@dimen/dp_10"
-        android:textColor="@android:color/white"
-        android:text="美白"/>
-    <SeekBar
-        android:id="@+id/sbMb"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_5"/>
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_15"
+            android:layout_gravity="center"
+            android:textColor="@android:color/white"
+            android:text="磨皮"/>
+        <SeekBar
+            android:id="@+id/sbMp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_15"
+            android:layout_gravity="center"
+            android:textColor="@android:color/white"
+            android:text="美白"/>
+        <SeekBar
+            android:id="@+id/sbMb"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_15"
+            android:layout_gravity="center"
+            android:textColor="@android:color/white"
+            android:text="锐化"/>
+        <SeekBar
+            android:id="@+id/sbRh"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+
+
+
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginVertical="@dimen/dp_10"
+        android:background="@color/colorDb5"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/sp_15"
-        android:layout_marginTop="@dimen/dp_10"
-        android:textColor="@android:color/white"
-        android:text="红润"/>
-    <SeekBar
-        android:id="@+id/sbHr"
+        android:text="滤镜"
+        android:textSize="@dimen/sp_18"
+        android:textColor="@color/colorDb5"/>
+
+    <HorizontalScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_5"/>
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:id="@+id/llHb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <com.dbvr.baselibrary.ui.MyImageView
+                    android:layout_width="@dimen/dp_65"
+                    android:layout_height="@dimen/dp_65"
+                    roundiv:radius="@dimen/dp_5"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/sp_14"
+                    android:layout_marginVertical="@dimen/dp_3"
+                    android:textColor="@color/colorWhite"
+                    android:text="黑白"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llLd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <com.dbvr.baselibrary.ui.MyImageView
+                    android:layout_width="@dimen/dp_65"
+                    android:layout_height="@dimen/dp_65"
+                    roundiv:radius="@dimen/dp_5"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/sp_14"
+                    android:layout_marginVertical="@dimen/dp_3"
+                    android:textColor="@color/colorWhite"
+                    android:text="蓝调"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llYs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <com.dbvr.baselibrary.ui.MyImageView
+                    android:layout_width="@dimen/dp_65"
+                    android:layout_height="@dimen/dp_65"
+                    roundiv:radius="@dimen/dp_5"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/sp_14"
+                    android:layout_marginVertical="@dimen/dp_3"
+                    android:textColor="@color/colorWhite"
+                    android:text="夜色"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llDy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <com.dbvr.baselibrary.ui.MyImageView
+                    android:layout_width="@dimen/dp_65"
+                    android:layout_height="@dimen/dp_65"
+                    roundiv:radius="@dimen/dp_5"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/sp_14"
+                    android:layout_marginVertical="@dimen/dp_3"
+                    android:textColor="@color/colorWhite"
+                    android:text="淡雅"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llGt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <com.dbvr.baselibrary.ui.MyImageView
+                    android:layout_width="@dimen/dp_65"
+                    android:layout_height="@dimen/dp_65"
+                    roundiv:radius="@dimen/dp_5"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/sp_14"
+                    android:layout_marginVertical="@dimen/dp_3"
+                    android:textColor="@color/colorWhite"
+                    android:text="哥特"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llGy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <com.dbvr.baselibrary.ui.MyImageView
+                    android:layout_width="@dimen/dp_65"
+                    android:layout_height="@dimen/dp_65"
+                    roundiv:radius="@dimen/dp_5"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/sp_14"
+                    android:layout_marginVertical="@dimen/dp_3"
+                    android:textColor="@color/colorWhite"
+                    android:text="光晕"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llMh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <com.dbvr.baselibrary.ui.MyImageView
+                    android:layout_width="@dimen/dp_65"
+                    android:layout_height="@dimen/dp_65"
+                    roundiv:radius="@dimen/dp_5"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/sp_14"
+                    android:layout_marginVertical="@dimen/dp_3"
+                    android:textColor="@color/colorWhite"
+                    android:text="梦幻"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <LinearLayout
+                android:id="@+id/llQn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <com.dbvr.baselibrary.ui.MyImageView
+                    android:layout_width="@dimen/dp_65"
+                    android:layout_height="@dimen/dp_65"
+                    roundiv:radius="@dimen/dp_5"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/sp_14"
+                    android:layout_marginVertical="@dimen/dp_3"
+                    android:textColor="@color/colorWhite"
+                    android:text="青柠"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llJj"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <com.dbvr.baselibrary.ui.MyImageView
+                    android:layout_width="@dimen/dp_65"
+                    android:layout_height="@dimen/dp_65"
+                    roundiv:radius="@dimen/dp_5"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/sp_14"
+                    android:layout_marginVertical="@dimen/dp_3"
+                    android:textColor="@color/colorWhite"
+                    android:text="简洁"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <com.dbvr.baselibrary.ui.MyImageView
+                    android:layout_width="@dimen/dp_65"
+                    android:layout_height="@dimen/dp_65"
+                    roundiv:radius="@dimen/dp_5"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/sp_14"
+                    android:layout_marginVertical="@dimen/dp_3"
+                    android:textColor="@color/colorWhite"
+                    android:text="不使用滤镜"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llLh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <com.dbvr.baselibrary.ui.MyImageView
+                    android:layout_width="@dimen/dp_65"
+                    android:layout_height="@dimen/dp_65"
+                    roundiv:radius="@dimen/dp_5"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/sp_14"
+                    android:layout_marginVertical="@dimen/dp_3"
+                    android:textColor="@color/colorWhite"
+                    android:text="老化"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llLm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <com.dbvr.baselibrary.ui.MyImageView
+                    android:layout_width="@dimen/dp_65"
+                    android:layout_height="@dimen/dp_65"
+                    roundiv:radius="@dimen/dp_5"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/sp_14"
+                    android:layout_marginVertical="@dimen/dp_3"
+                    android:textColor="@color/colorWhite"
+                    android:text="浪漫"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llRs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <com.dbvr.baselibrary.ui.MyImageView
+                    android:layout_width="@dimen/dp_65"
+                    android:layout_height="@dimen/dp_65"
+                    roundiv:radius="@dimen/dp_5"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/sp_14"
+                    android:layout_marginVertical="@dimen/dp_3"
+                    android:textColor="@color/colorWhite"
+                    android:text="锐色"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llHj"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <com.dbvr.baselibrary.ui.MyImageView
+                    android:layout_width="@dimen/dp_65"
+                    android:layout_height="@dimen/dp_65"
+                    roundiv:radius="@dimen/dp_5"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/sp_14"
+                    android:layout_marginVertical="@dimen/dp_3"
+                    android:textColor="@color/colorWhite"
+                    android:text="红酒"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+
+
+
 </LinearLayout>

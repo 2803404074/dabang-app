@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/dp_100"
+    android:layout_height="wrap_content">
+
+
+   <ImageView
+       android:layout_width="match_parent"
+       android:scaleType="fitXY"
+       android:layout_marginHorizontal="@dimen/dp_10"
+       android:layout_height="@dimen/dp_400"
+       android:src="@mipmap/auth_bg"/>
+
+   <com.facebook.drawee.view.SimpleDraweeView
+       android:id="@+id/sdvHead"
+       android:layout_width="@dimen/dp_65"
+       android:layout_height="@dimen/dp_65"
+       android:layout_gravity="center"
+       android:layout_centerHorizontal="true"
+       android:layout_marginTop="@dimen/dp_50"
+       android:layout_marginHorizontal="@dimen/dp_5"
+       fresco:roundAsCircle="true" />
+
+   <TextView
+       android:id="@+id/tvAuthName"
+       android:layout_below="@+id/sdvHead"
+       android:layout_width="wrap_content"
+       android:layout_marginTop="@dimen/dp_15"
+       android:layout_centerHorizontal="true"
+       android:text="海跳跳"
+       android:textSize="@dimen/sp_18"
+       android:textColor="@color/textTitle"
+       android:layout_height="wrap_content"/>
+
+   <LinearLayout
+       android:id="@+id/llDrop"
+       android:layout_marginTop="@dimen/dp_10"
+       android:layout_below="@+id/tvAuthName"
+       android:layout_width="wrap_content"
+       android:layout_centerHorizontal="true"
+       android:layout_height="wrap_content"
+       android:orientation="horizontal">
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textSize="@dimen/sp_16"
+          android:text="跳跳号:"/>
+      <TextView
+          android:id="@+id/tvDropNum"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textSize="@dimen/sp_16"
+          android:text="123456asd"/>
+      <View
+          android:layout_width="@dimen/dp_2"
+          android:layout_height="match_parent"
+          android:layout_gravity="center"
+          android:layout_marginHorizontal="@dimen/dp_5"
+          android:background="@color/color_e2e2e2"/>
+      <TextView
+          android:id="@+id/tvAdd"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textSize="@dimen/sp_16"
+          android:text="广西壮族自治区"/>
+   </LinearLayout>
+
+   <LinearLayout
+       android:id="@+id/llCount"
+       android:gravity="center"
+       android:layout_marginVertical="@dimen/dp_10"
+       android:layout_below="@+id/llDrop"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="horizontal">
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textColor="@color/colorDb5"
+          android:textSize="@dimen/sp_16"
+          android:text="跳跳认证：舞蹈、唱歌、海鲜专卖"/>
+   </LinearLayout>
+
+   <LinearLayout
+       android:id="@+id/llFo"
+       android:layout_marginVertical="@dimen/dp_10"
+       android:layout_centerHorizontal="true"
+       android:layout_below="@+id/llCount"
+       android:layout_width="@dimen/dp_270"
+       android:layout_height="wrap_content"
+       android:orientation="horizontal">
+      <TextView
+          android:id="@+id/tvFollow"
+          android:layout_width="0dp"
+          android:layout_weight="1"
+          android:gravity="center"
+          android:textSize="@dimen/sp_16"
+          android:layout_height="wrap_content"
+          android:text="55关注"/>
+      <TextView
+          android:id="@+id/tvFans"
+          android:layout_width="0dp"
+          android:layout_weight="1"
+          android:gravity="center"
+          android:textSize="@dimen/sp_16"
+          android:layout_height="wrap_content"
+          android:text="55粉丝"/>
+      <TextView
+          android:id="@+id/tvGoodsNum"
+          android:layout_width="0dp"
+          android:layout_weight="1"
+          android:gravity="center"
+          android:textSize="@dimen/sp_16"
+          android:layout_height="wrap_content"
+          android:text="156款海鲜"/>
+   </LinearLayout>
+
+   <LinearLayout
+       android:layout_below="@+id/llFo"
+       android:layout_centerHorizontal="true"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:gravity="center"
+       android:layout_marginTop="@dimen/dp_60"
+       android:orientation="horizontal">
+      <TextView
+          android:id="@+id/dTvFollow"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textColor="@color/colorDb5"
+          android:paddingHorizontal="@dimen/dp_20"
+          android:paddingVertical="@dimen/dp_5"
+          android:layout_marginRight="@dimen/dp_50"
+          android:background="@drawable/shape_db_stroke"
+          android:text="关注"/>
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:paddingHorizontal="@dimen/dp_20"
+          android:paddingVertical="@dimen/dp_5"
+          android:textColor="@color/colorDb5"
+          android:background="@drawable/shape_db_stroke"
+          android:text="主页"/>
+   </LinearLayout>
+
+
+</RelativeLayout>

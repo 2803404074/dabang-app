@@ -108,11 +108,18 @@ dependencies {
     implementation project(path: ':player')
     implementation project(path: ':videorecorder')
     implementation project(path: ':addressselection')
+    //刷新
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.5.1'
+
     implementation files('libs/hyphenatechat_3.6.1.jar')
-    implementation files('libs/pldroid-media-streaming-2.4.0.jar')
-    implementation files('libs/pldroid-player-2.1.7.jar')
     implementation 'com.github.rey5137:material:1.2.2'
     implementation 'org.jetbrains:annotations:15.0'
+    //功能引导
+    implementation 'com.github.huburt-Hu:NewbieGuide:v1.0.2'
+    implementation files('libs/zegoliveroom.jar')
+
+
+    implementation 'com.github.castorflex.verticalviewpager:library:19.0.1'
+    implementation 'io.reactivex:rxandroid:1.2.1'
 
 }

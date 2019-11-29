@@ -25,12 +25,12 @@ public class GifManager {
         viewList.add(giftFrameLayout);
     }
 
-    public void addGift(LiveComment giftSendModel) {
+    public void addGift(GiftMo giftSendModel) {
 
         GiftFrameLayout showView = getShowCurrView(giftSendModel);
         if (showView != null) {
             //当前添加的礼物已经在播放了，直接修改播放次数
-            int count = giftSendModel.getMsgDsComment().getGiftNum() + showView.getRepeatCount();
+            int count = giftSendModel.getGiftNum() + showView.getRepeatCount();
             showView.setRepeatCount(count);
             return;
         }
@@ -47,7 +47,7 @@ public class GifManager {
     }
 
 
-    private GiftFrameLayout getShowCurrView(LiveComment model) {
+    private GiftFrameLayout getShowCurrView(GiftMo model) {
         for (GiftFrameLayout giftFrameLayout : viewList) {
             if (giftFrameLayout.isShowing() && giftFrameLayout.equalsCurrentModel(model)) {
                 return giftFrameLayout;
@@ -73,12 +73,12 @@ public class GifManager {
 
     public void beginAnimotion(final GiftFrameLayout view) {
 
-        LiveComment model = queue.removeTop();
+        GiftMo model = queue.removeTop();
         if (model == null) {
             return;
         }
         view.setModel(model);
-        AnimatorSet animatorSet = view.startAnimation(model.getMsgDsComment().getGiftNum());
+        AnimatorSet animatorSet = view.startAnimation(model.getGiftNum());
         animatorSet.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {

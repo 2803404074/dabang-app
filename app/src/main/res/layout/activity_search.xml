@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingTop="@dimen/dp_35"
-    tools:context=".activity.SearchActivity">
+    tools:context=".home.activity.SearchActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

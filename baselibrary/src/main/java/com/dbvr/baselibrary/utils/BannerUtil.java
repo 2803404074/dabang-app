@@ -13,14 +13,15 @@ import com.youth.banner.Transformer;
 import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.loader.ImageLoader;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BannerUtil {
 
     private Context mContext;
     private Banner banner;
-    private List<String> mData;
     private List<String> mTitle;
+    private List<String> mImgs;
 
     private BannerCallBack bannerCallBack;
     public interface BannerCallBack{
@@ -30,28 +31,33 @@ public class BannerUtil {
         this.bannerCallBack = bannerCallBack;
     }
 
-    public BannerUtil(Context mContext, Banner banner, List<String> mData, List<String> mTitle) {
+    public BannerUtil(Context mContext, Banner banner, List<HomeFindMo.ThreeMo> mData) {
         this.mContext = mContext;
         this.banner = banner;
-        this.mData = mData;
-        this.mTitle = mTitle;
+        mTitle = new ArrayList<>();
+        mImgs = new ArrayList<>();
+        for (int i = 0; i < mData.size(); i++) {
+            mImgs.add(mData.get(i).getChartUrl());
+            mTitle.add(mData.get(i).getTitle());
+        }
+
     }
 
     public void startBanner() {
         //设置banner样式
-        banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE);
+        banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
         //设置banner动画效果
-        banner.setBannerAnimation(Transformer.DepthPage);
+        banner.setBannerAnimation(Transformer.Accordion);
         //设置标题集合（当banner样式有显示title时）
         banner.setBannerTitles(mTitle);
         //设置轮播时间
-        banner.setDelayTime(3500);
+        banner.setDelayTime(4500);
         //设置指示器位置（当banner模式中有指示器时）
         banner.setIndicatorGravity(BannerConfig.CENTER);
         //设置图片加载器
         banner.setImageLoader(new GlideImageLoader());
         //设置图片集合
-        banner.setImages(mData);
+        banner.setImages(mImgs);
 
         banner.setOnBannerListener(position -> {
            if (bannerCallBack!=null){
@@ -87,8 +93,6 @@ public class BannerUtil {
     public void onDestroy(){
         if (banner!=null){
             banner = null;
-            mData = null;
-            mTitle  = null;
             mContext = null;
         }
     }

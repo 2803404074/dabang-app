@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".activity.MusicActivity">
+    android:orientation="vertical">
 
     <LinearLayout
         android:paddingTop="@dimen/dp_35"
@@ -61,7 +60,6 @@
                         <ImageView
                             android:layout_width="@dimen/dp_60"
                             android:layout_height="@dimen/dp_60"
-                            android:src="@mipmap/test18"
                             android:scaleType="centerCrop"/>
                         <ImageView
                             android:id="@+id/ivPlay"

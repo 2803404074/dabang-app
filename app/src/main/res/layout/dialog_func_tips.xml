@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/ivLine"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_width="@dimen/dp_80"
+        android:layout_marginLeft="@dimen/dp_80"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/jiant"/>
+
+    <LinearLayout
+        android:layout_below="@+id/ivLine"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tvTip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_18"
+            android:textColor="@color/colorWhite"
+            android:textStyle="bold"
+            android:text="点击可查看个人信息、订单等资料"/>
+
+        <TextView
+            android:id="@+id/tvQuit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_18"
+            android:layout_gravity="right"
+            android:textColor="@color/colorDb5"
+            android:paddingHorizontal="@dimen/dp_10"
+            android:paddingVertical="@dimen/dp_5"
+            android:background="@drawable/shape_db_stroke"
+            android:text="我知道了"/>
+    </LinearLayout>
+
+</RelativeLayout>

@@ -97,6 +97,7 @@ public class BottomDialogUtil2 {
         });
 
         dialog.setOnDismissListener(dialogInterface -> {
+            dess();
             if (onDismissCallBack != null) {
                 onDismissCallBack.onDismiss();
             }

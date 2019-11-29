@@ -18,11 +18,12 @@
 
         <ImageView
             android:id="@+id/backe"
-            android:layout_width="@dimen/dp_15"
-            android:layout_height="@dimen/sp_15"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/sp_30"
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
-            android:src="@mipmap/back_w_black" />
+            android:padding="@dimen/dp_5"
+            android:src="@mipmap/back_w" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -31,8 +32,8 @@
             android:layout_centerHorizontal="true"
             android:layout_gravity="center"
             android:text="我的订单"
-            android:textColor="@color/color_505050"
-            android:textSize="@dimen/sp_18" />
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/sp_21" />
     </RelativeLayout>
 
 
@@ -40,7 +41,7 @@
         android:id="@+id/tablayout"
         app:stl_defaultTabTextSize="@dimen/sp_18"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_48"
+        android:layout_height="@dimen/dp_38"
         android:background="@drawable/btn_ban_round_blue"
         android:clipToPadding="false"
         android:paddingLeft="@dimen/dp_4"

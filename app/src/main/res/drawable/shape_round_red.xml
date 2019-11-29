@@ -3,7 +3,7 @@
     <!-- rectangle表示为矩形 -->
     <solid android:color="@color/colorAccent" />
 
-    <size
+   <!-- <size
         android:width="@dimen/dp_90"
-        android:height="@dimen/dp_90"/>
+        android:height="@dimen/dp_90"/>-->
 </shape>

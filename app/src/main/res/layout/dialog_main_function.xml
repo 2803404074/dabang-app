@@ -26,14 +26,6 @@
             android:drawableTop="@mipmap/main_function_video"
             android:layout_height="@dimen/dp_80"
             android:text="短视频"/>
-        <TextView
-            android:id="@+id/tvOpenDynamic"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:drawableTop="@mipmap/main_function_dynamic"
-            android:layout_height="@dimen/dp_80"
-            android:text="发动态"/>
     </RadioGroup>
 
     <ImageView

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activity.PhoneSetActivity">
+    tools:context=".user.activity.PhoneSetActivity">
     <RelativeLayout
         android:paddingTop="@dimen/dp_30"
         android:layout_width="match_parent"

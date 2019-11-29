@@ -3,29 +3,38 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
-<TextView
-    android:id="@+id/takePhoto"
-    android:layout_width="match_parent"
-    android:layout_height="45dp"
-    android:layout_margin="2dp"
-    android:gravity="center"
-    android:text="拍照"
-    android:textColor="@color/textTitle"
-    android:textSize="18sp"
-    android:textStyle="bold" />
-<View
-    android:layout_width="match_parent"
-    android:layout_height="1px"
-    android:background="@color/divider"
-    />
-<TextView
-    android:id="@+id/choosePhoto"
-    android:layout_width="match_parent"
-    android:layout_height="45dp"
-    android:layout_margin="2dp"
-    android:gravity="center"
-    android:text="从相册选择"
-    android:textColor="@color/textTitle"
-    android:textSize="18sp"
-    android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_10"
+        android:background="@drawable/shape_white"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/takePhoto"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_margin="2dp"
+            android:gravity="center"
+            android:text="拍照"
+            android:textColor="@color/textTitle"
+            android:textSize="18sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/divider" />
+
+        <TextView
+            android:id="@+id/choosePhoto"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_margin="2dp"
+            android:gravity="center"
+            android:text="从相册选择"
+            android:textColor="@color/textTitle"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+
 </LinearLayout>

@@ -4,7 +4,10 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:layout_margin="@dimen/dp_5"
-    android:padding="@dimen/dp_10"
+    android:paddingVertical="@dimen/dp_5"
+    android:paddingHorizontal="@dimen/dp_10"
+    android:id="@+id/llGift"
+    android:background="@drawable/shape_w_stroke"
     xmlns:roundiv="http://schemas.android.com/apk/res-auto">
 
     <com.dbvr.baselibrary.ui.MyImageView
@@ -21,8 +24,7 @@
         android:layout_height="wrap_content"
         android:text="飞机"
         android:textColor="@color/textTitle"
-        android:textStyle="bold"
-        android:layout_marginTop="@dimen/dp_5"
+        android:layout_marginTop="@dimen/dp_2"
         android:textSize="@dimen/sp_15"
         android:layout_gravity="center"/>
     <TextView
@@ -30,6 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="100跳币"
+        android:textColor="@color/lsq_color_gray"
         android:layout_gravity="center"/>
 
 </LinearLayout>

@@ -23,7 +23,7 @@
                 android:orientation="vertical"
                 android:weightSum="200">
 
-                <com.dabangvr.shopping.view.ViewPagerTransform
+                <com.dabangvr.mall.adapter.ViewPagerTransform
                     android:id="@+id/viewpager"
                     android:layout_width="@dimen/dp_280"
                     android:layout_height="match_parent"

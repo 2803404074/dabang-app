@@ -6,13 +6,13 @@
     android:orientation="horizontal"
     android:paddingHorizontal="@dimen/dp_5"
     android:layout_marginVertical="@dimen/dp_5"
+    android:paddingVertical="@dimen/dp_2"
     android:background="@drawable/shape_gray_touming">
     <TextView
         android:id="@+id/tvUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/green02"
-        android:paddingVertical="@dimen/dp_5"
         android:gravity="center"
         android:paddingHorizontal="@dimen/dp_2"
         android:textSize="@dimen/sp_14"
@@ -30,7 +30,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@android:color/white"
-        android:paddingVertical="@dimen/dp_3"
         android:paddingHorizontal="@dimen/dp_8"
         android:textSize="@dimen/sp_14"
         android:text="---"/>

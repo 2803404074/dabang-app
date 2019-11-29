@@ -1,5 +1,6 @@
 package com.dbvr.baselibrary.utils;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -18,12 +19,13 @@ public class DialogUtil {
     private Context context;
     private AlertDialog dialog;
 
-    public static DialogUtil getInstance(Context mContext){
-        if (dialogUtil == null){
+    public static DialogUtil getInstance(Context mContext) {
+        if (dialogUtil == null) {
             dialogUtil = new DialogUtil(mContext);
         }
         return dialogUtil;
     }
+
     public DialogUtil(Context context) {
         this.context = context;
     }
@@ -31,7 +33,7 @@ public class DialogUtil {
     /**
      * @param layout 该布局需要有一个iv_close id，用于通用关闭
      */
-    public void show(int layout,Conver convers) {
+    public void show(int layout, Conver convers) {
         View view = LayoutInflater.from(context).inflate(layout, null, false);
         convers.setView(view);
         dialog = new AlertDialog.Builder(context, R.style.TransparentDialog).setView(view).create();
@@ -43,21 +45,21 @@ public class DialogUtil {
         dialog.getWindow().setWindowAnimations(R.style.dialog_animation);
     }
 
-    public boolean isShow(){
-        if (dialog!=null){
+    public boolean isShow() {
+        if (dialog != null) {
             return dialog.isShowing();
         }
         return false;
     }
 
 
-    public void des(){
-        if (dialog != null){
-            dialog.dismiss();
-            dialog = null;
-        }
-        if (dialogUtil != null){
+    public void des() {
+        if (dialogUtil != null) {
             dialogUtil = null;
+            if (dialog != null) {
+                dialog.dismiss();
+                dialog = null;
+            }
         }
     }
 }

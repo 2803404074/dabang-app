@@ -33,60 +33,27 @@ import butterknife.Unbinder;
  * data 2019/7/8
  */
 public abstract class BaseFragmentFromType extends Fragment {
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
-    private Unbinder unbinder;
-    //获取TAG的fragment名称
-    protected final String TAG = this.getClass().getSimpleName();
-    protected String STATE_SAVE_IS_HIDDEN ;
-    public Context context;
 
-    private boolean IS_LOADED = false;
-    public static int mSerial = 0;
-    private int mTabPos = 0;//第几个类型
-    private int cType;//类型id
-    private boolean isFirst = true;
+    public Context context;
+    private Unbinder unbinder;
+    private int cType;//每个页卡的ID
+    private View rootView;
 
     public BaseFragmentFromType(int cType) {
         this.cType = cType;
+    }
+    private Handler handler = new Handler(message -> {
+        setDate(cType);
+        return false;
+    });
+    public Context getContext(){
+        return this.context;
     }
 
     public int getcType() {
         return cType;
     }
 
-    public Context getContext(){
-        return this.context;
-    }
-
-    private Handler handler = new Handler(new Handler.Callback() {
-        @Override
-        public boolean handleMessage(@NonNull Message message) {
-            if (!IS_LOADED) {
-                IS_LOADED = true;
-                //这里执行加载数据的操作
-                setDate();
-            }
-            return false;
-        }
-    });
-
-    @Override
-        public void onAttach(Context ctx) {
-        super.onAttach(ctx);
-        context = ctx;
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        context = null;
-    }
-
-    private View rootView;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -100,43 +67,14 @@ public abstract class BaseFragmentFromType extends Fragment {
             }
         }
         unbinder = ButterKnife.bind(this, rootView);
-        if (isFirst && mTabPos == mSerial) {
-            isFirst = false;
-            sendMessage();
-        }
+
         initView();
+
+        sendMessage();
 
         return rootView;
     }
 
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (savedInstanceState != null) {
-            boolean isSupportHidden = savedInstanceState.getBoolean(STATE_SAVE_IS_HIDDEN);
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            if (isSupportHidden) {
-                ft.hide(this);
-            } else {
-                ft.show(this);
-            }
-            ft.commit();
-        }
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putBoolean(STATE_SAVE_IS_HIDDEN,isHidden());
-    }
-
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if (hidden){
-
-        }
-    }
     /**
      * 请求网络
      */
@@ -157,11 +95,10 @@ public abstract class BaseFragmentFromType extends Fragment {
      */
     protected abstract void initView();
 
-
     /**
      * 加载数据
      */
-    protected abstract void setDate();
+    protected abstract void setDate(int cType);
 
     /**
      * 保证同一按钮在1秒内只响应一次点击事件
@@ -183,33 +120,11 @@ public abstract class BaseFragmentFromType extends Fragment {
         }
     }
 
-    private LinearLayout linearLayout;
-
-    public void setLinearLayout(LinearLayout linearLayout) {
-        this.linearLayout = linearLayout;
-    }
-
-    public void setLoaddingView(boolean isLoadding){
-        if (isLoadding){
-            if (linearLayout!=null){
-                linearLayout.setVisibility(View.VISIBLE);
-            }
-
-        }else {
-            if (linearLayout!=null){
-                linearLayout.setVisibility(View.GONE);
-            }
-
-        }
-    }
-
-
     /**
      * 同一按钮在短时间内可重复响应点击事件
      */
     public abstract class OnMultiClickListener implements View.OnClickListener {
         public abstract void onMultiClick(View view);
-
         @Override
         public void onClick(View v) {
             onMultiClick(v);
@@ -242,5 +157,20 @@ public abstract class BaseFragmentFromType extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         onDetach();
+    }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+    @Override
+    public void onAttach(Context ctx) {
+        super.onAttach(ctx);
+        context = ctx;
+    }
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        context = null;
     }
 }

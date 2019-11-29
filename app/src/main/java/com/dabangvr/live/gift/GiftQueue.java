@@ -10,14 +10,14 @@ import java.util.Set;
 
 
 public class GiftQueue {
-    Map<String, List<LiveComment>> queue;
+    Map<String, List<GiftMo>> queue;
 
     public GiftQueue() {
         queue = new LinkedHashMap<>();
     }
 
 
-    public List<LiveComment> getList(String key) {
+    public List<GiftMo> getList(String key) {
         return queue.get(key);
     }
 
@@ -26,10 +26,10 @@ public class GiftQueue {
      *
      * @return
      */
-    public synchronized LiveComment removeTop() {
-        LiveComment model = null;
+    public synchronized GiftMo removeTop() {
+        GiftMo model = null;
         if (queue.size() > 0) {
-            List<LiveComment> giftSendModels = getTopList();
+            List<GiftMo> giftSendModels = getTopList();
 
             if (giftSendModels == null) {
                 return model;
@@ -49,7 +49,7 @@ public class GiftQueue {
      *
      * @return
      */
-    private List<LiveComment> getTopList() {
+    private List<GiftMo> getTopList() {
         Set<String> strings = queue.keySet();
         for (String string : strings) {
             return queue.get(string);
@@ -63,19 +63,19 @@ public class GiftQueue {
      * @param model
      * @return
      */
-    public synchronized void add(LiveComment model) {
-        List<LiveComment> mapList = getList(model.getUserName());
+    public synchronized void add(GiftMo model) {
+        List<GiftMo> mapList = getList(model.getUserName());
         if (mapList == null) {
             //新来的用户添加到任务队列中
-            List<LiveComment> l = new ArrayList<>();
+            List<GiftMo> l = new ArrayList<>();
             l.add(model);
             queue.put(model.getUserName(), l);
         } else {
             boolean isRepeat = false;
-            for (LiveComment giftModel : mapList) {
-                if (giftModel.getMsgDsComment().getGiftId() == model.getMsgDsComment().getGiftId()) {
+            for (GiftMo giftModel : mapList) {
+                if (giftModel.getGiftName() == model.getGiftName()) {
                     //礼物相同时
-                    giftModel.getMsgDsComment().setGiftNum(model.getMsgDsComment().getGiftNum());
+                    giftModel.setGiftNum(model.getGiftNum());
                     isRepeat = true;
                     break;
                 }

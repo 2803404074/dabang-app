@@ -4,7 +4,7 @@
         <shape
             android:shape="rectangle">
             <!-- 圆角红色按钮 -->
-            <corners android:radius="@dimen/dp_10"/>
+            <corners android:radius="@dimen/dp_8"/>
             <solid android:color="#18dadc" />
             <gradient
                 android:startColor="#18dadc"

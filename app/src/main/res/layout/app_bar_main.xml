@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_100"
+        android:gravity="bottom"
+        android:background="@drawable/shape_style_db_green"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/dp_5"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/ivFunctionLeft"
+                android:layout_gravity="center"
+                android:layout_width="@dimen/dp_35"
+                android:layout_height="match_parent"
+                android:src="@mipmap/function_main"/>
+            <TextView
+                android:id="@+id/tvMain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/sp_25"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:layout_marginLeft="@dimen/dp_3"
+                android:layout_gravity="bottom"
+                android:text="跳跳直播"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1px"
+                android:layout_weight="1"/>
+            <ImageView
+                android:id="@+id/ivSearch"
+                android:layout_width="@dimen/dp_34"
+                android:layout_height="@dimen/dp_34"
+                android:src="@mipmap/search_round"
+                android:layout_gravity="bottom"
+                android:padding="@dimen/dp_2"/>
+            <ImageView
+                android:id="@+id/ivFunction"
+                android:layout_width="@dimen/dp_35"
+                android:layout_height="@dimen/dp_35"
+                android:src="@mipmap/paishe"
+                android:layout_marginHorizontal="@dimen/dp_5"
+                android:layout_gravity="bottom"
+                android:paddingBottom="@dimen/dp_2"/>
+
+            <ImageView
+                android:id="@+id/ivUser"
+                android:layout_width="@dimen/dp_30"
+                android:layout_height="@dimen/dp_30"
+                android:src="@mipmap/user"
+                android:layout_marginBottom="@dimen/dp_1"
+                android:layout_gravity="bottom"
+                android:padding="@dimen/dp_2"/>
+        </LinearLayout>
+
+        <com.ogaclejapan.smarttablayout.SmartTabLayout
+            android:id="@+id/tab_layout"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_35"
+            android:layout_marginVertical="@dimen/dp_4"
+            app:stl_indicatorWithoutPadding="true"
+            app:stl_indicatorInterpolation="smart"
+            app:stl_indicatorColor="@color/colorWhite"
+            app:stl_indicatorThickness="@dimen/dp_2"
+            app:stl_indicatorWidth="auto"
+            app:stl_customTabTextLayoutId="@layout/view_tab_text"
+            app:stl_defaultTabTextHorizontalPadding="@dimen/dp_5"
+            app:stl_indicatorCornerRadius="2dp"
+            app:stl_overlineThickness="0dp"
+            app:stl_underlineThickness="0dp"
+            app:stl_dividerThickness="0dp"
+            app:stl_drawDecorationAfterTab="true" />
+    </LinearLayout>
+
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>

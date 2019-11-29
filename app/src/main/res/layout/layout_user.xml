@@ -62,8 +62,7 @@
                 <ImageView
                     android:id="@+id/ivVip"
                     android:layout_width="@dimen/dp_20"
-                    android:layout_height="@dimen/dp_20"
-                    android:src="@mipmap/vip"/>
+                    android:layout_height="@dimen/dp_20" />
                 <View
                     android:layout_width="0dp"
                     android:layout_height="1px"

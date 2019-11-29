@@ -9,6 +9,18 @@ import android.widget.Toast;
 
 public class NetWorkStateReceiver extends BroadcastReceiver {
 
+    private NetCallBack netCallBack;
+    public interface NetCallBack{
+        void changeNet(boolean hasNet);
+    }
+
+    public NetWorkStateReceiver(NetCallBack netCallBack) {
+        this.netCallBack = netCallBack;
+    }
+
+    public NetWorkStateReceiver() {
+    }
+
     @Override
     public void onReceive(final Context context, Intent intent) {
 
@@ -19,6 +31,7 @@ public class NetWorkStateReceiver extends BroadcastReceiver {
             //获得ConnectivityManager对象
             ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
+            boolean isNet;
             //获取ConnectivityManager对象对应的NetworkInfo对象
             //获取WIFI连接的信息
             NetworkInfo wifiNetworkInfo = connMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
@@ -26,12 +39,20 @@ public class NetWorkStateReceiver extends BroadcastReceiver {
             NetworkInfo dataNetworkInfo = connMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
             if (wifiNetworkInfo.isConnected() && dataNetworkInfo.isConnected()) {
                 Toast.makeText(context, "WIFI已连接,移动数据已连接", Toast.LENGTH_SHORT).show();
+                isNet = true;
             } else if (wifiNetworkInfo.isConnected() && !dataNetworkInfo.isConnected()) {
                 Toast.makeText(context, "WIFI已连接,移动数据已断开", Toast.LENGTH_SHORT).show();
+                isNet = true;
             } else if (!wifiNetworkInfo.isConnected() && dataNetworkInfo.isConnected()) {
                 Toast.makeText(context, "WIFI已断开,移动数据已连接", Toast.LENGTH_SHORT).show();
+                isNet = true;
             } else {
                 Toast.makeText(context, "WIFI已断开,移动数据已断开", Toast.LENGTH_SHORT).show();
+                isNet = false;
+            }
+
+            if (netCallBack!=null){
+                netCallBack.changeNet(isNet);
             }
 //API大于23时使用下面的方式进行网络监听
         } else {
@@ -40,24 +61,34 @@ public class NetWorkStateReceiver extends BroadcastReceiver {
                 ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(
                         Context.CONNECTIVITY_SERVICE);
                 NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+                boolean isNet = false;
                 if (networkInfo != null && networkInfo.isAvailable()) {
                     int type2 = networkInfo.getType();
 
                     switch (type2) {
                         case 0://移动 网络    2G 3G 4G 都是一样的 实测 mix2s 联通卡
                             Toast.makeText(context, "当前使用移动网络,注意流量哦", Toast.LENGTH_SHORT).show();
+                            isNet = true;
                             break;
                         case 1: //wifi网络
                             //Toast.makeText(context, "当前使用WIFI网络", Toast.LENGTH_SHORT).show();
+                            isNet = true;
                             break;
                         case 9:  //网线连接
                             Toast.makeText(context, "网线连接", Toast.LENGTH_SHORT).show();
+                            isNet = true;
                             break;
                     }
 
                 } else {// 无网络
                     Toast.makeText(context, "无网络", Toast.LENGTH_SHORT).show();
+                    isNet = false;
                 }
+
+                if (netCallBack!=null){
+                    netCallBack.changeNet(isNet);
+                }
+
             }
         }
     }

@@ -9,7 +9,7 @@
     android:paddingHorizontal="@dimen/dp_5"
     android:paddingVertical="@dimen/dp_5"
     android:background="@drawable/shape_white"
-    tools:context=".activity.MainActivity">
+    tools:context=".comment.activity.MainActivity">
 
     <TextView
         android:id="@+id/tv_title"

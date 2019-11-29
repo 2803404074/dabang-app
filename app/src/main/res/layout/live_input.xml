@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_45"
+    android:focusable="true"
+    android:id="@+id/llBottom"
+    android:focusableInTouchMode="true"
+    android:orientation="horizontal"
+    android:background="#ecebe9"
+    android:paddingHorizontal="@dimen/dp_5">
+
+    <Switch
+        android:id="@+id/switch_mirror"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:text="弹(免费)"
+        android:textSize="@dimen/sp_16"
+        android:textColor="@color/colorDb5"
+        android:layout_gravity="center"/>
+    <View
+        android:layout_width="1px"
+        android:layout_marginLeft="@dimen/dp_5"
+        android:layout_height="match_parent"
+        android:layout_marginVertical="@dimen/dp_8"
+        android:background="@color/colorDb5"/>
+
+    <EditText
+        android:id="@+id/et_content_chart"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="@dimen/dp_5"
+        android:layout_marginVertical="@dimen/dp_5"
+        android:layout_weight="1"
+        android:background="@null"
+        android:hint="说点什么"
+        android:textSize="@dimen/sp_18" />
+
+    <TextView
+        android:id="@+id/btn_send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="@dimen/dp_8"
+        android:text="发送"
+        android:textColor="@color/colorDb5"
+        android:textSize="@dimen/sp_18" />
+</LinearLayout>

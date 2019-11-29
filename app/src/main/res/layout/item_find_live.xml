@@ -3,7 +3,6 @@
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:id="@+id/rlContent"
-    android:paddingHorizontal="@dimen/dp_2"
     android:layout_height="@dimen/dp_250">
 
     <com.facebook.drawee.view.SimpleDraweeView
@@ -21,6 +20,7 @@
 
     <TextView
         android:id="@+id/tvTag"
+        android:drawableLeft="@mipmap/dian"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dp_5"

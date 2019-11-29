@@ -1,7 +1,6 @@
 package com.dabangvr.im;
 
 import android.content.Context;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -9,8 +8,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -21,7 +18,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dabangvr.R;
-import com.dabangvr.adapter.BaseRecyclerHolder;
+import com.dabangvr.comment.adapter.BaseRecyclerHolder;
+import com.dabangvr.util.MyAnimatorUtil;
 import com.dbvr.baselibrary.model.UserMess;
 import com.dbvr.baselibrary.utils.SPUtils;
 import com.dbvr.baselibrary.utils.ScreenUtils;

@@ -6,21 +6,18 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.dabangvr.activity.LoginActivity;
-import com.dabangvr.activity.MainActivity;
-import com.dabangvr.activity.WellComePageActivity;
-import com.dabangvr.application.MyApplication;
-import com.dbvr.baselibrary.model.UserMess;
+import com.dabangvr.comment.activity.LoginActivity;
+import com.dabangvr.comment.activity.MainActivity;
+import com.dabangvr.comment.activity.WellComePageActivity;
+import com.dabangvr.comment.application.MyApplication;
 import com.dbvr.baselibrary.utils.SPUtils;
 import com.dbvr.baselibrary.utils.StringUtils;
 import com.dbvr.baselibrary.utils.ToastUtil;
 import com.dbvr.baselibrary.view.AppManager;
-import com.dbvr.httplibrart.constans.DyUrl;
 import com.dbvr.httplibrart.constans.UserUrl;
 import com.dbvr.httplibrart.utils.ObjectCallback;
 import com.dbvr.httplibrart.utils.OkHttp3Utils;
 import com.dbvr.httplibrart.utils.OtherCallback;
-import com.google.gson.Gson;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
@@ -31,10 +28,7 @@ import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.HashMap;
-
-import okhttp3.Call;
 
 public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
     private IWXAPI mWeixinAPI;

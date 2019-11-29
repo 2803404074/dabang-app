@@ -9,7 +9,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.dabangvr.R;
-import com.dabangvr.application.MyApplication;
+import com.dabangvr.comment.application.MyApplication;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.orzangleli.xdanmuku.XAdapter;
 import java.util.Random;
 
@@ -36,7 +37,7 @@ public class DanmuAdapter extends XAdapter<DanmuEntity> {
             convertView = LayoutInflater.from(context).inflate(R.layout.item_danmu, null);
             holder = new ViewHolder();
             holder.content = (TextView) convertView.findViewById(R.id.content);
-            holder.image = (ImageView) convertView.findViewById(R.id.image);
+            holder.image =  convertView.findViewById(R.id.image);
             holder.tvName = (TextView) convertView.findViewById(R.id.tv_usernickname);
             convertView.setTag(holder);
 
@@ -45,7 +46,7 @@ public class DanmuAdapter extends XAdapter<DanmuEntity> {
         }
 
 //        holder.image.setImageURI(danmuEntity.getPortrait());
-        Glide.with(MyApplication.getInstance()).load(danmuEntity.getPortrait()).into(holder.image);
+        holder.image.setImageURI(danmuEntity.getPortrait());
         holder.content.setText(danmuEntity.getContent());
         // holder.content.setTextColor(Color.rgb(random.nextInt(256), random.nextInt(256), random.nextInt(256)));
         holder.tvName.setText(danmuEntity.getName());
@@ -73,7 +74,7 @@ public class DanmuAdapter extends XAdapter<DanmuEntity> {
     class ViewHolder {
         public TextView content;
         public TextView tvName;
-        public ImageView image;
+        public SimpleDraweeView image;
     }
 
 

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/shape_style_db_green"
-    tools:context=".activity.HtmlActivity">
+    tools:context=".comment.activity.HtmlActivity">
 
     <View
         android:layout_width="match_parent"

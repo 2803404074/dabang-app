@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    xmlns:roundiv="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_90"
+    android:orientation="horizontal"
+    android:layout_gravity="right"
+    android:gravity="center"
+    android:id="@+id/llGoodsView"
+    android:paddingVertical="@dimen/dp_5"
+
+    android:paddingHorizontal="@dimen/dp_5">
+
+
+    <com.dbvr.baselibrary.ui.MyImageView
+        android:id="@+id/ivContent"
+        android:layout_width="@dimen/dp_85"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:scaleType="centerCrop"
+        roundiv:radius="@dimen/dp_8" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/dp_5"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tvContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_14"
+            android:lines="1"
+            android:text="超级无敌大闸蟹超级无敌大闸蟹超级无敌大闸蟹"
+            android:textColor="@color/textTitle"
+            android:ellipsize="end"/>
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_13"
+            android:lines="2"
+            android:ellipsize="end"
+            android:layout_marginTop="@dimen/dp_2"
+            android:text="防城港专卖店-本店买一送一，买海鲜送牙签o !!!"/>
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/sp_15"
+                android:textColor="@color/colorAccentButton"
+                android:text="¥"/>
+            <TextView
+                android:id="@+id/tvPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/sp_15"
+                android:textColor="@color/colorAccentButton"
+                android:text="199"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1px"
+                android:layout_weight="1"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="去购买"
+                android:textSize="@dimen/sp_12"
+                android:textColor="@color/colorDb5"
+                android:paddingHorizontal="@dimen/dp_10"
+                android:paddingVertical="@dimen/dp_3"
+                android:background="@drawable/shape_db_stroke"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:paddingBottom="@dimen/dp_70"
     android:background="@color/white"
-    tools:context=".activity.UserHomeActivity">
+    tools:context=".user.activity.UserHomeActivity">
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">

@@ -46,7 +46,7 @@
         android:required="false" />
 
     <application
-        android:name=".application.MyApplication"
+        android:name=".comment.application.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/application"
         android:label="@string/app_name"
@@ -55,33 +55,30 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:icon">
-        <activity android:name=".activity.MusicActivity" />
-        <activity android:name=".shopping.activity.GoodsActivity" />
-        <activity android:name=".activity.FollowActivity" />
-        <activity android:name=".activity.RechargeDetailedActivity" />
-        <activity android:name=".activity.StrategyActivity" />
-        <activity android:name=".activity.HtmlActivity" />
-        <activity android:name=".activity.ZhibTypeActivity" />
-        <activity android:name=".activity.CommentListActivity" />
-        <activity android:name=".activity.MyDropActivity" />
-        <activity android:name=".activity.DynamicDetailsActivity" />
-        <activity android:name=".activity.PhoneBindActivity" />
-        <activity android:name=".activity.PhoneSetActivity" />
-        <activity android:name=".activity.IntroduceActivity" />
-        <activity android:name=".activity.UserEditMessActivity" />
-        <activity android:name=".activity.UserHomeActivity" />
-        <activity android:name=".activity.FansActivity" />
-        <activity android:name=".activity.LocationActivity" />
-        <activity android:name=".activity.CreateDynamicActivity" />
-        <activity android:name=".activity.GetDzActivity" />
-        <activity android:name=".activity.SearchActivity" />
+        <activity android:name=".play.activity.verticle.PlayActivityCoPy"></activity>
+        <activity android:name=".live.activity.GeGoActivity" />
+        <activity android:name=".live.zeg.TestActivity" />
+        <activity android:name=".mall.activity.GoodsActivity" />
+        <activity android:name=".user.activity.FollowActivity" />
+        <activity android:name=".comment.activity.RechargeDetailedActivity" />
+        <activity android:name=".comment.activity.StrategyActivity" />
+        <activity android:name=".comment.activity.HtmlActivity" />
+        <activity android:name=".user.activity.UserDropActivity" />
+        <activity android:name=".user.activity.PhoneBindActivity" />
+        <activity android:name=".user.activity.PhoneSetActivity" />
+        <activity android:name=".user.activity.UserIntroduceActivity" />
+        <activity android:name=".user.activity.UserEditMessActivity" />
+        <activity android:name=".user.activity.UserHomeActivity" />
+        <activity android:name=".user.activity.FansActivity" />
+        <activity android:name=".comment.activity.LocationActivity" />
+        <activity android:name=".home.activity.SearchActivity" />
 
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
 
         <activity
-            android:name=".activity.WellcomActivity"
+            android:name=".comment.activity.WellcomActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/LaunchThem">
             <intent-filter>
@@ -90,38 +87,31 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.LoginActivity" />
-        <activity android:name=".play.activity.PlayActivity" /> <!-- 测试用的 -->
+        <activity android:name=".comment.activity.LoginActivity" />
+        <!-- 测试用的 -->
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".comment.activity.MainActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" />
-        <activity android:name=".activity.WellComePageActivity" />
+        <activity android:name=".comment.activity.WellComePageActivity" />
         <activity android:name=".live.activity.LiveFinishActivity" />
-        <activity
-            android:name=".live.activity.LiveActivity"
-            android:configChanges="orientation|screenSize"
-            android:screenOrientation="portrait" />
-        <activity android:name=".live.activity.CreateLiveActivity" />
-        <activity android:name=".activity.MessageActivity" />
+        <activity android:name=".im.MessageActivity" />
         <activity android:name=".im.ChatActivity" />
         <activity android:name="com.dbvr.imglibrary2.ui.SelectImageActivity" />
         <activity android:name="com.dbvr.imglibrary2.ui.PreviewImageActivity" />
-        <activity android:name=".fragment.other.Order.MyOrtherActivity" />
-        <activity android:name=".fragment.other.Order.MyYhjRecordActivity" />
-        <activity android:name=".fragment.other.Order.MyYhjActivity" />
-        <activity android:name=".fragment.other.Order.MyShoppingCartActivity" />
-        <activity android:name=".fragment.other.Order.ProblemActivity" />
-        <activity android:name=".fragment.other.Order.UserSettingActivity" />
-        <activity android:name=".fragment.other.Order.UserMessActivity" />
-        <activity android:name=".fragment.other.Order.UserSJRZOneActivity" />
-        <activity android:name=".fragment.other.Order.UserSJRZTwoActivity" />
-        <activity android:name=".fragment.other.Order.UserAgreeActivity" />
-        <activity android:name=".fragment.other.Order.UserSJRZThreeActivity" />
-        <activity android:name=".fragment.other.Order.UserZBSQOneActivity" />
-        <activity android:name=".fragment.other.Order.UserZBSQTwoActivity" />
-        <activity android:name=".fragment.other.Order.UserApplySuccessActivity" />
-        <activity android:name=".fragment.other.Order.UserAboutActivity" />
-        <activity android:name=".activity.AddressActivity" />
+        <activity android:name=".mall.activity.OrderActivity" />
+        <activity android:name=".mall.activity.CartActivity" />
+        <activity android:name=".user.activity.UserProblemActivity" />
+        <activity android:name=".user.activity.UserSettingActivity" />
+        <activity android:name=".user.activity.UserMessActivity" />
+        <activity android:name=".user.activity.UserSJRZOneActivity" />
+        <activity android:name=".user.activity.UserSJRZTwoActivity" />
+        <activity android:name=".user.activity.UserAgreeActivity" />
+        <activity android:name=".user.activity.UserSJRZThreeActivity" />
+        <activity android:name=".user.activity.UserZBSQOneActivity" />
+        <activity android:name=".user.activity.UserZBSQTwoActivity" />
+        <activity android:name=".user.activity.UserApplySuccessActivity" />
+        <activity android:name=".user.activity.UserAboutActivity" />
+        <activity android:name=".user.activity.UserAddressActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

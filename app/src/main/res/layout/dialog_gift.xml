@@ -6,13 +6,18 @@
     android:background="@color/white"
     android:layout_height="wrap_content">
 
+
    <LinearLayout
+       android:id="@+id/llSize"
+       android:focusable="true"
+       android:focusableInTouchMode="true"
+       android:paddingHorizontal="@dimen/dp_5"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
        android:orientation="horizontal">
       <ImageView
-          android:layout_width="@dimen/dp_40"
-          android:layout_height="@dimen/dp_40"
+          android:layout_width="@dimen/dp_35"
+          android:layout_height="@dimen/dp_35"
           android:src="@mipmap/tiaob"/>
       <TextView
           android:layout_width="wrap_content"
@@ -25,70 +30,75 @@
           android:id="@+id/tvTiaoB"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:textColor="@color/textTitle"
+          android:textColor="@color/colorOrag"
           android:textSize="@dimen/sp_16"
           android:layout_gravity="center"
           android:text="20"/>
+      <View
+          android:layout_width="0dp"
+          android:layout_height="1px"
+          android:layout_weight="1"/>
+      <View
+          android:layout_width="1px"
+          android:layout_height="match_parent"
+          android:background="@color/colorOrag"
+          android:layout_marginVertical="@dimen/dp_5"
+          android:layout_marginRight="@dimen/dp_5"/>
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:gravity="center"
+          android:textSize="@dimen/sp_15"
+          android:text="数量:"/>
+      <EditText
+          android:id="@+id/etNum"
+          android:inputType="number"
+          android:layout_width="@dimen/dp_50"
+          android:layout_height="match_parent"
+          android:gravity="center"
+          android:background="@null"
+          android:text="1" />
+      <View
+          android:layout_width="1px"
+          android:layout_height="match_parent"
+          android:background="@color/colorOrag"
+          android:layout_marginVertical="@dimen/dp_5"
+          android:layout_marginRight="@dimen/dp_5"/>
 
       <TextView
-          android:id="@+id/tvGoCz"
+          android:id="@+id/tvTipsT"
+          android:visibility="gone"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="去充值"
-          android:layout_marginLeft="@dimen/dp_10"
+          android:text="跳币不足"
+          android:layout_marginRight="@dimen/dp_5"
           android:layout_gravity="center"
-          android:textSize="@dimen/sp_16"
-          android:textColor="@color/colorDb5" />
-      <ImageView
-          android:layout_width="@dimen/dp_25"
-          android:layout_height="@dimen/dp_25"
-          android:src="@mipmap/sanjiao_db"
-          android:layout_gravity="center"
-          android:rotation="90"/>
-   </LinearLayout>
-
-   <View
-       android:layout_width="match_parent"
-       android:layout_height="1px"
-       android:background="@color/colorOrag"/>
-   <LinearLayout
-       android:layout_width="match_parent"
-       android:layout_height="@dimen/dp_100"
-       android:orientation="horizontal">
-      <ImageView
-          android:layout_width="0dp"
-          android:layout_height="match_parent"
-          android:layout_weight="1"
-          android:scaleType="centerCrop"
-          android:src="@mipmap/test18"/>
-   </LinearLayout>
-   <androidx.recyclerview.widget.RecyclerView
-       android:id="@+id/recycler_head"
-       android:layout_width="match_parent"
-       android:layout_gravity="center"
-       android:layout_height="wrap_content"/>
-
-   <LinearLayout
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:gravity="right"
-       android:orientation="horizontal">
-      <EditText
-          android:id="@+id/etNumber"
-          android:layout_width="@dimen/dp_40"
-          android:gravity="center"
-          android:inputType="number"
-          android:layout_height="wrap_content"
-          android:text="9"/>
+          android:textColor="@color/colorAccent"/>
       <TextView
           android:id="@+id/tvSend"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="发送"
+          android:text="打赏"
+          android:layout_gravity="center"
           android:textColor="@android:color/white"
           android:textSize="@dimen/sp_18"
           android:background="@drawable/shape_style_green_blue"
           android:paddingHorizontal="@dimen/dp_10"
           android:paddingVertical="@dimen/dp_2"/>
    </LinearLayout>
+
+
+   <View
+       android:layout_width="match_parent"
+       android:layout_height="1px"
+       android:background="@color/colorOrag"/>
+
+   <androidx.recyclerview.widget.RecyclerView
+       android:id="@+id/recycler_head"
+       android:layout_width="match_parent"
+       android:layout_gravity="center"
+       android:layout_height="wrap_content"/>
+
+
+
 </LinearLayout>

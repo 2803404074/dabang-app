@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    xmlns:roundiv="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/dp_5"
+    android:background="@drawable/shape_w_stroke"
+    android:orientation="vertical">
+
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/sdvHead"
+        android:layout_width="@dimen/dp_30"
+        android:layout_height="@dimen/dp_30"
+        android:layout_gravity="center"
+        fresco:roundAsCircle="true" />
+    <TextView
+        android:id="@+id/tvDepName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginVertical="@dimen/dp_3"
+        android:textColor="@color/textTitle"
+        android:text="海跳跳"/>
+    <TextView
+        android:id="@+id/tvYj"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="佣金比例20%"
+        android:textColor="@color/colorDb5"
+        android:layout_gravity="center"/>
+
+
+
+</LinearLayout>

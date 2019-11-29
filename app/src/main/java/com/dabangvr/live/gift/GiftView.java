@@ -48,7 +48,7 @@ public class GiftView extends LinearLayout {
     }
 
     public void addGift(LiveComment model) {
-        gifManager1.addGift(model);
+        //gifManager1.addGift(model);
     }
 
 }

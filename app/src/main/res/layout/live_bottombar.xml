@@ -11,8 +11,36 @@
         android:paddingLeft="2dp"
         android:paddingRight="2dp">
 
+        <RelativeLayout
+            android:id="@+id/rlGood"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/ivGoods"
+                android:layout_width="@dimen/dp_30"
+                android:layout_height="@dimen/dp_30"
+                android:src="@mipmap/goods" />
+
+            <TextView
+                android:id="@+id/tvGoodsNum"
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_20"
+                android:text="5"
+                android:textSize="@dimen/sp_15"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:background="@drawable/shape_round_bg"
+                android:textColor="@color/colorWhite"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"/>
+        </RelativeLayout>
+
+
         <LinearLayout
             android:id="@+id/llComment"
+            android:layout_toRightOf="@+id/rlGood"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -44,40 +72,50 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            <ImageView
-                android:id="@+id/btn_barrage"
-                android:layout_width="@dimen/dp_30"
-                android:layout_height="@dimen/dp_30"
-                android:layout_toLeftOf="@id/btn_gift"
-                android:src="@mipmap/chat_danmu" />
-
 
             <ImageView
                 android:id="@+id/ivGift"
-                android:layout_width="@dimen/dp_30"
-                android:layout_height="@dimen/dp_30"
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40"
+                android:layout_gravity="center"
+                android:padding="@dimen/dp_5"
                 android:layout_marginHorizontal="@dimen/dp_5"
                 android:src="@mipmap/gift" />
 
             <ImageView
-                android:id="@+id/btn_gift"
-                android:layout_width="@dimen/dp_30"
-                android:layout_height="@dimen/dp_30"
+                android:id="@+id/ivShare"
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40"
+                android:layout_gravity="center"
+                android:padding="@dimen/dp_5"
                 android:layout_marginRight="10dp"
-                android:src="@mipmap/goods" />
+                android:src="@mipmap/share" />
 
+            <RelativeLayout
+                android:layout_width="@dimen/dp_45"
+                android:layout_height="@dimen/dp_45">
 
-            <ImageView
-                android:layout_width="@dimen/dp_30"
-                android:layout_height="@dimen/dp_30"
-                android:layout_marginRight="10dp"
-                android:src="@mipmap/wechat_frends" />
+                <ImageView
+                    android:id="@+id/ivLove"
+                    android:padding="@dimen/dp_5"
+                    android:layout_width="@dimen/dp_35"
+                    android:layout_height="@dimen/dp_35"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    android:src="@mipmap/live_heart" />
+                <TextView
+                    android:id="@+id/tvDzNum"
+                    android:textColor="@color/colorWhite"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/dp_2"
+                    android:background="@drawable/shape_round_red"
+                    android:text="12"/>
 
-            <ImageView
-                android:id="@+id/ivLove"
-                android:layout_width="@dimen/dp_30"
-                android:layout_height="@dimen/dp_30"
-                android:src="@mipmap/live_heart" />
+            </RelativeLayout>
+
         </LinearLayout>
 
     </RelativeLayout>
