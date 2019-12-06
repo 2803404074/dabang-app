@@ -46,48 +46,31 @@
             android:textSize="@dimen/sp_25"/>
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/dp_5"
-            android:layout_marginTop="@dimen/dp_10"
-            android:layout_marginLeft="@dimen/dp_20"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/sp_15"
-                android:textColor="@color/white"
-                android:layout_gravity="center"
-                android:text="选择店铺"/>
-            <TextView
-                android:id="@+id/tvDepShow"
-                android:visibility="gone"
-                android:textColor="@color/colorAccentButton"
-                android:layout_width="wrap_content"
-                android:layout_gravity="center"
-                android:textSize="@dimen/sp_14"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/dp_5"
-                android:text="您还未关联任何店铺"/>
-
-            <ImageView
-                android:visibility="gone"
-                android:id="@+id/ivDepShow"
-                android:layout_width="@dimen/dp_25"
-                android:layout_height="@dimen/dp_25"
-                android:src="@mipmap/sanjiao_db"
-                android:layout_gravity="center"
-                android:rotation="90"/>
-
-        </LinearLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerDep"
-            android:layout_marginHorizontal="@dimen/dp_20"
-            android:padding="@dimen/dp_5"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dp_20"
+            android:paddingHorizontal="@dimen/dp_5"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_20"
+                android:layout_gravity="center"
+                android:src="@mipmap/location_w"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="广西防城港东兴市新华路"
+                android:textSize="@dimen/sp_15"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/dp_5"
+                android:textColor="@color/white"/>
 
+            <Switch
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_5"
+                android:checked="true"/>
+        </LinearLayout>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.mob.sdk'
-
+apply plugin: 'walle'
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -23,7 +23,7 @@ android {
         config {
             keyAlias 'key0'
             keyPassword '1008611'
-            storeFile file('G:/dabang/dbproject-key/db-key.jks')
+            storeFile file('F:/android-key/db-key.jks')
             storePassword '1008611'
         }
     }
@@ -43,6 +43,8 @@ android {
             shrinkResources true //去掉无用的resourse文件
             zipAlignEnabled true //压缩
             multiDexEnabled true
+
+            signingConfig signingConfigs.config
         }
 
         debug {
@@ -88,6 +90,14 @@ MobSDK {
     }
 }
 
+walle {
+    apkOutputFolder = new File("${project.buildDir}/outputs/channels")
+    apkFileNameFormat = '${appName}-${packageName}-${channel}-${buildType}-v${versionName}-${versionCode}-${buildTime}-${flavorName}.apk'
+    //configFile与channelFile两者必须存在一个，否则无法生成渠道包。两者都存在时优先执行configFile
+    channelFile = new File("${project.getProjectDir()}/channel")
+    //configFile = new File("${project.getProjectDir()}/config.json")
+}
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation(name: 'LiteAVSDK_UGC', ext: 'aar')
@@ -107,7 +117,6 @@ dependencies {
     implementation project(path: ':svgalibrary')
     implementation project(path: ':player')
     implementation project(path: ':videorecorder')
-    implementation project(path: ':addressselection')
     //刷新
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.5.1'
 
@@ -121,5 +130,8 @@ dependencies {
 
     implementation 'com.github.castorflex.verticalviewpager:library:19.0.1'
     implementation 'io.reactivex:rxandroid:1.2.1'
+
+    //多渠道打包
+    implementation 'com.meituan.android.walle:library:1.1.6'
 
 }

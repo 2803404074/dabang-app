@@ -84,7 +84,6 @@ public class UserAboutActivity extends BaseActivity {
     @Override
     public void initData() {
 
-        tv_content.setText("fe fef efe fe fef ef ef efe fe wf wefewofwepkfwef wef fewofwef ");
     }
 
     @OnClick({R.id.ivBack, R.id.ll_version_update})

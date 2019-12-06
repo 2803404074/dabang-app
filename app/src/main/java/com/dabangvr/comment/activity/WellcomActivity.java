@@ -7,12 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.widget.TextView;
 
-import butterknife.BindView;
-
-import com.addressselection.bean.AdressBean_two;
-import com.addressselection.manager.AddressDictManager;
 import com.dabangvr.R;
-import com.dabangvr.comment.application.MyApplication;
 import com.dabangvr.util.MyAnimatorUtil;
 import com.dbvr.baselibrary.model.UserMess;
 import com.dbvr.baselibrary.utils.SPUtils;
@@ -25,13 +20,7 @@ import com.dbvr.httplibrart.constans.DyUrl;
 import com.dbvr.httplibrart.utils.ObjectCallback;
 import com.dbvr.httplibrart.utils.OkHttp3Utils;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import org.json.JSONException;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import butterknife.BindView;
 
 public class WellcomActivity extends BaseActivity {
     private TextView text_version;
@@ -78,13 +67,11 @@ public class WellcomActivity extends BaseActivity {
 
     @Override
     public void initData() {
-
         if (StringUtils.isEmpty( SPUtils.instance(this).getToken())){
             goTActivity(LoginActivity.class);//未登陆
         } else {
             getUserInfo();//已经登录，获取用户最新信息
         }
-        getInitializationData();
     }
 
     private void getUserInfo() {
@@ -104,7 +91,7 @@ public class WellcomActivity extends BaseActivity {
                     }else {
                         SPUtils.instance(getContext()).put("token", userMess.getToken());
                         SPUtils.instance(getContext()).putUser(userMess);
-                        goTActivity(MainActivity.class);
+                        goTActivity(CownTimerActivity.class);
                     }
                 }catch (Exception e){
                     ToastUtil.showShort(getContext(),"信息已过期，请重新登录");
@@ -150,60 +137,4 @@ public class WellcomActivity extends BaseActivity {
         animatorUtil01 = null;
         animatorUtil02 = null;
     }
-
-    private void getInitializationData() {
-        getChannelMenu();
-        getAddressIfno();
-    }
-
-
-    private void getChannelMenu() {
-        Map<String, Object> map = new HashMap<>();
-        map.put("mallSpeciesId", 8);
-        //获取标签
-        OkHttp3Utils.getInstance(MyApplication.getInstance()).doPostJson(DyUrl.getChannelMenuList, map, new ObjectCallback<String>(MyApplication.getInstance()) {
-            @Override
-            public void onUi(String result) throws JSONException {
-
-                SPUtils.instance(WellcomActivity.this).put("getChannelMenuList", result);
-            }
-
-            @Override
-            public void onFailed(String msg) {
-
-            }
-        });
-    }
-
-    private void getAddressIfno() {
-        Map<String, Object> map = new HashMap<>();
-        map.put("mallSpeciesId", 8);
-        //获取标签
-        OkHttp3Utils.getInstance(MyApplication.getInstance()).doPostJson(DyUrl.getAmapDistrict, map, new ObjectCallback<String>(MyApplication.getInstance()) {
-            @Override
-            public void onUi(String result) {
-                String rep = "\"citycode\":[]";
-                String repe = "\"citycode\":\"0\"";
-                String replace = result.replace(rep, repe);
-                List<AdressBean_two> list = new Gson().fromJson(replace, new TypeToken<List<AdressBean_two>>() {
-                }.getType());
-
-                new Thread(() -> {
-                    inidSql(list);
-                }).start();
-            }
-
-            @Override
-            public void onFailed(String msg) {
-
-            }
-        });
-    }
-
-    private void inidSql(List<AdressBean_two> list) {
-        if (list != null && list.size() > 0) {
-            new AddressDictManager(this, true, list);
-        }
-    }
-
 }

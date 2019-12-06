@@ -1,24 +1,30 @@
 package com.dabangvr.user.activity;
 
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.addressselection.bean.City;
-import com.addressselection.bean.County;
-import com.addressselection.bean.Province;
-import com.addressselection.bean.Street;
-import com.addressselection.widge.AddressSelector;
-import com.addressselection.widge.BottomDialog;
-import com.addressselection.widge.OnAddressSelectedListener;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.dabangvr.R;
+import com.dabangvr.comment.adapter.BaseRecyclerHolder;
+import com.dabangvr.comment.adapter.RecyclerAdapter;
+import com.dbvr.baselibrary.model.AddressMo;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
+import com.dbvr.baselibrary.utils.StringUtils;
 import com.dbvr.baselibrary.view.AppManager;
 import com.dbvr.baselibrary.view.BaseActivity;
+import com.dbvr.httplibrart.constans.DyUrl;
+import com.dbvr.httplibrart.utils.ObjectCallback;
+import com.dbvr.httplibrart.utils.OkHttp3Utils;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -26,16 +32,15 @@ import butterknife.OnClick;
 /**
  * 用户编辑信息
  */
-public class UserAddressActivity extends BaseActivity implements OnAddressSelectedListener, AddressSelector.OnDialogCloseListener, AddressSelector.onSelectorAreaPositionListener {
+public class UserAddressActivity extends BaseActivity{
 
-    @BindView(R.id.content)
-    LinearLayout content;
-    @BindView(R.id.tv_selector_area)
-    TextView tv_selector_area;
-    private AddressSelector selector;
-    private BottomDialog dialog;
-    public static final String EXTRA_RESULT = "EXTRA_RESULT";
-    private String addressStr;
+    @BindView(R.id.recy_address)
+    RecyclerView recyclerView;
+
+    private RecyclerAdapter adapter;
+
+    private List<AddressMo> mData = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,93 +56,57 @@ public class UserAddressActivity extends BaseActivity implements OnAddressSelect
 
     @Override
     public void initView() {
-        selector = new AddressSelector(this);
-        selector.setOnAddressSelectedListener(new OnAddressSelectedListener() {
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new RecyclerAdapter<AddressMo>(getContext(),mData,R.layout.item_address) {
             @Override
-            public void onAddressSelected(Province province, City city, County county, Street street) {
-//                Log.d("luhuas", "selector省份id=" + province.name);
-//                Log.d("luhuas", "selector城市id=" + city.name);
-//                Log.d("luhuas", "selector乡镇id=" + county.name);
+            public void convert(Context mContext, BaseRecyclerHolder holder, AddressMo o) {
+                holder.getView(R.id.tvEdit).setOnClickListener(view -> {
+                    goTActivity(UserSetAddressActivity.class,null);
+                });
+                if (o.getIsDefault() == 1){
+                    holder.getView(R.id.tvDefault).setVisibility(View.VISIBLE);
+                }else {
+                    holder.getView(R.id.tvDefault).setVisibility(View.GONE);
+                }
+                holder.setText(R.id.tvName, StringUtils.isEmptyTxt(o.getConsigneeName()));
+                holder.setText(R.id.tvPhone,StringUtils.isEmptyTxt(o.getConsigneePhone()));
+                holder.setText(R.id.tvAddress,StringUtils.isEmptyTxt(o.getAddress()));
 
-                addressStr = (province == null ? "" : province.name) + (city == null ? "" : city.name) + (county == null ? "" : county.name) +
-                        (street == null ? "" : street.name);
-                tv_selector_area.setText(addressStr);
-                resultActivity();
+
             }
-        });
-        View view = selector.getView();
-        content.addView(view);
+        };
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
     public void initData() {
+        OkHttp3Utils.getInstance(getContext()).doPostJson(DyUrl.getAddressList, null, new ObjectCallback<String>(getContext()) {
+            @Override
+            public void onUi(String result) {
+                List<AddressMo> list = new Gson().fromJson(result, new TypeToken<List<AddressMo>>() {}.getType());
+                if (list!=null && list.size()>0){
+                    mData = list;
+                    adapter.updateDataa(mData);
+                }
+            }
 
+            @Override
+            public void onFailed(String msg) {
+
+            }
+        });
     }
 
-    @OnClick({R.id.ivBack,R.id.tv_selector_area})
+    @OnClick({R.id.ivBack,R.id.tvAddAdd})
     public void onclick(View view) {
         switch (view.getId()) {
             case R.id.ivBack:
                 AppManager.getAppManager().finishActivity(this);
                 break;
-            case R.id.tv_selector_area:
-
-//                if (dialog != null) {
-//                    dialog.show();
-//                } else {
-//                    dialog = new BottomDialog(this);
-//                    dialog.setOnAddressSelectedListener(this);
-//                    dialog.setDialogDismisListener(this);
-//                    dialog.setTextSize(14);//设置字体的大小
-//                    dialog.setIndicatorBackgroundColor(android.R.color.holo_orange_light);//设置指示器的颜色
-//                    dialog.setTextSelectedColor(android.R.color.holo_orange_light);//设置字体获得焦点的颜色
-//                    dialog.setTextUnSelectedColor(android.R.color.holo_blue_light);//设置字体没有获得焦点的颜色
-////            dialog.setDisplaySelectorArea("31",1,"2704",1,"2711",0,"15582",1);//设置已选中的地区
-//                    dialog.setSelectorAreaPositionListener(this);
-//                    dialog.show();
-//                }
-
+            case R.id.tvAddAdd:
+                goTActivity(UserSetAddressActivity.class,null);
                 break;
 
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-    }
-
-    private void resultActivity(){
-        Intent intent = new Intent();
-        if (TextUtils.isEmpty(addressStr)){
-            return;
-        }
-        intent.putExtra("address", addressStr);
-        setResult(RESULT_OK, intent);
-    }
-
-
-    @Override
-    public void onAddressSelected(Province province, City city, County county, Street street) {
-
-        String s = (province == null ? "" : province.name) + (city == null ? "" : city.name) + (county == null ? "" : county.name) +
-                (street == null ? "" : street.name);
-        tv_selector_area.setText(s);
-
-
-    }
-
-    @Override
-    public void dialogclose() {
-        if(dialog!=null){
-            dialog.dismiss();
-        }
-    }
-
-    @Override
-    public void selectorAreaPosition(int provincePosition, int cityPosition, int countyPosition, int streetPosition) {
-
-
     }
 }

@@ -224,7 +224,7 @@
                         android:layout_width="@dimen/dp_70"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="所在地"
+                        android:text="收获地址"
                         android:textSize="@dimen/sp_16" />
 
                     <TextView

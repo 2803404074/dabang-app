@@ -9,9 +9,10 @@ buildscript {
 
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.2'
+        classpath 'com.android.tools.build:gradle:3.5.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.mob.sdk:MobSDK:+'
+        classpath 'com.meituan.android.walle:plugin:1.1.6'
         // NOTE: Do not place your applicationz dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -24,11 +25,9 @@ allprojects {
         flatDir {
             dirs '../videorecorder/libs','libs'
         }
-        maven {
-            url 'https://maven.google.com/'
-            name 'Google'
-        }
+
         maven { url 'https://jitpack.io' }
+        google()
     }
 }
 ext {

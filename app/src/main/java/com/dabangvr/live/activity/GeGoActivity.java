@@ -10,9 +10,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.TextureView;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.Chronometer;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -31,7 +29,6 @@ import com.dabangvr.live.gift.GiftViewBackup;
 import com.dabangvr.live.gift.danmu.DanmuAdapter;
 import com.dabangvr.live.gift.danmu.DanmuEntity;
 import com.dabangvr.play.activity.verticle.LiveInterFace;
-import com.dabangvr.play.model.LiveData;
 import com.dabangvr.util.OpenCameUtil;
 import com.dbvr.baselibrary.model.DepMo;
 import com.dbvr.baselibrary.model.MainMo;
@@ -39,7 +36,6 @@ import com.dbvr.baselibrary.model.QiniuUploadFile;
 import com.dbvr.baselibrary.model.TagMo;
 import com.dbvr.baselibrary.ui.MyImageView;
 import com.dbvr.baselibrary.utils.BottomDialogUtil2;
-import com.dbvr.baselibrary.utils.Conver;
 import com.dbvr.baselibrary.utils.DataUtil;
 import com.dbvr.baselibrary.utils.DialogUtil;
 import com.dbvr.baselibrary.utils.OnUploadListener;
@@ -92,10 +88,6 @@ import static com.dabangvr.util.OpenCameUtil.REQ_1;
 import static com.dabangvr.util.OpenCameUtil.REQ_2;
 import static com.dabangvr.util.OpenCameUtil.REQ_4;
 import static com.dabangvr.util.OpenCameUtil.imageUri;
-import static com.zego.zegoliveroom.constants.ZegoBeauty.POLISH;
-import static com.zego.zegoliveroom.constants.ZegoBeauty.SHARPEN;
-import static com.zego.zegoliveroom.constants.ZegoBeauty.SKIN_WHITEN;
-import static com.zego.zegoliveroom.constants.ZegoBeauty.WHITEN;
 import static com.zego.zegoliveroom.constants.ZegoConstants.RoomRole.Anchor;
 
 public class GeGoActivity extends LiveBaseActivity{
@@ -111,13 +103,9 @@ public class GeGoActivity extends LiveBaseActivity{
     EditText etInput;
     @BindView(R.id.switch_my)
     Switch aSwitch;//美颜
-    @BindView(R.id.recyclerDep)
-    RecyclerView recyclerDep;
     @BindView(R.id.recyclerType)
     RecyclerView recyclerType;
-    private List<DepMo>mDepList = new ArrayList();
     private List<TagMo>mTypeList = new ArrayList();
-    private RecyclerAdapter depAdapter;
     private RecyclerAdapter typeAdapter;
 
     protected ZegoLiveRoom zegoLiveRoom;
@@ -191,41 +179,7 @@ public class GeGoActivity extends LiveBaseActivity{
         zegoLiveRoom.setPreviewViewMode(ZegoVideoViewMode.ScaleToFill);//ScaleToFill填充,ScaleAspectFill默认(可能有部分被裁减)
         zegoLiveRoom.startPreview();
 
-        //商家列表组件
-        recyclerDep.setLayoutManager(new GridLayoutManager(getContext(),3));
-        depAdapter = new RecyclerAdapter<DepMo>(getContext(),mDepList,R.layout.item_live_dep) {
-            @Override
-            public void convert(Context mContext, BaseRecyclerHolder holder, DepMo o) {
-                 SimpleDraweeView sdvHead = holder.getView(R.id.sdvHead);
-                 sdvHead.setImageURI(o.getLogo());
-                 TextView tvDepName = holder.getView(R.id.tvDepName);
-                 tvDepName.setText(o.getName());
-                 holder.setText(R.id.tvYj,"佣金比例%"+o.getProportion());
-                 if (o.isCheck()){
-                     holder.itemView.setBackgroundResource(R.drawable.shape_db_stroke);
-                     tvDepName.setTextColor(getResources().getColor(R.color.colorDb5));
-                     chekcLiveType(o.getDeptId());
-                 }else {
-                     holder.itemView.setBackgroundResource(R.drawable.shape_w_stroke);
-                     tvDepName.setTextColor(getResources().getColor(R.color.textTitle));
-                 }
-            }
-        };
-        recyclerDep.setAdapter(depAdapter);
-
-        //根据这个店铺，查看这个店铺下可直播的商品分类
-        depAdapter.setOnItemClickListener((view, position) -> {
-            for (int i = 0; i < mDepList.size(); i++) {
-                if (i == position){
-                    mDepList.get(i).setCheck(true);
-                }else {
-                    mDepList.get(i).setCheck(false);
-                }
-            }
-            depAdapter.updateDataa(mDepList);
-        });
-
-        //商家下的分类组件
+        //分类组件
         recyclerType.setLayoutManager(new GridLayoutManager(getContext(),4));
         typeAdapter = new RecyclerAdapter<TagMo>(getContext(),mTypeList,R.layout.item_txt) {
             @Override
@@ -537,16 +491,10 @@ public class GeGoActivity extends LiveBaseActivity{
         OkHttp3Utils.getInstance(getContext()).doPostJson(DyUrl.getDeptList, map, new ObjectCallback<String>(getContext()) {
             @Override
             public void onUi(String result) throws JSONException {
-                mDepList = new Gson().fromJson(result, new TypeToken<List<DepMo>>() {
+                List<DepMo> mDepList = new Gson().fromJson(result, new TypeToken<List<DepMo>>() {
                 }.getType());
                 if (mDepList!=null && mDepList.size()>0){
-                    mDepList.get(0).setCheck(true);
-                    depAdapter.updateDataa(mDepList);
-                }else {
-                    runOnUiThread(()->{
-                        findViewById(R.id.tvDepShow).setVisibility(View.VISIBLE);
-                        findViewById(R.id.ivDepShow).setVisibility(View.VISIBLE);
-                    });
+                    chekcLiveType(mDepList.get(0).getDeptId());
                 }
             }
 
@@ -992,13 +940,5 @@ public class GeGoActivity extends LiveBaseActivity{
             return true;
         }
         return super.onKeyDown(keyCode, event);
-    }
-
-
-    private void setNull(){
-        depAdapter = null;
-        typeAdapter = null;
-        mDepList = null;
-        mTypeList = null;
     }
 }

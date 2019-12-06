@@ -3,11 +3,10 @@ package com.dbvr.httplibrart.constans;
 public class DyUrl {
 
     public static final String QINIUDOMAN = "http://image.vrzbgw.com/";
-
     public static final String TOKEN_NAME = "DABANG-TOKEN";
-    //public static final String BASE = "http://www.vrzbgw.com/dabang/";
-    public static final String BASE = "http://192.168.0.112:8085/dabang/";
-    //public static final String BASE = "http://api.vrzbgw.com:8085/dabang/";//远程
+
+    //public static final String BASE = "http://192.168.0.112:8085/dabang/";
+    public static final String BASE = "http://api.vrzbgw.com:8085/dabang/";//远程
 
 
     //（开播）获取已关联的商家
@@ -24,10 +23,11 @@ public class DyUrl {
     public static final String getRoomGoodsList = "api/live/getRoomGoodsList";
 
 
-
-
     //获取用户信息
     public static final String getUserInfo = "api/getUserInfo";
+
+    //收获地址列表
+    public static final String getAddressList = "api/my/getAddressList";
 
     //首页关注的主播正在直播的列表
     public static final String indexFollowList = "api/index/indexFollowList";
@@ -87,8 +87,6 @@ public class DyUrl {
     public static String getGoods2CartList = "api/goods/getGoods2CartList";
 
     //--------------------------------------首页---------------------------------------------------
-    //发现(大头像以及大头像下面的列表)
-    public static final String indexFind = "api/index/indexFind";
 
     //根据类型查询直播列表
     public static final String getOnlineList = "api/live/getOnlineList";
@@ -96,11 +94,11 @@ public class DyUrl {
    //根据经纬度获取省市县
    public static final String getLocation = "api/config/getAmapReverse";
 
+   //获取省市县联动
+   public static final String getAmapDistrict = "/api/config/getAmapDistrict";
+
     //搜索用户
     public static final String queryUser = "api/queryUser";
     //获取某用户信息
     public static final String getUserByUserId = "api/getUserByUserId";
-
-    //获取高德省市县三级联动json
-    public static final String getAmapDistrict = "api/config/getAmapDistrict";
 }

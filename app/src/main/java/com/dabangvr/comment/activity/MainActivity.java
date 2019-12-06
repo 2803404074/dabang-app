@@ -5,12 +5,13 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.nfc.Tag;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,17 +37,11 @@ import com.dabangvr.user.activity.UserAboutActivity;
 import com.dabangvr.user.activity.UserDropActivity;
 import com.dabangvr.user.activity.UserIntroduceActivity;
 import com.dabangvr.user.activity.UserMessActivity;
-import com.dabangvr.user.activity.UserSJRZOneActivity;
 import com.dabangvr.user.activity.UserSettingActivity;
-import com.dabangvr.user.activity.UserZBSQOneActivity;
 import com.dbvr.baselibrary.adapter.ContentPagerAdapter;
-import com.dbvr.baselibrary.base.ParameterContens;
-import com.dbvr.baselibrary.model.AnchorVo;
-import com.dbvr.baselibrary.model.DepVo;
 import com.dbvr.baselibrary.model.TagMo;
 import com.dbvr.baselibrary.model.UserMess;
 import com.dbvr.baselibrary.utils.BottomDialogUtil2;
-import com.dbvr.baselibrary.utils.DialogUtil;
 import com.dbvr.baselibrary.utils.SPUtils;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
 import com.dbvr.baselibrary.utils.StringUtils;
@@ -54,13 +49,11 @@ import com.dbvr.baselibrary.utils.ToastUtil;
 import com.dbvr.baselibrary.view.AppManager;
 import com.dbvr.baselibrary.view.BaseActivity;
 import com.dbvr.httplibrart.constans.DyUrl;
-import com.dbvr.httplibrart.constans.UserUrl;
 import com.dbvr.httplibrart.utils.ObjectCallback;
 import com.dbvr.httplibrart.utils.OkHttp3Utils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.tencent.liteav.demo.videorecord.TCVideoRecordActivity;
@@ -69,9 +62,7 @@ import com.tencent.rtmp.TXLiveConstants;
 import com.tencent.ugc.TXRecordCommon;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -84,6 +75,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @BindView(R.id.drawer_layout)
     DrawerLayout drawer;
+
+    @BindView(R.id.ivFunction)
+    ImageView ivFunction;
 
     private SimpleDraweeView sdvHead;
 
@@ -114,9 +108,21 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         return R.layout.activity_main;
     }
 
+
+    protected UserMess userMess;
     @SuppressLint("WrongConstant")
     @Override
     public void initView() {
+        userMess = SPUtils.instance(this).getUser();
+        if (userMess!=null){
+            if (userMess.getIsAnchor()!=1){
+                ivFunction.setVisibility(View.GONE);
+                navigationView.getMenu().add(11,11,11,"商户入住").setIcon(R.mipmap.wifi);
+            }else {
+                ivFunction.setVisibility(View.VISIBLE);
+                navigationView.getMenu().add(22,22,22,"我的店铺").setIcon(R.mipmap.wifi);
+            }
+        }
         navigationView.setNavigationItemSelectedListener(this);
         sdvHead = navigationView.getHeaderView(0).findViewById(R.id.sdvHead_main);
         tvNickName = navigationView.getHeaderView(0).findViewById(R.id.tvNickName);
@@ -135,6 +141,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             @Override
             public void onUi(String result){
                 List<TagMo> list = new Gson().fromJson(result, new TypeToken<List<TagMo>>() {}.getType());
+                list.add(0,new TagMo("0","关注"));
+                list.add(1,new TagMo("1","附近"));
                 List<String> mTitles = new ArrayList<>();
                 if (list != null && list.size() > 0) {
                     mFragments = new ArrayList<>();
@@ -181,7 +189,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     public void initData() {
-        UserMess userMess = SPUtils.instance(this).getUser();
+
         if (null == userMess) {
             goTActivity(LoginActivity.class, null);
             AppManager.getAppManager().finishActivity(MainActivity.class);
@@ -242,144 +250,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             goTActivity(CartActivity.class, null);
         } else if (id == R.id.nav_mess) {
             goTActivity(UserMessActivity.class, null);
-        } else if (id == R.id.nav_zhub) {
-            queryAnchorState();
-        } else if (id == R.id.nav_ruz) {
-            queryAddDeptState();
-        } else if (id == R.id.nav_about) {
+        }else if (id == R.id.nav_about) {
             goTActivity(UserAboutActivity.class, null);
         } else if (id == R.id.nav_set) {
             goTActivity(UserSettingActivity.class, null);
+        }else if (id==11){
+            ToastUtil.showShort(getContext(),"入驻");
+        }else if (id == 22){
+            ToastUtil.showShort(getContext(),"我的商户");
         }
         return true;
-    }
-
-
-    private void queryAnchorState() {
-        Map<String, Object> map = new HashMap<>();
-//        map.put("phone", phone);
-        OkHttp3Utils.getInstance(getContext()).doPostJson(UserUrl.addAnchorState, map, new ObjectCallback<String>(getContext()) {
-            @Override
-            public void onUi(String result) {
-                Log.d("luhuas", "onUi: " + result);
-                try {
-                    AnchorVo anchorVo = new Gson().fromJson(result, AnchorVo.class);
-                    if (anchorVo != null) {
-                        if (anchorVo.getAuditStatus() == 0) {
-                            DialogUtil.getInstance(getContext()).show(R.layout.dialog_tip, holder -> {
-                                TextView tvTitle = holder.findViewById(R.id.tv_title);
-                                TextView tv_massage = holder.findViewById(R.id.tv_massage);
-                                String title = "审核不通过";
-                                tv_massage.setVisibility(View.VISIBLE);
-                                tv_massage.setText(anchorVo.getAuditDescribe());
-                                tvTitle.setText(title);
-                                holder.findViewById(R.id.tvCancel).setOnClickListener(view1 -> DialogUtil.getInstance(getContext()).des());
-                                holder.findViewById(R.id.tvConfirm).setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        Intent intent = new Intent(getContext(), UserZBSQOneActivity.class);
-                                        intent.putExtra(ParameterContens.AnchorVo, anchorVo);
-                                        startActivity(intent);
-                                        DialogUtil.getInstance(getContext()).des();
-                                    }
-                                });
-                            });
-                        } else {
-                            DialogUtil.getInstance(getContext()).show(R.layout.dialog_tip, holder -> {
-                                TextView tvTitle = holder.findViewById(R.id.tv_title);
-                                String title = "";
-                                if (anchorVo.getAuditStatus() == -1) {
-                                    title = "正在审核中";
-                                } else if (anchorVo.getAuditStatus() == 1) {
-                                    title = "您已经入驻成功";
-                                }
-                                tvTitle.setText(title);
-                                holder.findViewById(R.id.tvCancel).setOnClickListener(view1 -> DialogUtil.getInstance(getContext()).des());
-                                holder.findViewById(R.id.tvConfirm).setOnClickListener(view12 -> DialogUtil.getInstance(getContext()).des());
-                            });
-                        }
-                    } else {
-                        Intent intent = new Intent(getContext(), UserZBSQOneActivity.class);
-                        intent.putExtra(ParameterContens.AnchorVo, anchorVo);
-                        startActivity(intent);
-                    }
-                } catch (JsonSyntaxException e) {
-                    e.printStackTrace();
-                    goTActivity(UserZBSQOneActivity.class, null);
-                }
-
-            }
-
-            @Override
-            public void onFailed(String msg) {
-                ToastUtil.showShort(getContext(), msg);
-            }
-        });
-    }
-
-    /**
-     * 查询商家入驻状态
-     */
-    private void queryAddDeptState() {
-        Map<String, Object> map = new HashMap<>();
-//        map.put("phone", phone);
-        OkHttp3Utils.getInstance(getContext()).doPostJson(UserUrl.addDeptState, map, new ObjectCallback<String>(getContext()) {
-            @Override
-            public void onUi(String result) {
-                Log.d("luhuas", "onUi: " + result);
-                try {
-                    DepVo depVo = new Gson().fromJson(result, DepVo.class);
-                    if (depVo != null) {
-                        if (depVo.getAuditStatus() == 0) {
-                            DialogUtil.getInstance(getContext()).show(R.layout.dialog_tip, holder -> {
-                                TextView tvTitle = holder.findViewById(R.id.tv_title);
-                                TextView tv_massage = holder.findViewById(R.id.tv_massage);
-                                String title = "审核不通过";
-                                tv_massage.setVisibility(View.VISIBLE);
-                                tv_massage.setText(depVo.getAuditDescribe());
-                                tvTitle.setText(title);
-                                holder.findViewById(R.id.tvCancel).setOnClickListener(view1 -> DialogUtil.getInstance(getContext()).des());
-                                holder.findViewById(R.id.tvConfirm).setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        Intent intent = new Intent(getContext(), UserSJRZOneActivity.class);
-                                        intent.putExtra(ParameterContens.depVo, depVo);
-                                        startActivity(intent);
-                                        DialogUtil.getInstance(getContext()).des();
-                                    }
-                                });
-                            });
-                        } else {
-                            DialogUtil.getInstance(getContext()).show(R.layout.dialog_tip, holder -> {
-                                TextView tvTitle = holder.findViewById(R.id.tv_title);
-                                String title = "";
-                                if (depVo.getAuditStatus() == -1) {
-                                    title = "正在审核中";
-                                } else if (depVo.getAuditStatus() == 1) {
-                                    title = "您已经入驻成功";
-                                }
-                                tvTitle.setText(title);
-                                holder.findViewById(R.id.tvCancel).setOnClickListener(view1 -> DialogUtil.getInstance(getContext()).des());
-                                holder.findViewById(R.id.tvConfirm).setOnClickListener(view12 -> DialogUtil.getInstance(getContext()).des());
-                            });
-                        }
-                    } else {
-                        Intent intent = new Intent(getContext(), UserSJRZOneActivity.class);
-                        intent.putExtra(ParameterContens.depVo, depVo);
-                        startActivity(intent);
-                    }
-                } catch (JsonSyntaxException e) {
-                    e.printStackTrace();
-                    goTActivity(UserSJRZOneActivity.class, null);
-                }
-
-            }
-
-            @Override
-            public void onFailed(String msg) {
-                ToastUtil.showShort(getContext(), msg);
-            }
-        });
     }
 
     private void showFunction() {

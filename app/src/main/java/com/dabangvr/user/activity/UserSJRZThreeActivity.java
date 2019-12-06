@@ -10,14 +10,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.addressselection.bean.City;
-import com.addressselection.bean.County;
-import com.addressselection.bean.Province;
-import com.addressselection.bean.Street;
-import com.addressselection.widge.AddressSelector;
-import com.addressselection.widge.BottomDialog;
-import com.addressselection.widge.OnAddressSelectedListener;
 import com.bumptech.glide.Glide;
 import com.dabangvr.R;
 import com.dabangvr.comment.application.MyApplication;
@@ -52,8 +44,7 @@ import butterknife.OnClick;
 /**
  * 商家入驻申请第三步商户信息录入
  */
-public class UserSJRZThreeActivity extends BaseActivity implements OnAddressSelectedListener, AddressSelector.OnDialogCloseListener, AddressSelector.onSelectorAreaPositionListener {
-
+public class UserSJRZThreeActivity extends BaseActivity {
 
     @BindView(R.id.etname)
     EditText etname;
@@ -76,8 +67,6 @@ public class UserSJRZThreeActivity extends BaseActivity implements OnAddressSele
     private ArrayList<Image> mSelectImages = new ArrayList<>();
     private long lastonclickTime = 0;
     private DepVo depVo;
-    private BottomDialog dialog;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -163,20 +152,7 @@ public class UserSJRZThreeActivity extends BaseActivity implements OnAddressSele
                 selectImage(SELECT_IMAGE_REQUEST_four);
                 break;
             case R.id.rl_address: //
-                if (dialog != null) {
-                    dialog.show();
-                } else {
-                    dialog = new BottomDialog(this);
-                    dialog.setOnAddressSelectedListener(this);
-                    dialog.setDialogDismisListener(this);
-                    dialog.setTextSize(14);//设置字体的大小
-                    dialog.setIndicatorBackgroundColor(android.R.color.holo_orange_light);//设置指示器的颜色
-                    dialog.setTextSelectedColor(android.R.color.holo_orange_light);//设置字体获得焦点的颜色
-                    dialog.setTextUnSelectedColor(android.R.color.holo_blue_light);//设置字体没有获得焦点的颜色
-//            dialog.setDisplaySelectorArea("31",1,"2704",1,"2711",0,"15582",1);//设置已选中的地区
-                    dialog.setSelectorAreaPositionListener(this);
-                    dialog.show();
-                }
+
                 break;
 
         }
@@ -325,27 +301,5 @@ public class UserSJRZThreeActivity extends BaseActivity implements OnAddressSele
                 setLoaddingView(false);
             }
         });
-    }
-
-    @Override
-    public void onAddressSelected(Province province, City city, County county, Street street) {
-        String s = (province == null ? "" : province.name) + (city == null ? "" : city.name) + (county == null ? "" : county.name) +
-                (street == null ? "" : street.name);
-        depVo.setProductionProvince(province == null ? "" : province.name);
-        depVo.setProductionCity(city == null ? "" : city.name);
-        depVo.setProductionCounty(county == null ? "" : county.name);
-        tv_address.setText(s);
-    }
-
-    @Override
-    public void dialogclose() {
-        if (dialog != null) {
-            dialog.dismiss();
-        }
-    }
-
-    @Override
-    public void selectorAreaPosition(int provincePosition, int cityPosition, int countyPosition, int streetPosition) {
-
     }
 }

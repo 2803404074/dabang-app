@@ -50,10 +50,10 @@
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="@dimen/dp_100"
-            android:layout_height="@dimen/dp_100"
+            android:layout_width="@dimen/dp_130"
+            android:layout_height="@dimen/dp_130"
             android:layout_gravity="center"
-            android:src="@mipmap/icon_success" />
+            android:src="@mipmap/app_launch" />
 
         <TextView
             android:id="@+id/tv_content"
@@ -74,11 +74,6 @@
             android:text="V1.0.1"
             android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/dp_30"
-            android:text="简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介" />
     </LinearLayout>
 
     <View
@@ -101,8 +96,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="检测新版本"
+            android:textColor="@color/textTitle"
             android:textSize="@dimen/sp_16"
-            android:textStyle="bold" />
+             />
 
         <View
             android:layout_width="wrap_content"
@@ -116,7 +112,8 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:text="v1.0.1"
-            android:textStyle="bold" />
+            android:textSize="@dimen/sp_16"
+            android:textColor="@color/transitionSelectorBG" />
 
         <ImageView
             android:layout_width="@dimen/dp_25"
@@ -147,7 +144,7 @@
             android:layout_gravity="center"
             android:text="法律条款"
             android:textSize="@dimen/sp_16"
-            android:textStyle="bold" />
+            android:textColor="@color/textTitle" />
 
         <View
             android:layout_width="wrap_content"

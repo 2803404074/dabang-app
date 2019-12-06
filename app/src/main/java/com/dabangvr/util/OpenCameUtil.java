@@ -81,4 +81,27 @@ public class OpenCameUtil {
         intent.putExtra("noFaceDetection", true); // 头像识别
         activity.startActivityForResult(intent, REQ_4);
     }
+
+
+    //剪切、压缩后的方法
+    public static void startPhotoZoom(Activity activity,Uri uri,int x,int y) {
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.setDataAndType(uri, "image/*");
+        // 下面这个crop=true是设置在开启的Intent中设置显示的VIEW可裁剪
+        intent.putExtra("crop", "true");
+        //该参数可以不设定用来规定裁剪区的宽高比
+        intent.putExtra("aspectX", x);
+        intent.putExtra("aspectY", y);
+        //该参数设定为你的imageView的大小
+        intent.putExtra("outputX", 500);
+        intent.putExtra("outputY", 700);
+        intent.putExtra("scale", true);
+        //是否返回bitmap对象
+        intent.putExtra("return-data", false);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUris);
+        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());//输出图片的格式
+        intent.putExtra("noFaceDetection", true); // 头像识别
+        activity.startActivityForResult(intent, REQ_4);
+    }
+
 }
