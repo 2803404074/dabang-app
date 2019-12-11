@@ -23,7 +23,7 @@
             android:layout_height="@dimen/dp_30"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/play_start"/>
+            android:src="@drawable/test100"/>
     </RelativeLayout>
 
     <LinearLayout

@@ -35,6 +35,10 @@
 
 -keep class com.zego.**{*;}
 
+
+-keep class com.pili.pldroid.player.** { *; }
+-keep class com.qiniu.qplayer.mediaEngine.MediaPlayer{*;}
+
 #---------------------------------项目代码混淆-------------------------------------
 
 # 指定代码的压缩级别 0 - 7(指定代码进行迭代优化的次数，在Android里面默认是5，这条指令也只有在可以优化时起作用。)

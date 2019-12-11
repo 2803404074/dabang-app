@@ -24,7 +24,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/dp_20"
             android:textSize="@dimen/sp_14"
-            android:text="没有该分类的内容"/>
+            android:text="该分类暂无内容"/>
 
         <LinearLayout
             android:id="@+id/llLoading"

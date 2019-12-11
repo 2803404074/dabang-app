@@ -1,5 +1,6 @@
 package com.dabangvr.comment.application;
 
+import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 import android.content.IntentFilter;
@@ -18,11 +19,16 @@ import com.dbvr.baselibrary.utils.NetWorkStateReceiver;
 import com.dbvr.baselibrary.utils.ToastUtil;
 import com.dbvr.baselibrary.view.AppManager;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMOptions;
 import com.mob.MobSDK;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.tencent.ugc.TXUGCBase;
 import com.zego.zegoliveroom.ZegoLiveRoom;
+
+import java.util.Iterator;
+import java.util.List;
 
 import static com.dbvr.baselibrary.other.ThirdParty.WECHART_APP_ID;
 
@@ -58,8 +64,65 @@ public class MyApplication extends Application implements NetWorkStateReceiver.N
         api = WXAPIFactory.createWXAPI(this, WECHART_APP_ID, true);
         api.registerApp(WECHART_APP_ID);
 
+        //环信
+        initHy();
+
         initZeGoContext();
 
+    }
+
+
+    private void initHy() {
+        // 第一步
+        EMOptions options = initChatOptions();
+        // 第二步
+        boolean success = initSDK(this, options);
+        if (success) {
+            EMClient.getInstance().setDebugMode(true);
+        }
+    }
+    private EMOptions initChatOptions() {
+        EMOptions options = new EMOptions();
+        return options;
+    }
+
+    private boolean sdkInited = false;
+
+    public synchronized boolean initSDK(Context context, EMOptions options) {
+        if (sdkInited) {
+            return true;
+        }
+        int pid = android.os.Process.myPid();
+        String processAppName = getAppName(pid);
+        if (processAppName == null || !processAppName.equalsIgnoreCase(getPackageName())) {
+            return false;
+        }
+        if (options == null) {
+            EMClient.getInstance().init(context, initChatOptions());
+        } else {
+            EMClient.getInstance().init(context, options);
+        }
+        sdkInited = true;
+        return true;
+    }
+
+    private String getAppName(int pID) {
+        String processName = null;
+        ActivityManager am = (ActivityManager) this.getSystemService(Context.ACTIVITY_SERVICE);
+        List l = am.getRunningAppProcesses();
+        Iterator i = l.iterator();
+        while (i.hasNext()) {
+            ActivityManager.RunningAppProcessInfo info = (ActivityManager.RunningAppProcessInfo) (i.next());
+            try {
+                if (info.pid == pID) {
+
+                    processName = info.processName;
+                    return processName;
+                }
+            } catch (Exception e) {
+            }
+        }
+        return processName;
     }
 
     public void initShortVideo(){

@@ -22,8 +22,8 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation(name: 'LiteAVSDK_UGC', ext: 'aar')
     implementation project(':player')
+    implementation(name: 'LiteAVSDK_UGC', ext: 'aar')
     implementation project(path: ':baselibrary')
     implementation 'com.android.support:appcompat-v7:25.+'
     implementation 'com.android.support:recyclerview-v7:25.+'

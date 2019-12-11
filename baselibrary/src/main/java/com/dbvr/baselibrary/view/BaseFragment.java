@@ -32,6 +32,10 @@ public abstract class BaseFragment extends Fragment {
     private View rootView;
     protected Unbinder unbinder;
 
+    public View getRootView() {
+        return rootView;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

@@ -19,17 +19,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
 
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation(name: 'LiteAVSDK_UGC', ext: 'aar')
-    implementation 'com.github.ctiao:DanmakuFlameMaster:0.5.3'
-    implementation 'com.android.support:appcompat-v7:25.+'
-    implementation 'com.android.support:recyclerview-v7:25.+'
-    implementation 'me.dm7.barcodescanner:zxing:1.8.4'
-    implementation 'com.squareup.okhttp3:okhttp:3.9.0'
-    implementation 'com.android.support:multidex:1.0.0'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(path: ':baselibrary')
+    implementation files('libs/pldroid-player-2.1.9.jar')
 }

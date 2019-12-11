@@ -23,7 +23,7 @@ android {
         config {
             keyAlias 'key0'
             keyPassword '1008611'
-            storeFile file('F:/android-key/db-key.jks')
+            storeFile file('G:/dabang/dbproject-key/db-key.jks')
             storePassword '1008611'
         }
     }
@@ -126,7 +126,6 @@ dependencies {
     //功能引导
     implementation 'com.github.huburt-Hu:NewbieGuide:v1.0.2'
     implementation files('libs/zegoliveroom.jar')
-
 
     implementation 'com.github.castorflex.verticalviewpager:library:19.0.1'
     implementation 'io.reactivex:rxandroid:1.2.1'

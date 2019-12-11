@@ -403,7 +403,7 @@ public class RoomFragment extends BaseRoomFragment {
                 break;
             case R.id.ivGoods:
                 if (liveGoods== null || liveGoods.size() == 0)return;
-                BottomDialogUtil2.getInstance(getActivity()).show(R.layout.recy_no_bg,2, view16 -> {
+                BottomDialogUtil2.getInstance(getActivity()).show2(R.layout.recy_no_bg,2, view16 -> {
                     recyclerGoods = view16.findViewById(R.id.recycler_head);
                     recyclerGoods.setBackgroundResource(R.color.colorWhite);
                     recyclerGoods.setLayoutManager(new LinearLayoutManager(getContext()));

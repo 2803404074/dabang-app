@@ -16,7 +16,7 @@
         android:title="" />
     <item
         android:id="@+id/navigation_live"
-        android:icon="@mipmap/main_mess"
+        android:icon="@mipmap/main_mess_no"
         android:title="消息" />
 
     <item

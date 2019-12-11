@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,23 +7,17 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/llMainTop"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_100"
         android:gravity="bottom"
-        android:background="@drawable/shape_style_db_green"
+        android:background="@color/colorDb4"
         android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingHorizontal="@dimen/dp_5"
             android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/ivFunctionLeft"
-                android:layout_gravity="center"
-                android:layout_width="@dimen/dp_35"
-                android:layout_height="match_parent"
-                android:src="@mipmap/function_main"/>
             <TextView
                 android:id="@+id/tvMain"
                 android:layout_width="wrap_content"
@@ -33,7 +27,7 @@
                 android:textStyle="bold"
                 android:layout_marginLeft="@dimen/dp_3"
                 android:layout_gravity="bottom"
-                android:text="跳跳直播"/>
+                android:text="海跳跳"/>
 
             <View
                 android:layout_width="0dp"
@@ -41,28 +35,19 @@
                 android:layout_weight="1"/>
             <ImageView
                 android:id="@+id/ivSearch"
-                android:layout_width="@dimen/dp_34"
-                android:layout_height="@dimen/dp_34"
-                android:src="@mipmap/search_round"
-                android:layout_gravity="bottom"
-                android:padding="@dimen/dp_2"/>
-            <ImageView
-                android:id="@+id/ivFunction"
                 android:layout_width="@dimen/dp_35"
                 android:layout_height="@dimen/dp_35"
+                android:src="@mipmap/search"
+                android:layout_gravity="bottom"
+                android:padding="@dimen/dp_5"/>
+            <ImageView
+                android:id="@+id/ivFunction"
+                android:layout_width="@dimen/dp_28"
+                android:layout_height="@dimen/dp_28"
                 android:src="@mipmap/paishe"
                 android:layout_marginHorizontal="@dimen/dp_5"
-                android:layout_gravity="bottom"
+                android:layout_gravity="center"
                 android:paddingBottom="@dimen/dp_2"/>
-
-            <ImageView
-                android:id="@+id/ivUser"
-                android:layout_width="@dimen/dp_30"
-                android:layout_height="@dimen/dp_30"
-                android:src="@mipmap/user"
-                android:layout_marginBottom="@dimen/dp_1"
-                android:layout_gravity="bottom"
-                android:padding="@dimen/dp_2"/>
         </LinearLayout>
 
         <com.ogaclejapan.smarttablayout.SmartTabLayout
@@ -88,7 +73,22 @@
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
+        android:layout_below="@+id/llMainTop"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/tvVideo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="更多视频"
+        android:textSize="@dimen/sp_16"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:paddingHorizontal="@dimen/dp_15"
+        android:paddingVertical="@dimen/dp_3"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:background="@drawable/shape_style_db_green"/>
+</RelativeLayout>

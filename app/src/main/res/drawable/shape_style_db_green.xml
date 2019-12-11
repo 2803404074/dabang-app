@@ -7,9 +7,10 @@
         android:startColor="@color/colorDb3"
         android:endColor="@color/text8"
          />
-    <size
-        android:width="@dimen/dp_500"
-        android:height="@dimen/dp_250"/>
     <!--圆角-->
-    <!--<corners android:radius="4dp" />-->
+    <corners
+        android:bottomLeftRadius="@dimen/dp_20"
+        android:bottomRightRadius="0dp"
+        android:topRightRadius="0dp"
+        android:topLeftRadius="@dimen/dp_20"/>
 </shape>

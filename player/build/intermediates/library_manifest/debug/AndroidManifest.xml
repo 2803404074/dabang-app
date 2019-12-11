@@ -8,27 +8,4 @@
         android:minSdkVersion="16"
         android:targetSdkVersion="29" />
 
-    <application>
-        <activity
-            android:name="com.tencent.liteav.demo.play.superplayer.SuperPlayerActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/app_name"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" >
-            <intent-filter>
-                <action android:name="com.tencent.liteav.demo.play.action.float.click" />
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="com.tencent.liteav.demo.play.VodPlayerActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.tencent.liteav.demo.play.common.activity.QRCodeScanActivity"
-            android:screenOrientation="portrait" />
-    </application>
-
 </manifest>

@@ -47,8 +47,6 @@ public class UserHomeActivity extends BaseActivity {
 
     @BindView(R.id.ivGrade)
     ImageView ivGrade;
-    @BindView(R.id.tvGrade)
-    TextView tvGrade;
 
     @BindView(R.id.tvFollow)
     TextView tvFollow;
@@ -150,28 +148,19 @@ public class UserHomeActivity extends BaseActivity {
         }
         if (userMess.getGrade() == 1){
             ivGrade.setImageResource(R.mipmap.u_one);
-            tvGrade.setText("奋斗白银");
-            tvGrade.setTextColor(getResources().getColor(R.color.colorGray4));
+
         }
         if (userMess.getGrade() == 2){
             ivGrade.setImageResource(R.mipmap.u_tow);
-            tvGrade.setText("出道黄金");
-            tvGrade.setTextColor(getResources().getColor(R.color.lsq_filter_title_color));
         }
         if (userMess.getGrade() == 3){
             ivGrade.setImageResource(R.mipmap.u_three);
-            tvGrade.setTextColor(getResources().getColor(R.color.text2));
-            tvGrade.setText("舞台铂金");
         }
         if (userMess.getGrade() == 4){
             ivGrade.setImageResource(R.mipmap.u_four);
-            tvGrade.setTextColor(getResources().getColor(R.color.colorZi));
-            tvGrade.setText("幕后砖石");
         }
         if (userMess.getGrade() == 5){
             ivGrade.setImageResource(R.mipmap.u_five);
-            tvGrade.setTextColor(getResources().getColor(R.color.red));
-            tvGrade.setText("孤独王者");
         }
 
     }

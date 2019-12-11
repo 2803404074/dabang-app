@@ -63,6 +63,9 @@ public class UserIntroduceActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        if (StringUtils.isEmpty(getIntent().getStringExtra("str"))){
+            etInput.setText(getIntent().getStringExtra("str"));
+        }
         etInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {

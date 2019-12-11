@@ -90,24 +90,16 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<BaseRecycl
             //这里加载数据的时候要注意，是从position-1开始，因为position==0已经被header占用了
             if (mHeadView != null) {
                 convert(mContext, holder, mDatas.get(position - 1));
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (mItemClickListener != null) {
-                            mItemClickListener.onItemClick(v, position - 1);
-                        }
-
+                holder.itemView.setOnClickListener(v -> {
+                    if (mItemClickListener != null) {
+                        mItemClickListener.onItemClick(v, position - 1);
                     }
                 });
             } else {
                 convert(mContext, holder, mDatas.get(position));
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (mItemClickListener != null) {
-                            mItemClickListener.onItemClick(v, position);
-                        }
-
+                holder.itemView.setOnClickListener(v -> {
+                    if (mItemClickListener != null) {
+                        mItemClickListener.onItemClick(v, position);
                     }
                 });
             }

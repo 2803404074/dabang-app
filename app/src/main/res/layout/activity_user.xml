@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/dp_70"
+    android:background="@color/white"
+    tools:context=".user.activity.UserHomeActivity">
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
+            android:layout_width="match_parent"
+            android:background="@android:color/white"
+            android:layout_height="@dimen/dp_340"
+            android:fitsSystemWindows="true">
+
+
+            <RelativeLayout
+                android:id="@+id/rlTop"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_300"
+                app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
+                <include layout="@layout/layout_user"/>
+            </RelativeLayout>
+        
+            <com.ogaclejapan.smarttablayout.SmartTabLayout
+                android:id="@+id/tab_layout"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                android:layout_width="match_parent"
+                android:layout_marginHorizontal="@dimen/dp_10"
+                android:layout_height="@dimen/dp_35"
+                app:stl_indicatorWithoutPadding="true"
+                app:stl_indicatorInterpolation="smart"
+                app:stl_indicatorColor="@color/colorDb3"
+                app:stl_indicatorThickness="@dimen/dp_3"
+                app:stl_indicatorWidth="auto"
+                app:stl_distributeEvenly="true"
+                app:stl_customTabTextLayoutId="@layout/view_tab_text_db"
+                app:stl_defaultTabTextHorizontalPadding="@dimen/dp_5"
+                app:stl_defaultTabTextMinWidth="@dimen/dp_18"
+                app:stl_indicatorCornerRadius="2dp"
+                app:stl_overlineThickness="0dp"
+                app:stl_underlineThickness="0dp"
+                app:stl_dividerThickness="0dp"
+                app:stl_drawDecorationAfterTab="true" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</FrameLayout>

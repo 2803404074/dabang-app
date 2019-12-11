@@ -97,37 +97,13 @@
                     android:textSize="@dimen/sp_16" />
 
                 <TextView
+                    android:id="@+id/tvDropNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="15655475"
                     android:layout_gravity="center"
                     android:textColor="@color/textTitle"
                     android:textSize="@dimen/sp_16" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1px"
-                    android:layout_weight="1" />
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:id="@+id/ivGrade"
-                        android:layout_width="@dimen/dp_20"
-                        android:layout_height="@dimen/dp_20"
-                        android:src="@mipmap/u_one"/>
-                    <TextView
-                        android:id="@+id/tvGrade"
-                        android:layout_toRightOf="@+id/ivGrade"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="青铜会员"
-                        android:layout_marginRight="@dimen/dp_5"
-                        android:textColor="@color/colorGray4"
-                        android:layout_centerVertical="true"
-                        android:textSize="@dimen/sp_16" />
-                </RelativeLayout>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
@@ -175,7 +151,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="55"
+                android:text="0"
                 android:padding="@dimen/dp_3"
                 android:textColor="@color/textTitle"
                 android:textSize="@dimen/sp_20"
@@ -196,7 +172,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/sp_10"
-                android:text="12"
+                android:text="0"
                 android:padding="@dimen/dp_3"
                 android:textColor="@color/textTitle"
                 android:textSize="@dimen/sp_20"
@@ -217,7 +193,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/sp_10"
-                android:text="99"
+                android:text="0"
                 android:padding="@dimen/dp_3"
                 android:textColor="@color/textTitle"
                 android:textSize="@dimen/sp_20"

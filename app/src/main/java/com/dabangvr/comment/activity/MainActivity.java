@@ -5,7 +5,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.nfc.Tag;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -29,7 +28,7 @@ import com.app.hubert.library.OnGuideChangedListener;
 import com.dabangvr.R;
 import com.dabangvr.comment.application.MyApplication;
 import com.dabangvr.home.activity.SearchActivity;
-import com.dabangvr.home.fragment.MainFragment;
+import com.dabangvr.home.fragment.HomeFragment;
 import com.dabangvr.live.activity.GeGoActivity;
 import com.dabangvr.mall.activity.CartActivity;
 import com.dabangvr.mall.activity.OrderActivity;
@@ -147,7 +146,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 if (list != null && list.size() > 0) {
                     mFragments = new ArrayList<>();
                     for (int i = 0; i < list.size(); i++) {
-                        mFragments.add(new MainFragment(Integer.parseInt(list.get(i).getId())));
+                        mFragments.add(new HomeFragment(Integer.parseInt(list.get(i).getId())));
                         mTitles.add(list.get(i).getName());
                     }
                     contentAdapter = new ContentPagerAdapter(getSupportFragmentManager(), mTitles, mFragments);
@@ -164,16 +163,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         });
     }
 
-    @OnClick({R.id.tvMain, R.id.ivUser, R.id.ivFunction, R.id.ivSearch,R.id.ivFunctionLeft})
+    @OnClick({R.id.tvMain, R.id.ivUser, R.id.ivFunction, R.id.ivSearch})
     public void onclick(View view) {
         switch (view.getId()) {
             case R.id.tvMain:
                 drawer.openDrawer(GravityCompat.START);
                 break;
             case R.id.ivUser:
-                drawer.openDrawer(GravityCompat.START);
-                break;
-            case R.id.ivFunctionLeft:
                 drawer.openDrawer(GravityCompat.START);
                 break;
             case R.id.ivFunction:
@@ -289,7 +285,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         } else {
             goTActivity(GeGoActivity.class, null);
         }
-
     }
 
     @Override

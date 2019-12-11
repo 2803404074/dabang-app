@@ -31,7 +31,7 @@
                 android:textSize="@dimen/sp_15"
                 android:textStyle="bold"
                 android:gravity="center"
-                android:background="@drawable/shape_round_bg"
+                android:background="@drawable/test100"
                 android:textColor="@color/colorWhite"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"/>
