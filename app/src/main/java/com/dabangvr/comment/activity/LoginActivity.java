@@ -111,7 +111,7 @@ public class LoginActivity extends BaseActivity{
                 if (isFirst) {
                     goTActivityTou(WellComePageActivity.class, null);
                 } else {
-                    goTActivityTou(MainActivity.class, null);
+                    goTActivityTou(MainAc.class, null);
                 }
             }
 
@@ -185,7 +185,7 @@ public class LoginActivity extends BaseActivity{
                 if (userMess != null) {
                     SPUtils.instance(getContext()).putUser(result);
                     SPUtils.instance(getContext()).putObj("token", userMess.getToken());
-                    goTActivity(MainActivity.class, null);
+                    goTActivity(MainAc.class, null);
                     overridePendingTransition(R.anim.activity_out,R.anim.activity_in);
                     AppManager.getAppManager().finishActivity(LoginActivity.class);
                 } else {

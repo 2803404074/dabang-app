@@ -1,18 +1,22 @@
 package com.dabangvr.comment.activity;
 
-import android.annotation.SuppressLint;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.RequiresApi;
-import androidx.core.view.GravityCompat;
+import androidx.annotation.NonNull;
 
 import com.dabangvr.R;
 import com.dabangvr.comment.service.UserHolper;
-import com.dabangvr.comment.view.BottomBar;
+import com.dabangvr.comment.view.NavHelper;
 import com.dabangvr.home.fragment.CityFragment;
+import com.dabangvr.home.fragment.HomeFragment;
 import com.dabangvr.home.fragment.HomeFragmentHome;
 import com.dabangvr.home.fragment.MessageFragment;
 import com.dabangvr.home.fragment.MyFragment;
@@ -21,50 +25,56 @@ import com.dbvr.baselibrary.utils.SPUtils;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
 import com.dbvr.baselibrary.view.AppManager;
 import com.dbvr.baselibrary.view.BaseActivity;
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.EMError;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.exceptions.HyphenateException;
+
 import butterknife.BindView;
 
-@SuppressLint("Registered")
-public class MainAc extends BaseActivity {
-    @BindView(R.id.bottomBar)
-    BottomBar bottomBar;
+public class MainAc extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener, NavHelper.OnTabChangeListener<String> {
+    @BindView(R.id.bnvView)
+    BottomNavigationView bottomNavigationView;
 
+    private NavHelper<String> mNavHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         StatusBarUtil.setRootViewFitsSystemWindows(this, false);
     }
-
     @Override
     public int setLayout() {
         return R.layout.activity_main2;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void initView() {
-        bottomBar.setContainer(R.id.fg_layout)
-                .setTitleBeforeAndAfterColor("#999999", "#24ecbb")
-                .addItem(HomeFragmentHome.class,
-                        "首页",
-                        R.mipmap.home_no,
-                        R.mipmap.home_click)
-                .addItem(CityFragment.class,
-                        "同城",
-                        R.mipmap.main_tc,
-                        R.mipmap.main_tc_click)
-                .addItem(MessageFragment.class,
-                        "消息",
-                        R.mipmap.main_mess_no,
-                        R.mipmap.main_mess_click)
-                .addItem(MyFragment.class,
-                        "消息",
-                        R.mipmap.main_my_no,
-                        R.mipmap.main_my_click)
-                .build();
+        //这里就是获取所添加的每一个Tab(或者叫menu)，
+//        View tab = bottomNavigationView.getChildAt(3);
+//        BottomNavigationItemView itemView = (BottomNavigationItemView) tab;
+//
+//        //加载我们的角标View，新创建的一个布局
+//        ViewGroup badge = (ViewGroup) LayoutInflater.from(this).inflate(R.layout.menu_badge,null);
+//
+//        //添加到Tab上
+//        itemView.addView(badge);
+//
+//        TextView count = badge.findViewById(R.id.tvTab);
+//        count.setText(String.valueOf(1));
+//        count.setVisibility(View.VISIBLE);
+
+
+        mNavHelper = new NavHelper<String>(this,R.id.fg_layout,getSupportFragmentManager(),this);
+        mNavHelper.add(R.id.navigation_home,new NavHelper.Tab<>(HomeFragmentHome.class,"aaa"))
+                .add(R.id.navigation_tc,new NavHelper.Tab<>(CityFragment.class,"aaa"))
+                .add(R.id.navigation_video,new NavHelper.Tab<>(MessageFragment.class,"aaa"))
+                .add(R.id.navigation_my,new NavHelper.Tab<>(MyFragment.class,"aaa"));
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(this);
+        Menu menu = bottomNavigationView.getMenu();
+        menu.performIdentifierAction(R.id.navigation_home,0);
     }
 
     @Override
@@ -130,8 +140,14 @@ public class MainAc extends BaseActivity {
             }
         });
     }
-    private long exitTime = 0;
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        return mNavHelper.performClickMenu(item.getItemId());
+    }
+
+
+    private long exitTime = 0;
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK
@@ -146,9 +162,15 @@ public class MainAc extends BaseActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         UserHolper.getUserHolper(getContext()).ondessUser();
+    }
+
+    @Override
+    public void onTabChange(NavHelper.Tab<String> newTab, NavHelper.Tab<String> oldTab) {
+
     }
 }

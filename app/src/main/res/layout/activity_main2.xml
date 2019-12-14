@@ -12,13 +12,14 @@
         android:id="@+id/fg_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/bottomBar"/>
+        android:layout_above="@+id/bnvView"/>
 
-    <com.dabangvr.comment.view.BottomBar
-        android:id="@+id/bottomBar"
-        android:layout_width="match_parent"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:background="@color/white"
+        android:id="@+id/bnvView"
         android:layout_alignParentBottom="true"
-        android:background="@color/colorWhite"
-        android:layout_height="@dimen/dp_45"/>
-
+        android:layout_width="match_parent"
+        app:menu="@menu/bottom_nav_menu"
+        app:labelVisibilityMode="labeled"
+        android:layout_height="wrap_content"/>
 </RelativeLayout>

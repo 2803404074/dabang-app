@@ -13,7 +13,6 @@ public abstract class LazyFragment extends BaseFragment {
     protected boolean isVisibleToUser; //页面是否可见
     protected boolean isDataInitiated; //数据是否加载
 
-
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);

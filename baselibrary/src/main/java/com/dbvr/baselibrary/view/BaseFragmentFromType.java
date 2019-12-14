@@ -1,27 +1,26 @@
 package com.dbvr.baselibrary.view;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.dbvr.baselibrary.R;
-import com.dbvr.baselibrary.ui.LoadingUtils;
+import com.dbvr.baselibrary.utils.DialogUtil;
 
 import java.util.List;
 import java.util.Map;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -30,23 +29,45 @@ import butterknife.Unbinder;
  * 针对 展示多类型商品的页面
  * 懒加载
  * auth 黄仕豪
+ * 超过3gefragment 绑定控件用findviewbyid，原因butterknife滑动过多的话，基类的onDestoryView()执行unbinder.unbind();
  * data 2019/7/8
  */
-public abstract class BaseFragmentFromType extends Fragment {
-
+public abstract class BaseFragmentFromType<T> extends Fragment {
+    protected Activity mActivity;
     public Context context;
-    private Unbinder unbinder;
     private int cType;//每个页卡的ID
     private View rootView;
+    private boolean isLoadData = false;//是否加载过数据
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+
+    }
 
     public BaseFragmentFromType(int cType) {
         this.cType = cType;
     }
+
     private Handler handler = new Handler(message -> {
         setDate(cType);
         return false;
     });
-    public Context getContext(){
+
+    protected BaseFragmentFromType() {
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser){
+            if (!isLoadData){//如果没有加载过数据
+                sendMessage();
+            }
+        }
+    }
+
+    public Context getContext() {
         return this.context;
     }
 
@@ -54,11 +75,32 @@ public abstract class BaseFragmentFromType extends Fragment {
         return cType;
     }
 
+    /*
+     * Deprecated on API 23
+     * Use onAttachToContext instead
+     */
+    @SuppressWarnings("deprecation")
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            onAttachToContext(activity);
+        }
+    }
+    /*
+     * Called when the fragment attaches to the context
+     */
+    protected void onAttachToContext(Context context) {
+        //do something
+        mActivity = (Activity) context;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if(rootView == null){
             rootView = inflater.inflate(initLayout(), container, false);
+            initView();
         }else {
             //缓存的rootView需要判断是否已经被加过parent， 如果有parent需要从parent删除，要不然会发生这个rootview已经有parent的错误。
             ViewGroup parent = (ViewGroup) rootView.getParent();
@@ -66,19 +108,23 @@ public abstract class BaseFragmentFromType extends Fragment {
                 parent.removeView(rootView);
             }
         }
-        unbinder = ButterKnife.bind(this, rootView);
-
-        initView();
-
-        sendMessage();
-
         return rootView;
+    }
+
+    public void isLoading(boolean t){
+        if (t){
+            DialogUtil.getInstance(getContext()).showAn(R.layout.loading_layout,false, view -> {
+            });
+        }else {
+            DialogUtil.getInstance(getContext()).des();
+        }
     }
 
     /**
      * 请求网络
      */
     public void sendMessage() {
+        isLoadData =true;
         Message message = handler.obtainMessage();
         message.sendToTarget();
     }
@@ -130,6 +176,7 @@ public abstract class BaseFragmentFromType extends Fragment {
             onMultiClick(v);
         }
     }
+
     public void goTActivity(final Class T, Map<String,Object> map){
         if (T == null)return;
         Intent intent = new Intent(getContext(),T);
@@ -161,7 +208,7 @@ public abstract class BaseFragmentFromType extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+        //unbinder.unbind();
     }
     @Override
     public void onAttach(Context ctx) {
@@ -172,5 +219,9 @@ public abstract class BaseFragmentFromType extends Fragment {
     public void onDetach() {
         super.onDetach();
         context = null;
+    }
+
+    protected T bindView(int resId){
+        return (T) rootView.findViewById(resId);
     }
 }

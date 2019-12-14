@@ -59,6 +59,20 @@ public class DialogUtil {
         dialog.getWindow().setWindowAnimations(R.style.dialog_animation);
     }
 
+    public void showAn(int layout, boolean isCancel,Conver convers) {
+        View view = LayoutInflater.from(context).inflate(layout, null, false);
+        convers.setView(view);
+        dialog = new AlertDialog.Builder(context, R.style.TransparentDialog).setView(view).create();
+        dialog.setCanceledOnTouchOutside(isCancel);
+        dialog.show();
+        WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
+        params.width = (ScreenUtils.getScreenWidth(context) / 4 * 3);
+        params.height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        params.dimAmount = 0.0f;
+        dialog.getWindow().setAttributes(params);
+        dialog.getWindow().setWindowAnimations(R.style.dialog_animation);
+    }
+
     public boolean isShow() {
         if (dialog != null) {
             return dialog.isShowing();
@@ -68,12 +82,12 @@ public class DialogUtil {
 
 
     public void des() {
+        if (dialog != null) {
+            dialog.dismiss();
+            dialog = null;
+        }
         if (dialogUtil != null) {
             dialogUtil = null;
-            if (dialog != null) {
-                dialog.dismiss();
-                dialog = null;
-            }
         }
     }
 }

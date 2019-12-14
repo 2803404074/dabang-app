@@ -32,18 +32,13 @@ import butterknife.BindView;
 
 public class HomeFragment extends BaseFragmentFromType {
 
-    @BindView(R.id.recycler_view)
-    RecyclerView recyclerView;
+    private RecyclerView recyclerView;
     private RecyclerAdapter adapter;
     private List<MainMo>mData = new ArrayList<>();
+    private TextView tvShow;
+    private SwipeRefreshLayout refreshLayout;
 
-    @BindView(R.id.tvRecyclerShow)
-    TextView tvShow;
-    @BindView(R.id.llLoading)
-    LinearLayout llLoading;
-
-    @BindView(R.id.swipeRefreshLayout)
-    SwipeRefreshLayout refreshLayout;
+    public HomeFragment() {}
 
     public HomeFragment(int cType) {
         super(cType);
@@ -56,6 +51,10 @@ public class HomeFragment extends BaseFragmentFromType {
 
     @Override
     protected void initView() {
+        recyclerView = (RecyclerView) bindView(R.id.recycler_view);
+        tvShow = (TextView) bindView(R.id.tvRecyclerShow);
+        refreshLayout = (SwipeRefreshLayout) bindView(R.id.swipeRefreshLayout);
+
         recyclerView.setBackgroundResource(R.color.color_f1);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
         adapter = new RecyclerAdapter<MainMo>(getContext(),mData,R.layout.item_main) {
@@ -93,9 +92,10 @@ public class HomeFragment extends BaseFragmentFromType {
     }
 
     private int page = 1;
+
     @Override
     protected void setDate(int cType) {
-        llLoading.setVisibility(View.VISIBLE);
+        isLoading(true);
         Map<String, Object> map = new HashMap<>();
         map.put("liveTag", cType);
         map.put("page", page);
@@ -122,15 +122,15 @@ public class HomeFragment extends BaseFragmentFromType {
                         page--;
                     }
                 }
-                llLoading.setVisibility(View.GONE);
                 if (refreshLayout.isRefreshing()){
                     refreshLayout.setRefreshing(false);
                 }
+                isLoading(false);
             }
             @Override
             public void onFailed(String msg) {
                 tvShow.setVisibility(View.VISIBLE);
-                llLoading.setVisibility(View.GONE);
+                isLoading(false);
             }
         });
     }
