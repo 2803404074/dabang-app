@@ -1,4 +1,4 @@
-package com.dbvr.baselibrary.other;
+package com.dbvr.baselibrary.model;
 
 /**
  * 第三方资源

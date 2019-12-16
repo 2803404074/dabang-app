@@ -5,8 +5,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.dbvr.baselibrary.utils.ToastUtil;
-import com.dbvr.baselibrary.view.AppManager;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
@@ -14,7 +12,7 @@ import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
-import static com.dbvr.baselibrary.other.ThirdParty.WECHART_APP_ID;
+import static com.dbvr.baselibrary.model.ThirdParty.WECHART_APP_ID;
 
 public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler{
 

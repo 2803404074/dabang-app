@@ -12,7 +12,11 @@
         <activity
             android:name="com.tencent.liteav.demo.videorecord.TCVideoRecordActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask" >
+            <intent-filter>
+                <action android:name="com.record.recorctivity" />
+            </intent-filter>
+        </activity>
         <activity
             android:name="com.tencent.liteav.demo.videorecord.TCVideoRecordSmartActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" />

@@ -1,7 +1,6 @@
 package com.dabangvr.play.activity.verticle;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,23 +16,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.dabangvr.R;
 import com.dabangvr.comment.adapter.BaseRecyclerHolder;
 import com.dabangvr.comment.adapter.RecyclerAdapter;
-import com.dabangvr.comment.application.MyApplication;
 import com.dabangvr.live.activity.LiveBaseActivity;
 import com.dabangvr.live.gift.GiftMo;
 import com.dabangvr.live.gift.GiftViewBackup;
 import com.dabangvr.live.gift.danmu.DanmuAdapter;
 import com.dabangvr.live.gift.danmu.DanmuEntity;
 import com.dabangvr.mall.activity.GoodsActivity;
-import com.dabangvr.play.model.LiveData;
 import com.dabangvr.play.widget.HeartLayout;
 import com.dabangvr.util.ShareUtils;
-import com.dbvr.baselibrary.model.LiveComment;
 import com.dbvr.baselibrary.model.LiveGiftMo;
 import com.dbvr.baselibrary.model.LiveGoods;
-import com.dbvr.baselibrary.model.MainMo;
-import com.dbvr.baselibrary.model.TagMo;
-import com.dbvr.baselibrary.other.Contents;
-import com.dbvr.baselibrary.ui.MyImageView;
+import com.dbvr.baselibrary.model.LiveMo;
 import com.dbvr.baselibrary.utils.BottomDialogUtil2;
 import com.dbvr.baselibrary.utils.StringUtils;
 import com.dbvr.baselibrary.utils.ToastUtil;
@@ -107,10 +100,11 @@ public class RoomFragment extends BaseRoomFragment {
     //礼物列表
     private List<LiveGiftMo> giftList = new ArrayList<>();
 
-    public static MainMo liveData;
+    public LiveMo liveData;//直播对象
 
-    public static RoomFragment newInstance() {
+    public static RoomFragment newInstance(LiveMo liveMo) {
         Bundle args = new Bundle();
+        args.putSerializable("liveMo",liveMo);//传入首次需要播放直播的对象
         RoomFragment fragment = new RoomFragment();
         fragment.setArguments(args);
         return fragment;
@@ -123,7 +117,10 @@ public class RoomFragment extends BaseRoomFragment {
 
     @Override
     public void initView() {
-
+        Bundle bundle = getArguments();
+        if (bundle!=null){
+            liveData = (LiveMo) bundle.getSerializable("liveMo");
+        }
         //
         initCallBack();
 
@@ -179,15 +176,15 @@ public class RoomFragment extends BaseRoomFragment {
             }
 
             @Override
-            public void updateRoom(MainMo c) {
+            public void updateRoom(LiveMo c) {
                 //切换房间的回调
                 //清空评论
                 liveData = c;
-                if (c.isFollow()){
-                    tvFollow.setVisibility(View.GONE);
-                }else {
-                    tvFollow.setVisibility(View.VISIBLE);
-                }
+//                if (c.isFollow()){
+//                    tvFollow.setVisibility(View.GONE);
+//                }else {
+//                    tvFollow.setVisibility(View.VISIBLE);
+//                }
                 commentData.clear();
                 commentAdapter.updateDataa(commentData);
                 //设置用户信息
@@ -227,11 +224,11 @@ public class RoomFragment extends BaseRoomFragment {
     //初始化评论列表
     private void initCommentUi() {
         doTopGradualEffect(recyclerView);
-        commentAdapter = new RecyclerAdapter<ZegoRoomMessage>(getContext(), commentData, R.layout.item_comment) {
+        commentAdapter = new RecyclerAdapter<ZegoRoomMessage>(getContext(), commentData, R.layout.item_video_comment) {
             @Override
             public void convert(Context mContext, BaseRecyclerHolder holder, ZegoRoomMessage o) {
                 TextView tvMess = holder.getView(R.id.tvMess);
-                holder.setText(R.id.tvUser, o.fromUserName);
+                holder.setText(R.id.tvUser, "123");
                 tvMess.setText(o.content);
                 int mColor = R.color.colorDb3;
                 //系统
@@ -315,12 +312,12 @@ public class RoomFragment extends BaseRoomFragment {
                             danmuMo.setUrl(userMess.getHeadUrl());
                             String str = new Gson().toJson(danmuMo);
                             message.content = str;
-                            PlayActivityCoPy.playInstance.sendMessage(message.messageCategory,str);
+                            PlayActivity.playInstance.sendMessage(message.messageCategory,str);
                         }else {
                             //发送普通消息
                             message.messageCategory = ZegoIM.MessageCategory.Chat;
                             message.content = editText.getText().toString();
-                            PlayActivityCoPy.playInstance.sendMessage(message.messageCategory,message.content);
+                            PlayActivity.playInstance.sendMessage(message.messageCategory,message.content);
                         }
                         LiveBaseActivity.instance.setNotifyUi(message,null);
                         BottomDialogUtil2.getInstance(getActivity()).dess();
@@ -391,7 +388,7 @@ public class RoomFragment extends BaseRoomFragment {
                             //更新自己的UI
                             LiveBaseActivity.instance.setNotifyUi(message,null);
                             //发送消息
-                            PlayActivityCoPy.playInstance.sendMessage(message.messageCategory,str);
+                            PlayActivity.playInstance.sendMessage(message.messageCategory,str);
                             //后端送礼逻辑
                             rewardGift(clickGift.getId(),etNum.getText().toString());
                             //销毁
@@ -420,7 +417,7 @@ public class RoomFragment extends BaseRoomFragment {
                     goodsAdapter.setOnItemClickListener((view17, position) -> {
                         Map<String,Object>map = new HashMap<>();
                         map.put("goodsId",liveGoods.get(position).getId());
-                        map.put("streamId",PlayActivityCoPy.playInstance.getSteamID());
+                        map.put("streamId", PlayActivity.playInstance.getSteamID());
                         goTActivity(GoodsActivity.class,map);
 
                     });
@@ -436,7 +433,7 @@ public class RoomFragment extends BaseRoomFragment {
                 checkAfter(currentTime);
                 break;
             case R.id.ivShare:
-                ShareUtils.getInstance(getContext()).startShare("跳跳传媒",liveData.getLiveTitle(),liveData.getCoverUrl(),"www.baidu.com");
+                ShareUtils.getInstance(getContext()).startShare("跳跳传媒",liveData.getTitle(),liveData.getCoverUrl(),"www.baidu.com");
                 break;
             case R.id.sdvHead:
                 BottomDialogUtil2.getInstance(getActivity()).showLive(R.layout.dialog_auth_mess,view16 -> {
@@ -445,11 +442,11 @@ public class RoomFragment extends BaseRoomFragment {
                     TextView tvName = view16.findViewById(R.id.tvAuthName);
                     TextView dTvFollow = view16.findViewById(R.id.dTvFollow);
                     tvName.setText(liveData.getNickName());
-                    if (liveData.isFollow()){
-                        dTvFollow.setVisibility(View.GONE);
-                    }else {
-                        dTvFollow.setVisibility(View.VISIBLE);
-                    }
+//                    if (liveData.isFollow()){
+//                        dTvFollow.setVisibility(View.GONE);
+//                    }else {
+//                        dTvFollow.setVisibility(View.VISIBLE);
+//                    }
                     TextView tvDropNum = view16.findViewById(R.id.tvDropNum);
                     tvDropNum.setText(liveData.getJumpNo());
                     TextView tvAdd = view16.findViewById(R.id.tvAdd);
@@ -512,7 +509,7 @@ public class RoomFragment extends BaseRoomFragment {
                 message.messageCategory = ZegoIM.MessageCategory.Like;
                 message.content = String.valueOf(clickCount);
                 LiveBaseActivity.instance.setNotifyUi(message,null);
-                PlayActivityCoPy.playInstance.sendMessage(message.messageCategory,message.content);
+                PlayActivity.playInstance.sendMessage(message.messageCategory,message.content);
                 sendDz2Server(clickCount);
                 clickCount = 0;
             }

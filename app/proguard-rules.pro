@@ -23,6 +23,9 @@
 -keep class com.hyphenate.** {*;}
 -dontwarn  com.hyphenate.**
 
+-keep class com.qiniu.**{*;}
+-keep class com.qiniu.**{public <init>();}
+-ignorewarnings
 
 -keep class cn.sharesdk.**{*;}
 -keep class com.sina.**{*;}

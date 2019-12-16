@@ -2,7 +2,10 @@ package com.dabangvr.comment.activity;
 
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Looper;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -81,6 +84,7 @@ public class LoginActivity extends BaseActivity{
                         platformDb.getUserName(),
                         platformDb.getUserIcon(),
                         loginName);
+
             }
 
             @Override
@@ -102,7 +106,8 @@ public class LoginActivity extends BaseActivity{
         map.put("nickName", uName);
         map.put("icon", icon);
         map.put("loginType", type);
-        OkHttp3Utils.getInstance(this).doPostJson(UserUrl.login, map, new ObjectCallback<String>(this) {
+        Looper.prepare();
+        OkHttp3Utils.getInstance(LoginActivity.this).doPostJson(UserUrl.login, map, new ObjectCallback<String>(LoginActivity.this) {
             @Override
             public void onUi(String result) {
                 SPUtils.instance(getContext()).putUser(result);
@@ -117,10 +122,11 @@ public class LoginActivity extends BaseActivity{
 
             @Override
             public void onFailed(String msg) {
-                Toast.makeText(LoginActivity.this, "登陆失败", Toast.LENGTH_LONG).show();
+                //Toast.makeText(LoginActivity.this, "登陆失败", Toast.LENGTH_LONG).show();
                 setLoaddingView(false);
             }
         });
+        Looper.loop();
     }
 
     /**
@@ -151,17 +157,37 @@ public class LoginActivity extends BaseActivity{
                 });
 
                 //登陆
-                holder.findViewById(R.id.tvLogin).setOnClickListener(view -> {
+                TextView tvLogin = holder.findViewById(R.id.tvLogin);
+                tvLogin.setOnClickListener(view -> {
                     if (TextUtils.isEmpty(etPhone.getText().toString())) {
                         ToastUtil.showShort(getContext(), "请输入手机号");
                         return;
                     }
-                    if (TextUtils.isEmpty(etCode.getText().toString())) {
-                        ToastUtil.showShort(getContext(), "请输入验证码");
-                        return;
-                    }
                     setLoaddingView(true);
                     phoneLogin(etPhone.getText().toString(), etCode.getText().toString());
+                });
+
+                etCode.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                            if (etCode.getText().toString().length()==6){
+                                tvLogin.setEnabled(true);
+                                tvLogin.setBackgroundResource(R.drawable.shape_db);
+                            }else {
+                                tvLogin.setEnabled(false);
+                                tvLogin.setBackgroundResource(R.drawable.shape_touming);
+                            }
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+
+                    }
                 });
             }
         };
@@ -179,17 +205,13 @@ public class LoginActivity extends BaseActivity{
         OkHttp3Utils.getInstance(this).doPostJson(UserUrl.login, map, new ObjectCallback<String>(this) {
             @Override
             public void onUi(String result) {
-                setLoaddingView(false);
-                Gson gson = new Gson();
-                UserMess userMess = gson.fromJson(result, UserMess.class);
-                if (userMess != null) {
-                    SPUtils.instance(getContext()).putUser(result);
-                    SPUtils.instance(getContext()).putObj("token", userMess.getToken());
-                    goTActivity(MainAc.class, null);
-                    overridePendingTransition(R.anim.activity_out,R.anim.activity_in);
-                    AppManager.getAppManager().finishActivity(LoginActivity.class);
+                SPUtils.instance(getContext()).putUser(result);
+                //判断是否首次登陆
+                boolean isFirst = (boolean) SPUtils.instance(getContext()).getkey("isFirst", true);
+                if (isFirst) {
+                    goTActivityTou(WellComePageActivity.class, null);
                 } else {
-                    ToastUtil.showShort(getContext(), "登陆异常");
+                    goTActivityTou(MainAc.class, null);
                 }
             }
 

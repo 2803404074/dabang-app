@@ -75,6 +75,20 @@ import static android.view.View.GONE;
 public class TCVideoRecordActivity extends Activity implements View.OnClickListener, BeautySettingPannel.IOnBeautyParamsChangeListener
         , TXRecordCommon.ITXVideoRecordListener, View.OnTouchListener, GestureDetector.OnGestureListener, ScaleGestureDetector.OnScaleGestureListener {
 
+    public static void openRecordActivity(Context context){
+        Intent intent = new Intent("com.record.recorctivity");
+        intent.putExtra(TCConstants.RECORD_CONFIG_MIN_DURATION, 5 * 1000);
+        intent.putExtra(TCConstants.RECORD_CONFIG_MAX_DURATION, 60 * 1000);
+        intent.putExtra(TCConstants.RECORD_CONFIG_ASPECT_RATIO, TXRecordCommon.VIDEO_ASPECT_RATIO_9_16);//视频比例
+        intent.putExtra(TCConstants.RECORD_CONFIG_RECOMMEND_QUALITY, TXRecordCommon.VIDEO_QUALITY_HIGH);//超清
+        intent.putExtra(TCConstants.RECORD_CONFIG_HOME_ORIENTATION, TXLiveConstants.VIDEO_ANGLE_HOME_DOWN); // 竖屏录制
+        intent.putExtra(TCConstants.RECORD_CONFIG_TOUCH_FOCUS, true);//手动对焦
+        intent.putExtra(TCConstants.RECORD_CONFIG_NEED_EDITER, true);//录制完去编辑
+        context.startActivity(intent);
+    }
+
+
+
     private static final String TAG = "TCVideoRecordActivity";
     private static final String OUTPUT_DIR_NAME = "TXUGC";
     private boolean mRecording = false;

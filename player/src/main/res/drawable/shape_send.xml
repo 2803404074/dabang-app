@@ -5,7 +5,9 @@
             android:shape="rectangle">
             <!-- 圆角红色按钮 -->
             <solid android:color="@color/dividerGrey"/>
-            <corners android:radius="@dimen/dp_15"/>
+            <corners
+               android:radius="@dimen/dp_10"
+                />
         </shape>
     </item>
 </selector>

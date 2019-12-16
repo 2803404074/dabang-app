@@ -29,5 +29,6 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(path: ':baselibrary')
+    implementation project(path: ':httplibrart')
     implementation files('libs/pldroid-player-2.1.9.jar')
 }

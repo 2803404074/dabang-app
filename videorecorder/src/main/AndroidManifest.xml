@@ -8,7 +8,11 @@
         <activity
             android:name=".TCVideoRecordActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:launchMode="singleTask"/>
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="com.record.recorctivity"/>
+            </intent-filter>
+        </activity>
         <activity
             android:name=".TCVideoRecordSmartActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" />

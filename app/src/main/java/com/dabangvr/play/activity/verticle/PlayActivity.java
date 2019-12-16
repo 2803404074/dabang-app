@@ -13,9 +13,11 @@ import androidx.viewpager.widget.ViewPager;
 import com.dabangvr.R;
 import com.dabangvr.comment.application.MyApplication;
 import com.dabangvr.live.activity.LiveBaseActivity;
+import com.dbvr.baselibrary.model.LiveMo;
 import com.dbvr.baselibrary.model.MainMo;
 import com.dbvr.baselibrary.utils.SPUtils;
 import com.dbvr.baselibrary.utils.ToastUtil;
+import com.dbvr.baselibrary.utils.UserHolper;
 import com.dbvr.httplibrart.constans.DyUrl;
 import com.dbvr.httplibrart.utils.ObjectCallback;
 import com.dbvr.httplibrart.utils.OkHttp3Utils;
@@ -41,9 +43,9 @@ import fr.castorflex.android.verticalviewpager.VerticalViewPager;
 
 import static com.zego.zegoliveroom.constants.ZegoConstants.RoomRole.Audience;
 
-public class PlayActivityCoPy extends LiveBaseActivity {
+public class PlayActivity extends LiveBaseActivity {
 
-    public static PlayActivityCoPy playInstance;
+    public static PlayActivity playInstance;
 
     @BindView(R.id.view_pager)
     VerticalViewPager mViewPager;
@@ -54,13 +56,9 @@ public class PlayActivityCoPy extends LiveBaseActivity {
     private ZegoLiveRoom zegoLiveRoom;
     private TextureView textureView;
 
-    private RoomFragment mRoomFragment = RoomFragment.newInstance();
+    private RoomFragment mRoomFragment;
 
-    private List<MainMo>mData = new ArrayList<>();
-
-    public ZegoLiveRoom getZegoLiveRoom() {
-        return zegoLiveRoom;
-    }
+    private List<LiveMo>mData = new ArrayList<>();
 
     public String getSteamID() {
         return steamID;
@@ -68,21 +66,40 @@ public class PlayActivityCoPy extends LiveBaseActivity {
 
     @Override
     public int setLayout() {
-        return R.layout.activity_play_co_py;
+        return R.layout.activity_play;
     }
 
     private int mCurrentItem;
     private int mRoomId = -1;
+    private LiveMo liveMo;
     @Override
     public void initView() {
         playInstance = this;
-        getUserMess();
+        userMess = UserHolper.getUserHolper(this).getUserMess();
+        MainMo mainMo = (MainMo) getIntent().getSerializableExtra("list");
+        //将跳转过来的直播对象放入直播列表中
+        liveMo = new LiveMo();
+        liveMo.setCoverUrl(mainMo.getCoverUrl());
+        liveMo.setFansNumber(mainMo.getFansNumber());
+        liveMo.setGoodsNumber(mainMo.getGoodsNumber());
+        liveMo.setHeadUrl(mainMo.getHeadUrl());
+        liveMo.setId(mainMo.getId());
+        liveMo.setJumpNo(mainMo.getJumpNo());
+        liveMo.setLookNum(mainMo.getLookNum());
+        liveMo.setPermanentResidence(mainMo.getPermanentResidence());
+        liveMo.setPraseCount(mainMo.getPraseCount());
+        liveMo.setNickName(mainMo.getNickName());
+        liveMo.setRoomId(mainMo.getRoomId());
+        liveMo.setTitle(mainMo.getTitle());
+        liveMo.setUserId(mainMo.getUserId());
+        liveMo.setLabelId(mainMo.getLabelId());
 
+        mRoomFragment = RoomFragment.newInstance(liveMo);
         mRoomContainer = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.view_room_containe_copyr, null);
         mFragmentContainer = mRoomContainer.findViewById(R.id.fragment_container);
         textureView = mRoomContainer.findViewById(R.id.textTureView);
 
-
+        //mData.add(liveMo);
         playPageAdapter = new PlayPageAdapter(mData);
         mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
@@ -213,26 +230,27 @@ public class PlayActivityCoPy extends LiveBaseActivity {
     public void initData() {
         //获取直播列表
         Map<String, Object> map = new HashMap<>();
-        map.put("liveTag", getIntent().getIntExtra("typeId",0));
+        map.put("liveTag", liveMo.getLabelId());
         map.put("page", page);
         map.put("userId", SPUtils.instance(getContext()).getUser().getId());
         OkHttp3Utils.getInstance(getContext()).doPostJson(DyUrl.getOnlineList, map, new ObjectCallback<String>(getContext()) {
             @Override
             public void onUi(String result) {
-                List<MainMo> list = new Gson().fromJson(result,
-                        new TypeToken<List<MainMo>>() {}.getType());
+                List<LiveMo> list = new Gson().fromJson(result,
+                        new TypeToken<List<LiveMo>>() {}.getType());
                 if (list != null && list.size()>0){
-                    mData = list;
-                    RoomFragment.liveData = mData.get(getIntent().getIntExtra("position",0));
-                    if (page==1){
-                        playPageAdapter.notifyData(list);
+                    mData.addAll(list);
+                    if (page == 1){
+                        mData.add(0,liveMo);
+                        playPageAdapter.notifyData(mData);
                     }else {
-                        playPageAdapter.addData(list);
+                        playPageAdapter.addData(mData);
                     }
                 }
             }
             @Override
             public void onFailed(String msg) {
+
             }
         });
     }

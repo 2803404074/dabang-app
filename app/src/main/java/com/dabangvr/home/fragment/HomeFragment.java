@@ -2,7 +2,7 @@ package com.dabangvr.home.fragment;
 
 import android.content.Context;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,30 +10,28 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.dabangvr.R;
 import com.dabangvr.comment.adapter.BaseRecyclerHolder;
-import com.dabangvr.comment.adapter.RecyclerAdapter;
-import com.dabangvr.play.activity.verticle.PlayActivityCoPy;
+import com.dabangvr.comment.adapter.RecyclerAdapterPosition;
+import com.dabangvr.home.activity.SearchActivity;
+import com.dabangvr.play.activity.verticle.PlayActivity;
 import com.dbvr.baselibrary.model.MainMo;
 import com.dbvr.baselibrary.utils.SPUtils;
 import com.dbvr.baselibrary.view.BaseFragmentFromType;
 import com.dbvr.httplibrart.constans.DyUrl;
 import com.dbvr.httplibrart.utils.ObjectCallback;
 import com.dbvr.httplibrart.utils.OkHttp3Utils;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.tencent.liteav.demo.my.activity.ShortVideoActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.BindView;
-
 public class HomeFragment extends BaseFragmentFromType {
 
     private RecyclerView recyclerView;
-    private RecyclerAdapter adapter;
+    private RecyclerAdapterPosition adapter;
     private List<MainMo>mData = new ArrayList<>();
     private TextView tvShow;
     private SwipeRefreshLayout refreshLayout;
@@ -57,27 +55,41 @@ public class HomeFragment extends BaseFragmentFromType {
 
         recyclerView.setBackgroundResource(R.color.color_f1);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
-        adapter = new RecyclerAdapter<MainMo>(getContext(),mData,R.layout.item_main) {
+        adapter = new RecyclerAdapterPosition<MainMo>(getContext(),mData,R.layout.item_main) {
             @Override
-            public void convert(Context mContext, BaseRecyclerHolder holder, MainMo o) {
-                    holder.setImageByUrl(R.id.miv_view,o.getCoverUrl());
-                    holder.setText(R.id.tvLookNum,o.getLookNum());
-                    SimpleDraweeView sdvHead = holder.getView(R.id.sdvHead);
-                    sdvHead.setImageURI(o.getHeadUrl());
-                    holder.setText(R.id.tvUserName,o.getNickName());
-                    holder.setText(R.id.tvLiveTitle,o.getLiveTitle());
-                    holder.setText(R.id.tvGoodsTitle,o.getGoodsTitle());
-                    holder.setText(R.id.tvPrice,o.getGoodsPrice());
-                    holder.setImageByUrl(R.id.mivGoods,o.getGoodsCover());
+            public void convert(Context mContext, BaseRecyclerHolder holder,int position, MainMo o) {
+                //公共信息
+                holder.setImageByUrl(R.id.miv_view,o.getCoverUrl());//封面
+                holder.setHeadByUrl(R.id.sdvHead,o.getHeadUrl());//头像
+                holder.setText(R.id.tvUserName,o.getNickName());//昵称
+                holder.setText(R.id.tvLiveTitle,o.getTitle());//标题
+                holder.setText(R.id.tvGoodsTitle,o.getGoodsTitle());//商品标题
+                holder.setText(R.id.tvPrice,o.getGoodsPrice());//商品价钱
+                holder.setImageByUrl(R.id.mivGoods,o.getGoodsCover());//商品封面
+                holder.setText(R.id.tvLiveTitle,o.getTitle());//标题
+                //直播类型
+                if (o.getLive()){
+                    holder.getView(R.id.tvTag).setVisibility(View.VISIBLE);//显示"正在直播"字样
+                    holder.setImageResource(R.id.ivTable,R.mipmap.see);//改为观看的图片
+                    holder.setText(R.id.tvLookNum,o.getLookNum());//观看数量
+                }else {
+                    holder.getView(R.id.tvTag).setVisibility(View.GONE);//隐藏"正在直播"字样
+                    holder.setImageResource(R.id.ivTable,R.mipmap.mess_dz);//把观看的图片改成点赞图片
+                    holder.setText(R.id.tvLookNum,o.getPraseCount());
+                }
             }
         };
         recyclerView.setAdapter(adapter);
 
         adapter.setOnItemClickListener((view, position) -> {
             Map<String,Object>map = new HashMap<>();
-            map.put("typeId",getcType());
-            map.put("position",position);
-            goTActivity(PlayActivityCoPy.class, map);
+            MainMo mainMo = (MainMo) adapter.getData().get(position);
+            map.put("mainMo",mainMo);
+            if (mainMo.getLive()){
+                goTActivity(PlayActivity.class, map);
+            }else {
+                goTActivity(ShortVideoActivity.class, map);
+            }
         });
 
         refreshLayout.setColorSchemeResources(R.color.colorDb5,R.color.colorAccentButton,R.color.text8);
@@ -100,7 +112,7 @@ public class HomeFragment extends BaseFragmentFromType {
         map.put("liveTag", cType);
         map.put("page", page);
         map.put("userId", SPUtils.instance(getContext()).getUser().getId());
-        OkHttp3Utils.getInstance(getContext()).doPostJson(DyUrl.getOnlineList, map, new ObjectCallback<String>(getContext()) {
+        OkHttp3Utils.getInstance(getContext()).doPostJson(DyUrl.indexTT, map, new ObjectCallback<String>(getContext()) {
             @Override
             public void onUi(String result) {
                 List<MainMo> list = new Gson().fromJson(result,
@@ -129,7 +141,14 @@ public class HomeFragment extends BaseFragmentFromType {
             }
             @Override
             public void onFailed(String msg) {
-                tvShow.setVisibility(View.VISIBLE);
+                if (mData!=null && mData.size()>0){
+                    tvShow.setVisibility(View.GONE);
+                }else {
+                    tvShow.setVisibility(View.VISIBLE);
+                }
+                if (refreshLayout.isRefreshing()){
+                    refreshLayout.setRefreshing(false);
+                }
                 isLoading(false);
             }
         });

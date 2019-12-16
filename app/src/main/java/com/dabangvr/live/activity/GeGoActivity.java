@@ -2,10 +2,7 @@ package com.dabangvr.live.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.SystemClock;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.TextureView;
@@ -16,10 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
-
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.dabangvr.R;
 import com.dabangvr.comment.adapter.BaseRecyclerHolder;
 import com.dabangvr.comment.adapter.RecyclerAdapter;
@@ -29,19 +24,15 @@ import com.dabangvr.live.gift.GiftViewBackup;
 import com.dabangvr.live.gift.danmu.DanmuAdapter;
 import com.dabangvr.live.gift.danmu.DanmuEntity;
 import com.dabangvr.play.activity.verticle.LiveInterFace;
-import com.dabangvr.util.OpenCameUtil;
 import com.dbvr.baselibrary.model.DepMo;
-import com.dbvr.baselibrary.model.MainMo;
-import com.dbvr.baselibrary.model.QiniuUploadFile;
+import com.dbvr.baselibrary.model.LiveMo;
 import com.dbvr.baselibrary.model.TagMo;
-import com.dbvr.baselibrary.ui.MyImageView;
 import com.dbvr.baselibrary.utils.BottomDialogUtil2;
 import com.dbvr.baselibrary.utils.DataUtil;
 import com.dbvr.baselibrary.utils.DialogUtil;
-import com.dbvr.baselibrary.utils.OnUploadListener;
-import com.dbvr.baselibrary.utils.QiniuUploadManager;
 import com.dbvr.baselibrary.utils.StringUtils;
 import com.dbvr.baselibrary.utils.ToastUtil;
+import com.dbvr.baselibrary.utils.UserHolper;
 import com.dbvr.baselibrary.view.AppManager;
 import com.dbvr.httplibrart.constans.DyUrl;
 import com.dbvr.httplibrart.utils.ObjectCallback;
@@ -71,23 +62,14 @@ import com.zego.zegoliveroom.entity.ZegoUserState;
 
 import org.json.JSONException;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-import static com.dabangvr.util.OpenCameUtil.REQ_1;
-import static com.dabangvr.util.OpenCameUtil.REQ_2;
-import static com.dabangvr.util.OpenCameUtil.REQ_4;
-import static com.dabangvr.util.OpenCameUtil.imageUri;
 import static com.zego.zegoliveroom.constants.ZegoConstants.RoomRole.Anchor;
 
 public class GeGoActivity extends LiveBaseActivity{
@@ -96,9 +78,7 @@ public class GeGoActivity extends LiveBaseActivity{
 
     @BindView(R.id.textTureView)
     TextureView textureView;
-    @BindView(R.id.iv_content)
-    MyImageView imageView;
-    private File file;//封面
+
     @BindView(R.id.etInput)
     EditText etInput;
     @BindView(R.id.switch_my)
@@ -170,6 +150,8 @@ public class GeGoActivity extends LiveBaseActivity{
                 llNet.setVisibility(View.GONE);
             }
         });
+
+        userMess = UserHolper.getUserHolper(this).getUserMess();
 
         //初始化
         zegoLiveRoom = MyApplication.getInstance().initGeGo();
@@ -419,7 +401,7 @@ public class GeGoActivity extends LiveBaseActivity{
             }
 
             @Override
-            public void updateRoom(MainMo o) {
+            public void updateRoom(LiveMo o) {
 
             }
         });
@@ -460,7 +442,7 @@ public class GeGoActivity extends LiveBaseActivity{
 
     private void initCommentUi() {
         doTopGradualEffect(recyclerView);
-        commentAdapter = new RecyclerAdapter<ZegoRoomMessage>(this, commentData, R.layout.item_comment) {
+        commentAdapter = new RecyclerAdapter<ZegoRoomMessage>(this, commentData, R.layout.item_video_comment) {
             @Override
             public void convert(Context mContext, BaseRecyclerHolder holder, ZegoRoomMessage o) {
                 TextView tvMess = holder.getView(R.id.tvMess);
@@ -506,7 +488,8 @@ public class GeGoActivity extends LiveBaseActivity{
         //点击商家列表获取该商家的商品分类标签
     }
 
-    @OnClick({R.id.tvFinishLive,R.id.llMys})
+    private boolean isBackCam = true;
+    @OnClick({R.id.tvFinishLive,R.id.llMys,R.id.ivChangeCame})
     public void onclick(View view){
         switch (view.getId()){
             case R.id.tvFinishLive:
@@ -519,37 +502,19 @@ public class GeGoActivity extends LiveBaseActivity{
             case R.id.llMys:
                 beautySet();
                 break;
+            case R.id.ivChangeCame://摄像头切换
+                zegoLiveRoom.setFrontCam(isBackCam);
+                isBackCam = !isBackCam;
+                break;
                 default:break;
         }
     }
-
-    public void onClickImage(View view) {
-        BottomDialogUtil2.getInstance(this).showLive(R.layout.dialog_came, view1 -> {
-            view1.findViewById(R.id.takePhoto).setOnClickListener(view2 -> {
-                //停止预览
-                zegoLiveRoom.stopPreview();
-                OpenCameUtil.openCamera(this);
-                BottomDialogUtil2.getInstance(this).dess();
-            });
-            view1.findViewById(R.id.choosePhoto).setOnClickListener(view2 -> {
-                OpenCameUtil.openAlbum(this);
-                BottomDialogUtil2.getInstance(this).dess();
-            });
-        });
-    }
-
-
     /**
      * 开始直播
      * @param view
      */
     public void onStartLive(View view){
 
-        //判断内容输入
-        if (file == null){
-            ToastUtil.showShort(getContext(),"请上传封面");
-            return;
-        }
         if (StringUtils.isEmpty(etInput.getText().toString())){
             ToastUtil.showShort(getContext(),"标题不能空着哦");
             return;
@@ -569,8 +534,7 @@ public class GeGoActivity extends LiveBaseActivity{
         initGift();
 
         initGiftMall();
-        //获取用户信息
-        getUserMess();
+
         //隐藏信息录入视图
         findViewById(R.id.llInput).setVisibility(View.GONE);
         //显示直播视图
@@ -578,7 +542,7 @@ public class GeGoActivity extends LiveBaseActivity{
         //设置主播袭信息
         tvNickName.setText(userMess.getNickName());
         sdvHead.setImageURI(userMess.getHeadUrl());
-        tvRoomNumber.setText("房间号：roomId123");
+        tvRoomNumber.setText("---");
         //房间相关设置
         setRoom();
         //推流相关设置
@@ -676,6 +640,7 @@ public class GeGoActivity extends LiveBaseActivity{
             // 当 listStream 为 null 时说明当前房间没有人推流
             if (stateCode == 0) {
                 Log.e("gego","登录房间成功");
+                tvRoomNumber.setText(roomId);
             } else {
                 // 登录房间失败请查看 登录房间错误码，如果错误码是网络问题相关的，App 提示用户稍后再试，或者 App 内部重试登录。
                 //Log.i("登录房间失败, stateCode : %d", stateCode);
@@ -734,8 +699,8 @@ public class GeGoActivity extends LiveBaseActivity{
                         chronometer.setOnChronometerTickListener(ch -> miss++);
                     });
 
-                    //上传封面
-                    upLoadCover();
+                    //将房间信息发送给后端
+                    senMessageToMyServer("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1576422286614&di=5b69ab064c48f8b7edaf3ae6cc6da98c&imgtype=0&src=http%3A%2F%2Fimge.kugou.com%2Fv2%2Fzhongchou%2FT1orAsBQKT1RCvBVdK.jpg");
                 }
             }
 
@@ -775,62 +740,9 @@ public class GeGoActivity extends LiveBaseActivity{
                 Log.e("gego","onCaptureAudioFirstFrame");
             }
         });
-
         //开始推流
         stremId = "stream"+System.currentTimeMillis()+userMess.getId();
         zegoLiveRoom.startPublishing(stremId, etInput.getText().toString(), ZegoConstants.PublishFlag.JoinPublish);
-
-    }
-
-    /**
-     * 先上获取七牛token
-     */
-    private void upLoadCover() {
-        OkHttp3Utils.getInstance(this).doPostJson(DyUrl.getUploadConfigToken, null, new ObjectCallback<String>(this) {
-            @Override
-            public void onUi(String result) {
-                QiniuUploadFile qiniuUploadFile = new Gson().fromJson(result, QiniuUploadFile.class);
-                upCover(qiniuUploadFile);//这里是七牛的token
-            }
-
-            @Override
-            public void onFailed(String msg) {
-                setLoaddingView(false);
-            }
-        });
-
-    }
-
-    /**
-     * 上传封面
-     * @param qiniuUploadFile
-     */
-    private void upCover(QiniuUploadFile qiniuUploadFile) {
-        qiniuUploadFile.setFile(file);
-        qiniuUploadFile.setKey("live-cover" + UUID.randomUUID());
-        QiniuUploadManager.getInstance(this).upload(qiniuUploadFile, new OnUploadListener() {
-            @Override
-            public void onStartUpload() { }
-            @Override
-            public void onUploadProgress(String key, double percent) { }
-
-            @Override
-            public void onUploadFailed(String key, String err) {
-                ToastUtil.showShort(getContext(),"封面上传失败,请检查您的网络"+err);
-            }
-
-            @Override
-            public void onUploadBlockComplete(String key) {
-                //上传成功，将信息发送给后端
-                senMessageToMyServer(key);
-            }
-
-            @Override
-            public void onUploadCompleted() { }
-
-            @Override
-            public void onUploadCancel() { }
-        });
     }
 
     /**
@@ -842,7 +754,7 @@ public class GeGoActivity extends LiveBaseActivity{
     private int deptId;
     private void senMessageToMyServer(String key){
         Map<String,Object>map = new HashMap<>();
-        map.put("liveTitle",etInput.getText().toString());
+        map.put("title",etInput.getText().toString());
         map.put("liveTag",typeId);
         map.put("deptId",deptId);
         map.put("coverUrl",key);
@@ -864,58 +776,11 @@ public class GeGoActivity extends LiveBaseActivity{
         });
     }
 
-
-
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case REQ_1: {
-                if (resultCode == RESULT_OK) {
-                    Intent intent = new Intent("com.android.camera.action.CROP");
-                    intent.setDataAndType(imageUri, "image/*");
-                    intent.putExtra("scale", true);
-                    intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-                    OpenCameUtil.startPhotoZoom(GeGoActivity.this, imageUri);
-                }
-                break;
-            }
-            case REQ_2: {
-                if (resultCode == RESULT_OK) {
-                    OpenCameUtil.startPhotoZoom(GeGoActivity.this, data.getData());
-                }
-                break;
-            }
-            case REQ_4: {
-                if (resultCode == RESULT_OK) {
-                    try {
-                        zegoLiveRoom.startPreview();
-                        Bitmap bitmapCamera = BitmapFactory.decodeStream(getContentResolver()
-                                .openInputStream(OpenCameUtil.imageUris));
-                        imageView.setImageBitmap(bitmapCamera);
-                        if (bitmapCamera != null) {
-                            try {
-                                file = new File(new URI(OpenCameUtil.imageUris.toString()));
-                            } catch (URISyntaxException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                        zegoLiveRoom.startPreview();
-                    }
-                }
-                break;
-            }
-            default:
-                super.onActivityResult(requestCode, resultCode, data);
-                break;
-        }
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
         //
-        DialogUtil.getInstance(getContext()).des();
+        DialogUtil.getInstance(this).des();
         //停止推流
         zegoLiveRoom.stopPublishing();
         //退出房间

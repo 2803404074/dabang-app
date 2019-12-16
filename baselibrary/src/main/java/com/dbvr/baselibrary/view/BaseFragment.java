@@ -12,8 +12,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 
+import com.dbvr.baselibrary.R;
 import com.dbvr.baselibrary.ui.LoadingUtils;
+import com.dbvr.baselibrary.utils.DialogUtil;
 import com.dbvr.baselibrary.utils.SPUtils;
+import com.dbvr.baselibrary.utils.UserHolper;
 
 import java.util.List;
 import java.util.Map;
@@ -31,16 +34,14 @@ public abstract class BaseFragment extends Fragment {
 
     private View rootView;
     protected Unbinder unbinder;
-
-    public View getRootView() {
-        return rootView;
-    }
+    protected boolean isLoadView = false;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if(rootView == null){
             rootView = inflater.inflate(layoutId(), container, false);
+            isLoadView = true;
         }else {
             //缓存的rootView需要判断是否已经被加过parent， 如果有parent需要从parent删除，要不然会发生这个rootview已经有parent的错误。
             ViewGroup parent = (ViewGroup) rootView.getParent();
@@ -49,28 +50,21 @@ public abstract class BaseFragment extends Fragment {
             }
         }
         unbinder = ButterKnife.bind(this, rootView);
-        initView();
+        if (isLoadView){
+            initView();
+            initData();
+        }
+        isLoadView = false;
         return  rootView;
     }
 
-    private LoadingUtils mLoaddingUtils;
-
-    public void setLoaddingView(boolean isLoadding){
-        if(mLoaddingUtils==null){
-            mLoaddingUtils=new LoadingUtils(BaseFragment.this.getContext());
+    public void isLoading(boolean t){
+        if (t){
+            DialogUtil.getInstance(getActivity()).showAn(R.layout.loading_layout,false, view -> {
+            });
+        }else {
+            DialogUtil.getInstance(getActivity()).des();
         }
-        if(isLoadding){
-            mLoaddingUtils.show();
-        }else{
-            mLoaddingUtils.dismiss();
-        }
-    }
-
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        initData();
     }
 
     public abstract int layoutId();
@@ -105,26 +99,13 @@ public abstract class BaseFragment extends Fragment {
         startActivity(intent);
     }
 
-    public void goTActivityForResult(final Class T, Map<String,Object> map,int requestCode){
+    public void goTActivityIntent(final Class T, Intent intent){
         if (T == null)return;
-        Intent intent = new Intent(getContext(),T);
-        if (map!=null){
-            for (String key : map.keySet()) {
-                if (map.get(key) instanceof Boolean){
-                    intent.putExtra(key,(boolean)map.get(key));
-                }
-                if (map.get(key) instanceof String){
-                    intent.putExtra(key,(String)map.get(key));
-                }
-                if (map.get(key) instanceof Integer){
-                    intent.putExtra(key,(Integer)map.get(key));
-                }
-            }
-        }
-        startActivityForResult(intent,requestCode);
+        startActivity(intent);
     }
+
     public String getToken(){
-        return (String) SPUtils.instance(BaseFragment.this.getContext()).getkey("token","");
+        return UserHolper.getUserHolper(getContext()).getToken();
     }
 
     @Override
@@ -132,5 +113,4 @@ public abstract class BaseFragment extends Fragment {
         super.onDestroyView();
         unbinder.unbind();
     }
-
 }

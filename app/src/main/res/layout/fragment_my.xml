@@ -1,10 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/white">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_60">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/test33" />
+        <ImageView
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:padding="@dimen/dp_5"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="@dimen/dp_10"
+            android:src="@mipmap/search"/>
+    </RelativeLayout>
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,11 +36,17 @@
         <RelativeLayout
             android:id="@+id/rlTop"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_300"
+            android:layout_height="wrap_content"
             app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
             <include layout="@layout/layout_user"/>
         </RelativeLayout>
-
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="服务"
+            android:padding="@dimen/dp_8"
+            android:textSize="@dimen/sp_16"
+            android:textColor="@color/textTitle" />
         <LinearLayout
             android:id="@+id/llMoney"
             android:layout_width="match_parent"
@@ -53,7 +81,7 @@
             android:id="@+id/llOrder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/dp_8"
+            android:layout_marginVertical="@dimen/dp_10"
             android:padding="@dimen/dp_5"
             android:orientation="horizontal">
             <ImageView
@@ -115,7 +143,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/dp_5"
-            android:layout_marginVertical="@dimen/dp_8"
+            android:layout_marginVertical="@dimen/dp_10"
             android:orientation="horizontal">
             <ImageView
                 android:layout_width="@dimen/dp_20"
@@ -142,11 +170,126 @@
                 android:padding="@dimen/dp_5"/>
         </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_10"
+            android:background="@color/color_home"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="推荐"
+            android:padding="@dimen/dp_8"
+            android:textSize="@dimen/sp_16"
+            android:textColor="@color/textTitle" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_5"
+            android:layout_marginTop="@dimen/dp_5"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_20"
+                android:layout_gravity="center"
+                android:src="@mipmap/setup"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="入驻"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/dp_5"
+                android:textSize="@dimen/sp_16"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1px"
+                android:layout_weight="1"/>
+            <ImageView
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_20"
+                android:src="@mipmap/back_b_black"
+                android:layout_gravity="center"
+                android:padding="@dimen/dp_5"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_5"
+            android:layout_marginTop="@dimen/dp_10"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_20"
+                android:layout_gravity="center"
+                android:src="@mipmap/setup"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="帮助"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/dp_5"
+                android:textSize="@dimen/sp_16"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1px"
+                android:layout_weight="1"/>
+            <ImageView
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_20"
+                android:src="@mipmap/back_b_black"
+                android:layout_gravity="center"
+                android:padding="@dimen/dp_5"/>
+        </LinearLayout>
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_5"
+        android:layout_marginTop="@dimen/dp_10"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
+            android:layout_gravity="center"
+            android:src="@mipmap/setup"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="上门服务"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:textSize="@dimen/sp_16"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1px"
+            android:layout_weight="1"/>
+        <ImageView
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
+            android:src="@mipmap/back_b_black"
+            android:layout_gravity="center"
+            android:padding="@dimen/dp_5"/>
+    </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_10"
+            android:background="@color/color_home"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="其他"
+            android:padding="@dimen/dp_8"
+            android:textSize="@dimen/sp_16"
+            android:textColor="@color/textTitle" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/color_e2e2e2"/>
         <LinearLayout
             android:id="@+id/llSet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/dp_5"
+            android:layout_marginTop="@dimen/dp_5"
             android:orientation="horizontal">
             <ImageView
                 android:layout_width="@dimen/dp_20"
@@ -178,7 +321,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/dp_5"
-            android:layout_marginVertical="@dimen/dp_8"
+            android:layout_marginVertical="@dimen/dp_10"
             android:orientation="horizontal">
             <ImageView
                 android:layout_width="@dimen/dp_20"
@@ -204,5 +347,6 @@
                 android:padding="@dimen/dp_5"/>
         </LinearLayout>
     </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
-</androidx.core.widget.NestedScrollView>
+</LinearLayout>

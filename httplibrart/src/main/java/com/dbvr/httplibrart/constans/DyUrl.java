@@ -5,8 +5,8 @@ public class DyUrl {
     public static final String QINIUDOMAN = "http://image.vrzbgw.com/";
     public static final String TOKEN_NAME = "DABANG-TOKEN";
 
-    //public static final String BASE = "http://192.168.0.112:8085/dabang/";
-    public static final String BASE = "http://api.vrzbgw.com:8085/dabang/";//远程
+    public static final String BASE = "http://192.168.0.112:8085/dabang/";
+    //public static final String BASE = "http://api.vrzbgw.com:8085/dabang/";//远程
 
 
     //（开播）获取已关联的商家
@@ -29,9 +29,6 @@ public class DyUrl {
     //收获地址列表
     public static final String getAddressList = "api/my/getAddressList";
 
-    //首页关注的主播正在直播的列表
-    public static final String indexFollowList = "api/index/indexFollowList";
-
     //关注主播
     public static final String updateFans = "api/my/updateFans";
 
@@ -52,9 +49,6 @@ public class DyUrl {
 
     //直播标签列表
     public static final String getLiveCategoryList = "api/live/getLiveCategoryList";
-
-    // 个人中心菜单接口
-    public static final String getChannelMenuList = "api/config/getChannelMenuList";
 
 
     //我的订单列表
@@ -90,6 +84,20 @@ public class DyUrl {
 
     //根据类型查询直播列表
     public static final String getOnlineList = "api/live/getOnlineList";
+
+    //短视频列表
+    public static final String getLiveShortVideoList = "api/liveShortVideo/getLiveShortVideoList";
+
+    //直播短视频列表
+    public static final String indexTT ="api/index/indexTT";
+
+
+    //短视频列表
+    public static final String getShortVideoComment = "api/liveShortVideo/getShortVideoComment";
+    //评论短视频
+    public static final String commentShortVideo = "api/liveShortVideo/commentShortVideo";
+    //点赞短视频
+    public static final String praseShortVideo = "api/liveShortVideo/praseShortVideo";
 
     //根据定位直播列表
     public static final String getCityOnlineList = "api/live/getCityOnlineList";

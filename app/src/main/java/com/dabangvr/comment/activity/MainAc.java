@@ -1,40 +1,46 @@
 package com.dabangvr.comment.activity;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.dabangvr.R;
-import com.dabangvr.comment.service.UserHolper;
+import com.dabangvr.comment.application.MyApplication;
+import com.dabangvr.home.fragment.VideoFragment;
+import com.dbvr.baselibrary.utils.UserHolper;
 import com.dabangvr.comment.view.NavHelper;
 import com.dabangvr.home.fragment.CityFragment;
-import com.dabangvr.home.fragment.HomeFragment;
 import com.dabangvr.home.fragment.HomeFragmentHome;
 import com.dabangvr.home.fragment.MessageFragment;
 import com.dabangvr.home.fragment.MyFragment;
+import com.dabangvr.live.activity.GeGoActivity;
 import com.dbvr.baselibrary.model.UserMess;
+import com.dbvr.baselibrary.utils.BottomDialogUtil2;
 import com.dbvr.baselibrary.utils.SPUtils;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
+import com.dbvr.baselibrary.utils.ToastUtil;
 import com.dbvr.baselibrary.view.AppManager;
 import com.dbvr.baselibrary.view.BaseActivity;
-import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.EMError;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.exceptions.HyphenateException;
+import com.tencent.liteav.demo.videorecord.TCVideoRecordActivity;
 
 import butterknife.BindView;
 
 public class MainAc extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener, NavHelper.OnTabChangeListener<String> {
+
     @BindView(R.id.bnvView)
     BottomNavigationView bottomNavigationView;
 
@@ -51,25 +57,13 @@ public class MainAc extends BaseActivity implements BottomNavigationView.OnNavig
 
     @Override
     public void initView() {
-        //这里就是获取所添加的每一个Tab(或者叫menu)，
-//        View tab = bottomNavigationView.getChildAt(3);
-//        BottomNavigationItemView itemView = (BottomNavigationItemView) tab;
-//
-//        //加载我们的角标View，新创建的一个布局
-//        ViewGroup badge = (ViewGroup) LayoutInflater.from(this).inflate(R.layout.menu_badge,null);
-//
-//        //添加到Tab上
-//        itemView.addView(badge);
-//
-//        TextView count = badge.findViewById(R.id.tvTab);
-//        count.setText(String.valueOf(1));
-//        count.setVisibility(View.VISIBLE);
-
-
+        findViewById(R.id.rlFunction).setOnClickListener((view)->{
+            showFunction();
+        });
         mNavHelper = new NavHelper<String>(this,R.id.fg_layout,getSupportFragmentManager(),this);
         mNavHelper.add(R.id.navigation_home,new NavHelper.Tab<>(HomeFragmentHome.class,"aaa"))
                 .add(R.id.navigation_tc,new NavHelper.Tab<>(CityFragment.class,"aaa"))
-                .add(R.id.navigation_video,new NavHelper.Tab<>(MessageFragment.class,"aaa"))
+                .add(R.id.navigation_mess,new NavHelper.Tab<>(MessageFragment.class,"aaa"))
                 .add(R.id.navigation_my,new NavHelper.Tab<>(MyFragment.class,"aaa"));
 
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
@@ -143,7 +137,11 @@ public class MainAc extends BaseActivity implements BottomNavigationView.OnNavig
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        return mNavHelper.performClickMenu(item.getItemId());
+        if (item.getItemId() == R.id.navigation_function){
+            return false;
+        }else {
+            return mNavHelper.performClickMenu(item.getItemId());
+        }
     }
 
 
@@ -157,6 +155,7 @@ public class MainAc extends BaseActivity implements BottomNavigationView.OnNavig
                 exitTime = System.currentTimeMillis();
             } else {
                 AppManager.getAppManager().AppExit(this);
+                UserHolper.getUserHolper(getContext()).ondessUser();
             }
             return true;
         }
@@ -173,4 +172,51 @@ public class MainAc extends BaseActivity implements BottomNavigationView.OnNavig
     public void onTabChange(NavHelper.Tab<String> newTab, NavHelper.Tab<String> oldTab) {
 
     }
+    private void showFunction() {
+        BottomDialogUtil2.getInstance(this).show(R.layout.dialog_main_function, 0, view -> {
+            view.findViewById(R.id.tvOpenLive).setOnClickListener(view13 -> {
+                //goTActivity(CreateLiveActivity.class,null);
+                checkPermission();
+                BottomDialogUtil2.getInstance(this).dess();
+            });
+            view.findViewById(R.id.tvOpenVideo).setOnClickListener(view12 -> {
+                startVideoRecordActivity();
+                BottomDialogUtil2.getInstance(this).dess();
+            });
+            view.findViewById(R.id.ivClose).setOnClickListener(view1 -> BottomDialogUtil2.getInstance(this).dess());
+        });
+    }
+
+    private void startVideoRecordActivity() {
+        MyApplication.getInstance().initShortVideo();
+        TCVideoRecordActivity.openRecordActivity(this);
+    }
+
+    private void checkPermission() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            int checkCallPhonePermission = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
+            if (checkCallPhonePermission != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 222);
+                return;
+            } else {
+                goTActivity(GeGoActivity.class, null);
+            }
+        } else {
+            goTActivity(GeGoActivity.class, null);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == 222){
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                goTActivity(GeGoActivity.class, null);
+            } else {
+                ToastUtil.showShort(getContext(),"您已禁用了相机权限，将无法使用开播功能");
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+
 }

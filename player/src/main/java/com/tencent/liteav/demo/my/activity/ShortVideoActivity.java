@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.dbvr.baselibrary.adapter.ContentPagerAdapter;
+import com.dbvr.baselibrary.model.MainMo;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
 import com.dbvr.baselibrary.view.BaseActivity;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
@@ -24,6 +25,7 @@ public class ShortVideoActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
         StatusBarUtil.setRootViewFitsSystemWindows(this, false);
     }
 
@@ -38,7 +40,9 @@ public class ShortVideoActivity extends BaseActivity {
         viewPager = findViewById(R.id.viewPager);
 
         mFragments = new ArrayList<>();
-        mFragments.add(new ShortVideoFragment());
+
+        MainMo person = (MainMo) getIntent().getSerializableExtra("list");
+        mFragments.add(new ShortVideoFragment(person));
         mFragments.add(new ShortVideoFragment());
         List<String> mTitles = new ArrayList<>();
         mTitles.add("推荐");
@@ -52,5 +56,11 @@ public class ShortVideoActivity extends BaseActivity {
     @Override
     public void initData() {
 
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.scale_in_disappear,R.anim.scale_out_disappear);
     }
 }

@@ -16,17 +16,17 @@ import com.dbvr.baselibrary.R;
  */
 public class DialogUtil {
     private static DialogUtil dialogUtil;
-    private Context context;
+    private Activity context;
     private AlertDialog dialog;
 
-    public static DialogUtil getInstance(Context mContext) {
+    public static DialogUtil getInstance(Activity mContext) {
         if (dialogUtil == null) {
             dialogUtil = new DialogUtil(mContext);
         }
         return dialogUtil;
     }
 
-    public DialogUtil(Context context) {
+    public DialogUtil(Activity context) {
         this.context = context;
     }
 
@@ -64,7 +64,10 @@ public class DialogUtil {
         convers.setView(view);
         dialog = new AlertDialog.Builder(context, R.style.TransparentDialog).setView(view).create();
         dialog.setCanceledOnTouchOutside(isCancel);
-        dialog.show();
+        if (!context.isFinishing()){
+            dialog.show();
+        }
+
         WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
         params.width = (ScreenUtils.getScreenWidth(context) / 4 * 3);
         params.height = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -79,8 +82,6 @@ public class DialogUtil {
         }
         return false;
     }
-
-
     public void des() {
         if (dialog != null) {
             dialog.dismiss();

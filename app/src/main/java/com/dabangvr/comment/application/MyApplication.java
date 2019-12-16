@@ -4,20 +4,10 @@ import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 import android.content.IntentFilter;
-import android.graphics.PixelFormat;
 import android.net.ConnectivityManager;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.TextureView;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.TextView;
 
-import com.dabangvr.R;
 import com.dbvr.baselibrary.utils.NetWorkStateReceiver;
 import com.dbvr.baselibrary.utils.ToastUtil;
-import com.dbvr.baselibrary.view.AppManager;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMOptions;
@@ -30,13 +20,14 @@ import com.zego.zegoliveroom.ZegoLiveRoom;
 import java.util.Iterator;
 import java.util.List;
 
-import static com.dbvr.baselibrary.other.ThirdParty.WECHART_APP_ID;
+import static com.dbvr.baselibrary.model.ThirdParty.WECHART_APP_ID;
 
 public class MyApplication extends Application implements NetWorkStateReceiver.NetCallBack {
 
     private NetWorkStateReceiver netWorkStateReceiver;
     public static IWXAPI api;
     private static MyApplication instance;
+    public static Context appContext;
     public static MyApplication getInstance() {
         return instance;
     }
@@ -45,6 +36,7 @@ public class MyApplication extends Application implements NetWorkStateReceiver.N
     public void onCreate() {
         super.onCreate();
         instance = this;
+        appContext = getApplicationContext();
         //网络变化
         if (netWorkStateReceiver == null) {
             netWorkStateReceiver = new NetWorkStateReceiver(this);
@@ -52,7 +44,6 @@ public class MyApplication extends Application implements NetWorkStateReceiver.N
         IntentFilter filter = new IntentFilter();
         filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
         registerReceiver(netWorkStateReceiver, filter);
-
 
         //圆形图像初始化
         Fresco.initialize(this);
@@ -115,7 +106,6 @@ public class MyApplication extends Application implements NetWorkStateReceiver.N
             ActivityManager.RunningAppProcessInfo info = (ActivityManager.RunningAppProcessInfo) (i.next());
             try {
                 if (info.pid == pID) {
-
                     processName = info.processName;
                     return processName;
                 }
@@ -205,4 +195,12 @@ public class MyApplication extends Application implements NetWorkStateReceiver.N
     public void setNetCallBack(NetCallBack netCallBack) {
         this.netCallBack = netCallBack;
     }
+
+
+    public void onDes(){
+        appContext = null;
+        api = null;
+        instance = null;
+    }
+
 }

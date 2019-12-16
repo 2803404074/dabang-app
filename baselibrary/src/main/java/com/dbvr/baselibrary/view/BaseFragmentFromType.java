@@ -16,8 +16,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.dbvr.baselibrary.R;
+import com.dbvr.baselibrary.model.MainMo;
 import com.dbvr.baselibrary.utils.DialogUtil;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -113,10 +115,11 @@ public abstract class BaseFragmentFromType<T> extends Fragment {
 
     public void isLoading(boolean t){
         if (t){
-            DialogUtil.getInstance(getContext()).showAn(R.layout.loading_layout,false, view -> {
+            if (DialogUtil.getInstance(getActivity()).isShow())return;
+            DialogUtil.getInstance(getActivity()).showAn(R.layout.loading_layout,false, view -> {
             });
         }else {
-            DialogUtil.getInstance(getContext()).des();
+            DialogUtil.getInstance(getActivity()).des();
         }
     }
 
@@ -191,8 +194,8 @@ public abstract class BaseFragmentFromType<T> extends Fragment {
                 if (map.get(key) instanceof Integer){
                     intent.putExtra(key,(Integer)map.get(key));
                 }
-                if (map.get(key) instanceof List){
-
+                if (map.get(key) instanceof MainMo){
+                    intent.putExtra("list",(MainMo)map.get(key) );
                 }
             }
         }

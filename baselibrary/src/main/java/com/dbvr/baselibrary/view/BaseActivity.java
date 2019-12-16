@@ -1,5 +1,6 @@
 package com.dbvr.baselibrary.view;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import com.dbvr.baselibrary.R;
 import com.dbvr.baselibrary.ui.LoadingUtils;
 import com.dbvr.baselibrary.utils.SPUtils;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
+import com.dbvr.baselibrary.utils.UserHolper;
 import com.r0adkll.slidr.Slidr;
 
 
@@ -119,6 +121,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         startActivityForResult(intent,requestCode);
     }
 
+
+    public void goTActivityIntent(final Class T, Intent intent){
+        if (T == null)return;
+        startActivity(intent);
+    }
+
     // 设置布局
     public abstract int setLayout();
 
@@ -128,7 +136,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-
         setLoaddingView(false);
         AppManager.getAppManager().finishActivity(this);
         super.onDestroy();
@@ -142,10 +149,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
 
-    public Context getContext() {
+    public Activity getContext() {
         return this;
     }
+
     public String getToken(){
-        return (String) SPUtils.instance(this.getContext()).getkey("token","");
+        return UserHolper.getUserHolper(getContext()).getToken();
     }
 }

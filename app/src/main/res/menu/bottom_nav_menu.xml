@@ -12,12 +12,11 @@
         android:title="同城" />
     <item
         android:id="@+id/navigation_function"
-        android:icon="@mipmap/add_main"
         android:title="" />
     <item
-        android:id="@+id/navigation_video"
+        android:id="@+id/navigation_mess"
         android:icon="@mipmap/main_mess_no"
-        android:title="视频" />
+        android:title="消息" />
 
     <item
         android:id="@+id/navigation_my"

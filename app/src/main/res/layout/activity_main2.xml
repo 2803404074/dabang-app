@@ -12,14 +12,44 @@
         android:id="@+id/fg_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/bnvView"/>
+        android:layout_above="@+id/rlBottom"/>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:background="@color/white"
-        android:id="@+id/bnvView"
+
+    <LinearLayout
+        android:id="@+id/rlBottom"
         android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        app:menu="@menu/bottom_nav_menu"
-        app:labelVisibilityMode="labeled"
-        android:layout_height="wrap_content"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:background="@color/white"
+            android:id="@+id/bnvView"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            app:menu="@menu/bottom_nav_menu"
+            app:labelVisibilityMode="labeled"
+            android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlFunction"
+        android:layout_marginBottom="@dimen/dp_15"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_width="@dimen/dp_35"
+        android:layout_height="@dimen/dp_35">
+        <ImageView
+            android:layout_width="@dimen/dp_35"
+            android:layout_height="@dimen/dp_35"
+            android:src="@mipmap/add_main"/>
+        <View
+            android:layout_width="@dimen/dp_10"
+            android:layout_height="@dimen/dp_10"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/shape_round_red"/>
+    </RelativeLayout>
+
+
+
 </RelativeLayout>

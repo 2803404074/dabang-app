@@ -1,70 +1,129 @@
 package com.dabangvr.home.fragment;
 
-import android.Manifest;
-import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.content.Context;
 import android.os.Build;
+import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
+
 import com.dabangvr.R;
-import com.dabangvr.comment.application.MyApplication;
+import com.dabangvr.comment.adapter.BaseRecyclerHolder;
+import com.dabangvr.comment.adapter.RecyclerAdapterPosition;
 import com.dabangvr.home.activity.SearchActivity;
-import com.dabangvr.live.activity.GeGoActivity;
 import com.dbvr.baselibrary.adapter.ContentPagerAdapter;
+import com.dbvr.baselibrary.model.FansMo;
 import com.dbvr.baselibrary.model.TagMo;
-import com.dbvr.baselibrary.utils.BottomDialogUtil2;
-import com.dbvr.baselibrary.utils.ToastUtil;
+import com.dbvr.baselibrary.utils.StringUtils;
+import com.dbvr.baselibrary.utils.UserHolper;
 import com.dbvr.baselibrary.view.BaseFragment;
 import com.dbvr.httplibrart.constans.DyUrl;
 import com.dbvr.httplibrart.utils.ObjectCallback;
 import com.dbvr.httplibrart.utils.OkHttp3Utils;
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
-import com.tencent.liteav.demo.my.activity.ShortVideoActivity;
-import com.tencent.liteav.demo.videorecord.TCVideoRecordActivity;
-import com.tencent.liteav.demo.videorecord.utils.TCConstants;
-import com.tencent.rtmp.TXLiveConstants;
-import com.tencent.ugc.TXRecordCommon;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
 public class HomeFragmentHome extends BaseFragment {
+    @BindView(R.id.head_layout)
+    LinearLayout headLayout;
+    @BindView(R.id.collapsingToolbarLayout)
+    CollapsingToolbarLayout collapsingToolbarLayout;
+    @BindView(R.id.app_bar_layout)
+    AppBarLayout appBarLayout;
+    @BindView(R.id.tb_atf_toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.recyclerFollow)
+    RecyclerView recyclerView;
+    private List<FansMo> mData = new ArrayList<>();
+    private RecyclerAdapterPosition adapterPosition;
     @BindView(R.id.tab_layout)
     SmartTabLayout tabLayout;
     @BindView(R.id.viewPager)
     ViewPager viewPager;
 
-    @BindView(R.id.tvVideo)
-    TextView tvVideo;
     private ArrayList<Fragment> mFragments;
     private ContentPagerAdapter contentAdapter;
 
     @Override
     public int layoutId() {
-        return R.layout.app_bar_main;
+        return R.layout.app_bar_main_copy;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void initView() {
-        tvVideo.setOnClickListener(view -> {
-            goTActivity(ShortVideoActivity.class,null);
-        });
+        LinearLayoutManager manager = new LinearLayoutManager(getContext());
+        manager.setOrientation(RecyclerView.HORIZONTAL);
+        recyclerView.setLayoutManager(manager);
+        adapterPosition = new RecyclerAdapterPosition<FansMo>(getContext(), mData, R.layout.item_head) {
+            @Override
+            public void convert(Context mContext, BaseRecyclerHolder holder, int position, FansMo o) {
+                holder.setHeadByUrl(R.id.sdvHead, o.getHeadUrl());
+                holder.setText(R.id.tv_nickName, o.getNickName());
+                if (o.isLive()) {
+                    holder.getView(R.id.tvLive).setVisibility(View.VISIBLE);
+                } else {
+                    holder.getView(R.id.tvLive).setVisibility(View.GONE);
+                }
+            }
+        };
+        recyclerView.setAdapter(adapterPosition);
+    }
+
+    @OnClick({R.id.ivSearchToolbar})
+    public void onclick(View view){
+        if (view.getId() == R.id.ivSearchToolbar){
+            goTActivity(SearchActivity.class,null);
+        }
+    }
+    @Override
+    public void initData() {
+        //获取关注人的列表
+        getFollowList();
+        //获取标签列表
         getType();
     }
 
-    @Override
-    public void initData() {
-
+    private void getFollowList() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("page", 1);
+        map.put("limit", 20);
+        OkHttp3Utils.getInstance(getContext()).doPostJson(DyUrl.getFocusedsList, map,
+                new ObjectCallback<String>(getContext()) {
+                    @Override
+                    public void onUi(String result) {
+                        List<FansMo> list = new Gson().fromJson(result, new TypeToken<List<FansMo>>() {
+                        }.getType());
+                        if (list != null && list.size() > 0) {
+                            mData = list;
+                            adapterPosition.updateDataa(mData);
+                            AppBarLayout.LayoutParams para1 = (AppBarLayout.LayoutParams) collapsingToolbarLayout.getLayoutParams();
+                            para1.height = 500;
+                            collapsingToolbarLayout.setLayoutParams(para1);
+                        }
+                    }
+                    @Override
+                    public void onFailed(String msg) {
+                        Log.e("result", "返回：" + msg);
+                    }
+                });
     }
 
     private void getType() {
@@ -95,73 +154,4 @@ public class HomeFragmentHome extends BaseFragment {
             }
         });
     }
-
-    @OnClick({R.id.ivSearch,R.id.ivFunction})
-    public void onclick(View view){
-        switch (view.getId()){
-            case R.id.ivSearch:
-                goTActivity(SearchActivity.class,null);
-                break;
-            case R.id.ivFunction:
-                showFunction();
-                break;
-                default:break;
-        }
-    }
-
-    private void showFunction() {
-        BottomDialogUtil2.getInstance(getActivity()).show(R.layout.dialog_main_function, 0, view -> {
-            view.findViewById(R.id.tvOpenLive).setOnClickListener(view13 -> {
-                //goTActivity(CreateLiveActivity.class,null);
-                checkPermission();
-                BottomDialogUtil2.getInstance(getActivity()).dess();
-            });
-            view.findViewById(R.id.tvOpenVideo).setOnClickListener(view12 -> {
-                startVideoRecordActivity();
-                BottomDialogUtil2.getInstance(getActivity()).dess();
-            });
-            view.findViewById(R.id.ivClose).setOnClickListener(view1 -> BottomDialogUtil2.getInstance(getActivity()).dess());
-        });
-    }
-
-    private void startVideoRecordActivity() {
-        MyApplication.getInstance().initShortVideo();
-        Intent intent = new Intent(getContext(), TCVideoRecordActivity.class);
-        intent.putExtra(TCConstants.RECORD_CONFIG_MIN_DURATION, 5 * 1000);
-        intent.putExtra(TCConstants.RECORD_CONFIG_MAX_DURATION, 60 * 1000);
-        intent.putExtra(TCConstants.RECORD_CONFIG_ASPECT_RATIO, TXRecordCommon.VIDEO_ASPECT_RATIO_9_16);//视频比例
-        intent.putExtra(TCConstants.RECORD_CONFIG_RECOMMEND_QUALITY, TXRecordCommon.VIDEO_QUALITY_HIGH);//超清
-        intent.putExtra(TCConstants.RECORD_CONFIG_HOME_ORIENTATION, TXLiveConstants.VIDEO_ANGLE_HOME_DOWN); // 竖屏录制
-        intent.putExtra(TCConstants.RECORD_CONFIG_TOUCH_FOCUS, true);//手动对焦
-        intent.putExtra(TCConstants.RECORD_CONFIG_NEED_EDITER, true);//录制完去编辑
-        startActivity(intent);
-    }
-
-    private void checkPermission() {
-        if (Build.VERSION.SDK_INT >= 23) {
-            int checkCallPhonePermission = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA);
-            if (checkCallPhonePermission != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, 222);
-                return;
-            } else {
-                goTActivity(GeGoActivity.class, null);
-            }
-        } else {
-            goTActivity(GeGoActivity.class, null);
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        if (requestCode == 222){
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                goTActivity(GeGoActivity.class, null);
-            } else {
-                ToastUtil.showShort(getContext(),"您已禁用了相机权限，将无法使用开播功能");
-            }
-        }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
-
-
 }

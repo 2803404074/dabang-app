@@ -1,4 +1,6 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -46,13 +48,13 @@ dependencies {
     api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
 
     //网络请求
-    api 'com.squareup.okhttp3:okhttp:3.12.0'
+    api 'com.squareup.okhttp3:okhttp:4.2.2'
 
     //数据解析
-    api 'com.google.code.gson:gson:2.8.5'
+    api 'com.google.code.gson:gson:2.8.6'
 
     //图片加载
-    api 'com.github.bumptech.glide:glide:4.8.0'
+    api 'com.github.bumptech.glide:glide:4.9.0'
 
     //原图头像
     api 'com.facebook.fresco:fresco:0.14.1'
@@ -92,7 +94,7 @@ dependencies {
      */
     api 'com.qiniu:happy-dns:0.2.13'
     api 'com.qiniu.pili:pili-android-qos:0.8.20'
-    api 'com.qiniu:qiniu-android-sdk:7.3.15'
+    api 'com.qiniu:qiniu-android-sdk:7.4.2'
 
     //superbutton 按钮
     api 'top.androidman:superbutton:1.1.1'
@@ -103,6 +105,11 @@ dependencies {
     //高德定位
     api 'com.amap.api:location:4.7.2'
 
-    api 'com.google.android.material:material:1.1.0-alpha09'
+    api 'com.google.android.material:material:1.2.0-alpha02'
+    api "androidx.core:core-ktx:1.1.0"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
+}
+repositories {
+    mavenCentral()
 }

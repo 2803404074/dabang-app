@@ -14,6 +14,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.dabangvr.R;
 import com.dbvr.baselibrary.ui.MyImageView;
 import com.dbvr.baselibrary.utils.StringUtils;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 /**
  * 万能RecyclerHolder
@@ -99,6 +100,14 @@ public class BaseRecyclerHolder extends RecyclerView.ViewHolder {
             options.error(R.mipmap.err);
             //GlideLoadUtils.getInstance().glideLoad(context,url,(ImageView) getView(viewId));
             Glide.with(context).load(url).apply(options).into((ImageView) getView(viewId));
+        }
+        return this;
+    }
+
+    public BaseRecyclerHolder setHeadByUrl(int viewId, String url) {
+        if (!StringUtils.isEmpty(url) && !url.endsWith("null")) {
+            SimpleDraweeView simpleDraweeView = getView(viewId);
+            simpleDraweeView.setImageURI(url);
         }
         return this;
     }

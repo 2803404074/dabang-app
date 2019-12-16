@@ -16,29 +16,18 @@
     <LinearLayout
         android:id="@+id/llInput"
         android:focusable="true"
+        android:layout_alignParentBottom="true"
         android:focusableInTouchMode="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="@dimen/dp_400"
         android:orientation="vertical">
-        <com.dbvr.baselibrary.ui.MyImageView
-            android:id="@+id/iv_content"
-            android:layout_marginTop="@dimen/dp_50"
-            android:onClick="onClickImage"
-            android:layout_gravity="center"
-            android:layout_width="@dimen/dp_60"
-            android:layout_height="@dimen/dp_84"
-            android:scaleType="fitXY"
-            roundiv:radius="@dimen/dp_5"
-            android:src="@mipmap/test"
-            tools:ignore="OnClick" />
 
         <EditText
             android:id="@+id/etInput"
             android:layout_width="match_parent"
             android:layout_marginHorizontal="@dimen/dp_20"
-            android:layout_marginTop="@dimen/dp_10"
             android:layout_height="wrap_content"
-            android:hint="直播标题"
+            android:hint="Hi~绚丽的标题"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
             android:padding="@dimen/dp_5"

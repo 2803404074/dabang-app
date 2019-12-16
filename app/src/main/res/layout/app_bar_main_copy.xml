@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinator_Layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar_layout"
+        android:background="@color/colorDb5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapsingToolbarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:contentScrim="@color/colorDb5"
+            app:statusBarScrim="@color/colorDb5"
+            app:titleEnabled="false"
+            app:collapsedTitleTextAppearance="@style/ToolBarTitleText"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+
+            <LinearLayout
+                android:id="@+id/head_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/dp_40"
+                app:layout_collapseMode="pin"
+                app:layout_collapseParallaxMultiplier="0.2">
+
+                <View
+                    android:layout_width="1px"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerFollow"
+                    android:layout_marginHorizontal="@dimen/dp_5"
+                    android:layout_marginBottom="@dimen/dp_5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <!--Toolbar放在下面不然会被挡住-->
+            <androidx.appcompat.widget.Toolbar
+                app:contentInsetStart="@dimen/dp_10"
+                android:id="@+id/tb_atf_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40"
+                app:layout_collapseMode="pin"
+                android:paddingTop="@dimen/dp_5"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="海挑跳"
+                    android:layout_gravity="start"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/sp_25"
+                    android:textColor="@color/white"/>
+                <ImageView
+                    android:layout_width="@dimen/dp_35"
+                    android:layout_height="@dimen/dp_35"
+                    android:src="@mipmap/search"
+                    android:padding="@dimen/dp_5"
+                    android:layout_marginRight="@dimen/dp_5"
+                    android:layout_gravity="end"
+                    android:id="@+id/ivSearchToolbar" />
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+        <com.ogaclejapan.smarttablayout.SmartTabLayout
+            android:id="@+id/tab_layout"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_35"
+            android:layout_marginBottom="@dimen/dp_4"
+            app:stl_indicatorWithoutPadding="true"
+            app:stl_indicatorInterpolation="smart"
+            app:stl_indicatorColor="@color/colorWhite"
+            app:stl_indicatorThickness="@dimen/dp_2"
+            app:stl_indicatorWidth="auto"
+            app:stl_customTabTextLayoutId="@layout/view_tab_text"
+            app:stl_defaultTabTextHorizontalPadding="@dimen/dp_5"
+            app:stl_indicatorCornerRadius="2dp"
+            app:stl_overlineThickness="0dp"
+            app:stl_underlineThickness="0dp"
+            app:stl_dividerThickness="0dp"
+            app:stl_drawDecorationAfterTab="true" />
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nsv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPager"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:layout_below="@+id/llMainTop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

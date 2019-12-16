@@ -3,27 +3,39 @@
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:id="@+id/rlContent"
+    android:layout_marginHorizontal="@dimen/dp_1"
+    android:layout_marginTop="@dimen/dp_2"
     android:background="@color/color_e2e2e2"
-    android:layout_height="@dimen/dp_170">
+    android:layout_height="wrap_content">
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/miv_view"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_170"
-        android:layout_gravity="center"
-        android:scaleType="centerCrop"/>
+        android:layout_height="wrap_content"
+        fresco:placeholderImage="@mipmap/err"
+        android:scaleType="centerCrop"
+        fresco:progressBarAutoRotateInterval="1000"
+        fresco:progressBarImage="@mipmap/loading"
+        fresco:roundAsCircle="true" />
 
     <TextView
-        android:id="@+id/tvTag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
         android:layout_margin="@dimen/dp_5"
-        android:background="@drawable/shape_style_green_blue"
-        android:paddingHorizontal="@dimen/dp_5"
-        android:paddingVertical="@dimen/dp_2"
-        android:text="直播中"
-        android:textSize="@dimen/dp_8"
-        android:textColor="@color/white" />
+        android:textSize="@dimen/sp_14"
+        android:text="5km"/>
+    <TextView
+        android:layout_above="@+id/sdvHead"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lines="2"
+        android:ellipsize="end"
+        android:textSize="@dimen/sp_16"
+        android:textColor="@color/white"
+        android:padding="@dimen/dp_5"
+        android:text="瑜伽正确的打开方式，5分钟教你成就身材狂魔~~~"
+        />
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/sdvHead"
@@ -31,6 +43,9 @@
         android:layout_width="@dimen/dp_30"
         android:layout_height="@dimen/dp_30"
         android:layout_marginLeft="@dimen/dp_5"
+        fresco:placeholderImage="@mipmap/err"
+        fresco:progressBarAutoRotateInterval="1000"
+        fresco:progressBarImage="@mipmap/loading"
         fresco:roundAsCircle="true" />
     <LinearLayout
         android:id="@+id/llBottom"
@@ -65,7 +80,7 @@
             android:layout_width="@dimen/dp_20"
             android:layout_height="@dimen/dp_20"
             android:layout_gravity="center"
-            android:src="@mipmap/see" />
+            android:src="@mipmap/mess_dz" />
 
         <TextView
             android:id="@+id/zb_likeCounts"

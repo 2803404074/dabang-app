@@ -42,6 +42,7 @@ public class OkHttp3Utils {
     }
 
     public static OkHttp3Utils getInstance(Context mContext) {
+        if (mContext == null)return null;
         if (okHttp3Utils == null) {
             //加同步安全
             synchronized (OkHttp3Utils.class) {
@@ -50,7 +51,6 @@ public class OkHttp3Utils {
                 }
             }
         }
-
         return okHttp3Utils;
     }
 

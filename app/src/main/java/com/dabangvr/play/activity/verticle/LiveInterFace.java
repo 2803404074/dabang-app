@@ -3,6 +3,7 @@ package com.dabangvr.play.activity.verticle;
 import com.dabangvr.live.gift.GiftMo;
 import com.dabangvr.live.gift.danmu.DanmuEntity;
 import com.dabangvr.play.model.LiveData;
+import com.dbvr.baselibrary.model.LiveMo;
 import com.dbvr.baselibrary.model.MainMo;
 import com.opensource.svgaplayer.SVGAVideoEntity;
 
@@ -16,5 +17,5 @@ public interface LiveInterFace<T> {
     void updateGift(GiftMo giftMo);
     void updateGiftMall(SVGAVideoEntity giftMo, int arg0, boolean arg1);
     void updateDz(int num);
-    void updateRoom(MainMo mData);
+    void updateRoom(LiveMo mData);
 }

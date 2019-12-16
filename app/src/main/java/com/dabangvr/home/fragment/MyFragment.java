@@ -6,7 +6,7 @@ import android.widget.TextView;
 import com.dabangvr.R;
 import com.dabangvr.comment.activity.LoginActivity;
 import com.dabangvr.comment.activity.MainActivity;
-import com.dabangvr.comment.service.UserHolper;
+import com.dbvr.baselibrary.utils.UserHolper;
 import com.dabangvr.home.activity.SearchActivity;
 import com.dabangvr.mall.activity.CartActivity;
 import com.dabangvr.mall.activity.OrderActivity;
@@ -16,7 +16,6 @@ import com.dabangvr.user.activity.UserIntroduceActivity;
 import com.dabangvr.user.activity.UserMessActivity;
 import com.dabangvr.user.activity.UserSettingActivity;
 import com.dbvr.baselibrary.model.UserMess;
-import com.dbvr.baselibrary.utils.Conver;
 import com.dbvr.baselibrary.utils.DialogUtil;
 import com.dbvr.baselibrary.utils.StringUtils;
 import com.dbvr.baselibrary.view.AppManager;
@@ -68,11 +67,11 @@ public class MyFragment extends BaseFragment {
     }
 
     private void showLoginTips() {
-        DialogUtil.getInstance(getContext()).show(R.layout.dialog_tip,true, view -> {
+        DialogUtil.getInstance(getActivity()).show(R.layout.dialog_tip,true, view -> {
               TextView textView = view.findViewById(R.id.tv_title);
               textView.setText("是否前往登陆？");
               view.findViewById(R.id.tvCancel).setOnClickListener((view1)->{
-                  DialogUtil.getInstance(getContext()).des();
+                  DialogUtil.getInstance(getActivity()).des();
               });
             view.findViewById(R.id.tvConfirm).setOnClickListener((view1)->{
                 goTActivity(LoginActivity.class,null);

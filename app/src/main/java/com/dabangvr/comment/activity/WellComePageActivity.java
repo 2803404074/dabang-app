@@ -114,7 +114,7 @@ public class WellComePageActivity extends BaseActivity implements ViewPager.OnPa
             case R.id.text_time:
                 setLoaddingView(true);
                 SPUtils.instance(this).put("isFirst",false);
-                Intent intent = new Intent(this,MainActivity.class);
+                Intent intent = new Intent(this,MainAc.class);
                 startActivity(intent);
                 finish();
                 break;

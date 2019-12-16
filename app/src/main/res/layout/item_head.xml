@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="@dimen/dp_5">
+    android:layout_marginHorizontal="@dimen/dp_5"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/tvLive"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="直播"
+        android:textColor="@color/white"
+        android:drawableLeft="@mipmap/dian"
+        android:paddingHorizontal="@dimen/dp_5"
+        android:paddingVertical="@dimen/dp_1"
+        android:background="@drawable/shape_style_green_blue"/>
 
     <!-- progressBarImage 正在加载的图-->
     <!-- progressBarAutoRotateInterval 正在加载的图的旋转间隔-->
@@ -12,8 +22,8 @@
     <!-- roundingBorderColor 边框颜色-->
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/sdvHead"
-        android:layout_width="@dimen/dp_65"
-        android:layout_height="@dimen/dp_65"
+        android:layout_width="@dimen/dp_55"
+        android:layout_height="@dimen/dp_55"
         android:layout_gravity="center"
         fresco:progressBarAutoRotateInterval="1000"
         fresco:progressBarImage="@mipmap/loading"
@@ -22,6 +32,8 @@
         fresco:roundingBorderWidth="@dimen/dp_3" />
 
     <TextView
+        android:layout_below="@+id/sdvHead"
+        android:layout_centerHorizontal="true"
         android:id="@+id/tv_nickName"
         android:layout_width="@dimen/dp_55"
         android:layout_height="wrap_content"
@@ -29,8 +41,8 @@
         android:layout_marginTop="@dimen/dp_2"
         android:ellipsize="end"
         android:lines="1"
-        android:text="小可爱"
+        android:text=""
         android:gravity="center"
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/sp_14" />
-</LinearLayout>
+</RelativeLayout>

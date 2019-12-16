@@ -19,6 +19,7 @@ import com.pili.pldroid.player.widget.PLVideoTextureView;
 import com.pili.pldroid.player.widget.PLVideoView;
 import com.tencent.liteav.demo.play.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -36,7 +37,16 @@ public abstract class SlideAdapter<T> extends VideoPlayAdapter<BaseRecyclerHolde
     private RotateAnimation rotateAnimation;
     private ImageView sdvMusic;
 
-    public void updateData( List<T> mDatas){
+    public List<T> getmDatas() {
+        return mDatas;
+    }
+    public void updatePraseStatus(int position,boolean pre){
+        VideoMo videoMo = (VideoMo) mDatas.get(position);
+        videoMo.setPraseStatus(pre);
+        //notifyDataSetChanged();
+    }
+
+    public void updateData(List<T> mDatas){
         this.mDatas = mDatas;
         notifyDataSetChanged();
     }
@@ -75,7 +85,7 @@ public abstract class SlideAdapter<T> extends VideoPlayAdapter<BaseRecyclerHolde
         this.adapterInter = adapterInter;
     }
 
-    public abstract void convert(Context mContext, BaseRecyclerHolder holder, T t);
+    public abstract void convert(Context mContext, BaseRecyclerHolder holder,int position, T t);
 
     @NonNull
     @Override
@@ -89,7 +99,7 @@ public abstract class SlideAdapter<T> extends VideoPlayAdapter<BaseRecyclerHolde
     public void onBindViewHolder(@NonNull BaseRecyclerHolder holder, int position) {
 
         //数据绑定在这里处理
-        convert(mContext, holder, mDatas.get(position));
+        convert(mContext, holder, position,mDatas.get(position));
 
         //点击事件在这里处理
         holder.itemView.setOnClickListener(v -> {
@@ -124,12 +134,27 @@ public abstract class SlideAdapter<T> extends VideoPlayAdapter<BaseRecyclerHolde
         mVideoView.setMediaController(mMediaController);
         mVideoView.setDisplayAspectRatio(PLVideoView.ASPECT_RATIO_PAVED_PARENT);
         mVideoView.setLooping(true);
-        mVideoView.setVideoPath(videoMo.getUrl());
+        mVideoView.setVideoPath(videoMo.getVideoUrl());
         mVideoView.setAVOptions(options);
         mVideoView.setBufferingIndicator(loadingView);
-
+        itemView.setOnClickListener(view -> {
+           if (mVideoView.isPlaying()){
+               mVideoView.pause();
+               itemView.findViewById(R.id.ivPlay).setVisibility(View.VISIBLE);
+           }else {
+               itemView.findViewById(R.id.ivPlay).setVisibility(View.GONE);
+               mVideoView.start();
+           }
+        });
         if (select!=null){
             select.videoItemView(mVideoView);
+        }
+    }
+
+    public void startVideo(){
+        if (mVideoView!=null){
+            if (mVideoView.isPlaying())return;
+            mVideoView.start();
         }
     }
 

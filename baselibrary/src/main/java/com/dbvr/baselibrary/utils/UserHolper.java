@@ -1,14 +1,14 @@
-package com.dabangvr.comment.service;
+package com.dbvr.baselibrary.utils;
 
 import android.content.Context;
 
 import com.dbvr.baselibrary.model.UserMess;
-import com.dbvr.baselibrary.utils.SPUtils;
 
 public class UserHolper {
     private Context context;
     public static UserHolper userHolper;
     private UserMess userMess;
+    private String token;
     public static UserHolper getUserHolper(Context context){
         if (userHolper == null){
             userHolper = new UserHolper(context);
@@ -25,6 +25,17 @@ public class UserHolper {
             userMess =  SPUtils.instance(context).getUser();
         }
         return userMess;
+    }
+
+    public String getToken() {
+        if (StringUtils.isEmpty(token)){
+             token =  SPUtils.instance(context).getToken();
+        }
+        return token;
+    }
+
+    public void upUser(UserMess userMess){
+        this.userMess = userMess;
     }
 
     public void ondessUser(){

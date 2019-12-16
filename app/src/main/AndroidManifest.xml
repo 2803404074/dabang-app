@@ -4,6 +4,7 @@
     package="com.dabangvr">
 
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission
         android:name="android.permission.READ_LOGS"
         tools:ignore="ProtectedPermissions" /> <!-- 自己 Required -->
@@ -58,7 +59,7 @@
         <activity android:name="com.tencent.liteav.demo.my.activity.ShortVideoActivity"/>
         <activity android:name=".comment.activity.CownTimerActivity" />
         <activity android:name=".user.activity.UserSetAddressActivity" />
-        <activity android:name=".play.activity.verticle.PlayActivityCoPy" />
+        <activity android:name=".play.activity.verticle.PlayActivity" />
         <activity android:name=".live.activity.GeGoActivity" />
         <activity android:name=".mall.activity.GoodsActivity" />
         <activity android:name=".user.activity.FollowActivity" />
@@ -186,6 +187,15 @@
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="940b08a5acb6cd1ae54459c244300852" />
+
+        <receiver
+            android:name=".comment.service.ShareReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.dabang.sharex" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

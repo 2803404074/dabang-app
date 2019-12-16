@@ -69,13 +69,6 @@ public abstract class LazyFragment  extends Fragment {
 
     }
 
-    protected void showToast(String message) {
-        if (!TextUtils.isEmpty(message)) {
-            Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
-        }
-
-    }
-
     /**
      * 设置Fragment要显示的布局
      *

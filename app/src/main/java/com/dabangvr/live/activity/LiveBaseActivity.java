@@ -18,23 +18,23 @@ import android.view.View;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dabangvr.R;
 import com.dabangvr.live.gift.GiftMo;
 import com.dabangvr.live.gift.danmu.DanmuEntity;
 import com.dabangvr.play.activity.verticle.DanmuMo;
 import com.dabangvr.play.activity.verticle.LiveInterFace;
-import com.dabangvr.play.activity.verticle.PlayActivityCoPy;
-import com.dabangvr.play.model.LiveData;
+import com.dbvr.baselibrary.model.LiveMo;
 import com.dbvr.baselibrary.model.MainMo;
 import com.dbvr.baselibrary.model.UserMess;
 import com.dbvr.baselibrary.utils.SPUtils;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
 import com.dbvr.baselibrary.utils.StringUtils;
+import com.dbvr.baselibrary.utils.UserHolper;
 import com.dbvr.baselibrary.view.BaseActivity;
 import com.google.gson.Gson;
 import com.opensource.svgaplayer.SVGAParser;
 import com.opensource.svgaplayer.SVGAVideoEntity;
 import com.zego.zegoliveroom.constants.ZegoIM;
-import com.zego.zegoliveroom.entity.ZegoBigRoomMessage;
 import com.zego.zegoliveroom.entity.ZegoRoomMessage;
 
 import org.jetbrains.annotations.NotNull;
@@ -60,8 +60,8 @@ public abstract class LiveBaseActivity<T> extends BaseActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         StatusBarUtil.setRootViewFitsSystemWindows(this, false);
+        overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
         instance = this;
-
     }
     //自定义评论区淡出
     private int layerId;
@@ -106,7 +106,8 @@ public abstract class LiveBaseActivity<T> extends BaseActivity{
     }
 
     //收到消息
-    public void setNotifyUi(ZegoRoomMessage roomMessage, MainMo user) {
+    public void setNotifyUi(ZegoRoomMessage roomMessage, LiveMo user) {
+        if (roomMessage == null && user == null)return;
         //切换房间
         if (null == roomMessage){
             if (interFace!=null){
@@ -227,8 +228,9 @@ public abstract class LiveBaseActivity<T> extends BaseActivity{
         instance = null;
     }
 
-    public void getUserMess(){
-        userMess =  SPUtils.instance(this).getUser();
-        Log.e("a","a");
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.scale_in_disappear, R.anim.scale_out_disappear);
     }
 }

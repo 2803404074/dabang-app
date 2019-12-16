@@ -2,6 +2,7 @@ package com.dbvr.baselibrary.model;
 
 public class FansMo {
     private String id;//搜索用户的时候，userId就是这个id
+    private boolean isLive;//是否正在直播
     private String nickName;
     private String headUrl;
     private String userId;
@@ -11,6 +12,14 @@ public class FansMo {
     private boolean mutual;
 
     public FansMo() {
+    }
+
+    public boolean isLive() {
+        return isLive;
+    }
+
+    public void setLive(boolean live) {
+        isLive = live;
     }
 
     public String getId() {

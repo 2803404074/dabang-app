@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.dbvr.baselibrary.R;
 import com.dbvr.baselibrary.utils.StringUtils;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -89,7 +90,13 @@ public class BaseRecyclerHolder extends RecyclerView.ViewHolder {
         iv.setImageBitmap(bitmap);
         return this;
     }
-
+    public BaseRecyclerHolder setHeadByUrl(int viewId, String url) {
+        if (!StringUtils.isEmpty(url) && !url.endsWith("null")) {
+            SimpleDraweeView simpleDraweeView = getView(viewId);
+            simpleDraweeView.setImageURI(url);
+        }
+        return this;
+    }
     /**
      * 设置图片
      */

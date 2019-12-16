@@ -1,29 +1,28 @@
 package com.dbvr.baselibrary.adapter;
 
-import java.util.ArrayList;
-import java.util.List;
-
-
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-public  class ContentPagerAdapter extends FragmentPagerAdapter {
+import java.util.ArrayList;
+import java.util.List;
 
-    private List<String>mTitles;
+public class ContentPagerAdapter extends FragmentPagerAdapter {
+
+    private List<String> mTitles;
     private ArrayList<Fragment> mFragments;
 
     public ContentPagerAdapter(FragmentManager fm, List<String> mTitles, ArrayList<Fragment> fragments) {
         super(fm);
         this.mTitles = mTitles;
-        this.mFragments=fragments;
+        this.mFragments = fragments;
     }
+
     public ContentPagerAdapter(FragmentManager fm, ArrayList<Fragment> fragments) {
         super(fm);
 
-        this.mFragments=fragments;
+        this.mFragments = fragments;
     }
-
 
 
     @Override
@@ -42,4 +41,4 @@ public  class ContentPagerAdapter extends FragmentPagerAdapter {
         return mTitles.get(position);
     }
 
-    }
+}

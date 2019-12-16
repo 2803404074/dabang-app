@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <declare-styleable name="title">
         <attr name="name" format="string"/>
@@ -64,6 +64,8 @@
     <style name="dialog2">
         <!--弹窗背景是否变暗-->
         <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
     </style>
 
 </resources>
