@@ -153,6 +153,16 @@ public class ShortVideoFragment extends LazyFragment {
                                 holder.setText(R.id.tvContent,o.getContent());
                                 holder.setText(R.id.tvDate,o.getAddTime());
                                 holder.setText(R.id.tvDzNum,o.getPraseCount());
+                                TextView tvDzNum =  holder.getView(R.id.tvDzNum);
+                                holder.getView(R.id.ivDz).setOnClickListener(view24 -> {
+                                    //点赞评论
+                                    if (s.getPraseStatus()){
+                                        tvDzNum.setText(String.valueOf(Integer.parseInt(tvDzNum.getText().toString())-1));
+                                    }else {
+                                        tvDzNum.setText(String.valueOf(Integer.parseInt(tvDzNum.getText().toString())+1));
+                                    }
+                                    dzCommentFunction(s.getId());
+                                });
                             }
                         };
                         recyclerComment.setAdapter(commentAdapter);
@@ -199,6 +209,25 @@ public class ShortVideoFragment extends LazyFragment {
         recyclerView.setAdapter(adapter);
 
         getVideoData();
+    }
+
+    /**
+     * 点赞评论
+     */
+    private void dzCommentFunction(String cId) {
+        Map<String,Object>map = new HashMap<>();
+        map.put("commentId",cId);
+        OkHttp3Utils.getInstance(getContext()).doPostJson(DyUrl.praseShortVideoComment, map, new ObjectCallback<String>(getContext()) {
+            @Override
+            public void onUi(String result) throws JSONException {
+
+            }
+
+            @Override
+            public void onFailed(String msg) {
+
+            }
+        });
     }
 
     private void sendComment(String vId,String content) {

@@ -2,6 +2,7 @@ package com.tencent.liteav.demo.my.mo;
 
 public class CommentMo {
     private int id;
+    private boolean praseStatus;
     private String nickName;
     private String content;
     private int userId;
@@ -10,6 +11,14 @@ public class CommentMo {
     private String headUrl;
 
     public CommentMo() {
+    }
+
+    public boolean isPraseStatus() {
+        return praseStatus;
+    }
+
+    public void setPraseStatus(boolean praseStatus) {
+        this.praseStatus = praseStatus;
     }
 
     public int getId() {

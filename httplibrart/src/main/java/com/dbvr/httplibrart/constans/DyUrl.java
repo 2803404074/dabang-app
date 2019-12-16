@@ -98,6 +98,8 @@ public class DyUrl {
     public static final String commentShortVideo = "api/liveShortVideo/commentShortVideo";
     //点赞短视频
     public static final String praseShortVideo = "api/liveShortVideo/praseShortVideo";
+    //点赞评论
+    public static final String praseShortVideoComment = "api/liveShortVideo/praseShortVideoComment";
 
     //根据定位直播列表
     public static final String getCityOnlineList = "api/live/getCityOnlineList";

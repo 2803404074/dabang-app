@@ -66,6 +66,10 @@ android {
         targetCompatibility 1.8
         sourceCompatibility 1.8
     }
+
+    dataBinding {
+        enabled = true
+    }
 }
 MobSDK {
     appKey "2a302515c8c90"
