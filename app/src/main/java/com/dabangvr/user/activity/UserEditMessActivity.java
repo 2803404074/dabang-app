@@ -16,6 +16,8 @@ import android.widget.TextView;
 
 import com.dabangvr.R;
 import com.dabangvr.comment.activity.LocationActivity;
+import com.dabangvr.databinding.ActivityUserHomeBinding;
+import com.dabangvr.databinding.ActivityUserMessModifyBinding;
 import com.dabangvr.live.activity.GeGoActivity;
 import com.dabangvr.util.OpenCameUtil;
 import com.dbvr.baselibrary.base.ParameterContens;
@@ -30,8 +32,10 @@ import com.dbvr.baselibrary.utils.SPUtils;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
 import com.dbvr.baselibrary.utils.StringUtils;
 import com.dbvr.baselibrary.utils.ToastUtil;
+import com.dbvr.baselibrary.utils.UserHolper;
 import com.dbvr.baselibrary.view.AppManager;
 import com.dbvr.baselibrary.view.BaseActivity;
+import com.dbvr.baselibrary.view.BaseActivityBinding;
 import com.dbvr.httplibrart.constans.DyUrl;
 import com.dbvr.httplibrart.constans.UserUrl;
 import com.dbvr.httplibrart.utils.ObjectCallback;
@@ -53,6 +57,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import androidx.annotation.Nullable;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -64,73 +69,51 @@ import static com.dabangvr.util.OpenCameUtil.imageUri;
 /**
  * 用户编辑信息
  */
-public class UserEditMessActivity extends BaseActivity {
-
+public class UserEditMessActivity extends BaseActivityBinding<ActivityUserMessModifyBinding> implements View.OnClickListener {
     private static final int SELECT_IMAGE_REQUEST_statement = 1000;
-    @BindView(R.id.sdvHead)
-    SimpleDraweeView sdvHead;
-    @BindView(R.id.tvNickName)
-    EditText tvNickName;
-    @BindView(R.id.tvUserId)
-    TextView tvId;
-    @BindView(R.id.tvSex)
-    TextView tvSex;
-    @BindView(R.id.tvDate)
-    TextView tvDate;
-    @BindView(R.id.tvLocation)
-    TextView tvLocation;
-    @BindView(R.id.tvIntroduce)
-    TextView tvIntroduce;
-    @BindView(R.id.tvPhone)
-    TextView tvPhone;
-
     private UserMess userMess;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        //用来设置整体下移，状态栏沉浸
-        StatusBarUtil.setRootViewFitsSystemWindows(this, false);
-    }
-
-    @Override
     public int setLayout() {
-        EventBus.getDefault().register(this); //第1步: 注册
         return R.layout.activity_user_mess_modify;
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        userMess = UserHolper.getUserHolper(getContext()).getUserMess();
+        mBinding.setUser(userMess);
+
+        mBinding.sdvHead.setImageURI(userMess.getHeadUrl());
+
+        mBinding.tvNickName.setText(userMess.getNickName());
+        mBinding.tvUserId.setText(String.valueOf(userMess.getId()));
+
+        mBinding.tvSex.setText(StringUtils.isEmpty(userMess.getSex()) ? "未知" : userMess.getSex());
+        mBinding.tvDate.setText(StringUtils.isEmpty(userMess.getBirthday()) ? "未设置生日" : userMess.getBirthday());
+        mBinding.tvIntroduce.setText(StringUtils.isEmpty(userMess.getAutograph()) ? "设置签名更吸引粉丝哦~" : userMess.getAutograph());
+        mBinding.tvPhone.setText(StringUtils.isEmpty(userMess.getMobile()) ? " 未绑定手机" : userMess.getMobile());
+    }
+
+    @Override
     public void initView() {
-        userMess = SPUtils.instance(this).getUser();
-        sdvHead.setImageURI(userMess.getHeadUrl());
-        tvNickName.setText(userMess.getNickName());
-        tvDate.setText("----");
 
-        tvId.setText(String.valueOf(userMess.getId()));
+        mBinding.tvNickName.setOnFocusChangeListener((view, b) -> {
+            if (!b) {
+                if (!mBinding.tvNickName.getText().toString().equals(userMess.getNickName())) {
+                    updataMess(2, mBinding.tvNickName.getText().toString());
+                }
+            }
+        });
 
-        //性别
-        if (StringUtils.isEmpty(userMess.getSex())) {
-            tvSex.setHint("未设置性别");
-        } else {
-            tvSex.setText(userMess.getSex());
-        }
+        mBinding.sdvHead.setOnClickListener(this);
+        mBinding.llSex.setOnClickListener(this);
+        mBinding.llDate.setOnClickListener(this);
+        mBinding.llIntroduce.setOnClickListener(this);
+        mBinding.llLocation.setOnClickListener(this);
+        mBinding.llPhone.setOnClickListener(this);
+        mBinding.ivBack.setOnClickListener(this);
 
-        //常住地
-        if (StringUtils.isEmpty(userMess.getPermanentResidence())) {
-            tvLocation.setHint("未设置收货地址");
-        } else {
-            tvLocation.setText(userMess.getPermanentResidence());
-        }
-
-        //手机号
-        if (StringUtils.isEmpty(userMess.getMobile())) {
-            tvPhone.setHint("未绑定手机号");
-        } else {
-            tvPhone.setText(StringUtils.hidTel(userMess.getMobile()));
-        }
-
-        //个人说明
-        tvIntroduce.setHint(StringUtils.isEmpty(userMess.getAutograph()) ? "添加个人说明，如你的座右铭等" : userMess.getAutograph());
     }
 
     @Override
@@ -138,8 +121,8 @@ public class UserEditMessActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.sdvHead,R.id.ivBack, R.id.llHead, R.id.llNick, R.id.llSex, R.id.llDate, R.id.llLocation, R.id.llIntroduce, R.id.llPhone, R.id.tv_sub})
-    public void onclick(View view) {
+    @Override
+    public void onClick(View view) {
         switch (view.getId()) {
             case R.id.sdvHead:
                 BottomDialogUtil2.getInstance(this).showLive(R.layout.dialog_came, view1 -> {
@@ -156,10 +139,6 @@ public class UserEditMessActivity extends BaseActivity {
             case R.id.ivBack:
                 AppManager.getAppManager().finishActivity(this);
                 break;
-            case R.id.llHead:
-                break;
-            case R.id.llNick:
-                break;
             case R.id.llSex://性别
                 showSexDialog();
                 break;
@@ -167,26 +146,15 @@ public class UserEditMessActivity extends BaseActivity {
                 showDateDialog();
                 break;
             case R.id.llLocation:
-                goTActivity(UserAddressActivity.class,null);
+                goTActivity(UserAddressActivity.class, null);
                 break;
             case R.id.llIntroduce:
                 goTActivityForResult(UserIntroduceActivity.class, null, SELECT_IMAGE_REQUEST_statement);
                 break;
             case R.id.llPhone:
-
-                if (TextUtils.isEmpty(userMess.getMobile())) {
-
-                }
-                Intent intent = new Intent(this, PhoneSetActivity.class);
-                intent.putExtra("mobile", userMess.getMobile());
-                startActivity(intent);
+                goTActivity(PhoneSetActivity.class, null);
                 break;
-            case R.id.tv_sub: //提交修改资料
-                if (file!=null){
-                    getQiNiuToken();
-                }else {
-                    updataMess(null);
-                }
+            default:
                 break;
         }
     }
@@ -201,7 +169,7 @@ public class UserEditMessActivity extends BaseActivity {
 
             @Override
             public void onFailed(String msg) {
-                setLoaddingView(false);
+
             }
         });
     }
@@ -211,76 +179,43 @@ public class UserEditMessActivity extends BaseActivity {
         qiniuUploadFile.setKey("user-head" + UUID.randomUUID());
         QiniuUploadManager.getInstance(this).upload(qiniuUploadFile, new OnUploadListener() {
             @Override
-            public void onStartUpload() { }
+            public void onStartUpload() {
+            }
+
             @Override
-            public void onUploadProgress(String key, double percent) { }
+            public void onUploadProgress(String key, double percent) {
+            }
 
             @Override
             public void onUploadFailed(String key, String err) {
-                ToastUtil.showShort(getContext(),"封面上传失败,请检查您的网络"+err);
+                ToastUtil.showShort(getContext(), "封面上传失败,请检查您的网络" + err);
             }
 
             @Override
             public void onUploadBlockComplete(String key) {
                 //上传成功，将信息发送给后端
-                updataMess(key);
+                updataMess(1, key);
 
             }
 
             @Override
-            public void onUploadCompleted() { }
+            public void onUploadCompleted() {
+            }
 
             @Override
-            public void onUploadCancel() { }
+            public void onUploadCancel() {
+            }
         });
     }
 
     /**
-     * 修改资料
-     * @param key
+     * @param key    1,2,3,4,5,6,7,8,9,10
+     * @param values
      */
-    private void updataMess(String key) {
-        String nickName = tvNickName.getText().toString().trim();
-        String userId = tvId.getText().toString().trim();
-        String sex = tvSex.getText().toString().trim();
-        String date = tvDate.getText().toString().trim();
-        String location = tvLocation.getText().toString().trim();
-        String introduce = tvIntroduce.getText().toString().trim();
-        String phone = tvPhone.getText().toString().trim();
-
-        Map<String, Object> map = new HashMap<>();
-        map.put("nickName", nickName);
-        if (!StringUtils.isEmpty(key)){
-            map.put("headUrl",key);
-        }
-        map.put("permanentResidence", location);
-        map.put("sex", sex);
-        map.put("anchorId", userId);
-        map.put("autograph", introduce);
-        map.put("mobile", phone);
-        map.put("id", userMess.getId());
-        //修改用户信息
-        userMess.setNickName(nickName);
-        userMess.setPermanentResidence(location);
-        userMess.setSex(sex);
-        userMess.setAutograph(introduce);
-        userMess.setMobile(phone);
-        setLoaddingView(true);
-        OkHttp3Utils.getInstance(this).doPostJson(UserUrl.updateUser, map, new ObjectCallback<String>(this) {
-            @Override
-            public void onUi(String result) {
-                setLoaddingView(false);
-                SPUtils.instance(getContext()).putUser(userMess); //提交用户信息
-            }
-
-            @Override
-            public void onFailed(String msg) {
-                ToastUtil.showShort(getContext(), msg);
-                setLoaddingView(false);
-
-            }
-        });
+    private void updataMess(int key, String values) {
+        UserHolper.getUserHolper(getContext()).upUser(key, values);
     }
+
 
     private void showSexDialog() {
         BottomDialogUtil2.getInstance(this).show(R.layout.dialog_sex, 0, new Conver() {
@@ -291,11 +226,13 @@ public class UserEditMessActivity extends BaseActivity {
                 TextView tvConfirm = view.findViewById(R.id.tvConfirm);
                 tvConfirm.setVisibility(View.GONE);
                 tvName.setOnClickListener(v -> {
-                    tvSex.setText(tvName.getText().toString());
+                    mBinding.tvSex.setText(tvName.getText().toString());
+                    updataMess(3, "男");
                     BottomDialogUtil2.getInstance(UserEditMessActivity.this).dess();
                 });
                 tv_nv.setOnClickListener(v -> {
-                    tvSex.setText(tv_nv.getText().toString());
+                    mBinding.tvSex.setText(tv_nv.getText().toString());
+                    updataMess(3, "女");
                     BottomDialogUtil2.getInstance(UserEditMessActivity.this).dess();
                 });
             }
@@ -308,28 +245,20 @@ public class UserEditMessActivity extends BaseActivity {
         int mMonth = ca.get(Calendar.MONTH);
         int mDay = ca.get(Calendar.DAY_OF_MONTH);
         DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
-                new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        final String data = (month + 1) + "月-" + dayOfMonth + "日 ";
-                        ToastUtil.showShort(getContext(), data);
-                    }
+                (view, year, month, dayOfMonth) -> {
+                    final String data = (month + 1) + "月-" + dayOfMonth + "日 ";
+                    updataMess(4, data);
+                    mBinding.tvDate.setText(data);
                 },
                 mYear, mMonth, mDay);
         datePickerDialog.show();
     }
 
     private File file;
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            if (requestCode == SELECT_IMAGE_REQUEST_statement && data != null) {
-                String statement = data.getStringExtra(ParameterContens.statement);
-                tvIntroduce.setText(statement);
-            }
-        }
-
         switch (requestCode) {
             case REQ_1: {
                 if (resultCode == RESULT_OK) {
@@ -337,13 +266,13 @@ public class UserEditMessActivity extends BaseActivity {
                     intent.setDataAndType(imageUri, "image/*");
                     intent.putExtra("scale", true);
                     intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-                    OpenCameUtil.startPhotoZoom(UserEditMessActivity.this, imageUri,5,5);
+                    OpenCameUtil.startPhotoZoom(UserEditMessActivity.this, imageUri, 5, 5);
                 }
                 break;
             }
             case REQ_2: {
                 if (resultCode == RESULT_OK) {
-                    OpenCameUtil.startPhotoZoom(UserEditMessActivity.this, data.getData(),5,5);
+                    OpenCameUtil.startPhotoZoom(UserEditMessActivity.this, data.getData(), 5, 5);
                 }
                 break;
             }
@@ -352,11 +281,12 @@ public class UserEditMessActivity extends BaseActivity {
                     try {
                         Bitmap bitmapCamera = BitmapFactory.decodeStream(getContentResolver()
                                 .openInputStream(OpenCameUtil.imageUris));
-                        Uri uri = Uri.parse(MediaStore.Images.Media.insertImage(getContentResolver(), bitmapCamera, null,null));
-                        sdvHead.setImageURI(uri);
+                        Uri uri = Uri.parse(MediaStore.Images.Media.insertImage(getContentResolver(), bitmapCamera, null, null));
+                        mBinding.sdvHead.setImageURI(uri);
                         if (bitmapCamera != null) {
                             try {
                                 file = new File(new URI(OpenCameUtil.imageUris.toString()));
+                                getQiNiuToken();
                             } catch (URISyntaxException e) {
                                 e.printStackTrace();
                             }
@@ -373,16 +303,4 @@ public class UserEditMessActivity extends BaseActivity {
         }
     }
 
-    //EventBus主线程接收消息
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onUserEvent(ReadEvent event) {
-        String state = event.getState();
-        //如果多个消息，可在实体类中添加type区分消息
-        switch (event.getType()) {
-            case 1111:
-                String info = event.getInfo();
-                tvPhone.setText(info);
-                break;
-        }
-    }
 }

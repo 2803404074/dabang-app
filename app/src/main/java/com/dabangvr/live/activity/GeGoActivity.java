@@ -442,7 +442,7 @@ public class GeGoActivity extends LiveBaseActivity{
 
     private void initCommentUi() {
         doTopGradualEffect(recyclerView);
-        commentAdapter = new RecyclerAdapter<ZegoRoomMessage>(this, commentData, R.layout.item_video_comment) {
+        commentAdapter = new RecyclerAdapter<ZegoRoomMessage>(this, commentData, R.layout.item_comment) {
             @Override
             public void convert(Context mContext, BaseRecyclerHolder holder, ZegoRoomMessage o) {
                 TextView tvMess = holder.getView(R.id.tvMess);

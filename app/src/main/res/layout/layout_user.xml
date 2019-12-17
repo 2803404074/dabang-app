@@ -7,19 +7,15 @@
     <data>
         <import type="com.dbvr.baselibrary.model.UserMess"/>
         <variable
-            name="userMess"
+            name="userModel"
             type="UserMess" />
     </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_240"
+        android:background="@drawable/shape_style_user"
         android:clipChildren="false">
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/test33" />
 
         <LinearLayout
             android:id="@+id/llHead"
@@ -65,7 +61,7 @@
                         android:id="@+id/tvNickName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{userMess.nickName}"
+                        android:text="@{userModel.nickName}"
                         android:layout_gravity="center|left"
                         android:textColor="@color/textTitle"
                         android:textSize="@dimen/sp_25" />
@@ -110,7 +106,7 @@
                         android:id="@+id/tvDropNumber"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{String.valueOf(userMess.praisedNumber)}"
+                        android:text="@{userModel.autograph}"
                         android:layout_gravity="center"
                         android:textColor="@color/textTitle"
                         android:textSize="@dimen/sp_16" />
@@ -131,7 +127,7 @@
                 android:id="@+id/tvLove"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{userMess.permanentResidence}"
+                android:text="@{userModel.permanentResidence}"
                 android:layout_marginTop="@dimen/dp_8"
                 android:layout_marginBottom="@dimen/dp_5"
                 android:textColor="@color/color_8d8c8c"
@@ -141,12 +137,13 @@
             <TextView
                 android:layout_below="@+id/tvLove"
                 android:id="@+id/tvAddFriend"
-                android:layout_width="@dimen/dp_120"
+                android:layout_width="wrap_content"
                 android:layout_height="@dimen/dp_30"
-                android:background="@color/color_33000000"
+                android:background="@drawable/shape_send"
                 android:textColor="@color/textTitle"
                 android:textSize="@dimen/sp_16"
                 android:gravity="center"
+                android:paddingHorizontal="@dimen/dp_20"
                 android:layout_marginVertical="@dimen/dp_8"
                 android:text="+发现更多好友"/>
 
@@ -163,13 +160,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="@{userMess.followNumber}"
+                    android:text="@{userModel.followNumber}"
                     android:padding="@dimen/dp_3"
                     android:textColor="@color/textTitle"
                     android:textSize="@dimen/sp_25"
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/tvFollowOnclick"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -184,13 +182,14 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="@dimen/sp_10"
-                    android:text="@{userMess.fansNumber}"
+                    android:text="@{userModel.fansNumber}"
                     android:padding="@dimen/dp_3"
                     android:textColor="@color/textTitle"
                     android:textSize="@dimen/sp_25"
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/tvFansOnclick"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -205,13 +204,14 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="@dimen/sp_10"
-                    android:text="@{String.valueOf(userMess.diamond)}"
+                    android:text="@{String.valueOf(userModel.diamond)}"
                     android:padding="@dimen/dp_3"
                     android:textColor="@color/textTitle"
                     android:textSize="@dimen/sp_25"
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/tvDropOnclick"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

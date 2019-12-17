@@ -29,6 +29,7 @@
        android:src="@mipmap/play"/>
 
    <TextView
+       android:id="@+id/tvTitle"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
        android:textColor="@android:color/white"
@@ -51,6 +52,7 @@
           android:layout_gravity="center"
           android:src="@mipmap/comment"/>
       <TextView
+          android:id="@+id/tvCnum"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:text="1998"
@@ -63,19 +65,7 @@
           android:layout_marginTop="@dimen/dp_10"
           android:src="@mipmap/love"/>
       <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="1998"
-          android:textColor="@android:color/white"
-          android:layout_gravity="center"/>
-      <ImageView
-          android:layout_gravity="center"
-          android:layout_width="@dimen/dp_20"
-          android:layout_height="@dimen/dp_20"
-          android:layout_marginTop="@dimen/dp_10"
-          android:src="@mipmap/share"/>
-
-      <TextView
+          android:id="@+id/tvLnum"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:text="1998"

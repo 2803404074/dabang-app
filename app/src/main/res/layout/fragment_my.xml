@@ -16,14 +16,11 @@
         android:background="@color/white">
 
         <RelativeLayout
+            android:background="@drawable/shape_style_user"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_60">
             <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@mipmap/test33" />
-            <ImageView
+                android:id="@+id/ivSearch"
                 android:layout_width="@dimen/dp_30"
                 android:layout_height="@dimen/dp_30"
                 android:padding="@dimen/dp_5"
@@ -50,7 +47,7 @@
                     <include
                         android:id="@+id/inlcude"
                         layout="@layout/layout_user"
-                        bind:userMess="@{user}"/>
+                        bind:userModel="@{user}"/>
                 </RelativeLayout>
                 <TextView
                     android:layout_width="match_parent"

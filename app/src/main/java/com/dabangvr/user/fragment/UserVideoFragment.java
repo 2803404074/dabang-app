@@ -12,10 +12,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.dabangvr.R;
 import com.dabangvr.comment.adapter.BaseRecyclerHolder;
 import com.dabangvr.comment.adapter.RecyclerAdapter;
+import com.dbvr.baselibrary.model.MainMo;
+import com.dbvr.baselibrary.model.VideoMo;
 import com.dbvr.baselibrary.view.BaseFragment;
+import com.dbvr.httplibrart.constans.DyUrl;
+import com.dbvr.httplibrart.utils.ObjectCallback;
+import com.dbvr.httplibrart.utils.OkHttp3Utils;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.tencent.liteav.demo.my.activity.ShortVideoActivity;
+import com.tencent.liteav.demo.my.activity.UserVideoActivity;
+
+import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 
@@ -27,7 +40,7 @@ public class UserVideoFragment extends BaseFragment {
     @BindView(R.id.recycler_head)
     RecyclerView recyclerView;
 
-    private List<String>mData = new ArrayList<>();
+    private List<VideoMo>mData = new ArrayList<>();
     private RecyclerAdapter adapter;
 
 
@@ -39,31 +52,50 @@ public class UserVideoFragment extends BaseFragment {
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void initView() {
-        for (int i = 0; i < 10; i++) {
-            mData.add("");
-        }
-        //recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new RecyclerAdapter<String>(getContext(),mData,R.layout.item_user_video) {
+        adapter = new RecyclerAdapter<VideoMo>(getContext(),mData,R.layout.item_user_video) {
             @Override
-            public void convert(Context mContext, BaseRecyclerHolder holder, String o) {
-
+            public void convert(Context mContext, BaseRecyclerHolder holder, VideoMo o) {
+                holder.setImageByUrl(R.id.miv_view,o.getCoverUrl());
+                holder.setText(R.id.tvCnum,o.getCommentNum());
+                holder.setText(R.id.tvLnum,o.getPraseCount());
+                holder.setText(R.id.tvTitle,o.getTitle());
             }
         };
         recyclerView.setAdapter(adapter);
-        adapter.setOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Log.d("luhuas", "ovider=nItemClick: "+position);
-            }
+        adapter.setOnItemClickListener((view, position) -> {
+            VideoMo videoMo = (VideoMo) adapter.getData().get(position);
+            Map<String,Object>map = new HashMap<>();
+            map.put("head",videoMo.getHeadUrl());
+            map.put("name",videoMo.getNickName());
+            map.put("title",videoMo.getTitle());
+            map.put("comment",videoMo.getCommentNum());
+            map.put("like",videoMo.getPraseCount());
+            map.put("url",videoMo.getVideoUrl());
+            goTActivity(UserVideoActivity.class, map);
         });
-
-
-
     }
 
     @Override
     public void initData() {
+        Map<String,Object> map = new HashMap<>();
+        map.put("page",1);
+        map.put("limit",10);
+        OkHttp3Utils.getInstance(getContext()).doPostJson(DyUrl.getLiveShortVideoList, map, new ObjectCallback<String>(getContext()) {
+            @Override
+            public void onUi(String result) throws JSONException {
+                List<VideoMo> list = new Gson().fromJson(result, new TypeToken<List<VideoMo>>() {
+                }.getType());
+                if (list!=null && list.size()>0){
+                    mData = list;
+                    adapter.updateData(mData);
+                }
+            }
 
+            @Override
+            public void onFailed(String msg) {
+
+            }
+        });
     }
 }

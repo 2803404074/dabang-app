@@ -197,6 +197,7 @@ public class MyApplication extends Application implements NetWorkStateReceiver.N
     }
 
 
+
     public void onDes(){
         appContext = null;
         api = null;

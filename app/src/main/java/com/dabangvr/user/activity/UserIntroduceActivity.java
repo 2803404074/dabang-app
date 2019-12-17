@@ -12,6 +12,7 @@ import com.dabangvr.R;
 import com.dbvr.baselibrary.base.ParameterContens;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
 import com.dbvr.baselibrary.utils.StringUtils;
+import com.dbvr.baselibrary.utils.UserHolper;
 import com.dbvr.baselibrary.view.AppManager;
 import com.dbvr.baselibrary.view.BaseActivity;
 
@@ -54,18 +55,15 @@ public class UserIntroduceActivity extends BaseActivity {
     }
 
     private void commit() {
-        Intent intent =new Intent();
-        String etInputstr = etInput.getText().toString().trim();
-        intent.putExtra(ParameterContens.statement, etInputstr);
-        setResult(RESULT_OK, intent);
+        UserHolper.getUserHolper(getContext()).upUser(5,etInput.getText().toString());
         AppManager.getAppManager().finishActivity();
     }
 
     @Override
     public void initView() {
-        if (StringUtils.isEmpty(getIntent().getStringExtra("str"))){
-            etInput.setText(getIntent().getStringExtra("str"));
-        }
+        String str = UserHolper.getUserHolper(getContext()).getUserMess().getAutograph();
+        etInput.setText(StringUtils.isEmpty(str)?"介绍一下你自己吧~~~":str);
+
         etInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {

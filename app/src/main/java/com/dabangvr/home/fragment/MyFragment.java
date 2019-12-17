@@ -9,6 +9,8 @@ import com.dabangvr.databinding.FragmentMyBinding;
 import com.dabangvr.home.activity.SearchActivity;
 import com.dabangvr.mall.activity.CartActivity;
 import com.dabangvr.mall.activity.OrderActivity;
+import com.dabangvr.user.activity.FansActivity;
+import com.dabangvr.user.activity.FollowActivity;
 import com.dabangvr.user.activity.UserAboutActivity;
 import com.dabangvr.user.activity.UserDropActivity;
 import com.dabangvr.user.activity.UserIntroduceActivity;
@@ -41,6 +43,11 @@ public class MyFragment extends BaseFragmentBinding<FragmentMyBinding> implement
             binding.inlcude.sdvHead.setImageURI(userMess.getHeadUrl());
             binding.inlcude.tvAddFriend.setOnClickListener(this);
             binding.inlcude.tvLove.setOnClickListener(this);
+            binding.inlcude.tvFollowOnclick.setOnClickListener(this);
+            binding.inlcude.tvFansOnclick.setOnClickListener(this);
+            binding.inlcude.tvDropOnclick.setOnClickListener(this);
+            binding.ivSearch.setOnClickListener(this);
+
             binding.llMoney.setOnClickListener(this);
             binding.llOrder.setOnClickListener(this);
             binding.llCart.setOnClickListener(this);
@@ -95,6 +102,19 @@ public class MyFragment extends BaseFragmentBinding<FragmentMyBinding> implement
                 break;
             case R.id.llAbout:
                 goTActivity(UserAboutActivity.class,null);
+                break;
+
+            case R.id.tvFollowOnclick:
+                goTActivity(FollowActivity.class,null);
+                break;
+            case R.id.tvFansOnclick:
+                goTActivity(FansActivity.class,null);
+                break;
+            case R.id.tvDropOnclick:
+                goTActivity(UserDropActivity.class,null);
+                break;
+            case R.id.ivSearch:
+                goTActivity(SearchActivity.class,null);
                 break;
             default:break;
         }

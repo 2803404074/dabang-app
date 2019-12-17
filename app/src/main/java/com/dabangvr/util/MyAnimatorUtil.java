@@ -64,12 +64,9 @@ public class MyAnimatorUtil {
     }
 
     private void setHeightTing(View view, boolean isShow){
-        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                view.getLayoutParams().height = (int) animation.getAnimatedValue();
-                view.requestLayout();
-            }
+        valueAnimator.addUpdateListener(animation -> {
+            view.getLayoutParams().height = (int) animation.getAnimatedValue();
+            view.requestLayout();
         });
         valueAnimator.start();
         if (isShow){
@@ -81,12 +78,9 @@ public class MyAnimatorUtil {
 
 
     private void setTing(int visi){
-        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                view.getLayoutParams().width = (int) animation.getAnimatedValue();
-                view.requestLayout();
-            }
+        valueAnimator.addUpdateListener(animation -> {
+            view.getLayoutParams().width = (int) animation.getAnimatedValue();
+            view.requestLayout();
         });
         valueAnimator.start();
         view.setVisibility(visi);

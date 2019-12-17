@@ -196,6 +196,11 @@
                 <action android:name="com.dabang.sharex" />
             </intent-filter>
         </receiver>
+
+        <service android:name=".comment.service.UserService"
+            android:enabled="true"
+            android:exported="false">
+        </service>
     </application>
 
 </manifest>

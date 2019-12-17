@@ -17,6 +17,7 @@ import com.dabangvr.R;
 import com.dabangvr.comment.adapter.BaseRecyclerHolder;
 import com.dabangvr.comment.adapter.RecyclerAdapterPosition;
 import com.dabangvr.home.activity.SearchActivity;
+import com.dabangvr.user.activity.UserHomeActivity;
 import com.dbvr.baselibrary.adapter.ContentPagerAdapter;
 import com.dbvr.baselibrary.model.FansMo;
 import com.dbvr.baselibrary.model.TagMo;
@@ -85,6 +86,12 @@ public class HomeFragmentHome extends BaseFragment {
             }
         };
         recyclerView.setAdapter(adapterPosition);
+
+        adapterPosition.setOnItemClickListener((view, position) -> {
+            Map<String,Object>map = new HashMap<>();
+            map.put("userId",mData.get(position).getUserId());
+            goTActivity(UserHomeActivity.class,map);
+        });
     }
 
     @OnClick({R.id.ivSearchToolbar})

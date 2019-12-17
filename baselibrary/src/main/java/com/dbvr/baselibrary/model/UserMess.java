@@ -1,17 +1,25 @@
 package com.dbvr.baselibrary.model;
 
+import androidx.databinding.BaseObservable;
+import androidx.databinding.Bindable;
+import androidx.databinding.ObservableField;
+import androidx.databinding.library.baseAdapters.BR;
+
 import java.io.Serializable;
 
 /**
  * 用户实体类
  */
-public class UserMess implements Serializable {
+public class UserMess extends BaseObservable implements Serializable {
+
     private Integer id;
 
     private boolean mutual;//是否已经关注
     private boolean isNewsUser;
 
     private String mobile; //手机号码
+
+    private String birthday;
 
     private String openId; //唯一id
 
@@ -48,6 +56,7 @@ public class UserMess implements Serializable {
     public UserMess() {
     }
 
+
     @Override
     public String toString() {
         return "UserMess{" +
@@ -72,6 +81,14 @@ public class UserMess implements Serializable {
                 ", isAnchor=" + isAnchor +
                 ", isNew='" + isNew + '\'' +
                 '}';
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
     }
 
     public boolean isMutual() {
@@ -194,12 +211,14 @@ public class UserMess implements Serializable {
         this.headUrl = headUrl;
     }
 
+    @Bindable
     public String getNickName() {
         return nickName;
     }
 
     public void setNickName(String nickName) {
         this.nickName = nickName;
+        notifyChange();
     }
 
     public String getAutograph() {

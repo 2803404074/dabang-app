@@ -1,117 +1,99 @@
 package com.dabangvr.user.activity;
 
-import android.os.Build;
-import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
 
 import com.dabangvr.R;
+import com.dabangvr.databinding.ActivityUserHomeBinding;
+import com.dabangvr.im.ChatActivity;
 import com.dabangvr.user.fragment.UserLiveFragment;
 import com.dabangvr.user.fragment.UserVideoFragment;
-
-import com.dabangvr.im.ChatActivity;
 import com.dbvr.baselibrary.adapter.ContentPagerAdapter;
 import com.dbvr.baselibrary.model.UserMess;
-import com.dbvr.baselibrary.utils.StatusBarUtil;
-import com.dbvr.baselibrary.utils.StringUtils;
+import com.dbvr.baselibrary.utils.ToastUtil;
 import com.dbvr.baselibrary.view.AppManager;
-import com.dbvr.baselibrary.view.BaseActivity;
+import com.dbvr.baselibrary.view.BaseActivityBinding;
 import com.dbvr.httplibrart.constans.DyUrl;
 import com.dbvr.httplibrart.utils.ObjectCallback;
 import com.dbvr.httplibrart.utils.OkHttp3Utils;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.gson.Gson;
-import com.ogaclejapan.smarttablayout.SmartTabLayout;
+
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.BindView;
-import butterknife.OnClick;
-
 /**
  * 查看某用户的信息的页面
  */
-public class UserHomeActivity extends BaseActivity {
+public class UserHomeActivity extends BaseActivityBinding<ActivityUserHomeBinding> implements View.OnClickListener {
 
-    @BindView(R.id.sdvHead)
-    SimpleDraweeView sdvHead;
-
-    @BindView(R.id.ivGrade)
-    ImageView ivGrade;
-
-    @BindView(R.id.tvFollow)
-    TextView tvFollow;
-    @BindView(R.id.tvFans)
-    TextView tvFans;
-    @BindView(R.id.tvDropNom)
-    TextView tvDropNom;
-
-    @BindView(R.id.tab_layout)
-    SmartTabLayout tabLayout;
-
-    @BindView(R.id.tvSend)
-    TextView tvSend;
-    @BindView(R.id.rlTop)
-    RelativeLayout rlTop;
-
-    @BindView(R.id.tvLove)
-    TextView tvLove;
-
-    @BindView(R.id.view_pager)
-    ViewPager viewPager;
     private ArrayList<Fragment> mFragments;
     private ContentPagerAdapter contentAdapter;
 
-    @BindView(R.id.tvNickName)
-    TextView tvNickName;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        //用来设置整体下移，状态栏沉浸
-        StatusBarUtil.setRootViewFitsSystemWindows(this, false);
-    }
+    private UserMess userMess = new UserMess();
 
     @Override
     public int setLayout() {
         return R.layout.activity_user_home;
     }
 
-    @OnClick({R.id.ivBack})
-    public void onclick(View view){
-        switch (view.getId()){
-            case R.id.ivBack:
-                AppManager.getAppManager().finishActivity(this);
-                break;
-                default:break;
-        }
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void initView() {
+        mBinding.setUser(userMess);
         List<String> mTitles = new ArrayList<>();
-        mTitles.add("回放");
-        mTitles.add("作品");
+        mTitles.add("直播");
+        mTitles.add("视频");
         mFragments = new ArrayList<>();
         mFragments.add(new UserLiveFragment());
         mFragments.add(new UserVideoFragment());
         contentAdapter = new ContentPagerAdapter(getSupportFragmentManager(),mTitles,mFragments);
-        viewPager.setAdapter(contentAdapter);
-        tabLayout.setViewPager(viewPager);
-        viewPager.setCurrentItem(1);
+        mBinding.viewPager.setAdapter(contentAdapter);
+        mBinding.tabLayout.setViewPager(mBinding.viewPager);
+        mBinding.viewPager.setCurrentItem(1);
+
+        mBinding.ivBack.setOnClickListener(this);
+        mBinding.inlcude.tvSend.setOnClickListener(this);
+        mBinding.inlcude.tvAddFriend.setOnClickListener(this);
+        mBinding.inlcude.tvFollowOnclick.setOnClickListener(this);
+        mBinding.inlcude.tvFansOnclick.setOnClickListener(this);
+
+        mBinding.appBarLayout.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> {
+                if (verticalOffset == 0){
+                    mBinding.appBarLayout.setBackgroundResource(R.drawable.shape_style_user);
+                }else if (Math.abs(verticalOffset) >= appBarLayout.getTotalScrollRange()){
+
+                }else {
+                    mBinding.appBarLayout.setBackgroundResource(R.color.colorDb3);
+                }
+        });
     }
 
-    private String id;
-    private String url;
+    private void setUserInfo(){
+        mBinding.inlcude.sdvHead.setImageURI(userMess.getHeadUrl());
+        mBinding.inlcude.tvNickName.setText(userMess.getNickName());
+        mBinding.inlcude.tvFollow.setText(userMess.getFollowNumber());
+        mBinding.inlcude.tvFans.setText(userMess.getFansNumber());
+        mBinding.inlcude.tvDropNom.setText(String.valueOf(userMess.getDiamond()));
+        mBinding.tvToolBarNickName.setText(userMess.getNickName());
+        if (userMess.getGrade() == 1){ mBinding.inlcude.ivVip.setImageResource(R.mipmap.u_one); }
+        if (userMess.getGrade() == 2){ mBinding.inlcude.ivVip.setImageResource(R.mipmap.u_tow); }
+        if (userMess.getGrade() == 3){ mBinding.inlcude.ivVip.setImageResource(R.mipmap.u_three); }
+        if (userMess.getGrade() == 4){ mBinding.inlcude.ivVip.setImageResource(R.mipmap.u_four); }
+        if (userMess.getGrade() == 5){ mBinding.inlcude.ivVip.setImageResource(R.mipmap.u_five); }
+        if (userMess.isMutual()){
+            mBinding.inlcude.tvSend.setVisibility(View.VISIBLE);
+            mBinding.inlcude.tvAddFriend.setVisibility(View.GONE);
+        }else {
+            mBinding.inlcude.tvSend.setVisibility(View.GONE);
+            mBinding.inlcude.tvAddFriend.setText("+ 关注");
+            mBinding.inlcude.tvAddFriend.setVisibility(View.VISIBLE);
+        }
+    }
     @Override
     public void initData() {
         Map<String,Object>map = new HashMap<>();
@@ -119,9 +101,10 @@ public class UserHomeActivity extends BaseActivity {
         OkHttp3Utils.getInstance(getContext()).doPostJson(DyUrl.getUserByUserId, map, new ObjectCallback<String>(getContext()) {
             @Override
             public void onUi(String result){
-                UserMess userMess = new Gson().fromJson(result, UserMess.class);
+                userMess = new Gson().fromJson(result, UserMess.class);
                 if (userMess!=null){
-                    setUserMess(userMess);
+                    userMess.setNickName("海跳跳");
+                    setUserInfo();
                 }
             }
 
@@ -131,49 +114,54 @@ public class UserHomeActivity extends BaseActivity {
             }
         });
     }
-
-    private void setUserMess(UserMess userMess) {
-        id = String.valueOf(userMess.getId());
-        url = userMess.getHeadUrl();
-        sdvHead.setImageURI(userMess.getHeadUrl());
-        tvNickName.setText(userMess.getNickName());
-        tvFollow.setText(userMess.getFollowNumber());
-        tvFans.setText(userMess.getFansNumber());
-        tvDropNom.setText(String.valueOf(userMess.getDiamond()));
-        tvLove.setText(StringUtils.isEmptyTxt(userMess.getAutograph()));
-        if (userMess.isMutual()){
-            tvSend.setVisibility(View.VISIBLE);
-        }else {
-            tvSend.setVisibility(View.GONE);
-        }
-        if (userMess.getGrade() == 1){
-            ivGrade.setImageResource(R.mipmap.u_one);
-
-        }
-        if (userMess.getGrade() == 2){
-            ivGrade.setImageResource(R.mipmap.u_tow);
-        }
-        if (userMess.getGrade() == 3){
-            ivGrade.setImageResource(R.mipmap.u_three);
-        }
-        if (userMess.getGrade() == 4){
-            ivGrade.setImageResource(R.mipmap.u_four);
-        }
-        if (userMess.getGrade() == 5){
-            ivGrade.setImageResource(R.mipmap.u_five);
-        }
-
-    }
-
-    @OnClick(R.id.tvSend)
-    public void click(View view){
-        if (view.getId() == R.id.tvSend){
-            Map<String,Object>map = new HashMap<>();
-            map.put("hyId",id);//这里传环信的ID
-            map.put("dName",tvNickName.getText().toString());//这里传环信的ID
-            map.put("dHead",url);
-            goTActivity(ChatActivity.class,map);
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.ivBack:
+                AppManager.getAppManager().finishActivity(this);
+                break;
+            case R.id.tvSend:
+                Map<String,Object>map = new HashMap<>();
+                map.put("hyId",userMess.getId());//这里传环信的ID
+                map.put("dName",userMess.getNickName());//这里传环信的ID
+                map.put("dHead",userMess.getHeadUrl());
+                goTActivity(ChatActivity.class,map);
+                break;
+            case R.id.tvAddFriend:
+                addFriend();
+                break;
+            case R.id.tvFollowOnclick:
+                Map<String,Object>map1 = new HashMap<>();
+                map1.put("userId",userMess.getId());
+                goTActivity(FollowActivity.class,map1);
+                break;
+            case R.id.tvFansOnclick:
+                Map<String,Object>map2 = new HashMap<>();
+                map2.put("userId",userMess.getId());
+                goTActivity(FansActivity.class,map2);
+                break;
+            default:break;
         }
     }
 
+    /**
+     * 关注
+     */
+    private void addFriend() {
+        Map<String,Object>map = new HashMap<>();
+        map.put("userId",userMess.getId());
+        OkHttp3Utils.getInstance(getContext()).doPostJson(DyUrl.updateFans, map, new ObjectCallback<String>(getContext()) {
+            @Override
+            public void onUi(String result) throws JSONException {
+                ToastUtil.showShort(getContext(),"关注成功");
+                mBinding.inlcude.tvSend.setVisibility(View.VISIBLE);
+                mBinding.inlcude.tvAddFriend.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onFailed(String msg) {
+
+            }
+        });
+    }
 }
