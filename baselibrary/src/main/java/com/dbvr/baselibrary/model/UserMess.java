@@ -27,7 +27,7 @@ public class UserMess extends BaseObservable implements Serializable {
 
     private String nickName; //名字
 
-    private String autograph;//个性签名
+    private String autograph = "未来设置签名哦";//个性签名
 
     private String permanentResidence; //常住地
 

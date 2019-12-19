@@ -55,7 +55,7 @@ public class UserIntroduceActivity extends BaseActivity {
     }
 
     private void commit() {
-        UserHolper.getUserHolper(getContext()).upUser(5,etInput.getText().toString());
+        UserHolper.getUserHolper(getContext()).upUser("autograph",etInput.getText().toString());
         AppManager.getAppManager().finishActivity();
     }
 

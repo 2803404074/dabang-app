@@ -36,54 +36,30 @@ public class MyFragment extends BaseFragmentBinding<FragmentMyBinding> implement
     @Override
     public void initView(FragmentMyBinding binding) {
         UserMess userMess = UserHolper.getUserHolper(getContext()).getUserMess();
-        if (userMess == null){
-            showLoginTips();
-        }else {
-            binding.setUser(userMess);
-            binding.inlcude.sdvHead.setImageURI(userMess.getHeadUrl());
-            binding.inlcude.tvAddFriend.setOnClickListener(this);
-            binding.inlcude.tvLove.setOnClickListener(this);
-            binding.inlcude.tvFollowOnclick.setOnClickListener(this);
-            binding.inlcude.tvFansOnclick.setOnClickListener(this);
-            binding.inlcude.tvDropOnclick.setOnClickListener(this);
-            binding.ivSearch.setOnClickListener(this);
+        binding.setUser(userMess);
+        binding.inlcude.sdvHead.setImageURI(userMess.getHeadUrl());
+        binding.inlcude.tvAddFriend.setOnClickListener(this);
+        binding.inlcude.tvFollowOnclick.setOnClickListener(this);
+        binding.inlcude.tvFansOnclick.setOnClickListener(this);
+        binding.inlcude.tvDropOnclick.setOnClickListener(this);
+        binding.ivSearch.setOnClickListener(this);
 
-            binding.llMoney.setOnClickListener(this);
-            binding.llOrder.setOnClickListener(this);
-            binding.llCart.setOnClickListener(this);
-            binding.llMessInfo.setOnClickListener(this);
-            binding.llSet.setOnClickListener(this);
-            binding.llAbout.setOnClickListener(this);
-        }
+        binding.llMoney.setOnClickListener(this);
+        binding.llOrder.setOnClickListener(this);
+        binding.llCart.setOnClickListener(this);
+        binding.llMessInfo.setOnClickListener(this);
+        binding.llSet.setOnClickListener(this);
+        binding.llAbout.setOnClickListener(this);
     }
 
     @Override
     public void initData() {
     }
-
-    private void showLoginTips() {
-        DialogUtil.getInstance(getActivity()).show(R.layout.dialog_tip,true, view -> {
-            TextView textView = view.findViewById(R.id.tv_title);
-            textView.setText("是否前往登陆？");
-            view.findViewById(R.id.tvCancel).setOnClickListener((view1)->{
-                DialogUtil.getInstance(getActivity()).des();
-            });
-            view.findViewById(R.id.tvConfirm).setOnClickListener((view1)->{
-                goTActivity(LoginActivity.class,null);
-                AppManager.getAppManager().finishActivity(MainActivity.class);
-            });
-        });
-    }
-
     @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.tvAddFriend:
                 goTActivity(SearchActivity.class,null);
-                break;
-            case R.id.tvLove:
-                Map<String,Object>map = new HashMap<>();
-                goTActivity(UserIntroduceActivity.class,map);
                 break;
             case R.id.llMoney:
                 goTActivity(UserDropActivity.class,null);

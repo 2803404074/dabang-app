@@ -8,21 +8,38 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:background="@color/colorDb4"
-        android:layout_height="@dimen/dp_55">
+        android:background="@color/colorWhite"
+        android:layout_height="@dimen/dp_60">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="消 息"
+            android:textStyle="bold"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="@dimen/dp_5"
-            android:textSize="@dimen/sp_18"
-            android:textColor="@color/white"
+            android:textSize="@dimen/sp_21"
+            android:textColor="@color/textTitle"
             android:layout_centerHorizontal="true"/>
+
+        <ImageView
+            android:id="@+id/ivFollow"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:src="@mipmap/duixiang"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/dp_5"
+            android:layout_marginRight="@dimen/dp_10"/>
     </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/color_e2e2e2"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_mess"
+        android:layout_marginTop="@dimen/dp_5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

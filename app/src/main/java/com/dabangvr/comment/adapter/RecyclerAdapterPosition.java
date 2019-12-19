@@ -117,6 +117,13 @@ public abstract class RecyclerAdapterPosition<T> extends RecyclerView.Adapter<Ba
                         mItemClickListener.onItemClick(v, position);
                     }
                 });
+                holder.itemView.setOnLongClickListener(v -> {
+                    if (mLongItemClickListener != null) {
+                        mLongItemClickListener.onLongItemClick(v, position);
+                    }
+                    return true;
+                });
+
             }
 
             return;

@@ -19,6 +19,8 @@ import com.dbvr.httplibrart.utils.ObjectCallback;
 import com.dbvr.httplibrart.utils.OkHttp3Utils;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.gson.Gson;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.exceptions.HyphenateException;
 
 import org.json.JSONException;
 
@@ -103,7 +105,6 @@ public class UserHomeActivity extends BaseActivityBinding<ActivityUserHomeBindin
             public void onUi(String result){
                 userMess = new Gson().fromJson(result, UserMess.class);
                 if (userMess!=null){
-                    userMess.setNickName("海跳跳");
                     setUserInfo();
                 }
             }
@@ -123,8 +124,7 @@ public class UserHomeActivity extends BaseActivityBinding<ActivityUserHomeBindin
             case R.id.tvSend:
                 Map<String,Object>map = new HashMap<>();
                 map.put("hyId",userMess.getId());//这里传环信的ID
-                map.put("dName",userMess.getNickName());//这里传环信的ID
-                map.put("dHead",userMess.getHeadUrl());
+                map.put("nickName",userMess.getNickName());//这里传环信的ID
                 goTActivity(ChatActivity.class,map);
                 break;
             case R.id.tvAddFriend:
@@ -148,6 +148,13 @@ public class UserHomeActivity extends BaseActivityBinding<ActivityUserHomeBindin
      * 关注
      */
     private void addFriend() {
+        //环信关注
+        try {
+            EMClient.getInstance().contactManager().addContact(String.valueOf(userMess.getId()), "关注");
+        } catch (HyphenateException e) {
+            e.printStackTrace();
+        }
+        //后端关注
         Map<String,Object>map = new HashMap<>();
         map.put("userId",userMess.getId());
         OkHttp3Utils.getInstance(getContext()).doPostJson(DyUrl.updateFans, map, new ObjectCallback<String>(getContext()) {

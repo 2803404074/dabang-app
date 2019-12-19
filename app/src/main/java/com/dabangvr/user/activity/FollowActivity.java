@@ -16,6 +16,7 @@ import com.dabangvr.comment.adapter.RecyclerAdapterPosition;
 import com.dbvr.baselibrary.model.FansMo;
 import com.dbvr.baselibrary.utils.DialogUtil;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
+import com.dbvr.baselibrary.utils.StringUtils;
 import com.dbvr.baselibrary.utils.ToastUtil;
 import com.dbvr.baselibrary.view.AppManager;
 import com.dbvr.baselibrary.view.BaseActivity;
@@ -127,9 +128,13 @@ public class FollowActivity extends BaseActivity {
 
     @Override
     public void initData() {
+        String userId = getIntent().getStringExtra("userId");
         Map<String, Object> map = new HashMap<>();
         map.put("page", page);
         map.put("limit", 10);
+        if (!StringUtils.isEmpty(userId)){
+            map.put("userId", userId);
+        }
         OkHttp3Utils.getInstance(getContext()).doPostJson(DyUrl.getFocusedsList, map,
                 new ObjectCallback<String>(getContext()) {
                     @Override

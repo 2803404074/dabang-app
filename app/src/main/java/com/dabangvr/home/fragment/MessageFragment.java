@@ -1,18 +1,32 @@
 package com.dabangvr.home.fragment;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.Handler;
+import android.os.IBinder;
+import android.os.Message;
 import android.util.Pair;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dabangvr.R;
+import com.dabangvr.comment.activity.MainAc;
 import com.dabangvr.comment.adapter.BaseRecyclerHolder;
 import com.dabangvr.comment.adapter.RecyclerAdapterPosition;
+import com.dabangvr.comment.service.MessageService;
 import com.dabangvr.im.ChatActivity;
+import com.dabangvr.user.activity.FollowActivity;
+import com.dbvr.baselibrary.utils.Conver;
+import com.dbvr.baselibrary.utils.DialogUtil;
 import com.dbvr.baselibrary.utils.StringUtils;
 import com.dbvr.baselibrary.utils.ToastUtil;
+import com.dbvr.baselibrary.utils.UserHolper;
 import com.dbvr.baselibrary.view.BaseFragment;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.hyphenate.EMContactListener;
@@ -37,8 +51,11 @@ public class MessageFragment extends BaseFragment{
     RecyclerView recyclerView;
     @BindView(R.id.tvTips)
     TextView tvTips;
+    @BindView(R.id.ivFollow)
+    ImageView ivFollow;
     private List<EMConversation> conversationList = new ArrayList<>();
     private RecyclerAdapterPosition adapter;
+
 
     @Override
     public int layoutId() {
@@ -46,21 +63,17 @@ public class MessageFragment extends BaseFragment{
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        if (adapter!=null){
-            loadConversationList();
-            adapter.updateDataa(conversationList);
-            if (conversationList == null || conversationList.size()==0){
-                tvTips.setVisibility(View.VISIBLE);
-            }else {
-                tvTips.setVisibility(View.GONE);
-            }
-        }
+    public void initView() {
+
+        serOnCallBack();
+
+        ivFollow.setOnClickListener((view)->{
+            goTActivity(FollowActivity.class,null);
+        });
+
     }
 
-    @Override
-    public void initView() {
+    private void setView(){
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new RecyclerAdapterPosition<EMConversation>(getContext(), conversationList, R.layout.my_mess_recyitem) {
             @Override
@@ -70,7 +83,7 @@ public class MessageFragment extends BaseFragment{
                 try {
                     SimpleDraweeView sdvHead = holder.getView(R.id.avatar);
                     sdvHead.setImageURI(emMessage2.getStringAttribute("head"));
-                    holder.setText(R.id.name, emMessage2.getStringAttribute("nickName"));
+                    holder.setText(R.id.name, emMessage2.getFrom());
                 } catch (HyphenateException e) {
                     e.printStackTrace();
                 }
@@ -85,8 +98,13 @@ public class MessageFragment extends BaseFragment{
                 if (conversation.getAllMsgCount() != 0) {
                     // 把最后一条消息的内容作为item的message内容
                     EMMessage lastMessage = conversation.getLastMessage();
-                    //msg{from:tuhao11, to:52086 body:txt:"得得得"
-                    holder.setText(R.id.message, StringUtils.removeStr(lastMessage.getBody().toString()));
+                    //如果是图片
+                    if (lastMessage.getType() == EMMessage.Type.IMAGE){
+                        holder.setText(R.id.message, "图片...");
+                    }else {
+                        //msg{from:tuhao11, to:52086 body:txt:"得得得"
+                        holder.setText(R.id.message, StringUtils.removeStr(lastMessage.getBody().toString()));
+                    }
                     holder.setText(R.id.time, DateUtils.getTimestampString(new Date(lastMessage.getMsgTime())));
 
                     if (lastMessage.direct() == EMMessage.Direct.SEND && lastMessage.status() == EMMessage.Status.FAIL) {
@@ -102,17 +120,38 @@ public class MessageFragment extends BaseFragment{
         adapter.setOnItemClickListener((view, position) -> {
             EMConversation conversation = (EMConversation) adapter.getData().get(position);
             EMMessage emMessage = conversation.getLastMessage();
-            String username = emMessage.getUserName();
+            //mainactivity角标消息数量
+            MainAc.mainInstance.setMessageCount(conversation.getUnreadMsgCount());
+
             // 进入聊天页面
-            try {
-                Intent intent = new Intent(getContext(), ChatActivity.class);
-                intent.putExtra("hyId", username);
-                intent.putExtra("nickName", emMessage.getStringAttribute("nickName"));
-                intent.putExtra("head", emMessage.getStringAttribute("head"));
-                startActivity(intent);
-            } catch (HyphenateException e) {
-                e.printStackTrace();
+            Intent intent = new Intent(getContext(), ChatActivity.class);
+            if (!emMessage.getFrom().equals("admin")){
+                intent.putExtra("hyId", emMessage.getTo());//自己
+            }else {
+                intent.putExtra("hyId", emMessage.getFrom());//对方
             }
+            intent.putExtra("nickName", emMessage.getUserName());
+            startActivity(intent);
+        });
+
+        adapter.setonLongItemClickListener((view, position) -> {
+            DialogUtil.getInstance(getActivity()).show(R.layout.dialog_tip, view1 -> {
+                TextView title = view1.findViewById(R.id.tv_title);
+                title.setText("确定删除"+conversationList.get(position).getLatestMessageFromOthers().getFrom()+"的会话吗？");
+                view1.findViewById(R.id.tvConfirm).setOnClickListener((view2)->{
+                    EMClient.getInstance().chatManager().deleteConversation(conversationList.get(position).getLatestMessageFromOthers().getUserName(), true);
+                    conversationList.remove(position);
+                    adapter.updateDataa(conversationList);
+                    if (conversationList == null || conversationList.size() == 0){
+                        tvTips.setVisibility(View.VISIBLE);
+                    }
+                    DialogUtil.getInstance(getActivity()).des();
+                });
+
+                view1.findViewById(R.id.tvCancel).setOnClickListener((view2)->{
+                    DialogUtil.getInstance(getActivity()).des();
+                });
+            });
         });
     }
 
@@ -179,14 +218,11 @@ public class MessageFragment extends BaseFragment{
         }
         conversationList.clear();
         for (Pair<Long, EMConversation> sortItem : sortList) {
-            try {
-                EMMessage emMessage = sortItem.second.getLastMessage();
-                if (!StringUtils.isEmpty(emMessage.getStringAttribute("nickName"))){
-                    conversationList.add(sortItem.second);
-                }
-            } catch (HyphenateException e) {
-                e.printStackTrace();
+            if (null == sortItem.second.getLatestMessageFromOthers())continue;
+            if (sortItem.second.getLatestMessageFromOthers().getFrom().equals("admin")){
+                sortItem.second.getLatestMessageFromOthers().setAttribute("head","http://pili-clickplay.vrzbgw.com/application.png");
             }
+            conversationList.add(sortItem.second);
         }
     }
 
@@ -207,4 +243,29 @@ public class MessageFragment extends BaseFragment{
         });
     }
 
+    private void serOnCallBack(){
+        MessageService.service.setCallBack2(messages -> {
+            loadConversationList();
+            if (conversationList == null || conversationList.size() == 0){
+                if (tvTips!=null){
+                    tvTips.setVisibility(View.VISIBLE);
+                }
+            }
+            handler.sendEmptyMessage(0);
+        });
+    }
+
+    private Handler handler = new Handler(message -> {
+        if (message.what == 0){
+            setView();
+        }
+        return false;
+    });
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadConversationList();
+        setView();
+    }
 }

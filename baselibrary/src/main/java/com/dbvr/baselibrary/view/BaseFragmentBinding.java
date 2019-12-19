@@ -26,21 +26,21 @@ import java.util.Map;
  */
 
 public abstract class BaseFragmentBinding<DB extends ViewDataBinding> extends Fragment {
-    private DB db;
+    public DB mBinding;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if(db == null){
-            db = DataBindingUtil.inflate(inflater, layoutId(), container, false);
-            initView(db);
+        if(mBinding == null){
+            mBinding = DataBindingUtil.inflate(inflater, layoutId(), container, false);
+            initView(mBinding);
             initData();
         }else {
-            ViewGroup parent = (ViewGroup) db.getRoot().getParent();
+            ViewGroup parent = (ViewGroup) mBinding.getRoot().getParent();
             if (parent != null) {
-                parent.removeView(db.getRoot());
+                parent.removeView(mBinding.getRoot());
             }
         }
-        return  db.getRoot();
+        return  mBinding.getRoot();
     }
 
     public void isLoading(boolean t){

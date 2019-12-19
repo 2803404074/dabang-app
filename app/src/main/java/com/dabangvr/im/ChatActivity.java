@@ -1,6 +1,9 @@
 package com.dabangvr.im;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -14,18 +17,25 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.dabangvr.R;
 import com.dabangvr.comment.adapter.BaseRecyclerHolder;
 import com.dabangvr.util.MyAnimatorUtil;
+import com.dbvr.baselibrary.base.ParameterContens;
 import com.dbvr.baselibrary.model.UserMess;
 import com.dbvr.baselibrary.utils.SPUtils;
 import com.dbvr.baselibrary.utils.ScreenUtils;
 import com.dbvr.baselibrary.utils.StringUtils;
+import com.dbvr.baselibrary.utils.UserHolper;
 import com.dbvr.baselibrary.view.AppManager;
 import com.dbvr.baselibrary.view.BaseActivity;
+import com.dbvr.imglibrary2.model.Image;
+import com.dbvr.imglibrary2.ui.SelectImageActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.hyphenate.EMMessageListener;
 import com.hyphenate.chat.EMClient;
@@ -35,6 +45,7 @@ import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMMessage.ChatType;
 import com.hyphenate.chat.EMTextMessageBody;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -44,6 +55,9 @@ import butterknife.OnClick;
  * 聊天界面
  */
 public class ChatActivity extends BaseActivity {
+    private static final int PERMISSION_REQUEST_CODE = 0;
+    private static final int SELECT_IMAGE_REQUEST_four = 0x0014;
+    private ArrayList<Image> mSelectImages = new ArrayList<>();
 
     private int position;
 
@@ -103,11 +117,11 @@ public class ChatActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        userMess = SPUtils.instance(getContext()).getUser();
+        userMess = UserHolper.getUserHolper(getContext()).getUserMess();
         animatorUtil = new MyAnimatorUtil(getContext(), btn_send);
         toChatUsername = this.getIntent().getStringExtra("hyId");
 
-        tv_toUsername.setText(getIntent().getStringExtra("dName"));
+        tv_toUsername.setText(getIntent().getStringExtra("nickName"));
 
         getAllMessage();
         msgList = conversation.getAllMessages();
@@ -129,7 +143,11 @@ public class ChatActivity extends BaseActivity {
                             holder.setText(R.id.tv_chatcontent, txtBody.getMessage());
                             //头像
                             SimpleDraweeView sdvHead = holder.getView(R.id.iv_userhead);
-                            sdvHead.setImageURI(message.getStringAttribute("head"));
+                            if (message.getFrom().equals("admin")){
+                                sdvHead.setImageURI("http://pili-clickplay.vrzbgw.com/application.png");
+                            }else {
+                                sdvHead.setImageURI(message.getStringAttribute("head"));
+                            }
                             //隐藏图片内容区域
                             holder.getView(R.id.iv_content).setVisibility(View.GONE);
                         }
@@ -142,8 +160,7 @@ public class ChatActivity extends BaseActivity {
                             params.height = imgBody.getHeight();
                             params.width = imgBody.getWidth();
                             imageView.setLayoutParams(params);
-                            holder.setImageByUrl(R.id.iv_content, imgBody.getRemoteUrl());
-
+                            holder.setHeadByUrl(R.id.iv_content,imgBody.getRemoteUrl());
                             //隐藏文本内容区域
                             holder.getView(R.id.iv_jt).setVisibility(View.GONE);
                             holder.getView(R.id.tv_chatcontent).setVisibility(View.GONE);
@@ -178,7 +195,7 @@ public class ChatActivity extends BaseActivity {
                         params.height = imgBody.getHeight();
                         params.width = imgBody.getWidth();
                         imageView.setLayoutParams(params);
-                        holder.setImageByUrl(R.id.iv_content,imgBody.getRemoteUrl());
+                        holder.setHeadByUrl(R.id.iv_content,imgBody.getRemoteUrl());
                         if (userMess != null) {
                             SimpleDraweeView head = holder.getView(R.id.iv_userhead);
                             head.setImageURI(userMess.getHeadUrl());
@@ -214,7 +231,7 @@ public class ChatActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.ivBack,R.id.iv_add, R.id.iv_selectPhoto, R.id.iv_selectCame})
+    @OnClick({R.id.ivBack,R.id.iv_add, R.id.iv_selectPhoto})
     public void onTouchClick(View view) {
         switch (view.getId()) {
             case R.id.ivBack:
@@ -231,14 +248,48 @@ public class ChatActivity extends BaseActivity {
 
                 //选择相册
             case R.id.iv_selectPhoto:
-
+                selectImage(SELECT_IMAGE_REQUEST_four);
                 break;
-                //选择相机
-            case R.id.iv_selectCame:
-                break;
+                default:break;
 
         }
     }
+    private void selectImage(int code) {
+        int isPermission1 = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+        int isPermission2 = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (isPermission1 == PackageManager.PERMISSION_GRANTED && isPermission2 == PackageManager.PERMISSION_GRANTED) {
+            thisStartActivity(code);
+        } else {
+            //申请权限
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+        }
+    }
+    private void thisStartActivity(int code) {
+        Intent intent = new Intent(this, SelectImageActivity.class);
+        intent.putExtra("size", 1);
+        intent.putParcelableArrayListExtra("selected_images", mSelectImages);
+        startActivityForResult(intent, code);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            animatorUtil.startHeight(llAdd);
+            try {
+                if (requestCode == SELECT_IMAGE_REQUEST_four && data != null) {
+                    ArrayList<Image> selectImages = data.getParcelableArrayListExtra(SelectImageActivity.EXTRA_RESULT);
+                    if (selectImages!=null && selectImages.size()>0){
+                        sendImgs(selectImages.get(0).getPath());
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     @Override
     public void initData() {
@@ -261,6 +312,7 @@ public class ChatActivity extends BaseActivity {
                 EaseCommonUtils.getConversationType(chatType), true);
         // 把此会话的未读数置为0
         conversation.markAllMessagesAsRead();
+
         // 初始化db时，每个conversation加载数目是getChatOptions().getNumberOfMessagesLoaded
         // 这个数目如果比用户期望进入会话界面时显示的个数不一样，就多加载一些
         final List<EMMessage> msgs = conversation.getAllMessages();
@@ -278,11 +330,7 @@ public class ChatActivity extends BaseActivity {
         // 创建一条文本消息，content为消息文字内容，toChatUsername为对方用户或者群聊的id，后文皆是如此
         EMMessage message = EMMessage.createTxtSendMessage(content, toChatUsername);
         // 如果是群聊，设置chattype，默认是单聊
-        if (chatType == Constant.CHATTYPE_GROUP)
-            message.setChatType(ChatType.GroupChat);
-            message.setAttribute("head",SPUtils.instance(getContext()).getUser().getHeadUrl());
-            message.setAttribute("nickName",SPUtils.instance(getContext()).getUser().getNickName());
-
+        message.setAttribute("head",SPUtils.instance(getContext()).getUser().getHeadUrl());
         // 发送消息
         EMClient.getInstance().chatManager().sendMessage(message);
         chatAdapter.addPosition(message);
@@ -294,9 +342,6 @@ public class ChatActivity extends BaseActivity {
     private void sendImgs(String imagePath) {
         // imagePath为图片本地路径，false为不发送原图（默认超过100k的图片会压缩后发给对方），需要发送原图传true
         EMMessage message = EMMessage.createImageSendMessage(imagePath, false, toChatUsername);
-        // 如果是群聊，设置chattype，默认是单聊
-        if (chatType == Constant.CHATTYPE_GROUP)
-            message.setChatType(ChatType.GroupChat);
         // 发送消息
         EMClient.getInstance().chatManager().sendMessage(message);
 
@@ -325,14 +370,7 @@ public class ChatActivity extends BaseActivity {
         @Override
         public void onMessageReceived(List<EMMessage> messages) {
             for (EMMessage message : messages) {
-                String username = null;
-                // 群组消息
-                if (message.getChatType() == ChatType.GroupChat || message.getChatType() == ChatType.ChatRoom) {
-                    username = message.getTo();
-                } else {
-                    // 单聊消息
-                    username = message.getFrom();
-                }
+                String username = message.getFrom();
                 // 如果是当前会话的消息，刷新聊天页面
                 if (username.equals(toChatUsername)) {
                     chatAdapter.addPosition(message);
@@ -373,4 +411,7 @@ public class ChatActivity extends BaseActivity {
         EMClient.getInstance().chatManager().removeMessageListener(msgListener);
         if (animatorUtil != null) animatorUtil = null;
     }
+
+
+
 }

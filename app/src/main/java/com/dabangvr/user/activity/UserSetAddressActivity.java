@@ -20,6 +20,7 @@ import com.dbvr.baselibrary.utils.StatusBarUtil;
 import com.dbvr.baselibrary.utils.StringUtils;
 import com.dbvr.baselibrary.utils.ToastUtil;
 import com.dbvr.baselibrary.view.BaseActivity;
+import com.dbvr.baselibrary.view.BaseActivityBinding;
 import com.dbvr.httplibrart.constans.DyUrl;
 import com.dbvr.httplibrart.utils.ObjectCallback;
 import com.dbvr.httplibrart.utils.OkHttp3Utils;
@@ -36,7 +37,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class UserSetAddressActivity extends BaseActivity {
+public class UserSetAddressActivity extends BaseActivityBinding {
 
     @BindView(R.id.tvLocation)
     TextView tvLocation;

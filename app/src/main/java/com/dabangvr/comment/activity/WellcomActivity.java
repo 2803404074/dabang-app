@@ -2,8 +2,6 @@ package com.dabangvr.comment.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.animation.TimeInterpolator;
-import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -12,25 +10,17 @@ import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
-import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
 
 import com.dabangvr.R;
-import com.dabangvr.comment.application.MyApplication;
-import com.dabangvr.comment.service.UserService;
-import com.dabangvr.util.MyAnimatorUtil;
 import com.dbvr.baselibrary.model.UserMess;
 import com.dbvr.baselibrary.utils.SPUtils;
-import com.dbvr.baselibrary.utils.ScreenUtils;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
 import com.dbvr.baselibrary.utils.StringUtils;
-import com.dbvr.baselibrary.utils.ToastUtil;
+import com.dbvr.baselibrary.utils.UserHolper;
 import com.dbvr.baselibrary.view.BaseActivity;
-import com.dbvr.httplibrart.constans.DyUrl;
-import com.dbvr.httplibrart.utils.ObjectCallback;
-import com.dbvr.httplibrart.utils.OkHttp3Utils;
-import com.google.gson.Gson;
+
 import butterknife.BindView;
 
 public class WellcomActivity extends BaseActivity {
@@ -60,14 +50,23 @@ public class WellcomActivity extends BaseActivity {
         DisplayMetrics outMetrics = new DisplayMetrics();
         manager.getDefaultDisplay().getMetrics(outMetrics);
 
-        new Handler().postDelayed(() -> {
-            //如果已经登陆，则获取用户信息
-            if (!StringUtils.isEmpty( SPUtils.instance(getContext()).getToken())){
-                Intent intent = new Intent(getContext(), UserService.class);
-                startService(intent);
-            }
-            startActivity(CownTimerActivity.class);
-        },1500);
+        UserMess userMess = UserHolper.getUserHolper(getContext()).getUserMess();
+        if (userMess!=null){
+            new Handler().postDelayed(() -> {
+                //如果已经登陆，则获取用户信息
+                startActivity(CownTimerActivity.class);
+            },1500);
+        }else {
+            new Handler().postDelayed(() -> {
+                //如果已经登陆，则获取用户信息
+                if (!StringUtils.isEmpty( SPUtils.instance(getContext()).getToken())){
+                    startActivity(CownTimerActivity.class);
+                }else {
+                    startActivity(LoginActivity.class);
+                }
+            },1500);
+        }
+
 
         tvShow02.animate()
                 .translationX((float) (outMetrics.widthPixels*0.2))

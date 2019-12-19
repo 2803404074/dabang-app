@@ -66,7 +66,8 @@ public class UserVideoActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        mVideoView.setVideoPath(getIntent().getStringExtra("url"));
+        //mVideoView.setVideoPath(getIntent().getStringExtra("url"));
+        mVideoView.setVideoPath("http://pili-clickplay.vrzbgw.com/WeChat_20191003172307.mp4");
         mVideoView.start();
     }
 

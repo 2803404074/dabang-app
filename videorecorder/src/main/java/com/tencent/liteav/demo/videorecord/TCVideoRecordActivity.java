@@ -76,7 +76,7 @@ public class TCVideoRecordActivity extends Activity implements View.OnClickListe
         , TXRecordCommon.ITXVideoRecordListener, View.OnTouchListener, GestureDetector.OnGestureListener, ScaleGestureDetector.OnScaleGestureListener {
 
     public static void openRecordActivity(Context context){
-        Intent intent = new Intent("com.record.recorctivity");
+        Intent intent = new Intent(context,TCVideoRecordActivity.class);
         intent.putExtra(TCConstants.RECORD_CONFIG_MIN_DURATION, 5 * 1000);
         intent.putExtra(TCConstants.RECORD_CONFIG_MAX_DURATION, 60 * 1000);
         intent.putExtra(TCConstants.RECORD_CONFIG_ASPECT_RATIO, TXRecordCommon.VIDEO_ASPECT_RATIO_9_16);//视频比例

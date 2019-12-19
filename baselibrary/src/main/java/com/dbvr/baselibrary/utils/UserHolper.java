@@ -28,6 +28,11 @@ public class UserHolper {
         return userMess;
     }
 
+    public UserMess upUserMess() {
+        userMess = SPUtils.instance(context).getUser();
+        return userMess;
+    }
+
     public String getToken() {
         if (StringUtils.isEmpty(token)) {
             token = SPUtils.instance(context).getToken();
@@ -36,24 +41,24 @@ public class UserHolper {
     }
 
 
-    public void upUser(int key, String value) {
+    public void upUser(String key, String value) {
         switch (key) {
-            case 1:
+            case "headUrl":
                 this.userMess.setHeadUrl(value);
                 break;//头像
-            case 2:
+            case "nickName":
                 this.userMess.setNickName(value);
                 break;//昵称
-            case 3:
+            case "sex":
                 this.userMess.setSex(value);
                 break;//性别
-            case 4:
+            case "birthday":
                 this.userMess.setBirthday(value);
                 break;//生日
-            case 5:
+            case "autograph":
                 this.userMess.setAutograph(value);
                 break;//自我介绍
-            case 6:
+            case "mobile":
                 this.userMess.setMobile(value);
                 break;//手机号码
             default:

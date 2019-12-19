@@ -27,9 +27,9 @@
             android:layout_width="match_parent"
             app:menu="@menu/bottom_nav_menu"
             app:labelVisibilityMode="labeled"
+            app:itemIconTint="@color/selector_color"
+            app:itemTextColor="@color/selector_color"
             android:layout_height="wrap_content"/>
-
-
     </LinearLayout>
 
     <RelativeLayout
@@ -42,10 +42,11 @@
         <ImageView
             android:layout_width="@dimen/dp_35"
             android:layout_height="@dimen/dp_35"
+            android:layout_margin="@dimen/dp_2"
             android:src="@mipmap/add_main"/>
         <View
-            android:layout_width="@dimen/dp_10"
-            android:layout_height="@dimen/dp_10"
+            android:layout_width="@dimen/dp_6"
+            android:layout_height="@dimen/dp_6"
             android:layout_alignParentRight="true"
             android:background="@drawable/shape_round_red"/>
     </RelativeLayout>

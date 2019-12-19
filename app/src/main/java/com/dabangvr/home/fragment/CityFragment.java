@@ -12,11 +12,14 @@ import com.amap.api.location.AMapLocation;
 import com.dabangvr.R;
 import com.dabangvr.comment.adapter.BaseRecyclerHolder;
 import com.dabangvr.comment.adapter.RecyclerAdapter;
+import com.dabangvr.databinding.FragmentSameCityBinding;
 import com.dabangvr.play.activity.verticle.PlayActivity;
 import com.dabangvr.util.GDMapLocation;
 import com.dbvr.baselibrary.model.MainMo;
 import com.dbvr.baselibrary.utils.StringUtils;
+import com.dbvr.baselibrary.view.BaseActivityBinding;
 import com.dbvr.baselibrary.view.BaseFragment;
+import com.dbvr.baselibrary.view.BaseFragmentBinding;
 import com.dbvr.httplibrart.constans.DyUrl;
 import com.dbvr.httplibrart.utils.ObjectCallback;
 import com.dbvr.httplibrart.utils.OkHttp3Utils;
@@ -34,32 +37,22 @@ import java.util.Map;
 
 import butterknife.BindView;
 
-public class CityFragment extends BaseFragment implements GDMapLocation.MapEvevt {
+public class CityFragment extends BaseFragmentBinding<FragmentSameCityBinding> implements GDMapLocation.MapEvevt {
 
     private GDMapLocation gdMapLocation;
     private GDMapLocation.MapEvevt evevt;
-
-    @BindView(R.id.tvLocationName)
-    TextView tvLocationName;
-
-    @BindView(R.id.tvRecyclerShow)
-    TextView tvShow;
-
-    @BindView(R.id.recycler_tc)
-    RecyclerView recyclerView;
     private RecyclerAdapter adapter;
     private List<MainMo>mData = new ArrayList<>();
-
     @Override
     public int layoutId() {
         return R.layout.fragment_same_city;
     }
 
     @Override
-    public void initView() {
+    public void initView(FragmentSameCityBinding binding) {
         isLoading(true);
-        recyclerView.setBackgroundResource(R.color.color_f1);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
+        mBinding.recyclerTc.setBackgroundResource(R.color.color_f1);
+        mBinding.recyclerTc.setLayoutManager(new GridLayoutManager(getContext(),2));
         adapter = new RecyclerAdapter<MainMo>(getContext(),mData,R.layout.item_main) {
             @Override
             public void convert(Context mContext, BaseRecyclerHolder holder, MainMo o) {
@@ -83,8 +76,7 @@ public class CityFragment extends BaseFragment implements GDMapLocation.MapEvevt
                 }
             }
         };
-        recyclerView.setAdapter(adapter);
-
+        mBinding.recyclerTc.setAdapter(adapter);
         adapter.setOnItemClickListener((view, position) -> {
             Map<String,Object>map = new HashMap<>();
             MainMo mainMo = (MainMo) adapter.getData().get(position);
@@ -96,7 +88,6 @@ public class CityFragment extends BaseFragment implements GDMapLocation.MapEvevt
             }
         });
     }
-
 
     @Override
     public void initData() {
@@ -152,7 +143,7 @@ public class CityFragment extends BaseFragment implements GDMapLocation.MapEvevt
             public void onUi(String result) throws JSONException {
                 JSONObject object = new JSONObject(result);
                 String locationName = object.optString("locationName");
-                tvLocationName.setText(StringUtils.isEmptyTxt(locationName));
+                mBinding.tvLocationName.setText(StringUtils.isEmptyTxt(locationName));
                 String str = object.optString("list");
                 List<MainMo> list = new Gson().fromJson(str,
                         new TypeToken<List<MainMo>>() {}.getType());
@@ -162,14 +153,14 @@ public class CityFragment extends BaseFragment implements GDMapLocation.MapEvevt
                     }else {
                         adapter.addAll(list);
                     }
-                    if (tvShow!=null){tvShow.setVisibility(View.GONE);}
+                    mBinding.tvRecyclerShow.setVisibility(View.GONE);
                 }else {
                     if (page == 1){
                         //显示没有数据
-                        if (tvShow!=null){tvShow.setVisibility(View.VISIBLE);}
+                        mBinding.tvRecyclerShow.setVisibility(View.VISIBLE);
                     }else {
                         //没有更多了
-                        if (tvShow!=null){tvShow.setVisibility(View.GONE);}
+                        mBinding.tvRecyclerShow.setVisibility(View.GONE);
                         page--;
                     }
                 }
@@ -177,7 +168,7 @@ public class CityFragment extends BaseFragment implements GDMapLocation.MapEvevt
             }
             @Override
             public void onFailed(String msg) {
-                tvShow.setVisibility(View.VISIBLE);
+                mBinding.tvRecyclerShow.setVisibility(View.VISIBLE);
                 isLoading(false);
             }
         });

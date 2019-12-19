@@ -5,8 +5,8 @@ public class DyUrl {
     public static final String QINIUDOMAN = "http://image.vrzbgw.com/";
     public static final String TOKEN_NAME = "DABANG-TOKEN";
 
-    public static final String BASE = "http://192.168.0.112:8085/dabang/";
-    //public static final String BASE = "http://api.vrzbgw.com:8085/dabang/";//远程
+    //public static final String BASE = "http://192.168.0.112:8085/dabang/";
+    public static final String BASE = "http://api.vrzbgw.com:8085/dabang/";//远程
 
 
     //（开播）获取已关联的商家
@@ -28,6 +28,8 @@ public class DyUrl {
 
     //收获地址列表
     public static final String getAddressList = "api/my/getAddressList";
+
+    //添加/修改地址
 
     //关注主播
     public static final String updateFans = "api/my/updateFans";
@@ -105,6 +107,8 @@ public class DyUrl {
     public static final String getCityOnlineList = "api/live/getCityOnlineList";
 
 
+    //修改用户信息
+    public static final String update = "/api/update";
    //根据经纬度获取省市县
    public static final String getLocation = "api/config/getAmapReverse";
 

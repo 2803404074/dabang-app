@@ -97,26 +97,46 @@
                         android:id="@+id/llNick"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="@dimen/dp_10">
+                        android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="@dimen/dp_70"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:text="昵称"
+                            android:layout_margin="@dimen/dp_10"
                             android:textSize="@dimen/sp_16" />
 
-                        <EditText
-                            android:background="@null"
-                            android:id="@+id/tvNickName"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            android:paddingLeft="@dimen/dp_20"
-                            android:textColor="@color/textTitle"
-                            android:textSize="@dimen/sp_16" />
+                        <RelativeLayout
+                            android:paddingRight="@dimen/dp_10"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+                            <EditText
+                                android:background="@null"
+                                android:id="@+id/tvNickName"
+                                android:layout_toLeftOf="@+id/tvNickNameConfirm"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:text=""
+                                android:maxLength="8"
+                                android:textColor="@color/textTitle"
+                                android:textSize="@dimen/sp_16" />
+
+                            <TextView
+                                android:visibility="gone"
+                                android:id="@+id/tvNickNameConfirm"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="确定"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:textSize="@dimen/sp_15"
+                                android:paddingHorizontal="@dimen/dp_10"
+                                android:paddingVertical="@dimen/dp_3"
+                                android:background="@drawable/shape_gray"/>
+                        </RelativeLayout>
+
 
                     </LinearLayout>
 

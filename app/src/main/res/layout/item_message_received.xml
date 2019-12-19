@@ -10,8 +10,8 @@
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/iv_userhead"
         android:layout_marginRight="@dimen/dp_5"
-        android:layout_width="@dimen/dp_50"
-        android:layout_height="@dimen/dp_50"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_40"
         fresco:roundAsCircle="true" />
 
     <ImageView
@@ -33,12 +33,20 @@
         android:textColor="@android:color/white"
         android:textSize="@dimen/sp_16" />
 
-    <ImageView
-        android:visibility="visible"
+
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/iv_content"
+        android:visibility="gone"
         android:layout_gravity="center"
+        android:layout_width="@dimen/dp_120"
         android:scaleType="centerCrop"
         android:layout_marginLeft="@dimen/dp_5"
-        android:layout_width="@dimen/dp_120"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        fresco:actualImageScaleType="focusCrop"
+        fresco:placeholderImage="@mipmap/err"
+        fresco:progressBarAutoRotateInterval="1000"
+        fresco:progressBarImage="@mipmap/loading"
+        fresco:roundedCornerRadius="@dimen/dp_5"
+        fresco:roundingBorderColor="@color/colorWhite" />
 </LinearLayout>

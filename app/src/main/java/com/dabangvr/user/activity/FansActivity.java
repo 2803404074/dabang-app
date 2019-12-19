@@ -105,6 +105,7 @@ public class FansActivity extends BaseActivity {
         Map<String,Object>map = new HashMap<>();
         map.put("page",page);
         map.put("limit",10);
+        map.put("userId",getIntent().getIntExtra("userId",0));
         OkHttp3Utils.getInstance(getContext()).doPostJson(DyUrl.getFansList, map,
                 new ObjectCallback<String>(getContext()) {
             @Override

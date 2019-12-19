@@ -7,7 +7,9 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
@@ -46,6 +48,7 @@ import com.google.gson.Gson;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.json.JSONException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -98,12 +101,27 @@ public class UserEditMessActivity extends BaseActivityBinding<ActivityUserMessMo
     @Override
     public void initView() {
 
-        mBinding.tvNickName.setOnFocusChangeListener((view, b) -> {
-            if (!b) {
-                if (!mBinding.tvNickName.getText().toString().equals(userMess.getNickName())) {
-                    updataMess(2, mBinding.tvNickName.getText().toString());
+        mBinding.tvNickName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (!StringUtils.isEmpty(mBinding.tvNickName.getText().toString())){
+                    mBinding.tvNickNameConfirm.setVisibility(View.VISIBLE);
+                }else {
+                    mBinding.tvNickNameConfirm.setVisibility(View.GONE);
                 }
             }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        mBinding.tvNickNameConfirm.setOnClickListener((view)->{
+            updataMess("nickName", mBinding.tvNickName.getText().toString());
         });
 
         mBinding.sdvHead.setOnClickListener(this);
@@ -194,7 +212,7 @@ public class UserEditMessActivity extends BaseActivityBinding<ActivityUserMessMo
             @Override
             public void onUploadBlockComplete(String key) {
                 //上传成功，将信息发送给后端
-                updataMess(1, key);
+                updataMess("headUrl", key);
 
             }
 
@@ -212,30 +230,35 @@ public class UserEditMessActivity extends BaseActivityBinding<ActivityUserMessMo
      * @param key    1,2,3,4,5,6,7,8,9,10
      * @param values
      */
-    private void updataMess(int key, String values) {
+    private void updataMess(String key, String values) {
         UserHolper.getUserHolper(getContext()).upUser(key, values);
+        Map<String,Object>map = new HashMap<>();
+        map.put(key,values);
+        OkHttp3Utils.getInstance(getContext()).doPostJson(DyUrl.update, map, new ObjectCallback<String>(getContext()) {
+            @Override
+            public void onUi(String result) throws JSONException { }
+            @Override
+            public void onFailed(String msg) { }
+        });
     }
 
 
     private void showSexDialog() {
-        BottomDialogUtil2.getInstance(this).show(R.layout.dialog_sex, 0, new Conver() {
-            @Override
-            public void setView(View view) {
-                TextView tvName = view.findViewById(R.id.tv_nan);
-                TextView tv_nv = view.findViewById(R.id.tv_nv);
-                TextView tvConfirm = view.findViewById(R.id.tvConfirm);
-                tvConfirm.setVisibility(View.GONE);
-                tvName.setOnClickListener(v -> {
-                    mBinding.tvSex.setText(tvName.getText().toString());
-                    updataMess(3, "男");
-                    BottomDialogUtil2.getInstance(UserEditMessActivity.this).dess();
-                });
-                tv_nv.setOnClickListener(v -> {
-                    mBinding.tvSex.setText(tv_nv.getText().toString());
-                    updataMess(3, "女");
-                    BottomDialogUtil2.getInstance(UserEditMessActivity.this).dess();
-                });
-            }
+        BottomDialogUtil2.getInstance(this).show(R.layout.dialog_sex, 0, view -> {
+            TextView tvName = view.findViewById(R.id.tv_nan);
+            TextView tv_nv = view.findViewById(R.id.tv_nv);
+            TextView tvConfirm = view.findViewById(R.id.tvConfirm);
+            tvConfirm.setVisibility(View.GONE);
+            tvName.setOnClickListener(v -> {
+                mBinding.tvSex.setText(tvName.getText().toString());
+                updataMess("sex", "男");
+                BottomDialogUtil2.getInstance(UserEditMessActivity.this).dess();
+            });
+            tv_nv.setOnClickListener(v -> {
+                mBinding.tvSex.setText(tv_nv.getText().toString());
+                updataMess("sex", "女");
+                BottomDialogUtil2.getInstance(UserEditMessActivity.this).dess();
+            });
         });
     }
 
@@ -247,7 +270,7 @@ public class UserEditMessActivity extends BaseActivityBinding<ActivityUserMessMo
         DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
                 (view, year, month, dayOfMonth) -> {
                     final String data = (month + 1) + "月-" + dayOfMonth + "日 ";
-                    updataMess(4, data);
+                    updataMess("birthday", data);
                     mBinding.tvDate.setText(data);
                 },
                 mYear, mMonth, mDay);

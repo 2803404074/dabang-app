@@ -10,6 +10,8 @@ import android.widget.LinearLayout;
 
 import com.dbvr.baselibrary.R;
 
+import static android.view.WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
+
 
 /**
  * 弹窗，多类型

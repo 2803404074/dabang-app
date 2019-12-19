@@ -53,12 +53,6 @@
                 android:orientation="horizontal"
                 android:paddingHorizontal="@dimen/dp_5">
 
-                <ImageView
-                    android:id="@+id/iv_jianp"
-                    android:layout_width="@dimen/dp_30"
-                    android:layout_height="match_parent"
-                    android:padding="@dimen/dp_5"
-                    android:src="@mipmap/jianp" />
 
                 <EditText
                     android:id="@+id/et_content_chart"
@@ -102,25 +96,15 @@
                 android:id="@+id/ll_add"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:background="@color/lsq_seekbar_view_color"
-                android:orientation="horizontal"
+                android:background="@color/color_home"
                 android:visibility="invisible">
 
                 <ImageView
                     android:id="@+id/iv_selectPhoto"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_width="@dimen/dp_80"
+                    android:layout_height="@dimen/dp_80"
                     android:padding="@dimen/dp_10"
                     android:src="@mipmap/choos_photo" />
-
-                <ImageView
-                    android:id="@+id/iv_selectCame"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:padding="@dimen/dp_15"
-                    android:src="@mipmap/choos_cam" />
             </LinearLayout>
         </LinearLayout>
 

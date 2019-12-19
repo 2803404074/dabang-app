@@ -1,58 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="match_parent">
-
-
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <RelativeLayout
-        android:id="@+id/llTop"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_170"
-        android:orientation="horizontal"
-        android:background="@color/colorDb4">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/llLocation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/dp_35"
+        <RelativeLayout
+            android:id="@+id/llTop"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_170"
+            android:background="@color/colorDb4"
             android:orientation="horizontal">
-            <ImageView
-                android:layout_width="@dimen/dp_20"
-                android:layout_height="@dimen/dp_20"
-                android:layout_gravity="center"
-                android:src="@mipmap/location_w"/>
-            <TextView
-                android:id="@+id/tvLocationName"
+
+            <LinearLayout
+                android:id="@+id/llLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="广西"
-                android:layout_marginHorizontal="@dimen/dp_5"
-                android:textSize="@dimen/sp_20"
-                android:textColor="@android:color/white"
-                android:textStyle="bold"/>
-        </LinearLayout>
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/dp_35"
+                android:orientation="horizontal">
 
-        <TextView
-            android:layout_below="@+id/llLocation"
-            android:layout_marginTop="@dimen/dp_10"
-            android:id="@+id/tvRecyclerShow"
-            android:visibility="gone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:textSize="@dimen/sp_14"
-            android:textColor="@color/white"
-            android:text="区域暂无内容"/>
+                <ImageView
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/location_w" />
 
+                <TextView
+                    android:id="@+id/tvLocationName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp_5"
+                    android:text="广西"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/sp_20"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvRecyclerShow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/llLocation"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="区域暂无内容"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_14"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_tc"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/dp_70" />
     </RelativeLayout>
+</layout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_tc"
-        android:layout_marginTop="@dimen/dp_70"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-</RelativeLayout>
