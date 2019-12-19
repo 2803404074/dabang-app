@@ -50,6 +50,7 @@ public class MyFragment extends BaseFragmentBinding<FragmentMyBinding> implement
         binding.llMessInfo.setOnClickListener(this);
         binding.llSet.setOnClickListener(this);
         binding.llAbout.setOnClickListener(this);
+        binding.llDep.setOnClickListener(this);
     }
 
     @Override
@@ -91,6 +92,9 @@ public class MyFragment extends BaseFragmentBinding<FragmentMyBinding> implement
                 break;
             case R.id.ivSearch:
                 goTActivity(SearchActivity.class,null);
+                break;
+            case R.id.llDep:
+                //goTActivity(DepListActivity.class,null);
                 break;
             default:break;
         }

@@ -34,7 +34,6 @@ import butterknife.OnClick;
  */
 public class UserSJRZOneActivity extends BaseActivity {
 
-
     @BindView(R.id.tv_phone_authentication)
     TextView tv_phone_authentication;
 

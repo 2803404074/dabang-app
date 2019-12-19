@@ -309,6 +309,7 @@ public class MainAc extends BaseActivity implements BottomNavigationView.OnNavig
         });
     }
 
+
     private void startVideoRecordActivity() {
         MyApplication.getInstance().initShortVideo();
         TCVideoRecordActivity.openRecordActivity(this);

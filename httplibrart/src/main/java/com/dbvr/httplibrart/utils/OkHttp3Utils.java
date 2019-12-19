@@ -201,8 +201,9 @@ public class OkHttp3Utils {
     public void doPostJson(String url, Map<String, Object> map, Callback callback) {
         Gson gson = new Gson();
         String jsonParams = gson.toJson(map);
-        RequestBody requestBody = RequestBody.create(MediaType.parse("applicationz/json; charset=utf-8"), jsonParams);
-        Request request = new Request.Builder().url(DyUrl.BASE + url).post(requestBody).build();
+        MediaType mediaType=MediaType.Companion.parse("application/json;charset=utf-8");
+        RequestBody stringBody = RequestBody.Companion.create(jsonParams,mediaType);
+        Request request = new Request.Builder().url(DyUrl.BASE + url).post(stringBody).build();
         Call call = getOkHttpClient().newCall(request);
         call.enqueue(callback);
     }
@@ -211,30 +212,24 @@ public class OkHttp3Utils {
      * 上传文件到服务器
      *
      * @param url
-     * @param map      可以放一个文件，也可以放文件列表
+     * @param map      可以放一个文件
      * @param callback
      */
     public void upLoadFile(String url, Map<String, Object> map, Callback callback) {
         OkHttpClient client = getOkHttpClient();
         // form 表单形式上传
+        MediaType mediaType=MediaType.Companion.parse("text/x-markdown; charset=utf-8");
         MultipartBody.Builder requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM);
         if (map != null) {
             for (Map.Entry entry : map.entrySet()) {
                 if (entry.getValue() instanceof File) {
                     File file = (File) entry.getValue();
-                    RequestBody body = RequestBody.create(MediaType.parse("image/*"), file);
-                    requestBody.addFormDataPart(valueOf(entry.getKey()), file.getName(), body);
-                } else if (entry.getValue() instanceof java.util.List) {
-                    List<File> list = (List<File>) entry.getValue();
-                    for (int i = 0; i < list.size(); i++) {
-                        RequestBody body = RequestBody.create(MediaType.parse("image/*"), list.get(i));
-                        requestBody.addFormDataPart(valueOf(entry.getKey()), list.get(i).getName(), body);
-                    }
+                    RequestBody fileBody=RequestBody.Companion.create(file,mediaType);
+                    requestBody.addFormDataPart(valueOf(entry.getKey()), file.getName(), fileBody);
                 } else {
                     requestBody.addFormDataPart(valueOf(entry.getKey()), valueOf(entry.getValue()));
                 }
             }
-
         }
         String requestUrl = DyUrl.BASE + url;
         Request request = new Request.Builder().url(requestUrl).post(requestBody.build()).build();

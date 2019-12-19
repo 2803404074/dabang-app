@@ -5,14 +5,14 @@ public class DyUrl {
     public static final String QINIUDOMAN = "http://image.vrzbgw.com/";
     public static final String TOKEN_NAME = "DABANG-TOKEN";
 
-    //public static final String BASE = "http://192.168.0.112:8085/dabang/";
-    public static final String BASE = "http://api.vrzbgw.com:8085/dabang/";//远程
+    public static final String BASE = "http://192.168.0.112:8085/dabang/";
+    //public static final String BASE = "http://api.vrzbgw.com:8085/dabang/";//远程
 
+    //根据经纬度
+    public static final String getAmapReverse = "api/config/getAmapReverse";
 
-    //（开播）获取已关联的商家
-    public static final String getDeptList = "api/dept/getDeptList";
-    //（开播）根据商家ID，获取该商家下的分类标签
-    public static final String getDeptCategorys = "api/category/getDeptCategorys";
+    //（开播）获取自己商家下的分类标签
+    public static final String getOnlineCategorys = "api/category/getOnlineCategorys";
     //（开播）创建推流
     public static final String createStream = "api/live/createStream";
 

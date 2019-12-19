@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.dbvr.baselibrary.R;
 import com.dbvr.baselibrary.ui.LoadingUtils;
+import com.dbvr.baselibrary.utils.DialogUtil;
 import com.dbvr.baselibrary.utils.SPUtils;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
 import com.dbvr.baselibrary.utils.UserHolper;
@@ -60,6 +61,14 @@ public abstract class BaseActivity extends AppCompatActivity {
             mLoaddingUtils.dismiss();
         }
     }
+
+
+    public void isLoading(boolean t){
+        if (t){
+            DialogUtil.getInstance(this).showAn(R.layout.loading_layout,false, view -> {});
+        }else {DialogUtil.getInstance(this).des(); }
+    }
+
 
     public void goTActivity(final Class T, Map<String,Object>map){
         new Thread(() -> {
