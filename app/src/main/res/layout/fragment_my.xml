@@ -178,37 +178,6 @@
                         android:layout_gravity="center"
                         android:padding="@dimen/dp_5"/>
                 </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/llDep"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/dp_5"
-                    android:orientation="horizontal">
-                    <ImageView
-                        android:layout_width="@dimen/dp_20"
-                        android:layout_height="@dimen/dp_20"
-                        android:layout_gravity="center"
-                        android:src="@mipmap/main_function_live"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="直播管理"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="@dimen/dp_5"
-                        android:textSize="@dimen/sp_16"/>
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="1px"
-                        android:layout_weight="1"/>
-                    <ImageView
-                        android:layout_width="@dimen/dp_20"
-                        android:layout_height="@dimen/dp_20"
-                        android:src="@mipmap/back_b_black"
-                        android:layout_gravity="center"
-                        android:padding="@dimen/dp_5"/>
-                </LinearLayout>
-
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_10"
@@ -221,6 +190,7 @@
                     android:textSize="@dimen/sp_16"
                     android:textColor="@color/textTitle" />
                 <LinearLayout
+                    android:id="@+id/llDep"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/dp_5"
@@ -232,9 +202,10 @@
                         android:layout_gravity="center"
                         android:src="@mipmap/u_dep"/>
                     <TextView
+                        android:id="@+id/tvDep"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="成为商家"
+                        android:text="商户/入驻"
                         android:layout_gravity="center"
                         android:layout_marginLeft="@dimen/dp_5"
                         android:textSize="@dimen/sp_16"/>

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.dabangvr">
 
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission
@@ -57,7 +57,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:icon">
-        <activity android:name="com.tencent.liteav.demo.my.activity.ShortVideoActivity"/>
+        <activity android:name=".user.activity.DepListActivity"></activity>
+        <activity android:name="com.tencent.liteav.demo.my.activity.ShortVideoActivity" />
         <activity android:name=".comment.activity.CownTimerActivity" />
         <activity android:name=".user.activity.UserSetAddressActivity" />
         <activity android:name=".play.activity.verticle.PlayActivity" />
@@ -76,7 +77,8 @@
         <activity android:name=".user.activity.FansActivity" />
         <activity android:name=".comment.activity.LocationActivity" />
         <activity android:name=".home.activity.SearchActivity" />
-        <activity android:name="com.tencent.liteav.demo.my.activity.UserVideoActivity"/>
+        <activity android:name="com.tencent.liteav.demo.my.activity.UserVideoActivity" />
+        <activity android:name="com.tencent.liteav.demo.my.activity.VideoActivity" />
 
         <uses-library
             android:name="org.apache.http.legacy"
@@ -172,7 +174,8 @@
         <service
             android:name="com.hyphenate.chat.EMChatService"
             android:exported="true" /> <!-- 声明SDK所需的receiver -->
-        <service android:name=".comment.service.MessageService"/>
+        <service android:name=".comment.service.MessageService" />
+
         <receiver android:name="com.hyphenate.chat.EMMonitorReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_REMOVED" />
@@ -184,14 +187,12 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
-        </receiver>
-        <!-- 高德地图 -->
+        </receiver> <!-- 高德地图 -->
         <service android:name="com.amap.api.location.APSService" />
 
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="940b08a5acb6cd1ae54459c244300852" />
-
 
         <receiver
             android:name=".comment.service.ShareReceiver"
@@ -201,7 +202,6 @@
                 <action android:name="com.dabang.sharex" />
             </intent-filter>
         </receiver>
-
     </application>
 
 </manifest>

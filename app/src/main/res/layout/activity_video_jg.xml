@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
-    tools:context=".play.activity.VideoActivity">
+    tools:context="com.tencent.liteav.demo.my.activity.VideoActivity">
 
     <TextureView
         android:id="@+id/play_view"

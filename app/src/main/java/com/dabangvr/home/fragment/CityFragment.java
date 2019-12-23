@@ -1,12 +1,11 @@
 package com.dabangvr.home.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.amap.api.location.AMapLocation;
 import com.dabangvr.R;
@@ -17,15 +16,13 @@ import com.dabangvr.play.activity.verticle.PlayActivity;
 import com.dabangvr.util.GDMapLocation;
 import com.dbvr.baselibrary.model.MainMo;
 import com.dbvr.baselibrary.utils.StringUtils;
-import com.dbvr.baselibrary.view.BaseActivityBinding;
-import com.dbvr.baselibrary.view.BaseFragment;
 import com.dbvr.baselibrary.view.BaseFragmentBinding;
 import com.dbvr.httplibrart.constans.DyUrl;
 import com.dbvr.httplibrart.utils.ObjectCallback;
 import com.dbvr.httplibrart.utils.OkHttp3Utils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.tencent.liteav.demo.my.activity.ShortVideoActivity;
+import com.tencent.liteav.demo.my.activity.VideoActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,8 +31,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import butterknife.BindView;
 
 public class CityFragment extends BaseFragmentBinding<FragmentSameCityBinding> implements GDMapLocation.MapEvevt {
 
@@ -84,7 +79,9 @@ public class CityFragment extends BaseFragmentBinding<FragmentSameCityBinding> i
             if (mainMo.getLive()){
                 goTActivity(PlayActivity.class, map);
             }else {
-                goTActivity(ShortVideoActivity.class, map);
+                Intent intent = new Intent(getContext(),VideoActivity.class);
+                intent.putExtra("mainMo",mainMo);
+                startActivity(intent);
             }
         });
     }

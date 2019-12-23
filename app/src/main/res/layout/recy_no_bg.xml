@@ -11,9 +11,12 @@
 
    <TextView
        android:id="@+id/tvText"
+       android:visibility="gone"
+       android:layout_gravity="center"
+       android:layout_marginTop="@dimen/dp_20"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
-       android:text="aa"/>
+       android:text="主播太懒啦~~~"/>
 
    <ProgressBar
        android:id="@+id/loading"

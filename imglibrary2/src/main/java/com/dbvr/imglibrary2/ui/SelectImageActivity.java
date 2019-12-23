@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.text.TextUtils;
@@ -384,12 +385,12 @@ public class SelectImageActivity extends BaseActivity implements ImageFolderView
 //            galleryAddPictures(mImageUri);
 //            getSupportLoaderManager().restartLoader(0, null, mLoaderCallbacks);
             galleryAddPictures();
-            try {
-                Bitmap bitmap = BitmapFactory.decodeStream(this.getContentResolver().openInputStream(mImageUri));
-                Log.i("take photo", bitmap + "");
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                Bitmap bitmap = BitmapFactory.decodeStream(this.getContentResolver().openInputStream(mImageUri));
+//                Log.i("take photo", bitmap + "");
+//            } catch (FileNotFoundException e) {
+//                e.printStackTrace();
+//            }
 
         }
     }
@@ -419,12 +420,18 @@ public class SelectImageActivity extends BaseActivity implements ImageFolderView
                 MediaStore.Images.Media.insertImage(this.getContentResolver(),
                         takePhotoImageFile.getAbsolutePath(), takePhotoImageFile.getName(), null);
 
-                //通知图库更新
-                Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(takePhotoImageFile));
-                sendBroadcast(mediaScanIntent);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        //通知图库更新
+                        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(takePhotoImageFile));
+                        sendBroadcast(mediaScanIntent);
+                        mImages.get(0).setSelect(true);
+                        mImageAdapter.upData(mImages);
+                    }
+                },1000);
             }
         } catch (FileNotFoundException e) {
-
         }
     }
 

@@ -32,6 +32,11 @@ public class ImageAdapter extends CommonRecycleAdapter<Image> {
         this.mSelectImages = selectedImages;
     }
 
+    public void upData(List<Image> mSelectImages){
+        this.mSelectImages = mSelectImages;
+        notifyDataSetChanged();
+    }
+
     @Override
     protected void convert(CommonViewHolder holder, final Image image, int position) {
         if (!TextUtils.isEmpty(image.getPath())) {

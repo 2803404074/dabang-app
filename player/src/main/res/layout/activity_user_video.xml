@@ -13,16 +13,19 @@
         android:layout_marginLeft="@dimen/dp_5"
         android:padding="@dimen/dp_5"
         android:src="@mipmap/back_w"/>
-    <ImageView
-        android:id="@+id/rlImg"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitCenter"/>
+
     <com.pili.pldroid.player.widget.PLVideoTextureView
-        android:id="@+id/video_view"
+        android:id="@+id/video_view_paly"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center" />
+
+    <ProgressBar
+        android:id="@+id/mProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true" />
 
     <ImageView
         android:id="@+id/ivPlay"

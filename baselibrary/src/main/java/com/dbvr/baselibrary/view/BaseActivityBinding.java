@@ -10,6 +10,7 @@ import androidx.databinding.ViewDataBinding;
 
 import com.dbvr.baselibrary.R;
 import com.dbvr.baselibrary.ui.LoadingUtils;
+import com.dbvr.baselibrary.utils.DialogUtil;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
 import com.dbvr.baselibrary.utils.UserHolper;
 import com.r0adkll.slidr.Slidr;
@@ -108,6 +109,13 @@ public abstract class BaseActivityBinding<DB extends ViewDataBinding> extends Ap
         startActivity(intent);
     }
 
+    public void isLoading(boolean t){
+        if (t){
+            DialogUtil.getInstance(this).showAn(R.layout.loading_layout,false, view -> {});
+        }else {DialogUtil.getInstance(this).des(); }
+    }
+
+
     // 设置布局
     public abstract int setLayout();
 
@@ -118,6 +126,7 @@ public abstract class BaseActivityBinding<DB extends ViewDataBinding> extends Ap
     @Override
     protected void onDestroy() {
         AppManager.getAppManager().finishActivity(this);
+        DialogUtil.getInstance(this).des();
         super.onDestroy();
     }
     public Activity getContext() {

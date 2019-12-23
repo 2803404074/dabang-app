@@ -147,7 +147,7 @@ public abstract class SlideAdapter<T> extends VideoPlayAdapter<BaseRecyclerHolde
            }
         });
         if (select!=null){
-            select.videoItemView(mVideoView);
+            select.videoItemView(mVideoView,itemPosition);
         }
     }
 
@@ -165,6 +165,6 @@ public abstract class SlideAdapter<T> extends VideoPlayAdapter<BaseRecyclerHolde
     }
 
     public interface Select{
-        void videoItemView(PLVideoTextureView textureView);
+        void videoItemView(PLVideoTextureView textureView,int position);
     }
 }

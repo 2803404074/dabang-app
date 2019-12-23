@@ -1,6 +1,7 @@
 package com.dabangvr.home.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ import com.dbvr.httplibrart.utils.OkHttp3Utils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.tencent.liteav.demo.my.activity.ShortVideoActivity;
+import com.tencent.liteav.demo.my.activity.VideoActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -88,7 +90,9 @@ public class HomeFragment extends BaseFragmentFromType {
             if (mainMo.getLive()){
                 goTActivity(PlayActivity.class, map);
             }else {
-                goTActivity(ShortVideoActivity.class, map);
+                Intent intent = new Intent(getContext(), VideoActivity.class);
+                intent.putExtra("mainMo",mainMo);
+                startActivity(intent);
             }
         });
 

@@ -2,8 +2,8 @@ package com.dabangvr.user.fragment;
 
 import android.content.Context;
 import android.os.Build;
-import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.dabangvr.R;
 import com.dabangvr.comment.adapter.BaseRecyclerHolder;
 import com.dabangvr.comment.adapter.RecyclerAdapter;
-import com.dbvr.baselibrary.model.MainMo;
 import com.dbvr.baselibrary.model.VideoMo;
 import com.dbvr.baselibrary.view.BaseFragment;
 import com.dbvr.httplibrart.constans.DyUrl;
@@ -20,7 +19,6 @@ import com.dbvr.httplibrart.utils.ObjectCallback;
 import com.dbvr.httplibrart.utils.OkHttp3Utils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.tencent.liteav.demo.my.activity.ShortVideoActivity;
 import com.tencent.liteav.demo.my.activity.UserVideoActivity;
 
 import org.json.JSONException;
@@ -39,6 +37,8 @@ public class UserVideoFragment extends BaseFragment {
 
     @BindView(R.id.recycler_head)
     RecyclerView recyclerView;
+    @BindView(R.id.tvText)
+    TextView tvTextTips;
 
     private List<VideoMo>mData = new ArrayList<>();
     private RecyclerAdapter adapter;
@@ -90,11 +90,23 @@ public class UserVideoFragment extends BaseFragment {
                     mData = list;
                     adapter.updateData(mData);
                 }
+
+
+
+                getActivity().runOnUiThread(()->{
+                    if (tvTextTips!=null){
+                        tvTextTips.setVisibility(View.GONE);
+                    }
+                });
             }
 
             @Override
             public void onFailed(String msg) {
-
+                getActivity().runOnUiThread(()->{
+                    if (tvTextTips!=null){
+                        tvTextTips.setVisibility(View.VISIBLE);
+                    }
+                });
             }
         });
     }

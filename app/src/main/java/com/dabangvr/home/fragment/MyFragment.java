@@ -9,12 +9,14 @@ import com.dabangvr.databinding.FragmentMyBinding;
 import com.dabangvr.home.activity.SearchActivity;
 import com.dabangvr.mall.activity.CartActivity;
 import com.dabangvr.mall.activity.OrderActivity;
+import com.dabangvr.user.activity.DepListActivity;
 import com.dabangvr.user.activity.FansActivity;
 import com.dabangvr.user.activity.FollowActivity;
 import com.dabangvr.user.activity.UserAboutActivity;
 import com.dabangvr.user.activity.UserDropActivity;
 import com.dabangvr.user.activity.UserIntroduceActivity;
 import com.dabangvr.user.activity.UserMessActivity;
+import com.dabangvr.user.activity.UserSJRZOneActivity;
 import com.dabangvr.user.activity.UserSettingActivity;
 import com.dbvr.baselibrary.model.UserMess;
 import com.dbvr.baselibrary.utils.DialogUtil;
@@ -28,6 +30,7 @@ import butterknife.OnClick;
 
 public class MyFragment extends BaseFragmentBinding<FragmentMyBinding> implements View.OnClickListener {
 
+    private UserMess userMess;
     @Override
     public int layoutId() {
         return R.layout.fragment_my;
@@ -35,7 +38,7 @@ public class MyFragment extends BaseFragmentBinding<FragmentMyBinding> implement
 
     @Override
     public void initView(FragmentMyBinding binding) {
-        UserMess userMess = UserHolper.getUserHolper(getContext()).getUserMess();
+        userMess = UserHolper.getUserHolper(getContext()).getUserMess();
         binding.setUser(userMess);
         binding.inlcude.sdvHead.setImageURI(userMess.getHeadUrl());
         binding.inlcude.tvAddFriend.setOnClickListener(this);
@@ -55,6 +58,7 @@ public class MyFragment extends BaseFragmentBinding<FragmentMyBinding> implement
 
     @Override
     public void initData() {
+
     }
     @Override
     public void onClick(View view) {
@@ -94,7 +98,9 @@ public class MyFragment extends BaseFragmentBinding<FragmentMyBinding> implement
                 goTActivity(SearchActivity.class,null);
                 break;
             case R.id.llDep:
-                //goTActivity(DepListActivity.class,null);
+                Map<String,Object>map = new HashMap<>();
+                map.put("userId",userMess.getId());
+                goTActivity(DepListActivity.class,map);
                 break;
             default:break;
         }

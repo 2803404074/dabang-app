@@ -70,6 +70,8 @@ public class DyUrl {
     public static String payDiamond = "api/live/payDiamond";
 
 
+    //查看商户入驻状态
+    public static String getDeptState = "api/dept/getDeptState";
 
     //购物车获取确认订单
     public static String confirmGoods2Cart = "api/buygoods/confirmGoods2Cart";

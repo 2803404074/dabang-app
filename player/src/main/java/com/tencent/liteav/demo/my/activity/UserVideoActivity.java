@@ -1,6 +1,6 @@
 package com.tencent.liteav.demo.my.activity;
 
-import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.dbvr.baselibrary.view.AppManager;
@@ -14,6 +14,7 @@ import com.tencent.liteav.demo.play.R;
 
 public class UserVideoActivity extends BaseActivity {
 
+    private ProgressBar mProgressBar;
     private PLVideoTextureView mVideoView;
     private MediaController mMediaController;
     private AVOptions options;
@@ -24,6 +25,7 @@ public class UserVideoActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        mProgressBar = findViewById(R.id.mProgressBar);
         findViewById(R.id.ivBack).setOnClickListener(view -> {
             AppManager.getAppManager().finishActivity(this);
         });
@@ -38,16 +40,8 @@ public class UserVideoActivity extends BaseActivity {
         TextView tvCommentNum = findViewById(R.id.tvCommentNum);
         tvCommentNum.setText(getIntent().getStringExtra("comment"));
 
-        mVideoView = findViewById(R.id.video_view);
-
-
+        mVideoView = findViewById(R.id.video_view_paly);
         mMediaController = new MediaController(getContext());
-        mVideoView.setMediaController(mMediaController);
-        setAvOption();
-        mVideoView.setDisplayAspectRatio(PLVideoView.ASPECT_RATIO_PAVED_PARENT);
-        mVideoView.setLooping(true);
-        mVideoView.setAVOptions(options);
-
     }
 
 
@@ -66,9 +60,21 @@ public class UserVideoActivity extends BaseActivity {
 
     @Override
     public void initData() {
+        mVideoView.setMediaController(mMediaController);
+        mVideoView.setDisplayAspectRatio(PLVideoView.ASPECT_RATIO_PAVED_PARENT);
+        mVideoView.setLooping(true);
+        mVideoView.setVideoPath(getIntent().getStringExtra("url"));
+        setAvOption();
+        mVideoView.setAVOptions(options);
+        mVideoView.setBufferingIndicator(mProgressBar);
+
         //mVideoView.setVideoPath(getIntent().getStringExtra("url"));
-        mVideoView.setVideoPath("http://pili-clickplay.vrzbgw.com/WeChat_20191003172307.mp4");
-        mVideoView.start();
+        try {
+            mVideoView.start();
+        }catch (Exception e){
+            e.getMessage();
+        }
+
     }
 
     @Override
@@ -79,19 +85,19 @@ public class UserVideoActivity extends BaseActivity {
         }
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (mVideoView!=null){
-            mVideoView.pause();
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (mVideoView!=null){
-            mVideoView.pause();
-        }
-    }
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        if (mVideoView!=null){
+//            mVideoView.pause();
+//        }
+//    }
+//
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        if (mVideoView!=null){
+//            mVideoView.pause();
+//        }
+//    }
 }
