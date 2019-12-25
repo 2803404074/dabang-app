@@ -30,6 +30,10 @@ public class DyUrl {
     public static final String getAddressList = "api/my/getAddressList";
 
     //添加/修改地址
+    public static final String addAddress ="api/my/addAddress";
+
+    //删除地址
+    public static final String deleteAddress = "api/my/deleteAddress";
 
     //关注主播
     public static final String updateFans = "api/my/updateFans";

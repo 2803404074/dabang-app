@@ -417,9 +417,7 @@ public class RoomFragment extends BaseRoomFragment {
                     goodsAdapter.setOnItemClickListener((view17, position) -> {
                         Map<String,Object>map = new HashMap<>();
                         map.put("goodsId",liveGoods.get(position).getId());
-                        map.put("streamId", PlayActivity.playInstance.getSteamID());
                         goTActivity(GoodsActivity.class,map);
-
                     });
                 });
                 break;

@@ -99,14 +99,6 @@
                 android:layout_weight="1" />
 
             <ImageView
-                android:id="@+id/ivFunction"
-                android:layout_width="@dimen/dp_35"
-                android:layout_height="@dimen/dp_35"
-                android:padding="@dimen/dp_5"
-                android:layout_gravity="center"
-                android:src="@mipmap/function" />
-
-            <ImageView
                 android:id="@+id/ivChangeCame"
                 android:layout_width="@dimen/dp_35"
                 android:layout_height="@dimen/dp_35"

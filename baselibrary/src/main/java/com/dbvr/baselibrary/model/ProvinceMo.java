@@ -3,11 +3,20 @@ package com.dbvr.baselibrary.model;
 import java.util.List;
 
 public class ProvinceMo {
+    private int id;
     private String name;
     private boolean isCheck;
     private List<CityMo> districts;
 
     public ProvinceMo() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public boolean isCheck() {
@@ -40,11 +49,20 @@ public class ProvinceMo {
     }
 
     public static class CityMo{
+        private int id;
         private String name;
         private boolean isCheck;
         private List<XianMo> districts;
 
         public CityMo() {
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
         }
 
         public boolean isCheck() {
@@ -73,10 +91,19 @@ public class ProvinceMo {
     }
 
     public static class XianMo{
+        private int id;
         private String name;
         private boolean isCheck;
 
         public XianMo() {
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
         }
 
         public boolean isCheck() {

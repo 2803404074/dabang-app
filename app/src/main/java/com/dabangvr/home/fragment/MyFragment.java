@@ -1,10 +1,9 @@
 package com.dabangvr.home.fragment;
 
+import android.app.Activity;
 import android.view.View;
-import android.widget.TextView;
+
 import com.dabangvr.R;
-import com.dabangvr.comment.activity.LoginActivity;
-import com.dabangvr.comment.activity.MainActivity;
 import com.dabangvr.databinding.FragmentMyBinding;
 import com.dabangvr.home.activity.SearchActivity;
 import com.dabangvr.mall.activity.CartActivity;
@@ -14,19 +13,13 @@ import com.dabangvr.user.activity.FansActivity;
 import com.dabangvr.user.activity.FollowActivity;
 import com.dabangvr.user.activity.UserAboutActivity;
 import com.dabangvr.user.activity.UserDropActivity;
-import com.dabangvr.user.activity.UserIntroduceActivity;
-import com.dabangvr.user.activity.UserMessActivity;
-import com.dabangvr.user.activity.UserSJRZOneActivity;
+import com.dabangvr.user.activity.UserEditMessActivity;
 import com.dabangvr.user.activity.UserSettingActivity;
 import com.dbvr.baselibrary.model.UserMess;
-import com.dbvr.baselibrary.utils.DialogUtil;
 import com.dbvr.baselibrary.utils.UserHolper;
-import com.dbvr.baselibrary.view.AppManager;
 import com.dbvr.baselibrary.view.BaseFragmentBinding;
 import java.util.HashMap;
 import java.util.Map;
-
-import butterknife.OnClick;
 
 public class MyFragment extends BaseFragmentBinding<FragmentMyBinding> implements View.OnClickListener {
 
@@ -76,7 +69,7 @@ public class MyFragment extends BaseFragmentBinding<FragmentMyBinding> implement
                 goTActivity(CartActivity.class,null);
                 break;
             case R.id.llMessInfo:
-                goTActivity(UserMessActivity.class,null);
+               goTActivity(UserEditMessActivity.class,null);
                 break;
             case R.id.llSet:
                 goTActivity(UserSettingActivity.class,null);

@@ -154,12 +154,19 @@ public class QiniuUploadManager {
         AtomicInteger completedCount = new AtomicInteger();  // 完成(失败也算完成)的数量
         List<QiniuUploadFile> needUploadFile = new ArrayList<>();
         for (QiniuUploadFile param : params) {
-            File uploadFile = new File(param.getFilePath());
-            if (!uploadFile.exists() || uploadFile.isDirectory()) {
-                continue;  // 过滤无效的文件
+            File uploadFile = null;
+            if (param.getFile()!=null){
+                uploadFile=param.getFile();
+            }else {
+                uploadFile = new File(param.getFilePath());
+                if (!uploadFile.exists() || uploadFile.isDirectory()) {
+                    continue;  // 过滤无效的文件
+                }
             }
             needUploadFile.add(param);
         }
+
+
         if (needUploadFile.size() == 0) {
             return false;
         }
@@ -170,7 +177,12 @@ public class QiniuUploadManager {
         uploadListeners.add(uploadListener);
         cancels.put(uploadListener, false);
         for (QiniuUploadFile param : needUploadFile) {
-            File uploadFile = new File(param.getFilePath());
+            File uploadFile = null;
+            if (param.getFile()!=null){
+                uploadFile = param.getFile();
+            }else {
+                uploadFile = new File(param.getFilePath());
+            }
             uploadManager.put(uploadFile, param.getKey(), param.getUpLoadToken(),
                     (key, info, response) -> {
                         synchronized (lock) {

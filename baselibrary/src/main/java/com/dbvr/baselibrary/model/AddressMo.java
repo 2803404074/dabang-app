@@ -1,6 +1,9 @@
 package com.dbvr.baselibrary.model;
 
-public class AddressMo {
+import java.io.Serializable;
+
+public class AddressMo implements Serializable {
+    private int id;
     //省
     private String province;
     //市
@@ -17,7 +20,27 @@ public class AddressMo {
     //默认：（1.是 0.否)
     private int isDefault;
 
+    //标签
+    private int addressTag;//0,1,2 家公司学校
+
+
     public AddressMo() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getAddressTag() {
+        return addressTag;
+    }
+
+    public void setAddressTag(int addressTag) {
+        this.addressTag = addressTag;
     }
 
     public String getProvince() {

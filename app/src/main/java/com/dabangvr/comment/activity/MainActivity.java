@@ -34,8 +34,8 @@ import com.dabangvr.mall.activity.CartActivity;
 import com.dabangvr.mall.activity.OrderActivity;
 import com.dabangvr.user.activity.UserAboutActivity;
 import com.dabangvr.user.activity.UserDropActivity;
+import com.dabangvr.user.activity.UserEditMessActivity;
 import com.dabangvr.user.activity.UserIntroduceActivity;
-import com.dabangvr.user.activity.UserMessActivity;
 import com.dabangvr.user.activity.UserSettingActivity;
 import com.dbvr.baselibrary.adapter.ContentPagerAdapter;
 import com.dbvr.baselibrary.model.TagMo;
@@ -245,7 +245,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         } else if (id == R.id.nav_cart) {
             goTActivity(CartActivity.class, null);
         } else if (id == R.id.nav_mess) {
-            goTActivity(UserMessActivity.class, null);
+            goTActivity(UserEditMessActivity.class, null);
         }else if (id == R.id.nav_about) {
             goTActivity(UserAboutActivity.class, null);
         } else if (id == R.id.nav_set) {

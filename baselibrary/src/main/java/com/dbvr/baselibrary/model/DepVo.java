@@ -5,38 +5,6 @@ import java.util.Date;
 
 public class DepVo  implements Serializable {
 
-    /**
-     * deptId : 182
-     * parentId : 3
-     * name : 富贵花黄金季节
-     * orderNum : 0
-     * username : 急急急
-     * phone : 18655167655
-     * idcard : null
-     * productionProvince : 内蒙古自治区
-     * productionCity : 鄂尔多斯市
-     * productionCounty : 准格尔旗
-     * productionAddress : null
-     * idcartFacial : http://image.vrzbgw.com/idcartFacial-17fee37f-e8ad-4462-90a8-40a792ae9c2b
-     * idcartBehind : http://image.vrzbgw.com/idcartBehind-8ac9e2a5-6c4d-464a-a498-c399104bb839
-     * threeCertificates : http://image.vrzbgw.com/threeCertificates-a709aebc-8eba-4431-bf00-b158dabefd2f
-     * foodType : 0
-     * agreedAgreement : 1
-     * auditStatus : 0
-     * auditDescribe : null
-     * auditTime : null
-     * validTime : null
-     * auditUserId : null
-     * createTime : 2019-11-04 11:13:13
-     * userId : 234
-     * email : null
-     * logo : null
-     * country : null
-     * zipCode : null
-     * synopsis : null
-     * mainCategory : null
-     */
-
     private int deptId;
     private int parentId;
     //部门名称（入驻商名称）

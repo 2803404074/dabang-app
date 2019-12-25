@@ -93,11 +93,13 @@ public class UserVideoActivity extends BaseActivity {
 //        }
 //    }
 //
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        if (mVideoView!=null){
-//            mVideoView.pause();
-//        }
-//    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mVideoView!=null){
+            if (mVideoView.isPlaying()){
+                mVideoView.pause();
+            }
+        }
+    }
 }

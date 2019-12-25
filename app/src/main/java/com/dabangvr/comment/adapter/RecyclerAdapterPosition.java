@@ -37,8 +37,8 @@ public abstract class RecyclerAdapterPosition<T> extends RecyclerView.Adapter<Ba
     }
 
     public void updateData(List<T> data) {
-        mDatas.clear();
-        mDatas.addAll(data);
+        this.mDatas.clear();
+        this.mDatas=data;
         notifyDataSetChanged();
     }
 
@@ -109,7 +109,6 @@ public abstract class RecyclerAdapterPosition<T> extends RecyclerView.Adapter<Ba
                 if (holder.itemView.getTag() == null) {
                     holder.itemView.setTag(position);
                     convert(mContext, holder, position,mDatas.get(position));
-                    holder.itemView.setTag(position);
                 }
 
                 holder.itemView.setOnClickListener(v -> {
@@ -123,7 +122,6 @@ public abstract class RecyclerAdapterPosition<T> extends RecyclerView.Adapter<Ba
                     }
                     return true;
                 });
-
             }
 
             return;

@@ -5,7 +5,7 @@
 
     <data>
         <variable
-            name="address"
+            name="mAddress"
             type="com.dbvr.baselibrary.model.AddressMo" />
     </data>
     <LinearLayout
@@ -22,8 +22,9 @@
             android:paddingBottom="@dimen/dp_2">
 
             <ImageView
-                android:layout_width="@dimen/dp_25"
-                android:layout_height="@dimen/dp_25"
+                android:id="@+id/ivBack"
+                android:layout_width="@dimen/dp_28"
+                android:layout_height="@dimen/dp_28"
                 android:padding="@dimen/dp_5"
                 android:src="@mipmap/back_w_black" />
 
@@ -52,11 +53,13 @@
             android:orientation="horizontal">
 
             <EditText
+                android:id="@+id/etName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@null"
                 android:hint="收货人"
+                android:text="@{mAddress.consigneeName}"
                 android:padding="@dimen/dp_5"
                 android:textSize="@dimen/sp_16" />
 
@@ -80,26 +83,15 @@
             android:orientation="horizontal">
 
             <EditText
+                android:id="@+id/etPhone"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@null"
                 android:hint="手机号码"
+                android:text="@{mAddress.consigneePhone}"
                 android:padding="@dimen/dp_5"
                 android:textSize="@dimen/sp_16" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="+86" />
-
-            <ImageView
-                android:layout_width="@dimen/dp_20"
-                android:layout_height="@dimen/dp_20"
-                android:layout_gravity="center"
-                android:padding="@dimen/dp_5"
-                android:src="@mipmap/back_b_black" />
         </LinearLayout>
 
         <View
@@ -138,12 +130,14 @@
             android:background="@color/color_e2e2e2" />
 
         <EditText
+            android:id="@+id/etAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
             android:ellipsize="end"
             android:gravity="top|left"
             android:hint="详细地址：如道路、门牌号、小区、楼栋号、单元室等等"
+            android:text="@{mAddress.address}"
             android:lines="3"
             android:padding="@dimen/dp_5"
             android:textSize="@dimen/sp_16" />
@@ -159,63 +153,68 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
+
             <TextView
-                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
                 android:background="@null"
                 android:padding="@dimen/dp_5"
                 android:text="地址标签"
                 android:textColor="@color/textTitle"
                 android:textSize="@dimen/sp_16" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/shape_gra_stroke"
-                android:paddingHorizontal="@dimen/dp_14"
-                android:paddingVertical="@dimen/dp_2"
-                android:text="家"
-                android:textSize="@dimen/sp_15" />
+            <RadioGroup
+                android:id="@+id/rGroup"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginHorizontal="@dimen/dp_5"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <RadioButton
+                    android:id="@+id/rbHome"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:checked="true"
+                    android:paddingHorizontal="@dimen/dp_20"
+                    android:paddingVertical="@dimen/dp_3"
+                    android:background="@drawable/selector_radio"
+                    android:button="@null"
+                    android:text="家"/>
+                <RadioButton
+                    android:id="@+id/rbCompany"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/selector_radio"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:layout_marginHorizontal="@dimen/dp_10"
+                    android:paddingHorizontal="@dimen/dp_20"
+                    android:paddingVertical="@dimen/dp_3"
+                    android:text="公司"/>
+                <RadioButton
+                    android:id="@+id/rbSchool"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/selector_radio"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:paddingHorizontal="@dimen/dp_20"
+                    android:paddingVertical="@dimen/dp_3"
+                    android:text="学校"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/dp_10"
-                android:background="@drawable/shape_gra_stroke"
-                android:paddingHorizontal="@dimen/dp_14"
-                android:paddingVertical="@dimen/dp_2"
-                android:text="公司"
-                android:textSize="@dimen/sp_15" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/dp_20"
-                android:background="@drawable/shape_gra_stroke"
-                android:paddingHorizontal="@dimen/dp_14"
-                android:paddingVertical="@dimen/dp_2"
-                android:text="学校"
-                android:textSize="@dimen/sp_15" />
+            </RadioGroup>
 
             <ImageView
                 android:layout_width="@dimen/dp_25"
                 android:layout_height="@dimen/dp_25"
                 android:layout_gravity="center"
                 android:visibility="gone" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="更多" />
-
-            <ImageView
-                android:layout_width="@dimen/dp_20"
-                android:layout_height="@dimen/dp_20"
-                android:layout_gravity="center"
-                android:padding="@dimen/dp_5"
-                android:src="@mipmap/back_b_black" />
-
 
         </LinearLayout>
 
@@ -244,8 +243,10 @@
                 android:layout_weight="1" />
 
             <Switch
+                android:id="@+id/scDef"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:checked="@{mAddress.isDefault==1?true:false}"/>
         </LinearLayout>
     </LinearLayout>
 </layout>

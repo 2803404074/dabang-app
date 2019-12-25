@@ -5,49 +5,35 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+
 import com.dabangvr.R;
-import com.dabangvr.comment.activity.LocationActivity;
-import com.dabangvr.databinding.ActivityUserHomeBinding;
 import com.dabangvr.databinding.ActivityUserMessModifyBinding;
-import com.dabangvr.live.activity.GeGoActivity;
 import com.dabangvr.util.OpenCameUtil;
-import com.dbvr.baselibrary.base.ParameterContens;
-import com.dbvr.baselibrary.eventBus.ReadEvent;
 import com.dbvr.baselibrary.model.QiniuUploadFile;
 import com.dbvr.baselibrary.model.UserMess;
 import com.dbvr.baselibrary.utils.BottomDialogUtil2;
 import com.dbvr.baselibrary.utils.Conver;
+import com.dbvr.baselibrary.utils.DialogUtil;
 import com.dbvr.baselibrary.utils.OnUploadListener;
 import com.dbvr.baselibrary.utils.QiniuUploadManager;
-import com.dbvr.baselibrary.utils.SPUtils;
-import com.dbvr.baselibrary.utils.StatusBarUtil;
 import com.dbvr.baselibrary.utils.StringUtils;
 import com.dbvr.baselibrary.utils.ToastUtil;
 import com.dbvr.baselibrary.utils.UserHolper;
 import com.dbvr.baselibrary.view.AppManager;
-import com.dbvr.baselibrary.view.BaseActivity;
 import com.dbvr.baselibrary.view.BaseActivityBinding;
 import com.dbvr.httplibrart.constans.DyUrl;
-import com.dbvr.httplibrart.constans.UserUrl;
 import com.dbvr.httplibrart.utils.ObjectCallback;
 import com.dbvr.httplibrart.utils.OkHttp3Utils;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONException;
 
 import java.io.File;
@@ -58,11 +44,6 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-
-import androidx.annotation.Nullable;
-
-import butterknife.BindView;
-import butterknife.OnClick;
 
 import static com.dabangvr.util.OpenCameUtil.REQ_1;
 import static com.dabangvr.util.OpenCameUtil.REQ_2;
@@ -101,27 +82,21 @@ public class UserEditMessActivity extends BaseActivityBinding<ActivityUserMessMo
     @Override
     public void initView() {
 
-        mBinding.tvNickName.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-            }
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (!StringUtils.isEmpty(mBinding.tvNickName.getText().toString())){
-                    mBinding.tvNickNameConfirm.setVisibility(View.VISIBLE);
-                }else {
-                    mBinding.tvNickNameConfirm.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-        mBinding.tvNickNameConfirm.setOnClickListener((view)->{
-            updataMess("nickName", mBinding.tvNickName.getText().toString());
+        mBinding.tvNickName.setOnClickListener((view)->{
+            DialogUtil.getInstance(this).show(R.layout.dialog_tip_input, view1 -> {
+                EditText etInput = view1.findViewById(R.id.et_title);
+                etInput.setText(userMess.getNickName());
+                view1.findViewById(R.id.tvConfirm).setOnClickListener(view2 -> {
+                    if (etInput.getText().toString().equals(userMess.getNickName()))return;
+                    mBinding.tvNickName.setText(etInput.getText().toString());
+                    updataMess("nickName", etInput.getText().toString());
+                    DialogUtil.getInstance(this).des();
+                });
+                view1.findViewById(R.id.tvCancel).setOnClickListener((view2)->{
+                    DialogUtil.getInstance(this).des();
+                });
+            });
         });
 
         mBinding.sdvHead.setOnClickListener(this);
@@ -145,10 +120,12 @@ public class UserEditMessActivity extends BaseActivityBinding<ActivityUserMessMo
             case R.id.sdvHead:
                 BottomDialogUtil2.getInstance(this).showLive(R.layout.dialog_came, view1 -> {
                     view1.findViewById(R.id.takePhoto).setOnClickListener(view2 -> {
+                        OpenCameUtil.init("head");
                         OpenCameUtil.openCamera(this);
                         BottomDialogUtil2.getInstance(this).dess();
                     });
                     view1.findViewById(R.id.choosePhoto).setOnClickListener(view2 -> {
+                        OpenCameUtil.init("head");
                         OpenCameUtil.openAlbum(this);
                         BottomDialogUtil2.getInstance(this).dess();
                     });

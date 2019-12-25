@@ -19,13 +19,11 @@ import butterknife.OnClick;
  */
 public class UserApplySuccessActivity extends BaseActivity {
 
-
     @BindView(R.id.tv_title)
     TextView tv_title;
 
     @BindView(R.id.tv_content)
     TextView tv_content;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,14 +53,19 @@ public class UserApplySuccessActivity extends BaseActivity {
     public void onclick(View view) {
         switch (view.getId()) {
             case R.id.ivBack:
-                AppManager.getAppManager().finishActivity(this);
+                finishRz();
                 break;
             case R.id.tv_back:
-                AppManager.getAppManager().finishAllActivityTo(MainActivity.class);
+                finishRz();
                 break;
         }
     }
-
+    private void finishRz(){
+        AppManager.getAppManager().finishActivity(this);
+        AppManager.getAppManager().finishActivity(UserSJRZThreeActivity.class);
+        AppManager.getAppManager().finishActivity(UserSJRZTwoActivity.class);
+        AppManager.getAppManager().finishActivity(UserSJRZOneActivity.class);
+    }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {

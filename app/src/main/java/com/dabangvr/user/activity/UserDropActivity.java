@@ -1,31 +1,22 @@
 package com.dabangvr.user.activity;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.dabangvr.R;
+import com.dabangvr.comment.PayDialog;
 import com.dabangvr.comment.activity.RechargeDetailedActivity;
 import com.dabangvr.comment.activity.StrategyActivity;
-import com.dabangvr.comment.adapter.BaseRecyclerHolder;
-import com.dabangvr.comment.adapter.RecyclerAdapterPosition;
-import com.dabangvr.comment.PayDialog;
 import com.dabangvr.wxapi.WXPlayCallBack;
-import com.dbvr.baselibrary.model.CzMo;
 import com.dbvr.baselibrary.model.UserMess;
 import com.dbvr.baselibrary.utils.DialogUtil;
 import com.dbvr.baselibrary.utils.SPUtils;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
 import com.dbvr.baselibrary.view.AppManager;
 import com.dbvr.baselibrary.view.BaseActivity;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -35,19 +26,32 @@ import butterknife.OnClick;
  */
 public class UserDropActivity extends BaseActivity {
 
-    @BindView(R.id.recycle_cz)
-    RecyclerView recyclerView;
-    private RecyclerAdapterPosition adapter;
-    private List<CzMo>mData;
-
     @BindView(R.id.tvDropNum)
     TextView tvDropNum;
+
+    @BindView(R.id.cb01)
+    CheckBox cb01;
+    @BindView(R.id.cb02)
+    CheckBox cb02;
+    @BindView(R.id.cb03)
+    CheckBox cb03;
+    @BindView(R.id.cb04)
+    CheckBox cb04;
+    @BindView(R.id.cb05)
+    CheckBox cb05;
+    @BindView(R.id.cb06)
+    CheckBox cb06;
+
+    private CheckBox[] cbList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         StatusBarUtil.setRootViewFitsSystemWindows(this, false);
     }
+
     private UserMess userMess;
+
     @Override
     public int setLayout() {
         return R.layout.activity_my_drop;
@@ -55,89 +59,80 @@ public class UserDropActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        cbList = new CheckBox[]{cb01, cb02, cb03, cb04, cb05, cb06};
         userMess = SPUtils.instance(getContext()).getUser();
-        tvDropNum.setText("可用跳币："+userMess.getDiamond());
+        tvDropNum.setText("可用跳币：" + userMess.getDiamond());
+
+        findViewById(R.id.ll01).setOnClickListener(view -> {
+            price = 5;
+            num = 50;
+            select(0);
+        });
+        findViewById(R.id.ll02).setOnClickListener(view -> {
+            price = 10;
+            num = 100;
+            select(1);
+        });
+        findViewById(R.id.ll03).setOnClickListener(view -> {
+            price = 20;
+            num = 200;
+            select(2);
+        });
+        findViewById(R.id.ll04).setOnClickListener(view -> {
+            price = 50;
+            num = 500;
+            select(3);
+        });
+        findViewById(R.id.ll05).setOnClickListener(view -> {
+            price = 100;
+            num = 1000;
+            select(4);
+        });
+        findViewById(R.id.ll06).setOnClickListener(view -> {
+            price = 200;
+            num = 2000;
+            select(5);
+        });
+    }
+
+    private void select(int position) {
+        for (int i = 0; i < cbList.length; i++) {
+            if (position == i) {
+                cbList[i].setChecked(true);
+            } else {
+                cbList[i].setChecked(false);
+            }
+        }
     }
 
     protected int price;
     private int num;
+
     @Override
     public void initData() {
-        mData = CzMo.getData();
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));
-        adapter = new RecyclerAdapterPosition<CzMo>(getContext(),mData,R.layout.item_cz) {
-            @Override
-            public void convert(Context mContext, BaseRecyclerHolder holder, int position, CzMo o) {
-                TextView tvDropNum = holder.getView(R.id.tvDropNum);
-                TextView tvPrice = holder.getView(R.id.tvPrice);
-                tvDropNum.setText(o.getDropNum()+"跳币");
-                tvPrice.setText(o.getMoney()+".00元");
 
-                if (o.isYou()){//是否优惠
-                    holder.getView(R.id.ivYou).setVisibility(View.VISIBLE);
-                }else {
-                    holder.getView(R.id.ivYou).setVisibility(View.INVISIBLE);
-                }
-                if (o.isCheck()){
-                    price = o.getMoney();
-                    num = o.getDropNum();
-                    holder.getView(R.id.llSun).setBackgroundResource(R.drawable.shape_db_stroke);
-                    holder.getView(R.id.ivCheck).setVisibility(View.VISIBLE);
-                    tvDropNum.setTextColor(getResources().getColor(R.color.colorDb5));
-                    tvPrice.setTextColor(getResources().getColor(R.color.colorDb5));
-                }else {
-                    holder.getView(R.id.ivCheck).setVisibility(View.INVISIBLE);
-                    holder.getView(R.id.llSun).setBackgroundResource(R.drawable.shape_gra_stroke);
-                    tvDropNum.setTextColor(getResources().getColor(R.color.textTitle));
-                    tvPrice.setTextColor(getResources().getColor(R.color.default_bg));
-                }
-            }
-        };
-        adapter.setOnItemClickListener((view, position) -> {
-            for (int i = 0; i < mData.size(); i++) {
-                if (i == position){
-                    mData.get(i).setCheck(true);
-                }else {
-                    mData.get(i).setCheck(false);
-                }
-            }
-            adapter.updateDataa(mData);
-        });
-        recyclerView.setAdapter(adapter);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        finishRes();
-    }
-
-    private void finishRes() {
-        Intent i = new Intent();
-        i.putExtra("diamond",userMess.getDiamond());
-        setResult(99, i);
-        finish();
-        AppManager.getAppManager().finishActivity(this);
-    }
-
-    @OnClick({R.id.tvDetailed,R.id.ivBack,R.id.tvConfirm,R.id.tvSeeServer})
-    public void onclick(View view){
-        switch (view.getId()){
+    @OnClick({R.id.tvDetailed, R.id.ivBack, R.id.tvConfirm, R.id.tvSeeServer})
+    public void onclick(View view) {
+        switch (view.getId()) {
             case R.id.ivBack:
                 AppManager.getAppManager().finishActivity(this);
                 break;
             case R.id.tvDetailed:
-                goTActivity(RechargeDetailedActivity.class,null);
+                goTActivity(RechargeDetailedActivity.class, null);
                 break;
             case R.id.tvConfirm:
                 paymentDialog();
                 break;
             case R.id.tvSeeServer:
-                goTActivity(StrategyActivity.class,null);
+                goTActivity(StrategyActivity.class, null);
                 break;
-                default:break;
+            default:
+                break;
         }
     }
+
     /**
      * 支付弹窗
      */
@@ -154,14 +149,14 @@ public class UserDropActivity extends BaseActivity {
                     tvTitle.setText("充值成功");
 
                     view.findViewById(R.id.tvCancel).setVisibility(View.INVISIBLE);
-                    view.findViewById(R.id.tvConfirm).setOnClickListener((view1)->{
+                    view.findViewById(R.id.tvConfirm).setOnClickListener((view1) -> {
                         DialogUtil.getInstance(getContext()).des();
                     });
                 });
 
-                userMess.setDiamond(userMess.getDiamond()+num);
+                userMess.setDiamond(userMess.getDiamond() + num);
                 tvDropNum.setText(String.valueOf(userMess.getDiamond()));
-                Log.e("testttt",""+userMess.getDiamond());
+                Log.e("testttt", "" + userMess.getDiamond());
                 SPUtils.instance(getContext()).putUser(userMess);
             }
 
@@ -170,10 +165,8 @@ public class UserDropActivity extends BaseActivity {
                 DialogUtil.getInstance(getContext()).show(R.layout.dialog_tip, view -> {
                     TextView tvTitle = view.findViewById(R.id.tv_title);
                     tvTitle.setText("充值系统正在维护中，不便之处请谅解");
-                    view.findViewById(R.id.tvCancel).setOnClickListener((view1)->{
-                        DialogUtil.getInstance(getContext()).des();
-                    });
-                    view.findViewById(R.id.tvConfirm).setOnClickListener((view2)->{
+                    view.findViewById(R.id.tvCancel).setVisibility(View.GONE);
+                    view.findViewById(R.id.tvConfirm).setOnClickListener((view2) -> {
                         DialogUtil.getInstance(getContext()).des();
                     });
                 });

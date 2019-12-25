@@ -111,7 +111,6 @@
         <activity android:name=".mall.activity.CartActivity" />
         <activity android:name=".user.activity.UserProblemActivity" />
         <activity android:name=".user.activity.UserSettingActivity" />
-        <activity android:name=".user.activity.UserMessActivity" />
         <activity android:name=".user.activity.UserSJRZOneActivity" />
         <activity android:name=".user.activity.UserSJRZTwoActivity" />
         <activity android:name=".user.activity.UserAgreeActivity" />

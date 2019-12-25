@@ -89,7 +89,7 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="2px"
+                        android:layout_height="@dimen/dp_10"
                         android:layout_marginVertical="@dimen/dp_5"
                         android:background="@color/dividerGrey" />
 
@@ -107,35 +107,16 @@
                             android:layout_margin="@dimen/dp_10"
                             android:textSize="@dimen/sp_16" />
 
-                        <RelativeLayout
-                            android:paddingRight="@dimen/dp_10"
+                        <TextView
+                            android:id="@+id/tvNickName"
+                            android:gravity="center|left"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-                            <EditText
-                                android:background="@null"
-                                android:id="@+id/tvNickName"
-                                android:layout_toLeftOf="@+id/tvNickNameConfirm"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="center"
-                                android:text=""
-                                android:maxLength="8"
-                                android:textColor="@color/textTitle"
-                                android:textSize="@dimen/sp_16" />
-
-                            <TextView
-                                android:visibility="gone"
-                                android:id="@+id/tvNickNameConfirm"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="确定"
-                                android:layout_alignParentRight="true"
-                                android:layout_centerVertical="true"
-                                android:textSize="@dimen/sp_15"
-                                android:paddingHorizontal="@dimen/dp_10"
-                                android:paddingVertical="@dimen/dp_3"
-                                android:background="@drawable/shape_gray"/>
-                        </RelativeLayout>
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:text="啊啊啊啊啊"
+                            android:maxLength="8"
+                            android:textColor="@color/textTitle"
+                            android:textSize="@dimen/sp_16" />
 
 
                     </LinearLayout>
@@ -236,7 +217,35 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="2px"
+                        android:layout_height="@dimen/dp_10"
+                        android:layout_marginVertical="@dimen/dp_5"
+                        android:background="@color/dividerGrey" />
+
+                    <LinearLayout
+                        android:id="@+id/llIntroduce"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/dp_10">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="个人介绍："
+                            android:textSize="@dimen/sp_16" />
+
+                        <TextView
+                            android:id="@+id/tvIntroduce"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/textTitle"
+                            android:textSize="@dimen/sp_16" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_10"
                         android:layout_marginVertical="@dimen/dp_5"
                         android:background="@color/dividerGrey" />
 
@@ -270,38 +279,10 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="2px"
+                        android:layout_height="@dimen/dp_10"
                         android:layout_marginVertical="@dimen/dp_5"
                         android:background="@color/dividerGrey" />
 
-                    <LinearLayout
-                        android:id="@+id/llIntroduce"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="@dimen/dp_10">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="个人介绍："
-                            android:textSize="@dimen/sp_16" />
-
-                        <TextView
-                            android:id="@+id/tvIntroduce"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="@dimen/dp_20"
-                            android:textColor="@color/textTitle"
-                            android:textSize="@dimen/sp_16" />
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="2px"
-                        android:layout_marginVertical="@dimen/dp_5"
-                        android:background="@color/dividerGrey" />
 
                     <LinearLayout
                         android:id="@+id/llPhone"

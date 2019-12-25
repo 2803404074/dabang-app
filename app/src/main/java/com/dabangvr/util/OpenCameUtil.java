@@ -18,11 +18,16 @@ public class OpenCameUtil {
     public static final int REQ_2 = 2;//打开相册
     public static final int REQ_4 = 4;//相册后启动裁剪程序
 
-    private static final String IMAGE_FILE_LOCATION = "file:///" + Environment.getExternalStorageDirectory().getPath() + "/temp.jpg";
-    public static Uri imageUris = Uri.parse(IMAGE_FILE_LOCATION);
+    private static String IMAGE_FILE_LOCATION ;
+    public static Uri imageUris;
     public static Uri imageUri;
     public static File tempFile;
 
+
+    public static void init(String name){
+        IMAGE_FILE_LOCATION = "file:///" + Environment.getExternalStorageDirectory().getPath()+"/"+name+"temp.jpg";
+        imageUris = Uri.parse(IMAGE_FILE_LOCATION);
+    }
     //打开相册方法
     public static void openAlbum(Activity activity) {
         Intent intent = new Intent(Intent.ACTION_PICK, null);

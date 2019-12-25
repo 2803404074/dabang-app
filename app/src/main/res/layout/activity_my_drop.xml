@@ -99,6 +99,247 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycle_cz"
         android:layout_width="match_parent"
+        android:layout_height="0dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:layout_height="@dimen/dp_100"
+            android:background="@drawable/shape_db_stroke">
+            <CheckBox
+                android:id="@+id/cb01"
+                android:clickable="false"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="top"/>
+            <LinearLayout
+                android:id="@+id/ll01"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:layout_centerVertical="true"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/sp_18"
+                    android:textColor="@color/textTitle"
+                    android:textStyle="bold"
+                    android:text="50跳币"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/sp_14"
+                    android:textColor="@color/default_bg"
+                    android:text="5.00元"/>
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="@dimen/dp_5"
+            android:layout_height="@dimen/dp_100"
+            android:background="@drawable/shape_db_stroke">
+            <CheckBox
+                android:id="@+id/cb02"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="false"
+                android:gravity="top"/>
+            <LinearLayout
+                android:id="@+id/ll02"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:layout_centerVertical="true"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/sp_18"
+                    android:textColor="@color/textTitle"
+                    android:textStyle="bold"
+                    android:text="50跳币"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/sp_14"
+                    android:textColor="@color/default_bg"
+                    android:text="5.00元"/>
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_marginRight="@dimen/dp_5"
+            android:layout_height="@dimen/dp_100"
+            android:background="@drawable/shape_db_stroke">
+            <CheckBox
+                android:id="@+id/cb03"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="false"
+                android:gravity="top"/>
+            <LinearLayout
+                android:id="@+id/ll03"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:layout_centerVertical="true"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/sp_18"
+                    android:textColor="@color/textTitle"
+                    android:textStyle="bold"
+                    android:text="50跳币"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/sp_14"
+                    android:textColor="@color/default_bg"
+                    android:text="5.00元"/>
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_5"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:layout_height="@dimen/dp_100"
+            android:background="@drawable/shape_db_stroke">
+            <CheckBox
+                android:id="@+id/cb04"
+                android:clickable="false"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="top"/>
+            <LinearLayout
+                android:id="@+id/ll04"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:layout_centerVertical="true"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/sp_18"
+                    android:textColor="@color/textTitle"
+                    android:textStyle="bold"
+                    android:text="50跳币"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/sp_14"
+                    android:textColor="@color/default_bg"
+                    android:text="5.00元"/>
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="@dimen/dp_5"
+            android:layout_height="@dimen/dp_100"
+            android:background="@drawable/shape_db_stroke">
+            <CheckBox
+                android:id="@+id/cb05"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="false"
+                android:gravity="top"/>
+            <LinearLayout
+                android:id="@+id/ll05"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:layout_centerVertical="true"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/sp_18"
+                    android:textColor="@color/textTitle"
+                    android:textStyle="bold"
+                    android:text="50跳币"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/sp_14"
+                    android:textColor="@color/default_bg"
+                    android:text="5.00元"/>
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_marginRight="@dimen/dp_5"
+            android:layout_height="@dimen/dp_100"
+            android:background="@drawable/shape_db_stroke">
+            <CheckBox
+                android:id="@+id/cb06"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="false"
+                android:gravity="top"/>
+            <LinearLayout
+                android:id="@+id/ll06"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:layout_centerVertical="true"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/sp_18"
+                    android:textColor="@color/textTitle"
+                    android:textStyle="bold"
+                    android:text="50跳币"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/sp_14"
+                    android:textColor="@color/default_bg"
+                    android:text="5.00元"/>
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="1px"
         android:layout_height="0dp"
         android:layout_weight="1"/>
 

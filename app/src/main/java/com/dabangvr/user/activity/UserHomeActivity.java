@@ -108,10 +108,8 @@ public class UserHomeActivity extends BaseActivityBinding<ActivityUserHomeBindin
                     setUserInfo();
                 }
             }
-
             @Override
             public void onFailed(String msg) {
-
             }
         });
     }
@@ -164,10 +162,8 @@ public class UserHomeActivity extends BaseActivityBinding<ActivityUserHomeBindin
                 mBinding.inlcude.tvSend.setVisibility(View.VISIBLE);
                 mBinding.inlcude.tvAddFriend.setVisibility(View.GONE);
             }
-
             @Override
             public void onFailed(String msg) {
-
             }
         });
     }

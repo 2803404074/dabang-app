@@ -14,9 +14,12 @@ import com.bumptech.glide.Glide;
 import com.dabangvr.R;
 import com.dabangvr.comment.adapter.RecyclerAdapter;
 import com.dabangvr.comment.application.MyApplication;
+import com.dabangvr.databinding.ActivityGoodsBinding;
 import com.dabangvr.mall.adapter.ViewPagerTransform;
+import com.dbvr.baselibrary.model.GoodsVo;
 import com.dbvr.baselibrary.utils.StringUtils;
 import com.dbvr.baselibrary.view.BaseActivity;
+import com.dbvr.baselibrary.view.BaseActivityBinding;
 import com.zego.zegoliveroom.ZegoLiveRoom;
 
 import java.util.ArrayList;
@@ -24,7 +27,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public class GoodsActivity extends BaseActivity {
+public class GoodsActivity extends BaseActivityBinding<ActivityGoodsBinding> {
 
     @BindView(R.id.viewpager)
     ViewPagerTransform viewPagerTransform;

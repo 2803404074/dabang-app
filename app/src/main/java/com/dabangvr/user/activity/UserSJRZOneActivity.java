@@ -14,6 +14,8 @@ import android.widget.TextView;
 import com.dabangvr.R;
 import com.dbvr.baselibrary.base.ParameterContens;
 import com.dbvr.baselibrary.model.DepVo;
+import com.dbvr.baselibrary.model.DepVoRz;
+import com.dbvr.baselibrary.utils.SPUtils;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
 import com.dbvr.baselibrary.utils.StringUtils;
 import com.dbvr.baselibrary.utils.ToastUtil;
@@ -55,7 +57,7 @@ public class UserSJRZOneActivity extends BaseActivity {
 
     private boolean isChecked;
     private CountDownTimer count;
-    private DepVo depVo;
+    private DepVoRz depVo;
 
 
     @Override
@@ -72,11 +74,8 @@ public class UserSJRZOneActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        depVo = (DepVo) getIntent().getSerializableExtra(ParameterContens.depVo);
-        if (depVo != null) {
-            etPhone.setText(depVo.getPhone());
-        } else {
-            depVo = new DepVo();
+        if (depVo == null) {
+            depVo = new DepVoRz();
         }
     }
 
@@ -85,7 +84,6 @@ public class UserSJRZOneActivity extends BaseActivity {
         cb_select.setOnCheckedChangeListener((buttonView, isChecked) -> {
             Log.d("luhuas", "onCheckedChanged: " + isChecked);
             UserSJRZOneActivity.this.isChecked = isChecked;
-
         });
     }
 

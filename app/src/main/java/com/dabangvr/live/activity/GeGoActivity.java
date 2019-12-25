@@ -181,10 +181,12 @@ public class GeGoActivity extends LiveBaseActivity implements GDMapLocation.MapE
             BottomDialogUtil2.getInstance(this).showLive(R.layout.dialog_came, view1 -> {
                 view1.findViewById(R.id.takePhoto).setOnClickListener(view2 -> {
                     zegoLiveRoom.stopPreview();
+                    OpenCameUtil.init("cover");
                     OpenCameUtil.openCamera(this);
                     BottomDialogUtil2.getInstance(this).dess();
                 });
                 view1.findViewById(R.id.choosePhoto).setOnClickListener(view2 -> {
+                    OpenCameUtil.init("cover");
                     OpenCameUtil.openAlbum(this);
                     BottomDialogUtil2.getInstance(this).dess();
                 });
@@ -842,7 +844,7 @@ public class GeGoActivity extends LiveBaseActivity implements GDMapLocation.MapE
             map.put("coverUrlFile",file);
         }
         map.put("roomId", roomId);
-        map.put("stremId", stremId);
+        map.put("streamId", stremId);
         if (isOpenLocation){
             map.put("longitude", longitude);//经度
             map.put("latitude", latitude);//纬度
