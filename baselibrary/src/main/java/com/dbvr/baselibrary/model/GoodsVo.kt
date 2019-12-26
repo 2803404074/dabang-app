@@ -4,6 +4,10 @@ import java.io.Serializable
 
 class GoodsVo :Serializable{
     /**
+     * 是否已经收藏
+     */
+    var isCollect:Boolean?=false
+    /**
      * 商品id
      */
     var id: Int = 0
@@ -49,16 +53,16 @@ class GoodsVo :Serializable{
      */
     var merchantsId: Int? = null
 
+    //封面图
+    var listUrl:String?=null
     /**
      * 商品的轮播图
      */
-    var goodsImgs: List<String>? = null
+    var goodsImgList: List<String>? = null
     /**
      * 商品的详情内容
      */
     var goodsDesc: String? = null
-
-    var productName: String? = null
 
     /**
      * 分类名称
@@ -79,12 +83,5 @@ class GoodsVo :Serializable{
      * 所属商家logo
      */
     var merchantsLogo: String? = null
-
-    var receivingAddress:String?=null
-    var receivingAddressId:String?=null
-
-    var supportService:String?=null
-
-    var introduce:String?=null
 
 }

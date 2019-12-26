@@ -15,12 +15,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.Chronometer;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -62,7 +60,6 @@ import com.opensource.svgaplayer.SVGAVideoEntity;
 import com.orzangleli.xdanmuku.DanmuContainerView;
 import com.zego.zegoliveroom.ZegoLiveRoom;
 import com.zego.zegoliveroom.callback.IZegoLivePublisherCallback;
-import com.zego.zegoliveroom.callback.IZegoRoomCallback;
 import com.zego.zegoliveroom.callback.im.IZegoIMCallback;
 import com.zego.zegoliveroom.constants.ZegoBeauty;
 import com.zego.zegoliveroom.constants.ZegoConstants;
@@ -73,7 +70,6 @@ import com.zego.zegoliveroom.entity.AuxData;
 import com.zego.zegoliveroom.entity.ZegoBigRoomMessage;
 import com.zego.zegoliveroom.entity.ZegoPublishStreamQuality;
 import com.zego.zegoliveroom.entity.ZegoRoomMessage;
-import com.zego.zegoliveroom.entity.ZegoStreamInfo;
 import com.zego.zegoliveroom.entity.ZegoUserState;
 
 import org.json.JSONException;
@@ -269,18 +265,16 @@ public class GeGoActivity extends LiveBaseActivity implements GDMapLocation.MapE
                         typeAdapter.updateDataa(mTypeList);
                     });
                     mRoomContainer.findViewById(R.id.llShow).setVisibility(View.GONE);
-                } else {
-                    mRoomContainer.findViewById(R.id.llShow).setVisibility(View.VISIBLE);
-                    mRoomContainer.findViewById(R.id.llShow).setOnClickListener((view) -> {
-                        goTActivity(UserSJRZOneActivity.class, null);
-                        AppManager.getAppManager().finishActivity(GeGoActivity.this);
-                    });
                 }
             }
 
             @Override
             public void onFailed(String msg) {
-
+                mRoomContainer.findViewById(R.id.llShow).setVisibility(View.VISIBLE);
+                mRoomContainer.findViewById(R.id.llShow).setOnClickListener((view) -> {
+                    goTActivity(UserSJRZOneActivity.class, null);
+                    AppManager.getAppManager().finishActivity(GeGoActivity.this);
+                });
             }
         });
         viewGroup.addView(mRoomContainer);

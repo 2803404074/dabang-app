@@ -15,6 +15,7 @@
         android:layout_above="@+id/rlBottom"/>
 
 
+
     <LinearLayout
         android:id="@+id/rlBottom"
         android:layout_alignParentBottom="true"
@@ -50,7 +51,5 @@
             android:layout_alignParentRight="true"
             android:background="@drawable/shape_round_red"/>
     </RelativeLayout>
-
-
 
 </RelativeLayout>

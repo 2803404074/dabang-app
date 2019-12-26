@@ -1,15 +1,11 @@
 package com.dabangvr.comment.activity;
 
 import android.Manifest;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.IBinder;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,8 +21,6 @@ import androidx.core.content.ContextCompat;
 import com.dabangvr.R;
 import com.dabangvr.comment.application.MyApplication;
 import com.dabangvr.comment.service.MessageService;
-import com.dabangvr.home.fragment.VideoFragment;
-import com.dbvr.baselibrary.utils.DialogUtil;
 import com.dbvr.baselibrary.utils.StringUtils;
 import com.dbvr.baselibrary.utils.UserHolper;
 import com.dabangvr.comment.view.NavHelper;
@@ -52,11 +46,8 @@ import com.google.gson.Gson;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.EMError;
 import com.hyphenate.chat.EMClient;
-import com.hyphenate.chat.EMMessage;
 import com.hyphenate.exceptions.HyphenateException;
 import com.tencent.liteav.demo.videorecord.TCVideoRecordActivity;
-
-import java.util.List;
 
 import butterknife.BindView;
 

@@ -56,6 +56,11 @@ public class DyUrl {
     //直播标签列表
     public static final String getLiveCategoryList = "api/live/getLiveCategoryList";
 
+    //商品详情
+    public static final String getGoodsDetails = "api/goods/getGoodsDetails";
+
+    //收藏商品
+    public static final String getCollectGoods = "/api/goodscollect/getCollectGoods";
 
     //我的订单列表
     public static String getOrderList = "api/order/getOrderList";

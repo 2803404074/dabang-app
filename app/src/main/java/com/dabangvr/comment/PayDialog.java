@@ -135,13 +135,11 @@ public class PayDialog {
                 dialog.dismiss();
                 wxPlayCallBack.error(errorMessage);
             }
-
             @Override
             public void cancel() {
                 dialog.dismiss();
                 wxPlayCallBack.cancel();
             }
-
         });
     }
 

@@ -51,6 +51,19 @@
                 android:layout_marginLeft="@dimen/dp_5"
                 android:padding="@dimen/dp_2"
                 android:background="@color/color_e2e2e2"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1px"
+                android:layout_weight="1"/>
+            <TextView
+                android:id="@+id/tvEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="编辑"
+                android:padding="@dimen/dp_5"
+                android:textSize="@dimen/sp_15"
+                android:textStyle="bold"
+                android:textColor="@color/textTitle" />
         </LinearLayout>
 
 

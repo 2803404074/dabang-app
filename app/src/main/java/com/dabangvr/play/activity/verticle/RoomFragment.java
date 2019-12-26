@@ -213,7 +213,6 @@ public class RoomFragment extends BaseRoomFragment {
                     tvGoodsNum.setText(String.valueOf(liveGoods.size()));
                 }
             }
-
             @Override
             public void onFailed(String msg) {
 
@@ -224,11 +223,11 @@ public class RoomFragment extends BaseRoomFragment {
     //初始化评论列表
     private void initCommentUi() {
         doTopGradualEffect(recyclerView);
-        commentAdapter = new RecyclerAdapter<ZegoRoomMessage>(getContext(), commentData, R.layout.item_video_comment) {
+        commentAdapter = new RecyclerAdapter<ZegoRoomMessage>(getContext(), commentData, R.layout.item_comment) {
             @Override
             public void convert(Context mContext, BaseRecyclerHolder holder, ZegoRoomMessage o) {
                 TextView tvMess = holder.getView(R.id.tvMess);
-                holder.setText(R.id.tvUser, "123");
+                holder.setText(R.id.tvUser, o.fromUserName);
                 tvMess.setText(o.content);
                 int mColor = R.color.colorDb3;
                 //系统
@@ -417,7 +416,9 @@ public class RoomFragment extends BaseRoomFragment {
                     goodsAdapter.setOnItemClickListener((view17, position) -> {
                         Map<String,Object>map = new HashMap<>();
                         map.put("goodsId",liveGoods.get(position).getId());
+                        map.put("roomId",liveData.getRoomId());
                         goTActivity(GoodsActivity.class,map);
+                        BottomDialogUtil2.getInstance(getActivity()).dess();
                     });
                 });
                 break;

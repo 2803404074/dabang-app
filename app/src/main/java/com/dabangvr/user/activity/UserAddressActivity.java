@@ -63,8 +63,14 @@ public class UserAddressActivity extends BaseActivity{
         return R.layout.activity_address;
     }
 
+    private boolean isGoodsCom = false;
     @Override
     public void initView() {
+        boolean isGoods = getIntent().getBooleanExtra("isGoods",false);
+        if (isGoods){
+            isGoodsCom = true;
+        }
+
         isLoading(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new RecyclerAdapter<AddressMo>(getContext(),mData,R.layout.item_address) {
@@ -87,15 +93,25 @@ public class UserAddressActivity extends BaseActivity{
                 holder.setText(R.id.tvName, StringUtils.isEmptyTxt(o.getConsigneeName()));
                 holder.setText(R.id.tvPhone,StringUtils.isEmptyTxt(o.getConsigneePhone()));
                 holder.setText(R.id.tvAddress,StringUtils.isEmptyTxt(o.getAddress()));
+
+                holder.getView(R.id.tvEdit).setOnClickListener((view)->{
+                    Intent intent = new Intent(getContext(),UserSetAddressActivity.class);
+                    intent.putExtra("address",o);
+                    startActivity(intent);
+                });
             }
         };
         recyclerView.setAdapter(adapter);
 
         adapter.setOnItemClickListener((view, position) -> {
             AddressMo addressMo = (AddressMo) adapter.getData().get(position);
-            Intent intent = new Intent(this,UserSetAddressActivity.class);
-            intent.putExtra("address",addressMo);
-            startActivity(intent);
+            if (isGoodsCom){
+                Intent intent = new Intent();
+                intent.putExtra("str",addressMo.getConsigneeName()+"-"+addressMo.getConsigneePhone()+"-"+addressMo.getProvince()+addressMo.getCity()+addressMo.getArea()+"-"+addressMo.getAddress());
+                intent.putExtra("addressId",addressMo.getId());
+                setResult(101,intent);
+                finish();
+            }
         });
         adapter.setonLongItemClickListener((view, postion) -> {
             DialogUtil.getInstance(this).show(R.layout.dialog_tip, view13 -> {
