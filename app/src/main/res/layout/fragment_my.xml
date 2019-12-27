@@ -118,20 +118,20 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/llCart"
+                    android:id="@+id/llCollect"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/dp_5"
                     android:orientation="horizontal">
                     <ImageView
-                        android:layout_width="@dimen/dp_20"
-                        android:layout_height="@dimen/dp_20"
+                        android:layout_width="@dimen/dp_22"
+                        android:layout_height="@dimen/dp_22"
                         android:layout_gravity="center"
-                        android:src="@mipmap/my_cart"/>
+                        android:src="@mipmap/collect"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="购物车"
+                        android:text="收藏"
                         android:layout_gravity="center"
                         android:layout_marginLeft="@dimen/dp_5"
                         android:textSize="@dimen/sp_16"/>

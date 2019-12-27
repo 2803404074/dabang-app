@@ -17,8 +17,10 @@ import com.dbvr.baselibrary.utils.BottomDialogUtil;
 import com.dbvr.baselibrary.utils.SPUtils;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
 import com.dbvr.baselibrary.utils.ToastUtil;
+import com.dbvr.baselibrary.utils.UserHolper;
 import com.dbvr.baselibrary.view.AppManager;
 import com.dbvr.baselibrary.view.BaseActivity;
+import com.dbvr.httplibrart.constans.DyUrl;
 import com.dbvr.httplibrart.constans.UserUrl;
 import com.dbvr.httplibrart.utils.ObjectCallback;
 import com.dbvr.httplibrart.utils.OkHttp3Utils;
@@ -110,7 +112,11 @@ public class LoginActivity extends BaseActivity{
         OkHttp3Utils.getInstance(LoginActivity.this).doPostJson(UserUrl.login, map, new ObjectCallback<String>(LoginActivity.this) {
             @Override
             public void onUi(String result) {
-                SPUtils.instance(getContext()).putUser(result);
+                UserMess userMess = new Gson().fromJson(result, UserMess.class);
+                SPUtils.instance(getContext()).putUser(userMess);
+                SPUtils.instance(getContext()).put("token",userMess.getToken());
+                UserHolper.getUserHolper(getContext()).setUserMess(userMess);
+
                 //判断是否首次登陆
                 boolean isFirst = (boolean) SPUtils.instance(getContext()).getkey("isFirst", true);
                 if (isFirst) {

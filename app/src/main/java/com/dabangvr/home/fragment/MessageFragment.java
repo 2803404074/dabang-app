@@ -1,10 +1,8 @@
 package com.dabangvr.home.fragment;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
+import android.content.IntentFilter;
 import android.os.Handler;
-import android.os.IBinder;
 import android.os.Message;
 import android.util.Pair;
 import android.view.View;
@@ -12,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,15 +18,16 @@ import com.dabangvr.R;
 import com.dabangvr.comment.activity.MainAc;
 import com.dabangvr.comment.adapter.BaseRecyclerHolder;
 import com.dabangvr.comment.adapter.RecyclerAdapterPosition;
-import com.dabangvr.comment.service.MessageService;
+import com.dabangvr.databinding.FragmentMessageBinding;
+import com.dabangvr.im.receiver.MessReceiver;
+import com.dabangvr.im.service.MessageService;
 import com.dabangvr.im.ChatActivity;
 import com.dabangvr.user.activity.FollowActivity;
-import com.dbvr.baselibrary.utils.Conver;
 import com.dbvr.baselibrary.utils.DialogUtil;
 import com.dbvr.baselibrary.utils.StringUtils;
 import com.dbvr.baselibrary.utils.ToastUtil;
-import com.dbvr.baselibrary.utils.UserHolper;
 import com.dbvr.baselibrary.view.BaseFragment;
+import com.dbvr.baselibrary.view.BaseFragmentBinding;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.hyphenate.EMContactListener;
 import com.hyphenate.chat.EMClient;
@@ -46,16 +46,11 @@ import butterknife.BindView;
 /**
  * 纯列表的fragment
  */
-public class MessageFragment extends BaseFragment{
-    @BindView(R.id.recycler_mess)
-    RecyclerView recyclerView;
-    @BindView(R.id.tvTips)
-    TextView tvTips;
-    @BindView(R.id.ivFollow)
-    ImageView ivFollow;
+public class MessageFragment extends BaseFragmentBinding<FragmentMessageBinding> {
+
+    public static MessageFragment instance;
     private List<EMConversation> conversationList = new ArrayList<>();
     private RecyclerAdapterPosition adapter;
-
 
     @Override
     public int layoutId() {
@@ -63,18 +58,20 @@ public class MessageFragment extends BaseFragment{
     }
 
     @Override
-    public void initView() {
-
-        serOnCallBack();
-
-        ivFollow.setOnClickListener((view)->{
+    public void initView(FragmentMessageBinding fragmentMessageBinding) {
+        instance = this;
+        mBinding.ivFollow.setOnClickListener((view)->{
             goTActivity(FollowActivity.class,null);
         });
+    }
 
+    public void upMess(){
+        loadConversationList();
+        setView();
     }
 
     private void setView(){
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mBinding.recyclerMess.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new RecyclerAdapterPosition<EMConversation>(getContext(), conversationList, R.layout.my_mess_recyitem) {
             @Override
             public void convert(Context mContext, BaseRecyclerHolder holder, int position, EMConversation conversation) {
@@ -115,7 +112,7 @@ public class MessageFragment extends BaseFragment{
                 }
             }
         };
-        recyclerView.setAdapter(adapter);
+        mBinding.recyclerMess.setAdapter(adapter);
 
         adapter.setOnItemClickListener((view, position) -> {
             EMConversation conversation = (EMConversation) adapter.getData().get(position);
@@ -143,7 +140,7 @@ public class MessageFragment extends BaseFragment{
                     conversationList.remove(position);
                     adapter.updateDataa(conversationList);
                     if (conversationList == null || conversationList.size() == 0){
-                        tvTips.setVisibility(View.VISIBLE);
+                        mBinding.tvTips.setVisibility(View.VISIBLE);
                     }
                     DialogUtil.getInstance(getActivity()).des();
                 });
@@ -155,40 +152,10 @@ public class MessageFragment extends BaseFragment{
         });
     }
 
-
     @Override
     public void initData() {
-        EMClient.getInstance().contactManager().setContactListener(new EMContactListener() {
 
-            @Override
-            public void onContactInvited(String username, String reason) {
-                //收到好友邀请
-                ToastUtil.showShort(getContext(),username+"关注了你");
-            }
-
-            @Override
-            public void onFriendRequestAccepted(String s) {
-
-            }
-
-            @Override
-            public void onFriendRequestDeclined(String s) {
-
-            }
-
-            @Override
-            public void onContactDeleted(String username) {
-                //被删除时回调此方法
-            }
-
-
-            @Override
-            public void onContactAdded(String username) {
-                //增加了联系人时回调此方法
-            }
-        });
     }
-
     /**
      * 获取会话列表
      *
@@ -243,29 +210,15 @@ public class MessageFragment extends BaseFragment{
         });
     }
 
-    private void serOnCallBack(){
-        MessageService.service.setCallBack2(messages -> {
-            loadConversationList();
-            if (conversationList == null || conversationList.size() == 0){
-                if (tvTips!=null){
-                    tvTips.setVisibility(View.VISIBLE);
-                }
-            }
-            handler.sendEmptyMessage(0);
-        });
-    }
-
-    private Handler handler = new Handler(message -> {
-        if (message.what == 0){
-            setView();
-        }
-        return false;
-    });
-
     @Override
     public void onResume() {
         super.onResume();
         loadConversationList();
+        if (conversationList == null || conversationList.size() == 0){
+            if (mBinding.tvTips!=null){
+                mBinding.tvTips.setVisibility(View.VISIBLE);
+            }
+        }
         setView();
     }
 }

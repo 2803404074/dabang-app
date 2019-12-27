@@ -21,6 +21,9 @@ public class UserHolper {
         this.context = context;
     }
 
+    public void setUserMess(UserMess userMess){
+        this.userMess = userMess;
+    }
     public UserMess getUserMess() {
         if (userMess == null) {
             userMess = SPUtils.instance(context).getUser();

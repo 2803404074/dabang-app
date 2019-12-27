@@ -95,7 +95,7 @@ public class GoodsActivity extends BaseActivityBinding<ActivityGoodsBinding> {
                 mBinding.tvCollect.setTextColor(getResources().getColor(R.color.color_8d8c8c));
                 mBinding.tvCollect.setText("收藏");
             }else {
-                mBinding.cbC.setChecked(false);
+                mBinding.cbC.setChecked(true);
                 mBinding.tvCollect.setTextColor(getResources().getColor(R.color.colorDb5));
                 mBinding.tvCollect.setText("已收藏");
             }
@@ -160,6 +160,11 @@ public class GoodsActivity extends BaseActivityBinding<ActivityGoodsBinding> {
      * 本直播间的相关商品
      */
     private void getLiveGoods() {
+        if (StringUtils.isEmpty(getIntent().getStringExtra("roomId"))){
+            isLoading(false);
+            ToastUtil.showShort(getContext(),"未找到相关商品");
+            return;
+        }
         Map<String,Object>map = new HashMap<>();
         map.put("roomId",getIntent().getStringExtra("roomId"));
         OkHttp3Utils.getInstance(getContext()).doPostJson(DyUrl.getRoomGoodsList, map, new ObjectCallback<String>(getContext()) {
@@ -219,7 +224,7 @@ public class GoodsActivity extends BaseActivityBinding<ActivityGoodsBinding> {
         mBinding.mWebView.setWebViewClient(new GoodsWebViewClient(mBinding.mWebView));
         mBinding.mWebView.loadData(goodsVo.getGoodsDesc(), "text/html", "UTF-8");
 
-        isCollect = goodsVo.isCollect();
+        isCollect = goodsVo.getCollectTag();
         //是否已经收藏
         if(isCollect){
             mBinding.cbC.setChecked(true);
@@ -338,6 +343,7 @@ public class GoodsActivity extends BaseActivityBinding<ActivityGoodsBinding> {
                         vo.setProductName("产品"+i);
                         vo.setRemainingInventory(10+i);
                         vo.setRetailPrice("5"+i*2);
+                        vo.setId(i);
                         list.add(vo);
                     }
                     goodsVo.setGoodsProductList(list);

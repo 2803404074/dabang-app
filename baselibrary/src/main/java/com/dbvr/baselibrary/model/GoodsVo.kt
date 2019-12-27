@@ -6,7 +6,7 @@ class GoodsVo :Serializable{
     /**
      * 是否已经收藏
      */
-    var isCollect:Boolean?=false
+    var collectTag:Boolean?=false
     /**
      * 商品id
      */

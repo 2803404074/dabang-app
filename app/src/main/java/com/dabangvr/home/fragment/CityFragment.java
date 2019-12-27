@@ -6,6 +6,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.amap.api.location.AMapLocation;
 import com.dabangvr.R;
@@ -84,6 +85,16 @@ public class CityFragment extends BaseFragmentBinding<FragmentSameCityBinding> i
                 startActivity(intent);
             }
         });
+
+        mBinding.swipeRefreshLayout.setOnRefreshListener(() -> {
+            page = 1;
+            initData();
+        });
+
+        adapter.setOnLoadMoreListener(() -> {
+            page++;
+            getList();
+        });
     }
 
     @Override
@@ -111,7 +122,6 @@ public class CityFragment extends BaseFragmentBinding<FragmentSameCityBinding> i
         getList();
         gdMapLocation.onStop();
     }
-
     //停止定位
     @Override
     public void onStop() {
@@ -133,11 +143,18 @@ public class CityFragment extends BaseFragmentBinding<FragmentSameCityBinding> i
     private void getList(){
         Map<String, Object> map = new HashMap<>();
         map.put("page", page);
+        map.put("limit","20");
         map.put("longitude",longitude);//经度
         map.put("latitude",latitude);//纬度
         OkHttp3Utils.getInstance(getContext()).doPostJson(DyUrl.getCityOnlineList, map, new ObjectCallback<String>(getContext()) {
             @Override
             public void onUi(String result) throws JSONException {
+                if (StringUtils.isEmpty(result)){
+                    mBinding.tvLocationName.setText("定位失败...");
+                    mBinding.tvRecyclerShow.setVisibility(View.VISIBLE);
+                    mBinding.tvRecyclerShow.setText("没有找到相关直播~~刷新试试？");
+                    isLoading(false);
+                }
                 JSONObject object = new JSONObject(result);
                 String locationName = object.optString("locationName");
                 mBinding.tvLocationName.setText(StringUtils.isEmptyTxt(locationName));

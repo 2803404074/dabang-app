@@ -2,6 +2,7 @@ package com.dabangvr.comment.activity;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,7 +21,8 @@ import androidx.core.content.ContextCompat;
 
 import com.dabangvr.R;
 import com.dabangvr.comment.application.MyApplication;
-import com.dabangvr.comment.service.MessageService;
+import com.dabangvr.im.receiver.MessReceiver;
+import com.dabangvr.im.service.MessageService;
 import com.dbvr.baselibrary.utils.StringUtils;
 import com.dbvr.baselibrary.utils.UserHolper;
 import com.dabangvr.comment.view.NavHelper;
@@ -46,14 +48,20 @@ import com.google.gson.Gson;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.EMError;
 import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMMessage;
 import com.hyphenate.exceptions.HyphenateException;
 import com.tencent.liteav.demo.videorecord.TCVideoRecordActivity;
+
+import java.util.List;
 
 import butterknife.BindView;
 
 public class MainAc extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener, NavHelper.OnTabChangeListener<String> {
 
     public static MainAc mainInstance;
+
+    private MessReceiver messReceiver;
+
     @BindView(R.id.bnvView)
     BottomNavigationView bottomNavigationView;
 
@@ -96,7 +104,6 @@ public class MainAc extends BaseActivity implements BottomNavigationView.OnNavig
         //添加到Tab上
         itemView.addView(badge);
 
-
         findViewById(R.id.rlFunction).setOnClickListener((view) -> {
             showFunction();
         });
@@ -114,17 +121,33 @@ public class MainAc extends BaseActivity implements BottomNavigationView.OnNavig
     @Override
     public void initData() {
         UserMess userMess = UserHolper.getUserHolper(getContext()).getUserMess();
-        //直接去登录
-        if (null == userMess) {
-            goTActivity(LoginActivity.class, null);
-            AppManager.getAppManager().finishActivity(MainAc.class);
-            return;
+        //登陆环信
+        if (userMess.isNewsUser()) {
+            registerHX(String.valueOf(userMess.getId()), "com.haitiaotiao");
         } else {
-            //更新用户信息
-            getUserInfo();
+            loginToHx(String.valueOf(userMess.getId()), "com.haitiaotiao");
         }
-    }
+        //启动环信消息监听服务
+        intent = new Intent(MainAc.this, MessageService.class);
+        startService(intent);
 
+        //注册广播接收
+        messReceiver = new MessReceiver();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("com.haitiaotiao.broadcasereceiver.MESSAGE");
+        registerReceiver(messReceiver, intentFilter);
+        messReceiver.setImMessage(list -> {
+            runOnUiThread(() -> {
+                tvMessCount.setVisibility(View.VISIBLE);
+                int con = Integer.parseInt(tvMessCount.getText().toString());
+                con++;
+                tvMessCount.setText(String.valueOf(con));
+            });
+            if (MessageFragment.instance!=null){
+                MessageFragment.instance.upMess();
+            }
+        });
+    }
 
     private void registerHX(final String name, final String pass) {
         new Thread(() -> {
@@ -149,13 +172,9 @@ public class MainAc extends BaseActivity implements BottomNavigationView.OnNavig
         EMClient.getInstance().login(name, psd, new EMCallBack() {
             @Override
             public void onSuccess() {
-                //注册消息监听服务
-                intent = new Intent(MainAc.this, MessageService.class);
-                startService(intent);
                 // ** 第一次登录或者之前logout后再登录，加载所有本地群和回话
                 EMClient.getInstance().groupManager().loadAllGroups();
                 EMClient.getInstance().chatManager().loadAllConversations();
-
                 //获取所有未读消息数量，为底部导航栏添加角标
                 int messCount = EMClient.getInstance().chatManager().getUnreadMessageCount();
                 if (messCount != 0) {
@@ -168,19 +187,6 @@ public class MainAc extends BaseActivity implements BottomNavigationView.OnNavig
                         tvMessCount.setVisibility(View.GONE);
                     });
                 }
-
-                new Handler(getMainLooper()).postDelayed(() -> {
-                    MessageService.service.setCallBack(messages -> {
-                        if (tvMessCount != null) {
-                            runOnUiThread(()->{
-                                int a = Integer.parseInt(tvMessCount.getText().toString());
-                                a++;
-                                tvMessCount.setText(String.valueOf(a));
-                                tvMessCount.setVisibility(View.VISIBLE);
-                            });
-                        }
-                    });
-                },2000);
             }
 
             @Override
@@ -197,48 +203,6 @@ public class MainAc extends BaseActivity implements BottomNavigationView.OnNavig
                     //找不到用户,去注册
                     registerHX(name, psd);
                 }
-            }
-        });
-    }
-
-    private void goLogin() {
-        goTActivity(LoginActivity.class, null);
-        AppManager.getAppManager().finishActivity(MainActivity.class);
-    }
-
-    private void getUserInfo() {
-        OkHttp3Utils.getInstance(this).doPostJson(DyUrl.getUserInfo, null, new ObjectCallback<String>(this) {
-            @Override
-            public void onUi(String result) {
-                if (StringUtils.isEmpty(result)) {
-                    goLogin();
-                    return;
-                }
-                try {
-                    UserMess userMess = new Gson().fromJson(result, UserMess.class);
-                    if (userMess == null) {
-                        ToastUtil.showShort(getContext(), "信息已过期，请重新登录");
-                        goLogin();
-                    } else {
-                        SPUtils.instance(getContext()).put("token", userMess.getToken());
-                        SPUtils.instance(getContext()).putUser(userMess);
-                        UserHolper.getUserHolper(getContext()).upUserMess();
-                        if (userMess.isNewsUser()) {
-                            registerHX(String.valueOf(userMess.getId()), "com.haitiaotiao");
-                        } else {
-                            loginToHx(String.valueOf(userMess.getId()), "com.haitiaotiao");
-                        }
-                    }
-                } catch (Exception e) {
-                    ToastUtil.showShort(getContext(), "信息已过期，请重新登录");
-                    goLogin();
-                }
-            }
-
-            @Override
-            public void onFailed(String msg) {
-                ToastUtil.showShort(getContext(), msg);
-                goLogin();
             }
         });
     }
@@ -275,7 +239,6 @@ public class MainAc extends BaseActivity implements BottomNavigationView.OnNavig
     protected void onDestroy() {
         super.onDestroy();
         mainInstance = null;
-        MessageService.service = null;
         UserHolper.getUserHolper(getContext()).ondessUser();
         stopService(intent);
     }
@@ -299,7 +262,6 @@ public class MainAc extends BaseActivity implements BottomNavigationView.OnNavig
             view.findViewById(R.id.ivClose).setOnClickListener(view1 -> BottomDialogUtil2.getInstance(this).dess());
         });
     }
-
 
     private void startVideoRecordActivity() {
         MyApplication.getInstance().initShortVideo();
@@ -331,7 +293,5 @@ public class MainAc extends BaseActivity implements BottomNavigationView.OnNavig
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
-
-
 
 }

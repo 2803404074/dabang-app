@@ -65,6 +65,9 @@ public class DyUrl {
     //我的订单列表
     public static String getOrderList = "api/order/getOrderList";
 
+    //我的收藏列表
+    public static String getCollectGoodsList = "api/goodscollect/getCollectGoodsList";
+
     //修改订单状态
     public static String updateOrderState = "api/order/updateOrderState";
 

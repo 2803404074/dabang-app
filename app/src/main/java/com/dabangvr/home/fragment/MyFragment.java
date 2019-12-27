@@ -1,6 +1,5 @@
 package com.dabangvr.home.fragment;
 
-import android.app.Activity;
 import android.view.View;
 
 import com.dabangvr.R;
@@ -8,6 +7,7 @@ import com.dabangvr.databinding.FragmentMyBinding;
 import com.dabangvr.home.activity.SearchActivity;
 import com.dabangvr.mall.activity.CartActivity;
 import com.dabangvr.mall.activity.OrderActivity;
+import com.dabangvr.user.activity.CollectActivity;
 import com.dabangvr.user.activity.DepListActivity;
 import com.dabangvr.user.activity.FansActivity;
 import com.dabangvr.user.activity.FollowActivity;
@@ -18,6 +18,7 @@ import com.dabangvr.user.activity.UserSettingActivity;
 import com.dbvr.baselibrary.model.UserMess;
 import com.dbvr.baselibrary.utils.UserHolper;
 import com.dbvr.baselibrary.view.BaseFragmentBinding;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,7 +43,7 @@ public class MyFragment extends BaseFragmentBinding<FragmentMyBinding> implement
 
         binding.llMoney.setOnClickListener(this);
         binding.llOrder.setOnClickListener(this);
-        binding.llCart.setOnClickListener(this);
+        binding.llCollect.setOnClickListener(this);
         binding.llMessInfo.setOnClickListener(this);
         binding.llSet.setOnClickListener(this);
         binding.llAbout.setOnClickListener(this);
@@ -65,8 +66,8 @@ public class MyFragment extends BaseFragmentBinding<FragmentMyBinding> implement
             case R.id.llOrder:
                 goTActivity(OrderActivity.class,null);
                 break;
-            case R.id.llCart:
-                goTActivity(CartActivity.class,null);
+            case R.id.llCollect:
+                goTActivity(CollectActivity.class,null);
                 break;
             case R.id.llMessInfo:
                goTActivity(UserEditMessActivity.class,null);

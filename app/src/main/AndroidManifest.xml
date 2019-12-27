@@ -57,7 +57,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:icon">
-        <activity android:name=".user.activity.DepListActivity"></activity>
+        <activity android:name=".user.activity.CollectActivity"></activity>
+        <activity android:name=".user.activity.DepListActivity" />
         <activity android:name="com.tencent.liteav.demo.my.activity.ShortVideoActivity" />
         <activity android:name=".comment.activity.CownTimerActivity" />
         <activity android:name=".user.activity.UserSetAddressActivity" />
@@ -173,7 +174,7 @@
         <service
             android:name="com.hyphenate.chat.EMChatService"
             android:exported="true" /> <!-- 声明SDK所需的receiver -->
-        <service android:name=".comment.service.MessageService" />
+        <service android:name=".im.service.MessageService" />
 
         <receiver android:name="com.hyphenate.chat.EMMonitorReceiver">
             <intent-filter>
@@ -201,6 +202,12 @@
                 <action android:name="com.dabang.sharex" />
             </intent-filter>
         </receiver>
-    </application>
 
+        <receiver
+            android:name=".im.receiver.MessReceiver"
+            android:enabled="true"
+            android:exported="true">
+        </receiver>
+
+    </application>
 </manifest>

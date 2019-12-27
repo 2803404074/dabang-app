@@ -297,6 +297,8 @@
                     android:id="@+id/cbC"
                     android:layout_width="@dimen/dp_25"
                     android:layout_height="@dimen/dp_25"
+                    android:gravity="center"
+                    android:clickable="false"
                     android:background="@drawable/selector_collect"
                     android:button="@null" />
                 <TextView
