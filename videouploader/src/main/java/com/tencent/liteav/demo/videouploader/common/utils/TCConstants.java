@@ -4,7 +4,13 @@ package com.tencent.liteav.demo.videouploader.common.utils;
  * 静态函数
  */
 public class TCConstants {
-
+    public static final String KEY_FRAGMENT = "fragment_type";
+    public static final int TYPE_EDITER_BGM = 1;
+    public static final int TYPE_EDITER_MOTION = 2;
+    public static final int TYPE_EDITER_SPEED = 3;
+    public static final int TYPE_EDITER_FILTER = 4;
+    public static final int TYPE_EDITER_PASTER = 5;
+    public static final int TYPE_EDITER_SUBTITLE = 6;
     /**
      * UGC小视频录制信息
      */

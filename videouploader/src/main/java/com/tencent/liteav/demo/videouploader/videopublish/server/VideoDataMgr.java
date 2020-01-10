@@ -2,6 +2,10 @@ package com.tencent.liteav.demo.videouploader.videopublish.server;
 
 import android.content.Context;
 import android.text.TextUtils;
+
+import com.dbvr.httplibrart.constans.DyUrl;
+import com.dbvr.httplibrart.utils.ObjectCallback;
+import com.dbvr.httplibrart.utils.OkHttp3Utils;
 import com.tencent.liteav.basic.log.TXCLog;
 import com.tencent.liteav.demo.videouploader.common.utils.TCConstants;
 import com.tencent.liteav.demo.videouploader.common.utils.TCUtils;
@@ -51,14 +55,16 @@ public class VideoDataMgr {
 
     //获取视频上传凭证
     public void getPublishSig(Context context) {
-        String result = "";
-        //成功
-        TXCLog.i(TAG, "getPublishSig onResponse : " + result);
-        notifyGetPublishSigSuccess(result);
-
-        //失败
-        TXCLog.e(TAG, "getPublishSig onFailure : ");
-        notifyGetPublishSigFail(Const.RetCode.CODE_REQUEST_ERR);
+        OkHttp3Utils.getInstance(context).doPostJson(DyUrl.getTencentSign, null, new ObjectCallback<String>(context) {
+            @Override
+            public void onUi(String result) throws JSONException {
+                notifyGetPublishSigSuccess(result);
+            }
+            @Override
+            public void onFailed(String msg) {
+                notifyGetPublishSigFail(Const.RetCode.CODE_REQUEST_ERR);
+            }
+        });
     }
 
     private void parseSigRes(String sigRes) {

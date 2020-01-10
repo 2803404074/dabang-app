@@ -5,6 +5,29 @@ package com.tencent.liteav.demo.videorecord.utils;
  */
 public class TCConstants {
 
+    // 小视频相关配置请参考:https://cloud.tencent.com/document/product/584/15540
+    // ************在腾讯云开通各项服务后，将您的配置替换到如下的几个定义中************
+    // 业务Server的地址
+    public static final String APP_SVR_URL = "http://demo.vod2.myqcloud.com/lite";
+
+    public static final int ACTIVITY_BGM_REQUEST_CODE = 1;
+    public static final String BGM_POSITION = "bgm_position";
+    public static final String BGM_PATH = "bgm_path";
+    public static final String BGM_NAME = "bgm_name";
+
+    public static final String USER_ID          = "userid";
+    public static final String USER_PWD         = "userpwd";
+
+    public static final String ELK_ACTION_VIDEO_EDIT = "videoedit";
+
+    public static final String KEY_FRAGMENT = "fragment_type";
+    public static final int ACTIVITY_OTHER_REQUEST_CODE = 2;
+    public static final int TYPE_EDITER_BGM = 1;
+    public static final int TYPE_EDITER_MOTION = 2;
+    public static final int TYPE_EDITER_SPEED = 3;
+    public static final int TYPE_EDITER_FILTER = 4;
+    public static final int TYPE_EDITER_PASTER = 5;
+    public static final int TYPE_EDITER_SUBTITLE = 6;
     /**
      * UGC小视频录制信息
      */
@@ -74,6 +97,10 @@ public class TCConstants {
     //
     public static final int REQUEST_CODE_PASTER = 1;
     public static final int REQUEST_CODE_WORD   = 2;
+
+    // EventBus Msg
+    public static final int EVENT_MSG_PUBLISH_DONE  = 1; // 上传视频成功
+    public static final int EVENT_MSG_SAVE_DONE     = 2; // 保存视频成功
 
     //ELK上报事件
     public static final String ELK_ACTION_CHANGE_RESOLUTION = "change_resolution";

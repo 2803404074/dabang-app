@@ -11,10 +11,24 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.dbvr.baselibrary.adapter.BaseRecyclerHolder;
+import com.dbvr.baselibrary.adapter.RecyclerAdapter;
+import com.dbvr.baselibrary.model.TagMo;
+import com.dbvr.baselibrary.utils.ToastUtil;
+import com.dbvr.baselibrary.view.AppManager;
+import com.dbvr.httplibrart.constans.DyUrl;
+import com.dbvr.httplibrart.utils.ObjectCallback;
+import com.dbvr.httplibrart.utils.OkHttp3Utils;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.tencent.liteav.basic.log.TXCLog;
 import com.tencent.liteav.demo.videouploader.R;
 import com.tencent.liteav.demo.videouploader.common.utils.TCConstants;
@@ -32,11 +46,15 @@ import com.tencent.rtmp.TXVodPlayer;
 import com.tencent.rtmp.ui.TXCloudVideoView;
 import com.tencent.ugc.TXVideoInfoReader;
 
+import org.json.JSONException;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -61,6 +79,11 @@ public class TCVideoPublishActivity extends FragmentActivity implements View.OnC
     private PublishSigListener mPublishSiglistener;
     private ReportVideoInfoListener mReportVideoInfoListener;
 
+    private RecyclerView recyclerView;
+    private RecyclerAdapter adapter;
+    private List<TagMo> mTypeList = new ArrayList<>();
+    private String typeId;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +92,8 @@ public class TCVideoPublishActivity extends FragmentActivity implements View.OnC
         initView();
 
         initData();
+
+        getType();
     }
 
     @Override
@@ -96,7 +121,7 @@ public class TCVideoPublishActivity extends FragmentActivity implements View.OnC
     }
 
     private void initData() {
-        mVideoPath = getIntent().getStringExtra(TCConstants.VIDEO_EDITER_PATH);
+        mVideoPath = getIntent().getStringExtra(TCConstants.VIDEO_RECORD_VIDEPATH);
         mCoverImagePath = "/sdcard/cover.jpg";
         final Bitmap coverBitmap = TXVideoInfoReader.getInstance().getSampleImage(0, mVideoPath);
         if(coverBitmap != null){
@@ -115,6 +140,56 @@ public class TCVideoPublishActivity extends FragmentActivity implements View.OnC
         mTXugcPublish = new TXUGCPublish(this.getApplicationContext(), "customID");
 
         initListener();
+    }
+
+    private void getType(){
+        OkHttp3Utils.getInstance(this).doPostJson(DyUrl.getOnlineCategorys, null, new ObjectCallback<String>(this) {
+            @Override
+            public void onUi(String result) {
+                mTypeList = new Gson().fromJson(result, new TypeToken<List<TagMo>>() {
+                }.getType());
+                if (mTypeList != null && mTypeList.size() > 0) {
+                    mTypeList.get(0).setCheck(true);
+                    adapter = new RecyclerAdapter<TagMo>(TCVideoPublishActivity.this, mTypeList, R.layout.item_txt) {
+                        @Override
+                        public void convert(Context mContext, BaseRecyclerHolder holder, TagMo o) {
+                            TextView checkBox = holder.getView(R.id.cb_txt);
+                            checkBox.setText(o.getName());
+                            if (o.isCheck()) {
+                                checkBox.setBackgroundResource(R.drawable.shape_db);
+                                checkBox.setTextColor(getResources().getColor(R.color.colorWhite));
+                                typeId = o.getId();
+                            } else {
+                                checkBox.setBackgroundResource(R.drawable.shape_gray_w);
+                                checkBox.setTextColor(getResources().getColor(R.color.textTitle));
+                            }
+                        }
+                    };
+                    recyclerView.setAdapter(adapter);
+                    adapter.setOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(View view, int position) {
+                            for (int i = 0; i < mTypeList.size(); i++) {
+                                if (i == position) {
+                                    mTypeList.get(i).setCheck(true);
+                                } else {
+                                    mTypeList.get(i).setCheck(false);
+                                }
+                            }
+                            adapter.updateDataa(mTypeList);
+                        }
+                    });
+                }else {
+                    mBtnPublish.setText("未完成商户认证，请到“商户/入驻”进行入驻");
+                    mBtnPublish.setClickable(false);
+                }
+            }
+            @Override
+            public void onFailed(String msg) {
+                mBtnPublish.setText("未完成商户认证，请到“商户/入驻”进行入驻");
+                mBtnPublish.setClickable(false);
+            }
+        });
     }
 
     private void initListener() {
@@ -156,6 +231,10 @@ public class TCVideoPublishActivity extends FragmentActivity implements View.OnC
     }
 
     private void initView() {
+
+
+        recyclerView = findViewById(R.id.recy_type);
+        recyclerView.setLayoutManager(new GridLayoutManager(this,4));
         mBtnPublish = (Button) findViewById(R.id.btn_publish);
         mEtVideoTitle = (EditText) findViewById(R.id.et_video_title);
         mTXCloudVideoView = (TXCloudVideoView) findViewById(R.id.video_view);
@@ -255,11 +334,23 @@ public class TCVideoPublishActivity extends FragmentActivity implements View.OnC
      * @param result
      */
     private void reportVideoInfo(TXUGCPublishTypeDef.TXPublishResult result) {
-        Map<String,String>map = new HashMap<>();
+        Map<String,Object>map = new HashMap<>();
         map.put("title",mEtVideoTitle.getText().toString());
         map.put("videoUrl",result.getVideoURL());
-        map.put("coverPath",result.getCoverURL());
-        map.put("label","热门");
+        map.put("coverUrl",result.getCoverURL());
+        map.put("label",typeId);
+        OkHttp3Utils.getInstance(this).doPostJson(DyUrl.saveVideo, map, new ObjectCallback<String>(this) {
+            @Override
+            public void onUi(String result) throws JSONException {
+                ToastUtil.showShort(TCVideoPublishActivity.this,"发布成功");
+                finish();
+            }
+            @Override
+            public void onFailed(String msg) {
+                ToastUtil.showShort(TCVideoPublishActivity.this,"发布失败");
+                finish();
+            }
+        });
 
         //VideoDataMgr.getInstance().reportVideoInfo(result.videoId, "腾讯云");
     }

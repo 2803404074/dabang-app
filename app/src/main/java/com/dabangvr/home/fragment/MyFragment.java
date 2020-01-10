@@ -14,6 +14,7 @@ import com.dabangvr.user.activity.FollowActivity;
 import com.dabangvr.user.activity.UserAboutActivity;
 import com.dabangvr.user.activity.UserDropActivity;
 import com.dabangvr.user.activity.UserEditMessActivity;
+import com.dabangvr.user.activity.UserHomeActivity;
 import com.dabangvr.user.activity.UserSettingActivity;
 import com.dbvr.baselibrary.model.UserMess;
 import com.dbvr.baselibrary.utils.UserHolper;
@@ -43,11 +44,16 @@ public class MyFragment extends BaseFragmentBinding<FragmentMyBinding> implement
 
         binding.llMoney.setOnClickListener(this);
         binding.llOrder.setOnClickListener(this);
+        binding.llVideo.setOnClickListener(view -> {
+              goTActivity(UserHomeActivity.class,null);
+        });
         binding.llCollect.setOnClickListener(this);
         binding.llMessInfo.setOnClickListener(this);
         binding.llSet.setOnClickListener(this);
         binding.llAbout.setOnClickListener(this);
         binding.llDep.setOnClickListener(this);
+
+
     }
 
     @Override

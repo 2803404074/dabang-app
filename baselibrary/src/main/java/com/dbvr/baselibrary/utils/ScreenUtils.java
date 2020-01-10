@@ -18,6 +18,16 @@ public class ScreenUtils {
         return context.getResources().getDisplayMetrics().widthPixels;
     }
 
+    public float dp2px(Context context,float dp) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return dp * scale + 0.5f;
+    }
+
+    public float sp2px(Context context,float sp) {
+        final float scale = context.getResources().getDisplayMetrics().scaledDensity;
+        return sp * scale;
+    }
+
     public static boolean isInputShow(Activity activity){
         //获取当屏幕内容的高度
         int screenHeight = activity.getWindow().getDecorView().getHeight();

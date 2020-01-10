@@ -119,22 +119,18 @@ dependencies {
     implementation project(path: ':httplibrart')
     implementation project(path: ':imglibrary2')
     implementation project(path: ':svgalibrary')
-    implementation project(path: ':player')
     implementation project(path: ':videorecorder')
     //刷新
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.5.1'
-
     implementation files('libs/hyphenatechat_3.6.1.jar')
     implementation 'com.github.rey5137:material:1.2.2'
     implementation 'org.jetbrains:annotations:15.0'
     //功能引导
     implementation 'com.github.huburt-Hu:NewbieGuide:v1.0.2'
     implementation files('libs/zegoliveroom.jar')
-
     implementation 'com.github.castorflex.verticalviewpager:library:19.0.1'
     implementation 'io.reactivex:rxandroid:1.2.1'
-
     //多渠道打包
     implementation 'com.meituan.android.walle:library:1.1.6'
-
+    implementation files('libs/pldroid-player-2.1.9.jar')
 }

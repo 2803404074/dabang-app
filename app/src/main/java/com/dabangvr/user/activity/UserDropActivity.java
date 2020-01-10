@@ -12,6 +12,7 @@ import com.dabangvr.comment.activity.RechargeDetailedActivity;
 import com.dabangvr.comment.activity.StrategyActivity;
 import com.dabangvr.wxapi.WXPlayCallBack;
 import com.dbvr.baselibrary.model.UserMess;
+import com.dbvr.baselibrary.utils.Conver;
 import com.dbvr.baselibrary.utils.DialogUtil;
 import com.dbvr.baselibrary.utils.SPUtils;
 import com.dbvr.baselibrary.utils.StatusBarUtil;
@@ -22,6 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
+import butterknife.BindViews;
 import butterknife.OnClick;
 
 /**
@@ -66,6 +68,10 @@ public class UserDropActivity extends BaseActivity {
         userMess = SPUtils.instance(getContext()).getUser();
         tvDropNum.setText("可用跳币：" + userMess.getDiamond());
 
+        price = 5;
+        num = 50;
+        select(0);
+
         findViewById(R.id.ll01).setOnClickListener(view -> {
             price = 5;
             num = 50;
@@ -95,6 +101,20 @@ public class UserDropActivity extends BaseActivity {
             price = 200;
             num = 2000;
             select(5);
+        });
+
+
+        findViewById(R.id.tvTx).setOnClickListener(view -> {
+            DialogUtil.getInstance(this).show(R.layout.dialog_tip, view1 -> {
+                TextView title = view1.findViewById(R.id.tv_title);
+                title.setText("提现服务维护中，敬请期待");
+                TextView tvCancel = view1.findViewById(R.id.tvCancel);
+                tvCancel.setVisibility(View.INVISIBLE);
+                tvCancel.setClickable(false);
+                view1.findViewById(R.id.tvConfirm).setOnClickListener(view2 -> {
+                    DialogUtil.getInstance(this).des();
+                });
+            });
         });
     }
 

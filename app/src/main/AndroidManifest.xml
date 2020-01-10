@@ -57,9 +57,10 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:icon">
-        <activity android:name=".user.activity.CollectActivity"></activity>
+        <activity android:name=".mall.activity.BuyStatusActivity"></activity>
+        <activity android:name=".user.activity.CollectActivity" />
         <activity android:name=".user.activity.DepListActivity" />
-        <activity android:name="com.tencent.liteav.demo.my.activity.ShortVideoActivity" />
+        <activity android:name=".play.video.activity.ShortVideoActivity" />
         <activity android:name=".comment.activity.CownTimerActivity" />
         <activity android:name=".user.activity.UserSetAddressActivity" />
         <activity android:name=".play.activity.verticle.PlayActivity" />
@@ -78,8 +79,14 @@
         <activity android:name=".user.activity.FansActivity" />
         <activity android:name=".comment.activity.LocationActivity" />
         <activity android:name=".home.activity.SearchActivity" />
-        <activity android:name="com.tencent.liteav.demo.my.activity.UserVideoActivity" />
-        <activity android:name="com.tencent.liteav.demo.my.activity.VideoActivity" />
+        <activity android:name=".play.video.activity.UserVideoActivity" />
+        <activity android:name=".play.video.activity.VideoActivity" />
+
+
+        <activity android:name="com.tencent.liteav.demo.edit.activity.TCVideoPreprocessActivity"/>
+        <activity android:name="com.tencent.liteav.demo.edit.activity.TCVideoEditerActivity"/>
+        <activity android:name="com.tencent.liteav.demo.edit.activity.TCVideoEffectActivity"/>
+        <activity android:name="com.tencent.liteav.demo.edit.activity.BGMSelectActivity"/>
 
         <uses-library
             android:name="org.apache.http.legacy"
@@ -202,12 +209,10 @@
                 <action android:name="com.dabang.sharex" />
             </intent-filter>
         </receiver>
-
         <receiver
             android:name=".im.receiver.MessReceiver"
             android:enabled="true"
-            android:exported="true">
-        </receiver>
-
+            android:exported="true"></receiver>
     </application>
+
 </manifest>

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
+    <dimen name="video_thumbnail_width">50dp</dimen>
+
     <dimen name="status_height">18dp</dimen>				<!-- 状态栏高度 -->
 
     <dimen name="text_min">10sp</dimen>				<!-- 最小字体 -->

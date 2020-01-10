@@ -75,6 +75,7 @@ public class WellcomActivity extends BaseActivity {
     }
 
     private void startActivity(final Class T) {
+        Handler handler = new Handler();
         new Handler().postDelayed(() -> {
             Intent intent = new Intent(WellcomActivity.this, T);
             startActivity(intent);

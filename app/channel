@@ -1,0 +1,6 @@
+Yyb #应用宝
+Xiaomi #小米
+Huawei #华为
+Meizhu #魅族
+
+#使用命令：gradlew clean assembleReleaseChannels 进行打包

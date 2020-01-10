@@ -42,14 +42,9 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 public class HomeFragmentHome extends BaseFragment {
-    @BindView(R.id.head_layout)
-    LinearLayout headLayout;
+
     @BindView(R.id.collapsingToolbarLayout)
     CollapsingToolbarLayout collapsingToolbarLayout;
-    @BindView(R.id.app_bar_layout)
-    AppBarLayout appBarLayout;
-    @BindView(R.id.tb_atf_toolbar)
-    Toolbar toolbar;
     @BindView(R.id.recyclerFollow)
     RecyclerView recyclerView;
     private List<FansMo> mData = new ArrayList<>();

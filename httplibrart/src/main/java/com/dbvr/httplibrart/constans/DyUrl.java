@@ -5,7 +5,7 @@ public class DyUrl {
     public static final String QINIUDOMAN = "http://image.vrzbgw.com/";
     public static final String TOKEN_NAME = "DABANG-TOKEN";
 
-    public static final String BASE = "http://192.168.0.112:8085/dabang/";
+    public static final String BASE = "http://192.168.0.250:8085/dabang/";
     //public static final String BASE = "http://api.vrzbgw.com:8085/dabang/";//远程
 
     //根据经纬度
@@ -101,12 +101,17 @@ public class DyUrl {
     //根据类型查询直播列表
     public static final String getOnlineList = "api/live/getOnlineList";
 
+    //短视频上传凭证
+    public static final String getTencentSign = "api/liveShortVideo/getTencentSign";
+
     //短视频列表
     public static final String getLiveShortVideoList = "api/liveShortVideo/getLiveShortVideoList";
 
     //直播短视频列表
     public static final String indexTT ="api/index/indexTT";
 
+    //发布短视频
+    public static final String saveVideo = "api/liveShortVideo/saveVideo";
 
     //短视频列表
     public static final String getShortVideoComment = "api/liveShortVideo/getShortVideoComment";

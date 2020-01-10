@@ -71,6 +71,9 @@ public class MessageFragment extends BaseFragmentBinding<FragmentMessageBinding>
     }
 
     private void setView(){
+        if (conversationList!=null && conversationList.size()>0){
+            mBinding.tvTips.setVisibility(View.GONE);
+        }
         mBinding.recyclerMess.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new RecyclerAdapterPosition<EMConversation>(getContext(), conversationList, R.layout.my_mess_recyitem) {
             @Override

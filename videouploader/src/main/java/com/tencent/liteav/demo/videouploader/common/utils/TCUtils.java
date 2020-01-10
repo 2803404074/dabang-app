@@ -13,6 +13,7 @@ import android.provider.MediaStore;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
 
 public class TCUtils {
     /**
@@ -48,6 +49,17 @@ public class TCUtils {
             formatTime = ms + ":" + ss;
         }
         return formatTime;
+    }
+
+    /**
+     * 毫秒转换为 分：秒 ---  00：00形式
+     * @param millsecond
+     * @return
+     */
+    public static String millsecondToMinuteSecond(int millsecond) {
+        SimpleDateFormat formatter = new SimpleDateFormat("mm:ss");
+        String mmss = formatter.format(millsecond);
+        return mmss;
     }
 
     public static String duration(long durationMs) {

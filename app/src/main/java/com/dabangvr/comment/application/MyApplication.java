@@ -50,6 +50,7 @@ public class MyApplication extends Application implements NetWorkStateReceiver.N
         //圆形图像初始化
         Fresco.initialize(this);
 
+
         //分享
         MobSDK.init(this);
 
@@ -118,13 +119,11 @@ public class MyApplication extends Application implements NetWorkStateReceiver.N
     }
 
     public void initShortVideo(){
-        String ugcLicenceUrl = "http://license.vod2.myqcloud.com/license/v1/8c1a438e5d22efa5e67c1c0b9f951fa9/TXUgcSDK.licence"; //您从控制台申请的 licence url
-        String ugcKey = "3b74ed96b09b26753502311596ef08a5";
+        String ugcLicenceUrl = "http://license.vod2.myqcloud.com/license/v1/31f2352ffe8ed23465126e3127f85c11/TXUgcSDK.licence"; //您从控制台申请的 licence url
+        String ugcKey = "b6034301bf12f4531c0ac183b680e4db";
         //腾讯云短视频
         TXUGCBase.getInstance().setLicence(this, ugcLicenceUrl, ugcKey);
     }
-
-
 
     private void initZeGoContext() {
         ZegoLiveRoom.setSDKContext(new ZegoLiveRoom.SDKContextEx() {

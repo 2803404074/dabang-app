@@ -75,9 +75,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @BindView(R.id.drawer_layout)
     DrawerLayout drawer;
 
-    @BindView(R.id.ivFunction)
-    ImageView ivFunction;
-
     private SimpleDraweeView sdvHead;
 
     private TextView tvNickName;
@@ -115,10 +112,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         userMess = SPUtils.instance(this).getUser();
         if (userMess!=null){
             if (userMess.getIsAnchor()!=1){
-                ivFunction.setVisibility(View.GONE);
+                //ivFunction.setVisibility(View.GONE);
                 navigationView.getMenu().add(11,11,11,"商户入住").setIcon(R.mipmap.wifi);
             }else {
-                ivFunction.setVisibility(View.VISIBLE);
+                //ivFunction.setVisibility(View.VISIBLE);
                 navigationView.getMenu().add(22,22,22,"我的店铺").setIcon(R.mipmap.wifi);
             }
         }

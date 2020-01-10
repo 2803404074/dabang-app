@@ -9,13 +9,13 @@
         <RelativeLayout
             android:id="@+id/title"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_30"
-            android:background="@color/colorWhite">
+            android:background="@color/gra0"
+            android:layout_height="@dimen/dp_30">
 
             <ImageView
                 android:id="@+id/ivBack"
-                android:layout_width="@dimen/dp_28"
-                android:layout_height="@dimen/dp_28"
+                android:layout_width="@dimen/dp_30"
+                android:layout_height="@dimen/dp_30"
                 android:layout_alignParentBottom="true"
                 android:layout_margin="@dimen/dp_3"
                 android:padding="@dimen/dp_5"
@@ -30,6 +30,12 @@
                 android:textColor="@color/textTitle"
                 android:textSize="@dimen/sp_21" />
         </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginVertical="@dimen/dp_5"
+        android:background="@color/color_e2e2e2"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recy_chat"

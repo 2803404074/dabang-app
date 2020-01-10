@@ -16,6 +16,9 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 万能RecyclerHolder
  */
@@ -110,6 +113,7 @@ public class BaseRecyclerHolder extends RecyclerView.ViewHolder {
     }
 
     public BaseRecyclerHolder setImageByUrl(int viewId, String url, int resources) {
+        List<String>mDa = new ArrayList<>();
         // TODO: 2019/9/9
         if (!StringUtils.isEmpty(url) && !url.endsWith("null")) {
 

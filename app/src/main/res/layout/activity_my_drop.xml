@@ -79,6 +79,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tvTx"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="提现"
@@ -138,7 +139,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/sp_14"
-                    android:textColor="@color/default_bg"
+                    android:textColor="@color/lsq_color_gray"
                     android:text="5.00元"/>
             </LinearLayout>
 
@@ -175,7 +176,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/sp_14"
-                    android:textColor="@color/default_bg"
+                    android:textColor="@color/lsq_color_gray"
                     android:text="10.00元"/>
             </LinearLayout>
 
@@ -212,7 +213,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/sp_14"
-                    android:textColor="@color/default_bg"
+                    android:textColor="@color/lsq_color_gray"
                     android:text="20.00元"/>
             </LinearLayout>
 
@@ -257,7 +258,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/sp_14"
-                    android:textColor="@color/default_bg"
+                    android:textColor="@color/lsq_color_gray"
                     android:text="50.00元"/>
             </LinearLayout>
 
@@ -302,7 +303,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/sp_14"
-                    android:textColor="@color/default_bg"
+                    android:textColor="@color/lsq_color_gray"
                     android:text="100.00元"/>
             </LinearLayout>
 
@@ -345,7 +346,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/sp_14"
-                    android:textColor="@color/default_bg"
+                    android:textColor="@color/lsq_color_gray"
                     android:text="200.00元"/>
             </LinearLayout>
 

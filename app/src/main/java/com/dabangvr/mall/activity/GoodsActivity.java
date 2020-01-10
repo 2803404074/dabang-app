@@ -28,6 +28,8 @@ import com.dbvr.baselibrary.model.GoodsProductVo;
 import com.dbvr.baselibrary.model.GoodsVo;
 import com.dbvr.baselibrary.model.LiveGoods;
 import com.dbvr.baselibrary.utils.BottomDialogUtil2;
+import com.dbvr.baselibrary.utils.Conver;
+import com.dbvr.baselibrary.utils.DialogUtil;
 import com.dbvr.baselibrary.utils.MyWebViewClient;
 import com.dbvr.baselibrary.utils.StringUtils;
 import com.dbvr.baselibrary.utils.ToastUtil;
@@ -46,11 +48,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Handler;
 
 import butterknife.BindView;
 
 public class GoodsActivity extends BaseActivityBinding<ActivityGoodsBinding> {
-
     private RecyclerAdapter adapter;
     private GoodsVo goodsVo = new GoodsVo();
     private boolean isCollect = false;
@@ -148,7 +150,6 @@ public class GoodsActivity extends BaseActivityBinding<ActivityGoodsBinding> {
             public void onUi(String result) throws JSONException {
                 ToastUtil.showShort(getContext(),"已收藏");
             }
-
             @Override
             public void onFailed(String msg) {
                 ToastUtil.showShort(getContext(),"操作过于频繁，请稍候再试");
@@ -334,29 +335,28 @@ public class GoodsActivity extends BaseActivityBinding<ActivityGoodsBinding> {
                 String str = object.optString("goodsVo");
                 goodsVo = new Gson().fromJson(str, GoodsVo.class);
                 if (goodsVo!=null){
-                    List<GoodsProductVo>list = new ArrayList<>();
-                    for (int i = 0; i < 5; i++) {
-                        GoodsProductVo vo = new GoodsProductVo();
-                        if (i==0){
-                            vo.setCheck(true);
-                        }
-                        vo.setProductName("产品"+i);
-                        vo.setRemainingInventory(10+i);
-                        vo.setRetailPrice("5"+i*2);
-                        vo.setId(i);
-                        list.add(vo);
-                    }
-                    goodsVo.setGoodsProductList(list);
-
                     initGoodsMess(address);
                 }else {
-                    ToastUtil.showShort(getContext(),"商品已下架");
+                    errFunction();
                 }
             }
             @Override
             public void onFailed(String msg) {
-                ToastUtil.showShort(getContext(),StringUtils.isEmptyTxt(msg));
+                errFunction();
             }
+        });
+    }
+
+    private void errFunction(){
+        DialogUtil.getInstance(getContext()).show(R.layout.dialog_tip, false, view -> {
+            TextView tv_title = view.findViewById(R.id.tv_title);
+            tv_title.setText("商品已下架");
+            TextView tvCancel = view.findViewById(R.id.tvCancel);
+            tvCancel.setVisibility(View.INVISIBLE);
+            tvCancel.setClickable(false);
+            view.findViewById(R.id.tvConfirm).setOnClickListener(view1 -> {
+                AppManager.getAppManager().finishActivity(this);
+            });
         });
     }
 }

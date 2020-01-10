@@ -43,6 +43,7 @@ import android.widget.Toast;
 
 import com.dbvr.baselibrary.utils.ToastUtil;
 import com.tencent.liteav.basic.log.TXCLog;
+import com.tencent.liteav.demo.edit.activity.TCVideoPreprocessActivity;
 import com.tencent.liteav.demo.videorecord.mybottom.MusicBottom;
 import com.tencent.liteav.demo.videorecord.utils.FileUtils;
 import com.tencent.liteav.demo.videorecord.utils.TCConstants;
@@ -1118,9 +1119,9 @@ public class TCVideoRecordActivity extends Activity implements View.OnClickListe
     }
 
     private void startEditVideo() {
-        Intent intent = new Intent();
-        intent.setAction("com.tencent.liteav.demo.videopreprocess");
-//        Intent intent = new Intent(this, TCVideoPreprocessActivity.class);
+       // Intent intent = new Intent();
+        //intent.setAction("com.tencent.liteav.demo.videopreprocess");
+        Intent intent = new Intent(this, TCVideoPreprocessActivity.class);
 //        fileInfo.setThumbPath(mTXRecordResult.coverPath);
 //
 //        MediaMetadataRetriever retriever = new MediaMetadataRetriever();

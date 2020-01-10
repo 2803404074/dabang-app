@@ -6,7 +6,6 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.amap.api.location.AMapLocation;
 import com.dabangvr.R;
@@ -23,7 +22,7 @@ import com.dbvr.httplibrart.utils.ObjectCallback;
 import com.dbvr.httplibrart.utils.OkHttp3Utils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.tencent.liteav.demo.my.activity.VideoActivity;
+import com.dabangvr.play.video.activity.VideoActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;

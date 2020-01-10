@@ -22,9 +22,10 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation project(':player')
+    //implementation project(':player')
     implementation(name: 'LiteAVSDK_UGC', ext: 'aar')
     implementation project(path: ':baselibrary')
+    implementation project(path: ':httplibrart')
     implementation 'com.android.support:appcompat-v7:25.+'
     implementation 'com.android.support:recyclerview-v7:25.+'
     implementation 'com.squareup.okhttp3:okhttp:3.9.0'

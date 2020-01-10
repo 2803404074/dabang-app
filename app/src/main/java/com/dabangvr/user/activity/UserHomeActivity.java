@@ -11,7 +11,9 @@ import com.dabangvr.user.fragment.UserLiveFragment;
 import com.dabangvr.user.fragment.UserVideoFragment;
 import com.dbvr.baselibrary.adapter.ContentPagerAdapter;
 import com.dbvr.baselibrary.model.UserMess;
+import com.dbvr.baselibrary.utils.StringUtils;
 import com.dbvr.baselibrary.utils.ToastUtil;
+import com.dbvr.baselibrary.utils.UserHolper;
 import com.dbvr.baselibrary.view.AppManager;
 import com.dbvr.baselibrary.view.BaseActivityBinding;
 import com.dbvr.httplibrart.constans.DyUrl;
@@ -82,11 +84,6 @@ public class UserHomeActivity extends BaseActivityBinding<ActivityUserHomeBindin
         mBinding.inlcude.tvFans.setText(userMess.getFansNumber());
         mBinding.inlcude.tvDropNom.setText(String.valueOf(userMess.getDiamond()));
         mBinding.tvToolBarNickName.setText(userMess.getNickName());
-        if (userMess.getGrade() == 1){ mBinding.inlcude.ivVip.setImageResource(R.mipmap.u_one); }
-        if (userMess.getGrade() == 2){ mBinding.inlcude.ivVip.setImageResource(R.mipmap.u_tow); }
-        if (userMess.getGrade() == 3){ mBinding.inlcude.ivVip.setImageResource(R.mipmap.u_three); }
-        if (userMess.getGrade() == 4){ mBinding.inlcude.ivVip.setImageResource(R.mipmap.u_four); }
-        if (userMess.getGrade() == 5){ mBinding.inlcude.ivVip.setImageResource(R.mipmap.u_five); }
         if (userMess.isMutual()){
             mBinding.inlcude.tvSend.setVisibility(View.VISIBLE);
             mBinding.inlcude.tvAddFriend.setVisibility(View.GONE);
@@ -99,7 +96,11 @@ public class UserHomeActivity extends BaseActivityBinding<ActivityUserHomeBindin
     @Override
     public void initData() {
         Map<String,Object>map = new HashMap<>();
-        map.put("userId",getIntent().getStringExtra("userId"));
+        if (StringUtils.isEmpty(getIntent().getStringExtra("userId"))){
+            map.put("userId", UserHolper.getUserHolper(getContext()).getUserMess().getId());
+        }else {
+            map.put("userId",getIntent().getStringExtra("userId"));
+        }
         OkHttp3Utils.getInstance(getContext()).doPostJson(DyUrl.getUserByUserId, map, new ObjectCallback<String>(getContext()) {
             @Override
             public void onUi(String result){

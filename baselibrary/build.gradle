@@ -91,6 +91,8 @@ dependencies {
     api 'org.greenrobot:eventbus:3.0.0'
 
 
+    api 'de.hdodenhof:circleimageview:2.2.0'
+
     /**
      * 七牛云
      */

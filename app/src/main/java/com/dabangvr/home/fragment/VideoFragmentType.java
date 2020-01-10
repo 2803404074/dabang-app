@@ -2,7 +2,6 @@ package com.dabangvr.home.fragment;
 
 import android.content.Context;
 import android.os.Handler;
-import android.view.View;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
@@ -12,7 +11,7 @@ import com.dabangvr.comment.adapter.BaseRecyclerHolder;
 import com.dabangvr.comment.adapter.RecyclerAdapterPosition;
 import com.dbvr.baselibrary.utils.UserHolper;
 import com.dbvr.baselibrary.view.BaseFragmentFromType;
-import com.tencent.liteav.demo.my.activity.ShortVideoActivity;
+import com.dabangvr.play.video.activity.ShortVideoActivity;
 
 import java.io.Serializable;
 import java.util.ArrayList;

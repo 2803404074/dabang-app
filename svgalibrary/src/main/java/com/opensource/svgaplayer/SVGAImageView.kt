@@ -3,6 +3,7 @@ package com.opensource.svgaplayer
 import android.animation.Animator
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
+import android.annotation.TargetApi
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Build
@@ -56,6 +57,7 @@ open class SVGAImageView : ImageView {
         attrs?.let { loadAttrs(it) }
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
         setSoftwareLayerType()
         attrs?.let { loadAttrs(it) }

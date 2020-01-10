@@ -19,7 +19,7 @@ import com.dbvr.httplibrart.utils.ObjectCallback;
 import com.dbvr.httplibrart.utils.OkHttp3Utils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.tencent.liteav.demo.my.activity.UserVideoActivity;
+import com.dabangvr.play.video.activity.UserVideoActivity;
 
 import org.json.JSONException;
 

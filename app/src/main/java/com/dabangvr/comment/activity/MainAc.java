@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -101,6 +102,7 @@ public class MainAc extends BaseActivity implements BottomNavigationView.OnNavig
         //加载我们的角标View，新创建的一个布局
         View badge = LayoutInflater.from(MainAc.this).inflate(R.layout.menu_badge, menuView, false);
         tvMessCount = badge.findViewById(R.id.tvTab);
+        tvMessCount.setVisibility(View.GONE);
         //添加到Tab上
         itemView.addView(badge);
 
